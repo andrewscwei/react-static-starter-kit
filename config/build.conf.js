@@ -137,6 +137,7 @@ module.exports = {
       $TRANSLATIONS: JSON.stringify(translations)
     }),
     new HTMLPlugin({
+      appConfig: config,
       template: path.join(inputDir, `templates`, `index.html`),
       filename: `index.html`,
       inject: true,
