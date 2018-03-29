@@ -10,7 +10,7 @@ import thunk from 'redux-thunk';
 import BrowserRouter from 'react-router-dom/BrowserRouter';
 import React from 'react';
 import { createStore, applyMiddleware, combineReducers } from 'redux';
-import { hydrate, render } from 'react-dom';
+import { render } from 'react-snapshot';
 import { renderRoutes } from 'react-router-config';
 import { Provider } from 'react-redux';
 import { I18nextProvider } from 'react-i18next';
@@ -54,10 +54,4 @@ const markup = (r) => (
   </I18nextProvider>
 );
 
-// Render the app.
-if (process.env.NODE_ENV === `development`) {
-  render(markup(routes), document.getElementById(`app`));
-}
-else {
-  hydrate(markup(routes), document.getElementById(`app`));
-}
+render(markup(routes), document.getElementById(`app`));
