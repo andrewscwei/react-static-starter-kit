@@ -2,12 +2,10 @@
  * @file Client app root.
  */
 
-import styles from '@/containers/App.pcss';
-import Footer from '@/components/Footer';
-import Header from '@/components/Header';
-import React, { PureComponent } from 'react';
+import '@/containers/App.pcss';
 import PropTypes from 'prop-types';
 import { renderRoutes } from 'react-router-config';
+import { PureComponent } from 'react';
 
 export default class App extends PureComponent {
   static propTypes = {
@@ -15,12 +13,6 @@ export default class App extends PureComponent {
   }
 
   render() {
-    return (
-      <div className={styles[`root`]}>
-        <Header/>
-        {renderRoutes(this.props.route.routes)}
-        <Footer/>
-      </div>
-    );
+    return renderRoutes(this.props.route.routes);
   }
 }

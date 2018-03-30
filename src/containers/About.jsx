@@ -1,4 +1,6 @@
 import styles from '@/containers/About.pcss';
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
@@ -14,6 +16,7 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({ fetchUsers }, disp
 export default class About extends Component {
   static propTypes = {
     t: PropTypes.func.isRequired,
+    i18n: PropTypes.object.isRequired,
     users: PropTypes.array,
     fetchUsers: PropTypes.func
   }
@@ -27,10 +30,11 @@ export default class About extends Component {
   }
 
   render() {
-    const { t } = this.props;
+    const { t, i18n } = this.props;
 
     return (
       <div className={styles[`root`]}>
+        <Header t={t}/>
         <summary>
           <h1 className={styles[`h1`]}>{t(`about-title`)}</h1>
           {
@@ -43,6 +47,7 @@ export default class About extends Component {
             })
           }
         </summary>
+        <Footer t={t} i18n={i18n}/>
       </div>
     );
   }

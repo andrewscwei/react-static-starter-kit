@@ -1,10 +1,8 @@
 import styles from '@/components/Header.pcss';
 import PropTypes from 'prop-types';
 import React, { PureComponent } from 'react';
-import { translate } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
-@translate()
 export default class Header extends PureComponent {
   static propTypes = {
     t: PropTypes.func.isRequired

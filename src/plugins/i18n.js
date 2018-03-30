@@ -5,8 +5,8 @@ const i18n = i18next.init({
   ns: [`common`],
   defaultNS: `common`,
   lng: $APP_CONFIG.locales[0],
-  react: { wait: true },
   interpolation: { escapeValue: false },
+  react: { wait: true }
 });
 
 if (process.env.NODE_ENV === `development`) {

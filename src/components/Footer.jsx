@@ -1,9 +1,7 @@
 import styles from '@/components/Footer.pcss';
 import PropTypes from 'prop-types';
 import React, { PureComponent } from 'react';
-import { translate } from 'react-i18next';
 
-@translate()
 export default class Footer extends PureComponent {
   static propTypes = {
     t: PropTypes.func.isRequired,

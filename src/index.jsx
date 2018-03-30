@@ -3,8 +3,8 @@
  * @file Entry file.
  */
 
-import i18n from '@/plugins/i18n';
 import routes from './routes';
+import i18n from '@/plugins/i18n';
 import store from '@/plugins/store';
 import BrowserRouter from 'react-router-dom/BrowserRouter';
 import React from 'react';
