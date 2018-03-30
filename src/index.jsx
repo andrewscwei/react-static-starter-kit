@@ -1,4 +1,3 @@
-/* eslint-env browser */
 /**
  * @file Entry file.
  */
