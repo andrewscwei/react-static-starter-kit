@@ -1,24 +1,23 @@
-import styles from '@/containers/About.pcss';
+import styles from '@/pages/About.pcss';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
+import { changeLocale } from '@/reducers/i18n';
 import { connect } from 'react-redux';
 import { fetchUsers } from '@/reducers/users';
-import { translate } from 'react-i18next';
 
-const mapStateToProps = (state) => ({ users: state.users.items });
-const mapDispatchToProps = (dispatch) => bindActionCreators({ fetchUsers }, dispatch);
+const mapStateToProps = (state) => ({ users: state.users.items, t: state.i18n.messages });
+const mapDispatchToProps = (dispatch) => bindActionCreators({ changeLocale, fetchUsers }, dispatch);
 
-@translate()
 @connect(mapStateToProps, mapDispatchToProps)
 export default class About extends Component {
   static propTypes = {
-    t: PropTypes.func.isRequired,
-    i18n: PropTypes.object.isRequired,
+    t: PropTypes.object.isRequired,
     users: PropTypes.array,
-    fetchUsers: PropTypes.func
+    changeLocale: PropTypes.func.isRequired,
+    fetchUsers: PropTypes.func.isRequired
   }
 
   static fetchData(store) {
@@ -30,13 +29,13 @@ export default class About extends Component {
   }
 
   render() {
-    const { t, i18n } = this.props;
+    const { t, changeLocale } = this.props;
 
     return (
       <div className={styles[`root`]}>
         <Header t={t}/>
         <summary>
-          <h1 className={styles[`h1`]}>{t(`about-title`)}</h1>
+          <h1 className={styles[`h1`]}>{t[`about-title`]}</h1>
           {
             this.props.users.map(user => {
               return (
@@ -47,7 +46,7 @@ export default class About extends Component {
             })
           }
         </summary>
-        <Footer t={t} i18n={i18n}/>
+        <Footer t={t} changeLocale={changeLocale}/>
       </div>
     );
   }

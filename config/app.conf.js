@@ -28,7 +28,7 @@ module.exports = {
   ssrEnabled: process.env.NODE_ENV !== `development`,
 
   // Supported locales. First locale is the default locale.
-  locales: [`en`, `jp`],
+  locales: [`en`, `ja`],
 
   // Config options specific to the `build` task.
   build: {

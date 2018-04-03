@@ -2,11 +2,11 @@
  * @file Route definitions for React router.
  */
 
-import App from '@/containers/App';
-import About from '@/containers/About';
-import Home from '@/containers/Home';
-import List from '@/containers/List';
-import NotFound from '@/containers/NotFound';
+import App from '@/pages/App';
+import About from '@/pages/About';
+import Home from '@/pages/Home';
+import List from '@/pages/List';
+import NotFound from '@/pages/NotFound';
 
 export default [{
   component: App,
@@ -15,10 +15,10 @@ export default [{
     exact: true,
     component: Home
   }, {
-    path: `/about`,
+    path: `/about/`,
     component: About
   }, {
-    path: `/list`,
+    path: `/list/`,
     component: List
   }, {
     path: `*`,

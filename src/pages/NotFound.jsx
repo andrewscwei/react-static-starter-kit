@@ -1,13 +1,18 @@
-import styles from '@/containers/NotFound.pcss';
+import styles from '@/pages/NotFound.pcss';
 import PropTypes from 'prop-types';
 import React, { PureComponent } from 'react';
-import { translate } from 'react-i18next';
 import { Route } from 'react-router-dom';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { changeLocale } from '@/reducers/i18n';
 
-@translate()
+const mapStateToProps = (state) => ({ t: state.i18n.messages });
+const mapDispatchToProps = (dispatch) => bindActionCreators({ changeLocale }, dispatch);
+
+@connect(mapStateToProps, mapDispatchToProps)
 export default class NotFound extends PureComponent {
   static propTypes = {
-    t: PropTypes.func.isRequired
+    t: PropTypes.object.isRequired
   }
 
   render() {
@@ -21,7 +26,7 @@ export default class NotFound extends PureComponent {
         return (
           <div className={styles[`root`]}>
             <summary>
-              <h1 className={styles[`h1`]}>{t(`not-found`)}</h1>
+              <h1 className={styles[`h1`]}>{t[`not-found`]}</h1>
             </summary>
           </div>
         );

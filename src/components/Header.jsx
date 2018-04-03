@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 export default class Header extends PureComponent {
   static propTypes = {
-    t: PropTypes.func.isRequired
+    t: PropTypes.object.isRequired
   }
 
   render() {
@@ -13,8 +13,8 @@ export default class Header extends PureComponent {
 
     return (
       <header className={styles[`root`]}>
-        <Link className={styles[`link`]} to='/'>{t(`home`)}</Link>
-        <Link className={styles[`link`]} to='/about'>{t(`about`)}</Link>
+        <Link className={styles[`link`]} to='/'>{t[`home`]}</Link>
+        <Link className={styles[`link`]} to='/about/'>{t[`about`]}</Link>
       </header>
     );
   }
