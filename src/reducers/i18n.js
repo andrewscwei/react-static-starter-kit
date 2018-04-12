@@ -7,6 +7,7 @@ for (let i = 0; i < $APP_CONFIG.locales.length; i++) {
     addLocaleData(require(`react-intl/locale-data/${locale}`));
   }
   catch (err) {
+    // eslint-disable-next-line no-console
     console.error(`No locale data fround for "${locale}"`);
   }
 }

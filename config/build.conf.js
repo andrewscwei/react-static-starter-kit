@@ -4,7 +4,9 @@
  */
 
 const config = require(`./app.conf`);
+const convert = require(`koa-connect`);
 const fs = require(`fs`);
+const history = require(`connect-history-api-fallback`);
 const path = require(`path`);
 const CachedInputFileSystem = require(`enhanced-resolve/lib/CachedInputFileSystem`);
 const CopyPlugin = require(`copy-webpack-plugin`);
@@ -121,6 +123,11 @@ module.exports = {
     extensions: [`.js`, `.jsx`],
     alias: {
       '@': inputDir
+    }
+  },
+  serve: {
+    add: (app, middleware, options) => {
+      app.use(convert(history()));
     }
   },
   plugins: [
