@@ -9,7 +9,7 @@ This is an **experimental** starter kit for a React static app.
 3. ES7 support (i.e. `async`/`await`, decorators, class properties, etc.)
 4. [React Router 4](https://reacttraining.com/react-router/)
 5. [Redux](https://redux.js.org/introduction)
-6. [i18next](https://www.i18next.com/)
+6. [React Intl](https://github.com/yahoo/react-intl/wiki)
 7. [CSS modules](https://github.com/css-modules/css-modules) + [PostCSS](http://postcss.org/)
 8. [Docker](https://docker.com) config
 9. [ESLint](https://eslint.org/) and [StyleLint](https://stylelint.io/) config
