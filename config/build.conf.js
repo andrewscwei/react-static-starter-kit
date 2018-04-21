@@ -31,7 +31,7 @@ const translations = fs.readdirSync(path.join(cwd, `config/locales`))
     return obj;
   }, {});
 
-module.exports = {
+module.exports = Object.assign({
   mode: isDev ? `development` : `production`,
   target: `web`,
   devtool: isDev ? `eval-source-map` : (config.build.sourceMap ? `source-map` : false),
@@ -84,9 +84,7 @@ module.exports = {
                   }).resolveSync({}, basedir, id);
                 }
               }),
-              require(`precss`)({
-                stage: 0
-              }),
+              require(`precss`)(),
               require(`postcss-hexrgba`)(),
               require(`postcss-calc`)(),
               require(`autoprefixer`)(),
@@ -123,11 +121,6 @@ module.exports = {
     extensions: [`.js`, `.jsx`],
     alias: {
       '@': inputDir
-    }
-  },
-  serve: {
-    add: (app, middleware, options) => {
-      app.use(convert(history()));
     }
   },
   plugins: [
@@ -171,4 +164,10 @@ module.exports = {
     .concat((!isDev && config.build.analyzer) ? [
       new BundleAnalyzerPlugin()
     ] : [])
-};
+}, isDev ? {
+  serve: {
+    add: (app, middleware, options) => {
+      app.use(convert(history()));
+    }
+  }
+} : {});
