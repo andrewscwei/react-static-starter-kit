@@ -12,9 +12,9 @@
   "license": "MIT",
   "scripts": {
     "clean": "rimraf build",
-    "build": "npm run clean && NODE_ENV=production webpack --colors --profile --config config/build.conf.js --display-error-details && react-snapshot",
+    "build": "npm run clean && NODE_ENV=production webpack --colors --profile --config config/build.conf.ts --display-error-details && react-snapshot",
     "test": "echo \"No tests yet\"",
-    "dev": "NODE_ENV=development webpack-serve --config config/build.conf.js",
+    "dev": "NODE_ENV=development ts-node ./node_modules/.bin/webpack-serve --config config/build.conf.ts",
     "lint": "npm run lint:js && npm run lint:css",
     "lint:fix": "npm run lint:js:fix && npm run lint:css:fix",
     "lint:js": "eslint . -f node_modules/eslint-friendly-formatter --ignore-path .gitignore --ext .jsx --ext .js",
@@ -23,6 +23,8 @@
     "lint:css:fix": "npm run lint:css -- --fix"
   },
   "devDependencies": {
+    "@types/node": "^10.1.2",
+    "@types/webpack": "^4.4.0",
     "autoprefixer": "^8.2.0",
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.2.2",
@@ -69,6 +71,9 @@
     "stylelint-config-css-modules": "^1.2.0",
     "stylelint-config-standard": "^18.2.0",
     "stylelint-webpack-plugin": "^0.10.4",
+    "ts-node": "^6.0.3",
+    "tslint": "^5.10.0",
+    "typescript": "^2.8.3",
     "url-loader": "^1.0.1",
     "webpack": "^4.4.1",
     "webpack-bundle-analyzer": "^2.11.1",
