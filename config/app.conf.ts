@@ -2,7 +2,7 @@
  * @file Configuration for both client and server environments.
  */
 
-module.exports = {
+export default {
   // HTML metadata.
   meta: {
     // Title of the app.

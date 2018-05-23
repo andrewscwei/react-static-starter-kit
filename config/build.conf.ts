@@ -4,18 +4,14 @@
  */
 
 import appConfig from './app.conf';
-import convert from 'koa-connect';
 import fs from 'fs';
-import history from 'connect-history-api-fallback';
 import path from 'path';
-import CachedInputFileSystem from 'enhanced-resolve/lib/CachedInputFileSystem';
 import CopyPlugin from 'copy-webpack-plugin';
 import HTMLPlugin from 'html-webpack-plugin';
 import MiniCSSExtractPlugin from 'mini-css-extract-plugin';
-import NodeJsInputFileSystem from 'enhanced-resolve/lib/NodeJsInputFileSystem';
-import ResolverFactory from 'enhanced-resolve/lib/ResolverFactory';
 import StyleLintPlugin from 'stylelint-webpack-plugin';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
+import { CachedInputFileSystem, NodeJsInputFileSystem, ResolverFactory } from 'enhanced-resolve';
 import { Configuration, EnvironmentPlugin, DefinePlugin, IgnorePlugin } from 'webpack';
 import { Path } from 'typescript';
 
@@ -84,7 +80,7 @@ const config: any = {
                     },
                     extensions: [`.css`, `.pcss`],
                     useSyncFileSystemCalls: true,
-                    fileSystem: new CachedInputFileSystem(new NodeJsInputFileSystem(), 60000)
+                    fileSystem: new CachedInputFileSystem(new NodeJsInputFileSystem(), 60000) as any
                   }).resolveSync({}, basedir, id);
                 }
               }),
@@ -125,11 +121,52 @@ const config: any = {
       '@': inputDir
     }
   },
-  // ...isDev ? {
-  //   serve: {
-  //     add: (app, middleware, options) => app.use(convert(history()))
-  //   }
-  // } : {}
+  plugins: [
+    new CopyPlugin([{
+      from: path.join(inputDir, `static`),
+      to: outputDir,
+      ignore: [`.*`]
+    }]),
+    new EnvironmentPlugin({
+      NODE_ENV: `production`
+    }),
+    new DefinePlugin({
+      $APP_CONFIG: JSON.stringify(appConfig),
+      $TRANSLATIONS: JSON.stringify(translations)
+    }),
+    new HTMLPlugin({
+      appConfig: appConfig,
+      template: path.join(inputDir, `templates`, `index.html`),
+      filename: `index.html`,
+      inject: true,
+      minify: {
+        removeComments: true,
+        collapseWhitespace: true,
+        removeAttributeQuotes: true
+      }
+    }),
+    ...isDev ? [] : [
+      new IgnorePlugin(/^.*\/config\/.*$/),
+      new MiniCSSExtractPlugin({
+        filename: `bundle.[chunkhash:8].css`,
+      })
+    ],
+    ...!useLinter ? [] : [
+      new StyleLintPlugin({
+        files: [`**/*.css`, `**/*.pcss`],
+        failOnError: false,
+        quiet: false
+      })
+    ],
+    ...!useBundleAnalyzer ? [] : [
+      new BundleAnalyzerPlugin()
+    ]
+  ],
+  ...!isDev ? {} : {
+    devServer: {
+      historyApiFallback: true
+    }
+  }
 };
 
 export default config;
