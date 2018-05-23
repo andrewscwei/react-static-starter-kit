@@ -3,17 +3,16 @@
  *       `development` and `production` environments.
  */
 
-import appConfig from './app.conf';
-import fs from 'fs';
-import path from 'path';
 import CopyPlugin from 'copy-webpack-plugin';
+import { CachedInputFileSystem, NodeJsInputFileSystem, ResolverFactory } from 'enhanced-resolve';
+import fs from 'fs';
 import HTMLPlugin from 'html-webpack-plugin';
 import MiniCSSExtractPlugin from 'mini-css-extract-plugin';
+import path from 'path';
 import StyleLintPlugin from 'stylelint-webpack-plugin';
+import { DefinePlugin, EnvironmentPlugin, IgnorePlugin } from 'webpack';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
-import { CachedInputFileSystem, NodeJsInputFileSystem, ResolverFactory } from 'enhanced-resolve';
-import { Configuration, EnvironmentPlugin, DefinePlugin, IgnorePlugin } from 'webpack';
-import { Path } from 'typescript';
+import appConfig from './app.conf';
 
 const isDev: boolean = process.env.NODE_ENV === `development`;
 const useLinter: boolean = (isDev && appConfig.dev.linter) || (!isDev && appConfig.build.linter);
@@ -22,38 +21,29 @@ const cwd: string = path.join(__dirname, `../`);
 const inputDir: string = path.join(cwd, `src`);
 const outputDir: string = path.join(cwd, `build`);
 const translations = fs.readdirSync(path.join(cwd, `config/locales`))
-  .filter(v => !(/(^|\/)\.[^/.]/g).test(v))
-  .map(val => path.basename(val, `.json`))
-  .filter(v => ~appConfig.locales.indexOf(v))
+  .filter((v) => !(/(^|\/)\.[^/.]/g).test(v))
+  .map((val) => path.basename(val, `.json`))
+  .filter((v) => ~appConfig.locales.indexOf(v))
   .reduce((obj, val) => {
     obj[val] = require(path.join(cwd, `config/locales`, `${val}.json`));
     return obj;
   }, {});
 
 const config: any = {
-  mode: isDev ? `development` : `production`,
-  target: `web`,
-  devtool: isDev ? `eval-source-map` : (appConfig.build.sourceMap ? `source-map` : false),
-  stats: {
-    colors: true,
-    modules: true,
-    reasons: true,
-    errorDetails: true
-  },
+  devtool: isDev ? `eval-source-map` : (appConfig.build.sourceMap ? `source-map` : false), ,
   entry: {
-    bundle: path.join(inputDir, `index.jsx`)
+    bundle: path.join(inputDir, `index.tsx`)
   },
-  output: {
-    path: outputDir,
-    publicPath: isDev ? `/` : appConfig.build.publicPath,
-    filename: isDev ? `[name].js` : `[name].[chunkhash].js`,
-    sourceMapFilename: `[file].map`
-  },
+  mode: isDev ? `development` : `production`,
   module: {
     rules: [{
-      test: /\.jsx?$/,
       exclude: /node_modules/,
+      test: /\.jsx?$/,
       use: `babel-loader`
+    }, {
+      exclude: /node_modules/,
+      test: /\.tsx?$/,
+      use: `awesome-typescript-loader`
     }, {
       test: /\.p?css$/,
       use: [
@@ -61,16 +51,15 @@ const config: any = {
         ...[{
           loader: `css-loader`,
           options: {
-            modules: true,
-            sourceMap: isDev ? true : appConfig.build.sourceMap,
             importLoaders: 1,
-            localIdentName: `[hash:6]`
+            localIdentName: `[hash:6]`,
+            modules: true,
+            sourceMap: isDev ? true : appConfig.build.sourceMap
           }
         }, {
           loader: `postcss-loader`,
           options: {
             ident: `postcss`,
-            sourceMap: isDev ? true : appConfig.build.sourceMap,
             plugins: () => [
               require(`postcss-import`)({
                 resolve(id, basedir) {
@@ -79,8 +68,8 @@ const config: any = {
                       '@': inputDir
                     },
                     extensions: [`.css`, `.pcss`],
-                    useSyncFileSystemCalls: true,
-                    fileSystem: new CachedInputFileSystem(new NodeJsInputFileSystem(), 60000) as any
+                    fileSystem: new CachedInputFileSystem(new NodeJsInputFileSystem(), 60000) as any,
+                    useSyncFileSystemCalls: true
                   }).resolveSync({}, basedir, id);
                 }
               }),
@@ -89,7 +78,8 @@ const config: any = {
               require(`postcss-calc`)(),
               require(`autoprefixer`)(),
               require(`cssnano`)()
-            ]
+            ],
+            sourceMap: isDev ? true : appConfig.build.sourceMap
           }
         }]
       ]
@@ -104,9 +94,9 @@ const config: any = {
       use: `url-loader?limit=10000&name=assets/fonts/[name]${isDev ? `` : `.[hash:6]`}.[ext]`
     },
     ...(isDev ? appConfig.dev.linter : appConfig.build.linter) ? [{
-      test: /\.jsx?$/,
-      include: [inputDir],
       enforce: `pre`,
+      include: [inputDir],
+      test: /\.jsx?$/,
       use: {
         loader: `eslint-loader`,
         options: {
@@ -115,17 +105,17 @@ const config: any = {
       }
     }] : []]
   },
-  resolve: {
-    extensions: [`.js`, `.jsx`],
-    alias: {
-      '@': inputDir
-    }
+  output: {
+    filename: isDev ? `[name].js` : `[name].[chunkhash].js`,
+    path: outputDir,
+    publicPath: isDev ? `/` : appConfig.build.publicPath,
+    sourceMapFilename: `[file].map`
   },
   plugins: [
     new CopyPlugin([{
       from: path.join(inputDir, `static`),
-      to: outputDir,
-      ignore: [`.*`]
+      ignore: [`.*`],
+      to: outputDir
     }]),
     new EnvironmentPlugin({
       NODE_ENV: `production`
@@ -135,26 +125,26 @@ const config: any = {
       $TRANSLATIONS: JSON.stringify(translations)
     }),
     new HTMLPlugin({
-      appConfig: appConfig,
-      template: path.join(inputDir, `templates`, `index.html`),
+      appConfig,
       filename: `index.html`,
       inject: true,
       minify: {
-        removeComments: true,
         collapseWhitespace: true,
-        removeAttributeQuotes: true
-      }
+        removeAttributeQuotes: true,
+        removeComments: true
+      },
+      template: path.join(inputDir, `templates`, `index.html`)
     }),
     ...isDev ? [] : [
       new IgnorePlugin(/^.*\/config\/.*$/),
       new MiniCSSExtractPlugin({
-        filename: `bundle.[chunkhash:8].css`,
+        filename: `bundle.[chunkhash:8].css`
       })
     ],
     ...!useLinter ? [] : [
       new StyleLintPlugin({
-        files: [`**/*.css`, `**/*.pcss`],
         failOnError: false,
+        files: [`**/*.css`, `**/*.pcss`],
         quiet: false
       })
     ],
@@ -166,7 +156,20 @@ const config: any = {
     devServer: {
       historyApiFallback: true
     }
-  }
+  },
+  resolve: {
+    alias: {
+      '@': inputDir
+    },
+    extensions: [`.js`, `.jsx`, `.ts`, `.tsx`]
+  },
+  stats: {
+    colors: true,
+    errorDetails: true,
+    modules: true,
+    reasons: true
+  },
+  target: `web`
 };
 
 export default config;

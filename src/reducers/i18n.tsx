@@ -1,13 +1,10 @@
 import { addLocaleData } from 'react-intl';
 
-for (let i = 0; i < $APP_CONFIG.locales.length; i++) {
-  const locale = $APP_CONFIG.locales[i];
-
+for (const locale of $APP_CONFIG.locales) {
   try {
     addLocaleData(require(`react-intl/locale-data/${locale}`));
-  }
-  catch (err) {
-    // eslint-disable-next-line no-console
+  } catch (err) {
+    // tslint:disable-next-line no-console
     console.error(`No locale data fround for "${locale}"`);
   }
 }
@@ -22,12 +19,12 @@ if (process.env.NODE_ENV === `development`) {
   const localeReq = require.context(`@/../config/locales`, true, /^.*\.json$/);
   localeReq.keys().forEach((path) => {
     const locale = path.replace(`./`, ``).replace(`.json`, ``);
-    if (!~$APP_CONFIG.locales.indexOf(locale)) return;
+    if (!~$APP_CONFIG.locales.indexOf(locale)) { return; }
     translations[locale] = localeReq(path);
   });
-}
-else {
+} else {
   for (const locale in $TRANSLATIONS) {
+    if (!$TRANSLATIONS.hasOwnProperty(locale)) continue;
     translations[locale] = $TRANSLATIONS[locale];
   }
 }
@@ -40,17 +37,17 @@ const initialState = {
 export default function reducer(state = initialState, action) {
   switch (action.type) {
   case I18N_LOCALE_CHANGED:
-    return Object.assign({}, state, { locale: action.locale, messages: translations[action.locale] });
+    return {...state,  locale: action.locale, messages: translations[action.locale]};
   default:
     return state;
   }
 }
 
 export function changeLocale(locale) {
-  return function(dispatch) {
+  return (dispatch) => {
     dispatch({
-      type: I18N_LOCALE_CHANGED,
-      locale: locale
+      locale,
+      type: I18N_LOCALE_CHANGED
     });
   };
 }

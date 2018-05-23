@@ -1,28 +1,27 @@
-import styles from '@/pages/Home.pcss';
-import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import Header from '@/components/Header';
 import PropTypes from 'prop-types';
 import React, { PureComponent } from 'react';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { changeLocale } from '@/reducers/i18n';
+import { bindActionCreators } from 'redux';
+
+import styles = require('@/pages/Home.pcss');
 
 const mapStateToProps = (state) => ({ t: state.i18n.messages });
 const mapDispatchToProps = (dispatch) => bindActionCreators({ changeLocale }, dispatch);
 
-@connect(mapStateToProps, mapDispatchToProps)
-export default class Home extends PureComponent {
-  static propTypes = {
-    t: PropTypes.object.isRequired,
-    changeLocale: PropTypes.func.isRequired
-  }
+interface IProps {
+  t: { [_: string]: string };
+  changeLocale: () => void;
+}
 
-  static defaultProps = {
-    t: {},
-    changeLocale: () => {}
-  }
+class Home extends PureComponent<IProps, {}> {
+  public static defaultProps: Partial<IProps> = {
+    changeLocale: () => {},
+    t: {}
+  };
 
-  render() {
+  public render() {
     const { t, changeLocale } = this.props;
 
     return (
@@ -37,3 +36,5 @@ export default class Home extends PureComponent {
     );
   }
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

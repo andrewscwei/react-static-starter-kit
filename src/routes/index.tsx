@@ -2,8 +2,8 @@
  * @file Route definitions for React router.
  */
 
-import App from '@/pages/App';
 import About from '@/pages/About';
+import App from '@/pages/App';
 import Home from '@/pages/Home';
 import List from '@/pages/List';
 import NotFound from '@/pages/NotFound';
@@ -11,17 +11,17 @@ import NotFound from '@/pages/NotFound';
 export default [{
   component: App,
   routes: [{
-    path: `/`,
+    component: Home,
     exact: true,
-    component: Home
+    path: `/`
   }, {
-    path: `/about/`,
-    component: About
+    component: About,
+    path: `/about/`
   }, {
-    path: `/list/`,
-    component: List
+    component: List,
+    path: `/list/`
   }, {
-    path: `*`,
-    component: NotFound
+    component: NotFound,
+    path: `*`
   }]
 }];
