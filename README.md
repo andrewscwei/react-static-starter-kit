@@ -11,8 +11,7 @@ This is an **experimental** starter kit for a React static app.
 5. [Redux](https://redux.js.org/introduction)
 6. [React Intl](https://github.com/yahoo/react-intl/wiki)
 7. [CSS modules](https://github.com/css-modules/css-modules) + [PostCSS](http://postcss.org/)
-8. [Docker](https://docker.com) config
-9. [ESLint](https://eslint.org/) and [StyleLint](https://stylelint.io/) config
+8. [TSLint](https://palantir.github.io/tslint/) and [StyleLint](https://stylelint.io/) config
 
 ## Usage
 
