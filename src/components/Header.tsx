@@ -1,13 +1,14 @@
-import styles from '@/components/Header.pcss';
-import PropTypes from 'prop-types';
+import { Translations } from '@/types';
 import React, { PureComponent } from 'react';
 import { Link } from 'react-router-dom';
 
-export default class Header extends PureComponent {
-  static propTypes = {
-    t: PropTypes.object.isRequired
-  }
+const styles = require(`@/components/Header.pcss`);
 
+export interface Props {
+  t: Translations;
+}
+
+export default class Header extends PureComponent<Props> {
   render() {
     const { t } = this.props;
 

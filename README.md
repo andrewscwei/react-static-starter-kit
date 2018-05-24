@@ -6,7 +6,7 @@ This is an **experimental** starter kit for a React static app.
 
 1. Prerendering (in production)
 2. Hot module replacement (in development)
-3. ES7 support (i.e. `async`/`await`, decorators, class properties, etc.)
+3. [TypeScript](https://www.typescriptlang.org/)
 4. [React Router 4](https://reacttraining.com/react-router/)
 5. [Redux](https://redux.js.org/introduction)
 6. [React Intl](https://github.com/yahoo/react-intl/wiki)

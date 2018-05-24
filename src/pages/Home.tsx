@@ -1,27 +1,23 @@
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
-import PropTypes from 'prop-types';
+import { changeLocale } from '@/reducers/i18n';
+import { Translations } from '@/types';
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import styles = require('@/pages/Home.pcss');
+const styles = require('@/pages/Home.pcss');
 
-const mapStateToProps = (state) => ({ t: state.i18n.messages });
-const mapDispatchToProps = (dispatch) => bindActionCreators({ changeLocale }, dispatch);
-
-interface IProps {
-  t: { [_: string]: string };
-  changeLocale: () => void;
+interface Props {
+  t: Translations;
+  changeLocale: (locale: string) => void;
 }
 
-class Home extends PureComponent<IProps, {}> {
-  public static defaultProps: Partial<IProps> = {
-    changeLocale: () => {},
-    t: {}
-  };
+const mapStateToProps = (state): Partial<Props> => ({ t: state.i18n.messages });
+const mapDispatchToProps = (dispatch): Partial<Props> => bindActionCreators({ changeLocale: changeLocale }, dispatch);
 
-  public render() {
+class Home extends PureComponent<Props> {
+  render() {
     const { t, changeLocale } = this.props;
 
     return (

@@ -1,13 +1,14 @@
-import styles from '@/components/Footer.pcss';
-import PropTypes from 'prop-types';
+import { Translations } from '@/types';
 import React, { PureComponent } from 'react';
 
-export default class Footer extends PureComponent {
-  static propTypes = {
-    t: PropTypes.object.isRequired,
-    changeLocale: PropTypes.func.isRequired
-  }
+const styles = require(`@/components/Footer.pcss`);
 
+interface Props {
+  t: Translations;
+  changeLocale: (locale: string) => void;
+}
+
+export default class Footer extends PureComponent<Props> {
   render() {
     const { t, changeLocale } = this.props;
 

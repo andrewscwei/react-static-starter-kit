@@ -10,7 +10,7 @@ import HTMLPlugin from 'html-webpack-plugin';
 import MiniCSSExtractPlugin from 'mini-css-extract-plugin';
 import path from 'path';
 import StyleLintPlugin from 'stylelint-webpack-plugin';
-import { DefinePlugin, EnvironmentPlugin, IgnorePlugin } from 'webpack';
+import { Configuration, DefinePlugin, EnvironmentPlugin, IgnorePlugin } from 'webpack';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import appConfig from './app.conf';
 
@@ -28,9 +28,16 @@ const translations = fs.readdirSync(path.join(cwd, `config/locales`))
     obj[val] = require(path.join(cwd, `config/locales`, `${val}.json`));
     return obj;
   }, {});
+const localeData = Object.keys(translations).reduce((obj, val) => {
+  try {
+    obj[val] = require(`react-intl/locale-data/${val}`);
+  }
+  catch (err) {}
+  return obj;
+}, {});
 
-const config: any = {
-  devtool: isDev ? `eval-source-map` : (appConfig.build.sourceMap ? `source-map` : false), ,
+const config: Configuration = {
+  devtool: isDev ? `eval-source-map` : (appConfig.build.sourceMap ? `source-map` : false),
   entry: {
     bundle: path.join(inputDir, `index.tsx`)
   },
@@ -38,51 +45,45 @@ const config: any = {
   module: {
     rules: [{
       exclude: /node_modules/,
-      test: /\.jsx?$/,
-      use: `babel-loader`
-    }, {
-      exclude: /node_modules/,
       test: /\.tsx?$/,
-      use: `awesome-typescript-loader`
+      use: `ts-loader`
     }, {
       test: /\.p?css$/,
       use: [
-        ...[isDev ? `style-loader?sourceMap` : MiniCSSExtractPlugin.loader],
-        ...[{
-          loader: `css-loader`,
-          options: {
-            importLoaders: 1,
-            localIdentName: `[hash:6]`,
-            modules: true,
-            sourceMap: isDev ? true : appConfig.build.sourceMap
-          }
-        }, {
-          loader: `postcss-loader`,
-          options: {
-            ident: `postcss`,
-            plugins: () => [
-              require(`postcss-import`)({
-                resolve(id, basedir) {
-                  return ResolverFactory.createResolver({
-                    alias: {
-                      '@': inputDir
-                    },
-                    extensions: [`.css`, `.pcss`],
-                    fileSystem: new CachedInputFileSystem(new NodeJsInputFileSystem(), 60000) as any,
-                    useSyncFileSystemCalls: true
-                  }).resolveSync({}, basedir, id);
-                }
-              }),
-              require(`precss`)(),
-              require(`postcss-hexrgba`)(),
-              require(`postcss-calc`)(),
-              require(`autoprefixer`)(),
-              require(`cssnano`)()
-            ],
-            sourceMap: isDev ? true : appConfig.build.sourceMap
-          }
-        }]
-      ]
+        ...[isDev ? `style-loader?sourceMap` : MiniCSSExtractPlugin.loader], {
+        loader: `css-loader`,
+        options: {
+          importLoaders: 1,
+          localIdentName: `[hash:6]`,
+          modules: true,
+          sourceMap: isDev ? true : appConfig.build.sourceMap
+        }
+      }, {
+        loader: `postcss-loader`,
+        options: {
+          ident: `postcss`,
+          plugins: () => [
+            require(`postcss-import`)({
+              resolve(id, basedir) {
+                return ResolverFactory.createResolver({
+                  alias: {
+                    '@': inputDir
+                  },
+                  extensions: [`.css`, `.pcss`],
+                  fileSystem: new CachedInputFileSystem(new NodeJsInputFileSystem(), 60000) as any,
+                  useSyncFileSystemCalls: true
+                }).resolveSync({}, basedir, id);
+              }
+            }),
+            require(`precss`)(),
+            require(`postcss-hexrgba`)(),
+            require(`postcss-calc`)(),
+            require(`autoprefixer`)(),
+            require(`cssnano`)()
+          ],
+          sourceMap: isDev ? true : appConfig.build.sourceMap
+        }
+      }]
     }, {
       test: /\.(jpe?g|png|gif|svg|ico)(\?.*)?$/,
       use: `url-loader?limit=10000&name=assets/images/[name]${isDev ? `` : `.[hash:6]`}.[ext]`
@@ -92,18 +93,7 @@ const config: any = {
     }, {
       test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
       use: `url-loader?limit=10000&name=assets/fonts/[name]${isDev ? `` : `.[hash:6]`}.[ext]`
-    },
-    ...(isDev ? appConfig.dev.linter : appConfig.build.linter) ? [{
-      enforce: `pre`,
-      include: [inputDir],
-      test: /\.jsx?$/,
-      use: {
-        loader: `eslint-loader`,
-        options: {
-          formatter: require(`eslint-friendly-formatter`)
-        }
-      }
-    }] : []]
+    }]
   },
   output: {
     filename: isDev ? `[name].js` : `[name].[chunkhash].js`,
@@ -122,7 +112,7 @@ const config: any = {
     }),
     new DefinePlugin({
       $APP_CONFIG: JSON.stringify(appConfig),
-      $TRANSLATIONS: JSON.stringify(translations)
+      $LOCALE_CONFIG: JSON.stringify({ translations, localeData })
     }),
     new HTMLPlugin({
       appConfig,
@@ -161,7 +151,7 @@ const config: any = {
     alias: {
       '@': inputDir
     },
-    extensions: [`.js`, `.jsx`, `.ts`, `.tsx`]
+    extensions: [`.js`, `.ts`, `.tsx`]
   },
   stats: {
     colors: true,
