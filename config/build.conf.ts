@@ -104,11 +104,11 @@ const config: Configuration = {
       })
     ],
     ...!useLinter ? [] : [
-      // new StyleLintPlugin({
-      //   failOnError: false,
-      //   files: [`**/*.tsx`],
-      //   quiet: false
-      // })
+      new StyleLintPlugin({
+        failOnError: false,
+        files: [`**/*.tsx`],
+        quiet: false
+      })
     ],
     ...!useBundleAnalyzer ? [] : [
       new BundleAnalyzerPlugin()
