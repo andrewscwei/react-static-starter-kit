@@ -5,7 +5,7 @@ This is an **experimental** starter kit for a React static app.
 ## Features
 
 1. Prerendering with [React Snapshot](https://github.com/geelen/react-snapshot) (in production)
-2. Hot module replacement (in development)
+2. HMR (in development)
 3. [TypeScript](https://www.typescriptlang.org/)
 4. [React Router 4](https://reacttraining.com/react-router/)
 5. [Redux](https://redux.js.org/introduction)
