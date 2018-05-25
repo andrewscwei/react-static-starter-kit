@@ -48,39 +48,11 @@ const config: Configuration = {
       test: /\.tsx?$/,
       use: `ts-loader`
     }, {
-      test: /\.p?css$/,
+      test: /\.css$/,
       use: [
         ...[isDev ? `style-loader?sourceMap` : MiniCSSExtractPlugin.loader], {
         loader: `css-loader`,
         options: {
-          importLoaders: 1,
-          localIdentName: `[hash:6]`,
-          modules: true,
-          sourceMap: isDev ? true : appConfig.build.sourceMap
-        }
-      }, {
-        loader: `postcss-loader`,
-        options: {
-          ident: `postcss`,
-          plugins: () => [
-            require(`postcss-import`)({
-              resolve(id, basedir) {
-                return ResolverFactory.createResolver({
-                  alias: {
-                    '@': inputDir
-                  },
-                  extensions: [`.css`, `.pcss`],
-                  fileSystem: new CachedInputFileSystem(new NodeJsInputFileSystem(), 60000) as any,
-                  useSyncFileSystemCalls: true
-                }).resolveSync({}, basedir, id);
-              }
-            }),
-            require(`precss`)(),
-            require(`postcss-hexrgba`)(),
-            require(`postcss-calc`)(),
-            require(`autoprefixer`)(),
-            require(`cssnano`)()
-          ],
           sourceMap: isDev ? true : appConfig.build.sourceMap
         }
       }]
@@ -132,11 +104,11 @@ const config: Configuration = {
       })
     ],
     ...!useLinter ? [] : [
-      new StyleLintPlugin({
-        failOnError: false,
-        files: [`**/*.css`, `**/*.pcss`],
-        quiet: false
-      })
+      // new StyleLintPlugin({
+      //   failOnError: false,
+      //   files: [`**/*.tsx`],
+      //   quiet: false
+      // })
     ],
     ...!useBundleAnalyzer ? [] : [
       new BundleAnalyzerPlugin()

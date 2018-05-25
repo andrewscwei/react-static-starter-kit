@@ -24,7 +24,7 @@
     "no-implicit-dependencies": false,
     "no-shadowed-variable": false,
     "no-submodule-imports": [true, "@"],
-    "no-unused-expression": true,
+    "no-unused-expression": false,
     "no-var-requires": false,
     "no-void-expression": [true, "ignore-arrow-function-shorthand"],
     "object-literal-shorthand": false,

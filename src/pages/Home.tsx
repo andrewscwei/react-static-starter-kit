@@ -5,8 +5,40 @@ import { Translations } from '@/types';
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import styled from 'styled-components';
 
-const styles = require('@/pages/Home.pcss');
+const Root = styled.div`
+  padding: 10% 5%;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: nowrap;
+  color: #fff;
+  box-sizing: border-box;
+
+  & > summary {
+    max-width: 550px;
+
+    & h1 {
+      font-size: 5em;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      margin: 0;
+    }
+
+    & p {
+      font-weight: 400;
+      letter-spacing: .6px;
+      line-height: 1.4em;
+      color: #666;
+    }
+  }
+`;
 
 interface Props {
   t: Translations;
@@ -21,14 +53,14 @@ class Home extends PureComponent<Props> {
     const { t, changeLocale } = this.props;
 
     return (
-      <div className={styles[`root`]}>
+      <Root>
         <Header t={t}/>
         <summary>
-          <h1 className={styles[`h1`]}>{t[`hello`]}</h1>
-          <p className={styles[`description`]}>{t[`description`]}</p>
+          <h1>{t[`hello`]}</h1>
+          <p>{t[`description`]}</p>
         </summary>
         <Footer t={t} changeLocale={changeLocale}/>
-      </div>
+      </Root>
     );
   }
 }

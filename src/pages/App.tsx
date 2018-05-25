@@ -2,9 +2,10 @@
  * @file Client app root.
  */
 
-import '@/pages/App.pcss';
+import 'normalize.css';
 import { PureComponent } from 'react';
 import { renderRoutes } from 'react-router-config';
+import { injectGlobal } from 'styled-components';
 
 interface Props {
   route;
@@ -17,3 +18,12 @@ class App extends PureComponent<Props> {
 }
 
 export default App;
+
+injectGlobal`
+  body {
+    width: 100%;
+    height: 100%;
+    font-family: 'Roboto', sans-serif;
+    background: #111;
+  }
+`;
