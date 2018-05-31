@@ -7,7 +7,6 @@ import CopyPlugin from 'copy-webpack-plugin';
 import { CachedInputFileSystem, NodeJsInputFileSystem, ResolverFactory } from 'enhanced-resolve';
 import fs from 'fs';
 import HTMLPlugin from 'html-webpack-plugin';
-import MiniCSSExtractPlugin from 'mini-css-extract-plugin';
 import path from 'path';
 import StyleLintPlugin from 'stylelint-webpack-plugin';
 import { Configuration, DefinePlugin, EnvironmentPlugin, IgnorePlugin } from 'webpack';
@@ -47,15 +46,6 @@ const config: Configuration = {
       exclude: /node_modules/,
       test: /\.tsx?$/,
       use: `ts-loader`
-    }, {
-      test: /\.css$/,
-      use: [
-        ...[isDev ? `style-loader?sourceMap` : MiniCSSExtractPlugin.loader], {
-        loader: `css-loader`,
-        options: {
-          sourceMap: isDev ? true : appConfig.build.sourceMap
-        }
-      }]
     }, {
       test: /\.(jpe?g|png|gif|svg|ico)(\?.*)?$/,
       use: `url-loader?limit=10000&name=assets/images/[name]${isDev ? `` : `.[hash:6]`}.[ext]`
@@ -98,10 +88,7 @@ const config: Configuration = {
       template: path.join(inputDir, `templates`, `index.html`)
     }),
     ...isDev ? [] : [
-      new IgnorePlugin(/^.*\/config\/.*$/),
-      new MiniCSSExtractPlugin({
-        filename: `bundle.[chunkhash:8].css`
-      })
+      new IgnorePlugin(/^.*\/config\/.*$/)
     ],
     ...!useLinter ? [] : [
       new StyleLintPlugin({

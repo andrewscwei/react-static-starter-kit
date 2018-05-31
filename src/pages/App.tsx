@@ -2,10 +2,10 @@
  * @file Client app root.
  */
 
-import 'normalize.css';
 import { PureComponent } from 'react';
 import { renderRoutes } from 'react-router-config';
 import { injectGlobal } from 'styled-components';
+import normalize from 'styled-normalize';
 
 interface Props {
   route;
@@ -20,6 +20,8 @@ class App extends PureComponent<Props> {
 export default App;
 
 injectGlobal`
+  ${normalize}
+
   body {
     width: 100%;
     height: 100%;
