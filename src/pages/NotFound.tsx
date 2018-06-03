@@ -1,4 +1,4 @@
-import { changeLocale } from '@/reducers/i18n';
+import { changeLocale } from '@/store/i18n';
 import { Translations } from '@/types';
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
@@ -7,7 +7,7 @@ import { bindActionCreators } from 'redux';
 import styled from 'styled-components';
 
 const mapStateToProps = (state): Partial<Props> => ({ t: state.i18n.messages });
-const mapDispatchToProps = (dispatch): Partial<Props> => bindActionCreators({ changeLocale: changeLocale }, dispatch);
+const mapDispatchToProps = (dispatch): Partial<Props> => bindActionCreators({ changeLocale }, dispatch);
 
 const Root = styled.div`
   padding: 10% 5%;

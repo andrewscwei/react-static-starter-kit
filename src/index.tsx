@@ -3,7 +3,7 @@
  */
 
 import App from '@/App';
-import * as reducers from '@/reducers';
+import * as reducers from '@/store';
 import theme from '@/styles/theme';
 import React from 'react';
 import { IntlProvider } from 'react-intl';

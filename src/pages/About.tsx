@@ -1,7 +1,7 @@
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
-import { changeLocale } from '@/reducers/i18n';
-import { fetchUsers } from '@/reducers/users';
+import { changeLocale } from '@/store/i18n';
+import { fetchUsers } from '@/store/users';
 import { Translations } from '@/types';
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
