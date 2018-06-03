@@ -34,6 +34,7 @@
     "@types/react-redux": "^6.0.1",
     "@types/react-router-config": "^1.0.7",
     "@types/react-router-dom": "^4.2.7",
+    "@types/react-transition-group": "^2.0.11",
     "@types/stylelint-webpack-plugin": "^0.1.2",
     "@types/webpack": "^4.4.0",
     "@types/webpack-bundle-analyzer": "^2.9.2",
