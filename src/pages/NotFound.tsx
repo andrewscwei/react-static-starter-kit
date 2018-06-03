@@ -9,17 +9,18 @@ import styled from 'styled-components';
 const mapStateToProps = (state): Partial<Props> => ({ t: state.i18n.messages });
 const mapDispatchToProps = (dispatch): Partial<Props> => bindActionCreators({ changeLocale }, dispatch);
 
-const Root = styled.div`
+const StyledRoot = styled.div`
   padding: 10% 5%;
   width: 100%;
   height: 100%;
   position: absolute;
   display: flex;
+  font-family: ${props => props.theme.font};
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
   flex-wrap: nowrap;
-  color: #fff;
+  color: ${props => props.theme.titleColor};
   box-sizing: border-box;
 
   & > summary {
@@ -47,11 +48,11 @@ class NotFound extends PureComponent<Props> {
     return (
       <Route render={ () => {
         return (
-          <Root>
+          <StyledRoot>
             <summary>
               <h1>{t[`not-found`]}</h1>
             </summary>
-          </Root>
+          </StyledRoot>
         );
       } }/>
     );

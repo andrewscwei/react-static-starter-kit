@@ -31,7 +31,7 @@ class App extends PureComponent<Props> {
     return $ROUTES_CONFIG.map((route, index) => {
       const { path, component } = route;
       const Component = require(`@/pages/${component}`).default;
-      return <Route path={path} component={Component} key={index}/>;
+      return <Route exact={true} path={path} component={Component} key={index}/>;
     });
   }
 

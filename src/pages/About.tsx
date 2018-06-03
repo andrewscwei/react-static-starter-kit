@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import styled from 'styled-components';
 
-const Root = styled.div`
+const StyledRoot = styled.div`
   padding: 10% 5%;
   width: 100%;
   height: 100%;
@@ -61,7 +61,7 @@ class About extends PureComponent<Props> {
     const { t, changeLocale } = this.props;
 
     return (
-      <Root>
+      <StyledRoot>
         <Header t={t}/>
         <summary>
           <h1>{t[`about-title`]}</h1>
@@ -76,7 +76,7 @@ class About extends PureComponent<Props> {
           }
         </summary>
         <Footer t={t} changeLocale={changeLocale}/>
-      </Root>
+      </StyledRoot>
     );
   }
 }

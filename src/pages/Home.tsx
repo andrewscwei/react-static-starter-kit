@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import styled from 'styled-components';
 
-const Root = styled.div`
+const StyledRoot = styled.div`
   padding: 10% 5%;
   width: 100%;
   height: 100%;
@@ -50,12 +50,12 @@ class Home extends PureComponent<Props> {
     const { t } = this.props;
 
     return (
-      <Root>
+      <StyledRoot>
         <summary>
           <h1>{t[`hello`]}</h1>
           <p>{t[`description`]}</p>
         </summary>
-      </Root>
+      </StyledRoot>
     );
   }
 }

@@ -23,6 +23,11 @@
     "lint:css": "stylelint \"src/**/*.tsx\"",
     "lint:css:fix": "npm run lint:css -- --fix"
   },
+  "reactSnapshot": {
+    "include": [
+      "/404"
+    ]
+  },
   "devDependencies": {
     "@types/copy-webpack-plugin": "^4.4.1",
     "@types/html-webpack-plugin": "^2.30.3",

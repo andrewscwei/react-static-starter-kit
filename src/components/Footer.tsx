@@ -2,7 +2,7 @@ import { Translations } from '@/types';
 import React, { PureComponent } from 'react';
 import styled from 'styled-components';
 
-const Root = styled.footer`
+const StyledRoot = styled.footer`
   padding: 0 5%;
   bottom: 0;
   left: 0;
@@ -70,13 +70,13 @@ export default class Footer extends PureComponent<Props> {
     const { t, changeLocale } = this.props;
 
     return (
-      <Root>
+      <StyledRoot>
         <nav>
           <a className='github-button' href='https://github.com/andrewscwei/react-static-starter-kit'/>
         </nav>
         <button className='locale-button' onClick={() => changeLocale(`en`)}>{t[`en`]}</button>
         <button className='locale-button' onClick={() => changeLocale(`ja`)}>{t[`jp`]}</button>
-      </Root>
+      </StyledRoot>
     );
   }
 }

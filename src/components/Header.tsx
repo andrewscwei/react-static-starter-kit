@@ -3,7 +3,7 @@ import React, { PureComponent } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-const Root = styled.header`
+const StyledRoot = styled.header`
   top: 0;
   left: 0;
   padding: 0 5%;
@@ -47,10 +47,10 @@ class Header extends PureComponent<Props> {
     const { t } = this.props;
 
     return (
-      <Root>
+      <StyledRoot>
         <Link className='link' to='/'>{t[`home`]}</Link>
         <Link className='link' to='/about/'>{t[`about`]}</Link>
-      </Root>
+      </StyledRoot>
     );
   }
 }
