@@ -18,7 +18,7 @@ const Root = styled.div`
   justify-content: center;
   align-items: flex-start;
   flex-wrap: nowrap;
-  color: #fff;
+  font-family: ${props => props.theme.font};
   box-sizing: border-box;
 
   & > summary {
@@ -30,13 +30,14 @@ const Root = styled.div`
       text-transform: uppercase;
       letter-spacing: 3px;
       margin: 0;
+      color: ${props => props.theme.titleColor};
     }
 
     & span {
       font-weight: 400;
       letter-spacing: .6px;
       line-height: 1.4em;
-      color: #666;
+      color: ${props => props.theme.textColor};
     }
   }
 `;
@@ -65,7 +66,7 @@ class About extends PureComponent<Props> {
         <summary>
           <h1>{t[`about-title`]}</h1>
           {
-            this.props.users.map((user) => {
+            this.props.users.map(user => {
               return (
                 <div key={user.id} >
                   <span>{user.name}</span>

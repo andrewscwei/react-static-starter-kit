@@ -14,16 +14,17 @@ const Root = styled.div`
   position: absolute;
   display: flex;
   flex-direction: column;
+  font-family: ${props => props.theme.font};
   justify-content: center;
   align-items: flex-start;
   flex-wrap: nowrap;
-  color: #fff;
   box-sizing: border-box;
 
   & > summary {
     max-width: 550px;
 
     & h1 {
+      color: ${props => props.theme.titleColor};
       font-size: 5em;
       font-weight: 700;
       text-transform: uppercase;
@@ -35,7 +36,7 @@ const Root = styled.div`
       font-weight: 400;
       letter-spacing: .6px;
       line-height: 1.4em;
-      color: #666;
+      color: ${props => props.theme.textColor};
     }
   }
 `;

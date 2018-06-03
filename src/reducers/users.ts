@@ -15,7 +15,7 @@ export interface UserLoadedAction extends Action {
 }
 
 export function fetchUsers() {
-  return async (dispatch) => {
+  return async dispatch => {
     const res = await axios.get(`//jsonplaceholder.typicode.com/users`);
 
     dispatch({

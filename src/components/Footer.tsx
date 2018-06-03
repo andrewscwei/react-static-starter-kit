@@ -35,7 +35,7 @@ const Root = styled.footer`
   & .locale-button {
     width: 22px;
     height: 22px;
-    background: #666;
+    background: ${props => props.theme.buttonColor};
     box-sizing: border-box;
     justify-content: center;
     align-items: center;
@@ -44,7 +44,7 @@ const Root = styled.footer`
     padding-top: 4px;
     cursor: pointer;
     border: none;
-    color: #fff;
+    color: ${props => props.theme.buttonTextColor};
     transition: all .2s ease-out;
     outline: none;
 

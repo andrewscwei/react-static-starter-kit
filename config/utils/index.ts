@@ -102,7 +102,7 @@ export function getLocalizedRoutesFromDir(dir: string, whitelistedLocales: Array
   // Finally, add the wildcard route at the end to redirect to 404 page.
   if (fs.existsSync(path.resolve(dir, `NotFound.tsx`))) {
     out.push({
-      component: `NotFound.jsx`,
+      component: `NotFound.tsx`,
       path: `*`,
     });
   }

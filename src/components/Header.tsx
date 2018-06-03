@@ -10,6 +10,7 @@ const Root = styled.header`
   width: 100%;
   height: 70px;
   background: #111;
+  font-family: ${props => props.theme.font};
   position: fixed;
   box-sizing: border-box;
   display: flex;
@@ -18,7 +19,7 @@ const Root = styled.header`
   z-index: 10;
 
   & > .link {
-    color: #fff;
+    color: ${props => props.theme.linkColor};
     text-decoration: none;
     transition: all .2s ease-out;
     font-weight: 400;

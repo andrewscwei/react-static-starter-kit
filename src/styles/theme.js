@@ -1,7 +1,8 @@
 export default {
   font: `Roboto, sans-serif`,
-  textColor: `#999`,
-  accentColor: `#fff`,
-  buttonColor: `#483eb5`,
+  titleColor: `#fff`,
+  textColor: `#666`,
+  linkColor: `#fff`,
+  buttonColor: `#666`,
   buttonTextColor: `#fff`,
 };
