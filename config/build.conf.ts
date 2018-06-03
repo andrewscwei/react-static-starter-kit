@@ -14,7 +14,6 @@ import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import appConfig from './app.conf';
 
 const isDev: boolean = process.env.NODE_ENV === `development`;
-const useLinter: boolean = (isDev && appConfig.dev.linter) || (!isDev && appConfig.build.linter);
 const useBundleAnalyzer: boolean = (!isDev && appConfig.build.analyzer);
 const cwd: string = path.join(__dirname, `../`);
 const inputDir: string = path.join(cwd, `src`);
@@ -89,13 +88,6 @@ const config: Configuration = {
     }),
     ...isDev ? [] : [
       new IgnorePlugin(/^.*\/config\/.*$/)
-    ],
-    ...!useLinter ? [] : [
-      new StyleLintPlugin({
-        failOnError: false,
-        files: [`**/*.tsx`],
-        quiet: false
-      })
     ],
     ...!useBundleAnalyzer ? [] : [
       new BundleAnalyzerPlugin()
