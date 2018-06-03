@@ -9,7 +9,7 @@ import path from 'path';
 import { Configuration, DefinePlugin, EnvironmentPlugin, IgnorePlugin } from 'webpack';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import appConfig from './app.conf';
-import { getLocaleDataFromDir, getTranslationsFromDir, parseLocalesFromDir } from './utils';
+import { getLocaleDataFromDir, getLocalesFromDir, getLocalizedRoutesFromDir, getTranslationsFromDir } from './utils';
 
 const isDev: boolean = process.env.NODE_ENV === `development`;
 const useBundleAnalyzer: boolean = (!isDev && appConfig.build.analyzer);
@@ -17,6 +17,7 @@ const cwd: string = path.join(__dirname, `../`);
 const inputDir: string = path.join(cwd, `src`);
 const outputDir: string = path.join(cwd, `build`);
 const localesDir: string = path.join(cwd, `config/locales`);
+const locales = getLocalesFromDir(localesDir, appConfig.locales[0], appConfig.locales);
 
 const config: Configuration = {
   devtool: isDev ? `eval-source-map` : (appConfig.build.sourceMap ? `source-map` : false),
@@ -58,10 +59,11 @@ const config: Configuration = {
     new DefinePlugin({
       $APP_CONFIG: JSON.stringify(appConfig),
       $LOCALE_CONFIG: JSON.stringify({
-        localeData: getLocaleDataFromDir(localesDir, appConfig.locales),
-        locales: parseLocalesFromDir(localesDir, appConfig.locales),
-        translations: getTranslationsFromDir(localesDir, appConfig.locales),
+        localeData: getLocaleDataFromDir(localesDir, locales),
+        locales,
+        translations: getTranslationsFromDir(localesDir, locales),
       }),
+      $ROUTES_CONFIG: JSON.stringify(getLocalizedRoutesFromDir(path.join(inputDir, `pages`), locales)),
     }),
     new HTMLPlugin({
       appConfig,

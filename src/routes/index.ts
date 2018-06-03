@@ -2,8 +2,8 @@
  * @file Route definitions for React router.
  */
 
+import App from '@/App';
 import About from '@/pages/About';
-import App from '@/pages/App';
 import Home from '@/pages/Home';
 import List from '@/pages/List';
 import NotFound from '@/pages/NotFound';
