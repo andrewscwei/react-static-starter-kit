@@ -1,6 +1,3 @@
-import Footer from '@/components/Footer';
-import Header from '@/components/Header';
-import { changeLocale } from '@/store/i18n';
 import { fetchUsers } from '@/store/users';
 import { Translations } from '@/types';
 import React, { PureComponent } from 'react';
@@ -45,12 +42,11 @@ const StyledRoot = styled.div`
 interface Props {
   users: Array<any>;
   t: Translations;
-  changeLocale: (locale: string) => void;
   fetchUsers: () => void;
 }
 
 const mapStateToProps = (state): Partial<Props> => ({ users: state.users.users, t: state.i18n.messages });
-const mapDispatchToProps = (dispatch): Partial<Props> => bindActionCreators({ changeLocale, fetchUsers }, dispatch);
+const mapDispatchToProps = (dispatch): Partial<Props> => bindActionCreators({ fetchUsers }, dispatch);
 
 class About extends PureComponent<Props> {
   componentDidMount() {
@@ -58,11 +54,10 @@ class About extends PureComponent<Props> {
   }
 
   render() {
-    const { t, changeLocale } = this.props;
+    const { t } = this.props;
 
     return (
       <StyledRoot>
-        <Header t={t}/>
         <summary>
           <h1>{t[`about-title`]}</h1>
           {
@@ -75,7 +70,6 @@ class About extends PureComponent<Props> {
             })
           }
         </summary>
-        <Footer t={t} changeLocale={changeLocale}/>
       </StyledRoot>
     );
   }

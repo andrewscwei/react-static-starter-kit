@@ -9,7 +9,6 @@ const StyledRoot = styled.header`
   padding: 0 5%;
   width: 100%;
   height: 70px;
-  background: #111;
   font-family: ${props => props.theme.font};
   position: fixed;
   box-sizing: border-box;
@@ -40,16 +39,17 @@ const StyledRoot = styled.header`
 
 export interface Props {
   t: Translations;
+  locale: string;
 }
 
 class Header extends PureComponent<Props> {
   render() {
-    const { t } = this.props;
+    const { t, locale } = this.props;
 
     return (
       <StyledRoot>
-        <Link className='link' to='/'>{t[`home`]}</Link>
-        <Link className='link' to='/about/'>{t[`about`]}</Link>
+        <Link className='link' to={locale === `en` ? `/` : `/ja`}>{t[`home`]}</Link>
+        <Link className='link' to={locale === `en` ? `/about` : `/ja/about`}>{t[`about`]}</Link>
       </StyledRoot>
     );
   }

@@ -9,7 +9,7 @@ const StyledRoot = styled.footer`
   left: 0;
   width: 100%;
   height: 50px;
-  border-top: 1px solid rgba(#fff, .1);
+  border-top: 1px solid #1e1e1e;
   font-family: ${props => props.theme.font};
   position: fixed;
   display: flex;

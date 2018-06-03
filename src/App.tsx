@@ -17,6 +17,7 @@ import normalize from 'styled-normalize';
 interface Props {
   t: Translations;
   changeLocale: (locale: string) => void;
+  locale: string;
   location;
 }
 
@@ -25,7 +26,7 @@ const StyledRoot = styled.div`
   width: 100%;
 `;
 
-const mapStateToProps = (state): Partial<Props> => ({ t: state.i18n.messages });
+const mapStateToProps = (state): Partial<Props> => ({ t: state.i18n.messages, locale: state.i18n.locale });
 const mapDispatchToProps = (dispatch): Partial<Props> => bindActionCreators({ changeLocale }, dispatch);
 class App extends PureComponent<Props> {
   generateRoutes = () => {
@@ -58,11 +59,11 @@ class App extends PureComponent<Props> {
   }
 
   render() {
-    const { t, location, changeLocale } = this.props;
+    const { t, locale, location, changeLocale } = this.props;
 
     return (
       <StyledRoot>
-        <Header t={t}/>
+        <Header t={t} locale={locale}/>
         <TransitionGroup>
           <CSSTransition key={location.key} timeout={300} classNames='fade'>
             <Switch location={location}>{this.generateRoutes()}</Switch>
