@@ -16,7 +16,7 @@ import thunk from 'redux-thunk';
 const ConnectedIntlProvider = connect((state: any) => ({
   key: state.i18n.locale,
   locale: state.i18n.locale,
-  messages: state.i18n.messages
+  messages: state.i18n.messages,
 }))(IntlProvider);
 
 const store = createStore(combineReducers(reducers), {}, applyMiddleware(thunk));
@@ -25,9 +25,9 @@ render(
   <Provider store={store}>
     <ConnectedIntlProvider>
       <BrowserRouter>
-        { renderRoutes(routes) }
+        {renderRoutes(routes)}
       </BrowserRouter>
     </ConnectedIntlProvider>
   </Provider>,
-  document.getElementById(`app`)
+  document.getElementById(`app`),
 );

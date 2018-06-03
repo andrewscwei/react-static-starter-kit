@@ -27,7 +27,7 @@ else {
 
 const initialState: State = {
   locale: $APP_CONFIG.locales[0],
-  messages: translations[$APP_CONFIG.locales[0]]
+  messages: translations[$APP_CONFIG.locales[0]],
 };
 
 export interface State {
@@ -42,7 +42,7 @@ export interface LocaleChangeAction extends Action {
 export function changeLocale(locale: string): LocaleChangeAction {
   return {
     locale,
-    type: ActionType.LOCALE_CHANGED
+    type: ActionType.LOCALE_CHANGED,
   };
 }
 

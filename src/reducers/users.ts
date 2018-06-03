@@ -7,7 +7,7 @@ export interface State {
 }
 
 const initialState: State = {
-  users: []
+  users: [],
 };
 
 export interface UserLoadedAction extends Action {
@@ -20,7 +20,7 @@ export function fetchUsers() {
 
     dispatch({
       type: ActionType.USERS_LOADED,
-      users: res.data
+      users: res.data,
     });
   };
 }

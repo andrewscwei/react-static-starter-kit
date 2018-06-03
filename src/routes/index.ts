@@ -13,15 +13,15 @@ export default [{
   routes: [{
     component: Home,
     exact: true,
-    path: `/`
+    path: `/`,
   }, {
     component: About,
-    path: `/about/`
+    path: `/about/`,
   }, {
     component: List,
-    path: `/list/`
+    path: `/list/`,
   }, {
     component: NotFound,
-    path: `*`
-  }]
+    path: `*`,
+  }],
 }];

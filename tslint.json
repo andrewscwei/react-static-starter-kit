@@ -31,7 +31,7 @@
     "one-line": [true, "check-open-brace"],
     "semicolon": [true, "always"],
     "space-before-function-paren": [true, { "anonymous": "never", "named": "never", "asyncArrow": "always" }],
-    "trailing-comma": [true, { "multiline": "never", "singleline": "never" }],
+    "trailing-comma": [true, { "multiline": "always", "singleline": "never" }],
     "quotemark": [true, "single"],
     "whitespace": [true, "check-branch", "check-decl", "check-operator", "check-module", "check-separator", "check-rest-spread", "check-type", "check-typecast", "check-type-operator", "check-preblock"]
   }

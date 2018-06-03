@@ -15,7 +15,7 @@ export default {
     keywords: require(`../package.json`).keywords,
 
     // App URL.
-    url: require(`../package.json`).homepage
+    url: require(`../package.json`).homepage,
   },
 
   // Supported locales. First locale is the default locale.
@@ -31,6 +31,6 @@ export default {
 
     // Specifies whether a bundle analyzer report should be generated at the end
     // of the build process.
-    analyzer: process.env.ANALYZE_BUNDLE === `true` ? true : false
-  }
+    analyzer: process.env.ANALYZE_BUNDLE === `true` ? true : false,
+  },
 };

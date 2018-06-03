@@ -4,5 +4,5 @@
 
 export enum ActionType {
   LOCALE_CHANGED = 'localeChanged',
-  USERS_LOADED = 'usersLoaded'
+  USERS_LOADED = 'usersLoaded',
 }
