@@ -8,6 +8,7 @@ import theme from '@/styles/theme';
 import React from 'react';
 import { IntlProvider } from 'react-intl';
 import { connect, Provider } from 'react-redux';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { render } from 'react-snapshot';
 import { applyMiddleware, combineReducers, createStore } from 'redux';
 import thunk from 'redux-thunk';
@@ -25,7 +26,11 @@ render(
   <Provider store={store}>
     <ConnectedIntlProvider>
       <ThemeProvider theme={theme}>
-        <App/>
+      <Router>
+        <Route render={({ location }) => (
+          <App location={location}/>
+        )}/>
+      </Router>
       </ThemeProvider>
     </ConnectedIntlProvider>
   </Provider>,

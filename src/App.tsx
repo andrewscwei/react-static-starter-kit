@@ -8,7 +8,7 @@ import { changeLocale } from '@/store/i18n';
 import { Translations } from '@/types';
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { bindActionCreators } from 'redux';
 import styled, { injectGlobal } from 'styled-components';
@@ -17,6 +17,7 @@ import normalize from 'styled-normalize';
 interface Props {
   t: Translations;
   changeLocale: (locale: string) => void;
+  location;
 }
 
 const StyledRoot = styled.div`
@@ -35,28 +36,45 @@ class App extends PureComponent<Props> {
     });
   }
 
+  updateLocale = () => {
+    const { location, changeLocale } = this.props;
+    const locales = $LOCALE_CONFIG.locales;
+    const locale = location.pathname.split('/')[1];
+
+    if (locales.includes(locale)) {
+      changeLocale(locale);
+    }
+    else {
+      changeLocale(locales[0]);
+    }
+  }
+
+  componentWillMount() {
+    this.updateLocale();
+  }
+
+  componentDidUpdate() {
+    this.updateLocale();
+  }
+
   render() {
-    const { t, changeLocale } = this.props;
+    const { t, location, changeLocale } = this.props;
 
     return (
-      <Router>
-        <Route render={({ location }) => (
-          <StyledRoot>
-            <Header t={t}/>
-            <TransitionGroup>
-              <CSSTransition key={location.key} timeout={300} classNames='fade'>
-                <Switch location={location}>{this.generateRoutes()}</Switch>
-              </CSSTransition>
-            </TransitionGroup>
-            <Footer t={t} changeLocale={changeLocale}/>
-          </StyledRoot>
-        )}/>
-      </Router>
+      <StyledRoot>
+        <Header t={t}/>
+        <TransitionGroup>
+          <CSSTransition key={location.key} timeout={300} classNames='fade'>
+            <Switch location={location}>{this.generateRoutes()}</Switch>
+          </CSSTransition>
+        </TransitionGroup>
+        <Footer t={t} changeLocale={changeLocale}/>
+      </StyledRoot>
     );
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect<{}, {}, Partial<Props>>(mapStateToProps, mapDispatchToProps)(App);
 
 injectGlobal`
   ${normalize}

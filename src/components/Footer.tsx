@@ -1,5 +1,6 @@
 import { Translations } from '@/types';
 import React, { PureComponent } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const StyledRoot = styled.footer`
@@ -47,6 +48,7 @@ const StyledRoot = styled.footer`
     border: none;
     color: ${props => props.theme.buttonTextColor};
     transition: all .2s ease-out;
+    text-decoration: none;
     outline: none;
 
     &:hover {
@@ -74,8 +76,8 @@ export default class Footer extends PureComponent<Props> {
         <nav>
           <a className='github-button' href='https://github.com/andrewscwei/react-static-starter-kit'/>
         </nav>
-        <button className='locale-button' onClick={() => changeLocale(`en`)}>{t[`en`]}</button>
-        <button className='locale-button' onClick={() => changeLocale(`ja`)}>{t[`jp`]}</button>
+        <Link className='locale-button' to='/'>{t[`en`]}</Link>
+        <Link className='locale-button' to='/ja'>{t[`jp`]}</Link>
       </StyledRoot>
     );
   }
