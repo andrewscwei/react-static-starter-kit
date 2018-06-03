@@ -1,6 +1,3 @@
-import Footer from '@/components/Footer';
-import Header from '@/components/Header';
-import { changeLocale } from '@/store/i18n';
 import { Translations } from '@/types';
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
@@ -43,24 +40,21 @@ const Root = styled.div`
 
 interface Props {
   t: Translations;
-  changeLocale: (locale: string) => void;
 }
 
 const mapStateToProps = (state): Partial<Props> => ({ t: state.i18n.messages });
-const mapDispatchToProps = (dispatch): Partial<Props> => bindActionCreators({ changeLocale: changeLocale }, dispatch);
+const mapDispatchToProps = (dispatch): Partial<Props> => bindActionCreators({ }, dispatch);
 
 class Home extends PureComponent<Props> {
   render() {
-    const { t, changeLocale } = this.props;
+    const { t } = this.props;
 
     return (
       <Root>
-        <Header t={t}/>
         <summary>
           <h1>{t[`hello`]}</h1>
           <p>{t[`description`]}</p>
         </summary>
-        <Footer t={t} changeLocale={changeLocale}/>
       </Root>
     );
   }

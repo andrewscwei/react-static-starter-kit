@@ -9,6 +9,7 @@ const Root = styled.footer`
   width: 100%;
   height: 50px;
   border-top: 1px solid rgba(#fff, .1);
+  font-family: ${props => props.theme.font};
   position: fixed;
   display: flex;
   justify-content: flex-start;
