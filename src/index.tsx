@@ -17,7 +17,7 @@ import { ThemeProvider } from 'styled-components';
 const ConnectedIntlProvider = connect((state: any) => ({
   key: state.intl.locale,
   locale: state.intl.locale,
-  messages: state.intl.messages,
+  messages: state.intl.translations,
 }))(IntlProvider);
 
 const store = createStore(combineReducers(reducers), {}, applyMiddleware(thunk));

@@ -6,7 +6,7 @@ import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 import { changeLocale } from '@/store/intl';
 import React, { PureComponent } from 'react';
-import { connect, Dispatch } from 'react-redux';
+import { connect } from 'react-redux';
 import { Route, RouteComponentProps, Switch } from 'react-router-dom';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { bindActionCreators } from 'redux';
@@ -25,7 +25,7 @@ const StyledRoot = styled.div`
   width: 100%;
 `;
 
-const mapStateToProps = (state: any): Partial<Props> => ({ t: state.intl.messages, locale: state.intl.locale });
+const mapStateToProps = (state: any): Partial<Props> => ({ t: state.intl.translations, locale: state.intl.locale });
 const mapDispatchToProps = (dispatch: any): Partial<Props> => bindActionCreators({ changeLocale }, dispatch);
 
 class App extends PureComponent<Props> {

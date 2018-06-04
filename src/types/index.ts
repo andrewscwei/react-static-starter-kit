@@ -1,4 +1,7 @@
-import { ActionType } from '@/enums';
+export enum ActionType {
+  LOCALE_CHANGED = 'localeChanged',
+  USERS_LOADED = 'usersLoaded',
+}
 
 export interface Action {
   type: ActionType;
@@ -18,7 +21,7 @@ export interface UsersLoadedAction extends Action {
 
 export interface IntlState {
   locale: string;
-  messages: TranslationData;
+  translations: TranslationData;
 }
 
 export interface LocaleChangeAction extends Action {

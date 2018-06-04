@@ -1,5 +1,4 @@
-import { ActionType } from '@/enums';
-import { Action, IntlState, LocaleChangeAction } from '@/types';
+import { Action, ActionType, IntlState, LocaleChangeAction } from '@/types';
 import { addLocaleData } from 'react-intl';
 
 for (const locale of $APP_CONFIG.locales) {
@@ -27,7 +26,7 @@ else {
 
 const initialState: IntlState = {
   locale: $APP_CONFIG.locales[0],
-  messages: translations[$APP_CONFIG.locales[0]],
+  translations: translations[$APP_CONFIG.locales[0]],
 };
 
 export function changeLocale(locale: string): LocaleChangeAction {
@@ -41,7 +40,7 @@ export default function reducer(state = initialState, action: Action): IntlState
   switch (action.type) {
   case ActionType.LOCALE_CHANGED:
     const t = action as LocaleChangeAction;
-    return { ...state, locale: t.locale, messages: translations[t.locale] };
+    return { ...state, locale: t.locale, translations: translations[t.locale] };
   default:
     return state;
   }

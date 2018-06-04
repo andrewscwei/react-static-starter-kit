@@ -1,10 +1,10 @@
 import React, { PureComponent } from 'react';
-import { connect, Dispatch } from 'react-redux';
+import { connect } from 'react-redux';
 import { Route } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import styled from 'styled-components';
 
-const mapStateToProps = (state: any): Partial<Props> => ({ t: state.intl.messages });
+const mapStateToProps = (state: any): Partial<Props> => ({ t: state.intl.translations });
 const mapDispatchToProps = (dispatch: any): Partial<Props> => bindActionCreators({}, dispatch);
 
 const StyledRoot = styled.div`

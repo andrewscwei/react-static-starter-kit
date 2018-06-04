@@ -1,14 +1,13 @@
-import { ActionType } from '@/enums';
-import { Action, UsersLoadedAction, UsersState } from '@/types';
-import axios from 'axios';
+import { Action, ActionType, UsersLoadedAction, UsersState } from '@/types';
 import { Dispatch } from 'react-redux';
+import request from 'superagent';
 
 export function fetchUsers() {
   return async (dispatch: Dispatch<Action>) => {
-    const res = await axios.get(`//jsonplaceholder.typicode.com/users`);
+    const res = await request.get(`//jsonplaceholder.typicode.com/users`);
     const action: UsersLoadedAction = {
       type: ActionType.USERS_LOADED,
-      users: res.data,
+      users: res.body,
     };
 
     dispatch(action);
