@@ -26,11 +26,11 @@ render(
   <Provider store={store}>
     <ConnectedIntlProvider>
       <ThemeProvider theme={theme}>
-      <Router>
-        <Route render={({ location }) => (
-          <App location={location}/>
-        )}/>
-      </Router>
+        <Router>
+          <Route render={({ location }) => (
+            <App location={location}/>
+          )}/>
+        </Router>
       </ThemeProvider>
     </ConnectedIntlProvider>
   </Provider>,
