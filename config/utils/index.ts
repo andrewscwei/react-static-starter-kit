@@ -11,7 +11,7 @@ export function getRoutesFromDir(dir: string, baseDir: string = dir) {
     if ((/(^|\/)\.[^/.]/g).test(fileName)) return;
 
     const basename = path.basename(fileName, `.tsx`);
-    const ignorePattern = [`NotFound`];
+    const ignorePattern = [`NotFound`, `App`];
     const indexPattern = [`index`, `home`];
 
     // Ignore files with certain names (i.e. NotFound.tsx). No need to generate a

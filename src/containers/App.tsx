@@ -8,17 +8,17 @@ import { changeLocale } from '@/store/i18n';
 import { Translations } from '@/types';
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
-import { Route, Switch } from 'react-router-dom';
+import { Route, RouteComponentProps, Switch } from 'react-router-dom';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { bindActionCreators } from 'redux';
 import styled, { injectGlobal } from 'styled-components';
 import normalize from 'styled-normalize';
 
 interface Props {
-  t: Translations;
-  changeLocale: (locale: string) => void;
   locale: string;
-  location;
+  route: RouteComponentProps<any>;
+  t: Translations;
+  changeLocale(locale: string);
 }
 
 const StyledRoot = styled.div`
@@ -32,15 +32,15 @@ class App extends PureComponent<Props> {
   generateRoutes = () => {
     return $ROUTES_CONFIG.map((route, index) => {
       const { path, component } = route;
-      const Component = require(`@/pages/${component}`).default;
+      const Component = require(`@/containers/${component}`).default;
       return <Route exact={true} path={path} component={Component} key={index}/>;
     });
   }
 
   updateLocale = () => {
-    const { location, changeLocale } = this.props;
+    const { route, changeLocale } = this.props;
     const locales = $LOCALE_CONFIG.locales;
-    const locale = location.pathname.split('/')[1];
+    const locale = route.location.pathname.split('/')[1];
 
     if (locales.includes(locale)) {
       changeLocale(locale);
@@ -59,14 +59,14 @@ class App extends PureComponent<Props> {
   }
 
   render() {
-    const { t, locale, location, changeLocale } = this.props;
+    const { t, locale, route, changeLocale } = this.props;
 
     return (
       <StyledRoot>
         <Header t={t} locale={locale}/>
         <TransitionGroup>
-          <CSSTransition key={location.key} timeout={300} classNames='fade'>
-            <Switch location={location}>{this.generateRoutes()}</Switch>
+          <CSSTransition key={route.location.key} timeout={300} classNames='fade'>
+            <Switch location={route.location}>{this.generateRoutes()}</Switch>
           </CSSTransition>
         </TransitionGroup>
         <Footer t={t} changeLocale={changeLocale}/>

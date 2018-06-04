@@ -63,7 +63,7 @@ const config: Configuration = {
         locales,
         translations: getTranslationsFromDir(localesDir, locales),
       }),
-      $ROUTES_CONFIG: JSON.stringify(getLocalizedRoutesFromDir(path.join(inputDir, `pages`), locales)),
+      $ROUTES_CONFIG: JSON.stringify(getLocalizedRoutesFromDir(path.join(inputDir, `containers`), locales)),
     }),
     new HTMLPlugin({
       appConfig,
