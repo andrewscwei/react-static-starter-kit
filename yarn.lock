@@ -198,12 +198,6 @@
   version "0.2.28"
   resolved "https://registry.yarnpkg.com/@types/relateurl/-/relateurl-0.2.28.tgz#6bda7db8653fa62643f5ee69e9f69c11a392e3a6"
 
-"@types/stylelint-webpack-plugin@^0.1.2":
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/@types/stylelint-webpack-plugin/-/stylelint-webpack-plugin-0.1.2.tgz#fc254558ceb1ef57762020f54df18ecfa4da93c9"
-  dependencies:
-    "@types/webpack" "*"
-
 "@types/tapable@*":
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/@types/tapable/-/tapable-1.0.2.tgz#e13182e1b69871a422d7863e11a4a6f5b814a4bd"
@@ -4251,10 +4245,6 @@ quick-lru@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/quick-lru/-/quick-lru-1.1.0.tgz#4360b17c61136ad38078397ff11416e186dcfbb8"
 
-ramda@^0.25.0:
-  version "0.25.0"
-  resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.25.0.tgz#8fdf68231cffa90bc2f9460390a0cb74a29b29a9"
-
 randomatic@^1.1.3:
   version "1.1.7"
   resolved "https://registry.yarnpkg.com/randomatic/-/randomatic-1.1.7.tgz#c7abe9cc8b87c0baa876b19fde83fd464797e38c"
@@ -5206,15 +5196,6 @@ stylelint-processor-styled-components@^1.3.1:
     "@babel/traverse" "^7.0.0-beta.40"
     babylon "^7.0.0-beta.40"
     postcss "^6.0.14"
-
-stylelint-webpack-plugin@^0.10.5:
-  version "0.10.5"
-  resolved "https://registry.yarnpkg.com/stylelint-webpack-plugin/-/stylelint-webpack-plugin-0.10.5.tgz#0b6e0d373ff5e03baa8197ebe0f2625981bd266b"
-  dependencies:
-    arrify "^1.0.1"
-    micromatch "^3.1.8"
-    object-assign "^4.1.0"
-    ramda "^0.25.0"
 
 stylelint@^9.2.1:
   version "9.2.1"
