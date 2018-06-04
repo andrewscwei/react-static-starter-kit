@@ -1,5 +1,5 @@
 import { fetchUsers } from '@/store/users';
-import { Action, AppState, User } from '@/types';
+import { User } from '@/types';
 import React, { PureComponent } from 'react';
 import { connect, Dispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -45,8 +45,8 @@ interface Props {
   fetchUsers: () => void;
 }
 
-const mapStateToProps = (state: AppState): Partial<Props> => ({ users: state.users.users, t: state.intl.messages });
-const mapDispatchToProps = (dispatch: Dispatch<Action>): Partial<Props> => bindActionCreators({ fetchUsers }, dispatch);
+const mapStateToProps = (state: any): Partial<Props> => ({ users: state.users.users, t: state.intl.messages });
+const mapDispatchToProps = (dispatch: any): Partial<Props> => bindActionCreators({ fetchUsers }, dispatch);
 
 class About extends PureComponent<Props> {
   componentDidMount() {

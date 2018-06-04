@@ -112,7 +112,5 @@ export function getLocalizedRoutesFromDir(dir: string, whitelistedLocales: Array
     });
   }
 
-  console.log(out);
-
   return out;
 }

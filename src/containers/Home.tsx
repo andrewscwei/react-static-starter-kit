@@ -1,4 +1,3 @@
-import { Action, AppState } from '@/types';
 import React, { PureComponent } from 'react';
 import { connect, Dispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -42,8 +41,8 @@ interface Props {
   t: TranslationData;
 }
 
-const mapStateToProps = (state: AppState): Partial<Props> => ({ t: state.intl.messages });
-const mapDispatchToProps = (dispatch: Dispatch<Action>): Partial<Props> => bindActionCreators({ }, dispatch);
+const mapStateToProps = (state: any): Partial<Props> => ({ t: state.intl.messages });
+const mapDispatchToProps = (dispatch: any): Partial<Props> => bindActionCreators({ }, dispatch);
 
 class Home extends PureComponent<Props> {
   render() {

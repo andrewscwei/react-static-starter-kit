@@ -5,7 +5,6 @@
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 import { changeLocale } from '@/store/intl';
-import { Action, AppState } from '@/types';
 import React, { PureComponent } from 'react';
 import { connect, Dispatch } from 'react-redux';
 import { Route, RouteComponentProps, Switch } from 'react-router-dom';
@@ -26,8 +25,8 @@ const StyledRoot = styled.div`
   width: 100%;
 `;
 
-const mapStateToProps = (state: AppState): Partial<Props> => ({ t: state.intl.messages, locale: state.intl.locale });
-const mapDispatchToProps = (dispatch: Dispatch<Action>): Partial<Props> => bindActionCreators({ changeLocale }, dispatch);
+const mapStateToProps = (state: any): Partial<Props> => ({ t: state.intl.messages, locale: state.intl.locale });
+const mapDispatchToProps = (dispatch: any): Partial<Props> => bindActionCreators({ changeLocale }, dispatch);
 
 class App extends PureComponent<Props> {
   generateRoutes = () => {
