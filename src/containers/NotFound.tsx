@@ -1,13 +1,12 @@
-import { changeLocale } from '@/store/i18n';
-import { Translations } from '@/types';
+import { Action, AppState } from '@/types';
 import React, { PureComponent } from 'react';
-import { connect } from 'react-redux';
+import { connect, Dispatch } from 'react-redux';
 import { Route } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import styled from 'styled-components';
 
-const mapStateToProps = (state): Partial<Props> => ({ t: state.i18n.messages });
-const mapDispatchToProps = (dispatch): Partial<Props> => bindActionCreators({ changeLocale }, dispatch);
+const mapStateToProps = (state: AppState): Partial<Props> => ({ t: state.intl.messages });
+const mapDispatchToProps = (dispatch: Dispatch<Action>): Partial<Props> => bindActionCreators({}, dispatch);
 
 const StyledRoot = styled.div`
   padding: 10% 5%;
@@ -37,8 +36,7 @@ const StyledRoot = styled.div`
 `;
 
 interface Props {
-  t: Translations;
-  changeLocale: (locale: string) => void;
+  t: TranslationData;
 }
 
 class NotFound extends PureComponent<Props> {

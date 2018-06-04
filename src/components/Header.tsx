@@ -1,4 +1,3 @@
-import { Translations } from '@/types';
 import React, { PureComponent } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
@@ -38,7 +37,7 @@ const StyledRoot = styled.header`
 `;
 
 export interface Props {
-  t: Translations;
+  t: TranslationData;
   locale: string;
 }
 
@@ -48,8 +47,8 @@ class Header extends PureComponent<Props> {
 
     return (
       <StyledRoot>
-        <Link className='link' to={locale === `en` ? `/` : `/ja`}>{t[`home`]}</Link>
-        <Link className='link' to={locale === `en` ? `/about` : `/ja/about`}>{t[`about`]}</Link>
+        <Link className='link' to={locale === `en` ? `/` : `/ja/`}>{t[`home`]}</Link>
+        <Link className='link' to={locale === `en` ? `/about/` : `/ja/about/`}>{t[`about`]}</Link>
       </StyledRoot>
     );
   }

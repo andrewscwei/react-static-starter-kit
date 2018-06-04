@@ -15,9 +15,9 @@ import thunk from 'redux-thunk';
 import { ThemeProvider } from 'styled-components';
 
 const ConnectedIntlProvider = connect((state: any) => ({
-  key: state.i18n.locale,
-  locale: state.i18n.locale,
-  messages: state.i18n.messages,
+  key: state.intl.locale,
+  locale: state.intl.locale,
+  messages: state.intl.messages,
 }))(IntlProvider);
 
 const store = createStore(combineReducers(reducers), {}, applyMiddleware(thunk));

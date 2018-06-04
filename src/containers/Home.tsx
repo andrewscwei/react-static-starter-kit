@@ -1,6 +1,6 @@
-import { Translations } from '@/types';
+import { Action, AppState } from '@/types';
 import React, { PureComponent } from 'react';
-import { connect } from 'react-redux';
+import { connect, Dispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import styled from 'styled-components';
 
@@ -39,11 +39,11 @@ const StyledRoot = styled.div`
 `;
 
 interface Props {
-  t: Translations;
+  t: TranslationData;
 }
 
-const mapStateToProps = (state): Partial<Props> => ({ t: state.i18n.messages });
-const mapDispatchToProps = (dispatch): Partial<Props> => bindActionCreators({ }, dispatch);
+const mapStateToProps = (state: AppState): Partial<Props> => ({ t: state.intl.messages });
+const mapDispatchToProps = (dispatch: Dispatch<Action>): Partial<Props> => bindActionCreators({ }, dispatch);
 
 class Home extends PureComponent<Props> {
   render() {

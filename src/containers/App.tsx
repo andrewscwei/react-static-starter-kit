@@ -4,10 +4,10 @@
 
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
-import { changeLocale } from '@/store/i18n';
-import { Translations } from '@/types';
+import { changeLocale } from '@/store/intl';
+import { Action, AppState } from '@/types';
 import React, { PureComponent } from 'react';
-import { connect } from 'react-redux';
+import { connect, Dispatch } from 'react-redux';
 import { Route, RouteComponentProps, Switch } from 'react-router-dom';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { bindActionCreators } from 'redux';
@@ -17,8 +17,8 @@ import normalize from 'styled-normalize';
 interface Props {
   locale: string;
   route: RouteComponentProps<any>;
-  t: Translations;
-  changeLocale(locale: string);
+  t: TranslationData;
+  changeLocale(locale: string): void;
 }
 
 const StyledRoot = styled.div`
@@ -26,14 +26,14 @@ const StyledRoot = styled.div`
   width: 100%;
 `;
 
-const mapStateToProps = (state): Partial<Props> => ({ t: state.i18n.messages, locale: state.i18n.locale });
-const mapDispatchToProps = (dispatch): Partial<Props> => bindActionCreators({ changeLocale }, dispatch);
+const mapStateToProps = (state: AppState): Partial<Props> => ({ t: state.intl.messages, locale: state.intl.locale });
+const mapDispatchToProps = (dispatch: Dispatch<Action>): Partial<Props> => bindActionCreators({ changeLocale }, dispatch);
+
 class App extends PureComponent<Props> {
   generateRoutes = () => {
-    return $ROUTES_CONFIG.map((route, index) => {
-      const { path, component } = route;
-      const Component = require(`@/containers/${component}`).default;
-      return <Route exact={true} path={path} component={Component} key={index}/>;
+    return $ROUTES_CONFIG.map((route: RouteData, index: number) => {
+      const Component = require(`@/containers/${route.component}`).default;
+      return <Route exact={route.exact} path={route.path} component={Component} key={index}/>;
     });
   }
 
@@ -69,7 +69,7 @@ class App extends PureComponent<Props> {
             <Switch location={route.location}>{this.generateRoutes()}</Switch>
           </CSSTransition>
         </TransitionGroup>
-        <Footer t={t} changeLocale={changeLocale}/>
+        <Footer t={t}/>
       </StyledRoot>
     );
   }

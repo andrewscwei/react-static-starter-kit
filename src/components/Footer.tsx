@@ -1,4 +1,3 @@
-import { Translations } from '@/types';
 import React, { PureComponent } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
@@ -63,13 +62,12 @@ const StyledRoot = styled.footer`
 `;
 
 interface Props {
-  t: Translations;
-  changeLocale: (locale: string) => void;
+  t: TranslationData;
 }
 
 export default class Footer extends PureComponent<Props> {
   render() {
-    const { t, changeLocale } = this.props;
+    const { t } = this.props;
 
     return (
       <StyledRoot>
@@ -77,7 +75,7 @@ export default class Footer extends PureComponent<Props> {
           <a className='github-button' href='https://github.com/andrewscwei/react-static-starter-kit'/>
         </nav>
         <Link className='locale-button' to='/'>{t[`en`]}</Link>
-        <Link className='locale-button' to='/ja'>{t[`jp`]}</Link>
+        <Link className='locale-button' to='/ja/'>{t[`jp`]}</Link>
       </StyledRoot>
     );
   }

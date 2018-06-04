@@ -1,34 +1,24 @@
 import { ActionType } from '@/enums';
-import { Action } from '@/types';
+import { Action, UsersLoadedAction, UsersState } from '@/types';
 import axios from 'axios';
-
-export interface State {
-  users: ReadonlyArray<{}>;
-}
-
-const initialState: State = {
-  users: [],
-};
-
-export interface UserLoadedAction extends Action {
-  users: Array<{}>;
-}
+import { Dispatch } from 'react-redux';
 
 export function fetchUsers() {
-  return async dispatch => {
+  return async (dispatch: Dispatch<Action>) => {
     const res = await axios.get(`//jsonplaceholder.typicode.com/users`);
-
-    dispatch({
+    const action: UsersLoadedAction = {
       type: ActionType.USERS_LOADED,
       users: res.data,
-    });
+    };
+
+    dispatch(action);
   };
 }
 
-export default function reducer(state: State = initialState, action: Action): State {
+export default function reducer(state: UsersState = { users: [] }, action: Action): UsersState {
   switch (action.type) {
   case ActionType.USERS_LOADED:
-    return { ...state, users: (action as UserLoadedAction).users };
+    return { ...state, users: (action as UsersLoadedAction).users };
   default:
     return state;
   }

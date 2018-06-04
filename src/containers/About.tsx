@@ -1,7 +1,7 @@
 import { fetchUsers } from '@/store/users';
-import { Translations } from '@/types';
+import { Action, AppState, User } from '@/types';
 import React, { PureComponent } from 'react';
-import { connect } from 'react-redux';
+import { connect, Dispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import styled from 'styled-components';
 
@@ -40,13 +40,13 @@ const StyledRoot = styled.div`
 `;
 
 interface Props {
-  users: Array<any>;
-  t: Translations;
+  users: ReadonlyArray<User>;
+  t: TranslationData;
   fetchUsers: () => void;
 }
 
-const mapStateToProps = (state): Partial<Props> => ({ users: state.users.users, t: state.i18n.messages });
-const mapDispatchToProps = (dispatch): Partial<Props> => bindActionCreators({ fetchUsers }, dispatch);
+const mapStateToProps = (state: AppState): Partial<Props> => ({ users: state.users.users, t: state.intl.messages });
+const mapDispatchToProps = (dispatch: Dispatch<Action>): Partial<Props> => bindActionCreators({ fetchUsers }, dispatch);
 
 class About extends PureComponent<Props> {
   componentDidMount() {
