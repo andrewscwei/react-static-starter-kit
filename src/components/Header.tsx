@@ -3,42 +3,42 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const StyledRoot = styled.header`
-  top: 0;
-  left: 0;
-  padding: 0 5%;
-  width: 100%;
-  height: 70px;
-  font-family: ${props => props.theme.font};
-  position: fixed;
+  align-items: center;
   box-sizing: border-box;
   display: flex;
+  font-family: ${props => props.theme.font};
+  height: 70px;
   justify-content: flex-end;
-  align-items: center;
+  left: 0;
+  padding: 0 5%;
+  position: fixed;
+  top: 0;
+  width: 100%;
   z-index: 10;
 
-  & > .link {
+  & > a {
     color: ${props => props.theme.linkColor};
-    text-decoration: none;
-    transition: all .2s ease-out;
+    cursor: pointer;
+    font-size: .8em;
     font-weight: 400;
     letter-spacing: 1px;
-    font-size: .8em;
-    cursor: pointer;
+    text-decoration: none;
     text-transform: uppercase;
-
-    &:not(:last-child) {
-      margin-right: 20px;
-    }
+    transition: all .2s ease-out;
 
     &:hover {
       opacity: .6;
+    }
+
+    &:not(:last-child) {
+      margin-right: 20px;
     }
   }
 `;
 
 export interface Props {
-  t: TranslationData;
   locale: string;
+  t: TranslationData;
 }
 
 class Header extends PureComponent<Props> {
@@ -47,8 +47,8 @@ class Header extends PureComponent<Props> {
 
     return (
       <StyledRoot>
-        <Link className='link' to={locale === `en` ? `/` : `/ja/`}>{t[`home`]}</Link>
-        <Link className='link' to={locale === `en` ? `/about/` : `/ja/about/`}>{t[`about`]}</Link>
+        <Link to={locale === `en` ? `/` : `/ja/`}>{t[`home`]}</Link>
+        <Link to={locale === `en` ? `/about/` : `/ja/about/`}>{t[`about`]}</Link>
       </StyledRoot>
     );
   }

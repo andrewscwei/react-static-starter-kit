@@ -6,43 +6,43 @@ import { bindActionCreators } from 'redux';
 import styled from 'styled-components';
 
 const StyledRoot = styled.div`
-  padding: 10% 5%;
-  width: 100%;
-  height: 100%;
-  position: absolute;
+  align-items: flex-start;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
   flex-wrap: nowrap;
   font-family: ${props => props.theme.font};
-  box-sizing: border-box;
+  height: 100%;
+  justify-content: center;
+  padding: 10% 5%;
+  position: absolute;
+  width: 100%;
 
   & > summary {
     max-width: 550px;
 
     & h1 {
+      color: ${props => props.theme.titleColor};
       font-size: 2.4em;
       font-weight: 700;
-      text-transform: uppercase;
       letter-spacing: 3px;
       margin: 0;
-      color: ${props => props.theme.titleColor};
+      text-transform: uppercase;
     }
 
     & span {
+      color: ${props => props.theme.textColor};
       font-weight: 400;
       letter-spacing: .6px;
       line-height: 1.4em;
-      color: ${props => props.theme.textColor};
     }
   }
 `;
 
 interface Props {
-  users: ReadonlyArray<User>;
   t: TranslationData;
-  fetchUsers: () => void;
+  users: ReadonlyArray<User>;
+  fetchUsers(): void;
 }
 
 const mapStateToProps = (state: any): Partial<Props> => ({ users: state.users.users, t: state.intl.translations });

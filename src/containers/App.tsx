@@ -58,7 +58,7 @@ class App extends PureComponent<Props> {
   }
 
   render() {
-    const { t, locale, route, changeLocale } = this.props;
+    const { t, locale, route } = this.props;
 
     return (
       <StyledRoot>
@@ -81,9 +81,9 @@ injectGlobal`
 
   html,
   body {
-    width: 100%;
-    height: 100%;
     background: #111;
+    height: 100%;
+    width: 100%;
   }
 
   .fade-enter {

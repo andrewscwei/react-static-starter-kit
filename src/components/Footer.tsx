@@ -3,18 +3,18 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const StyledRoot = styled.footer`
-  padding: 0 5%;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 50px;
-  border-top: 1px solid #1e1e1e;
-  font-family: ${props => props.theme.font};
-  position: fixed;
-  display: flex;
-  justify-content: flex-start;
   align-items: center;
   box-sizing: border-box;
+  border-top: 1px solid #1e1e1e;
+  bottom: 0;
+  display: flex;
+  font-family: ${props => props.theme.font};
+  height: 50px;
+  justify-content: flex-start;
+  left: 0;
+  padding: 0 5%;
+  position: fixed;
+  width: 100%;
   z-index: 10;
 
   & > nav {
@@ -22,33 +22,33 @@ const StyledRoot = styled.footer`
   }
 
   & .github-button {
-    width: 20px;
-    height: 20px;
-    transition: all .2s ease-out;
     background: url(${require(`@/assets/images/github-icon.svg`)}) center / 100% no-repeat;
     display: block;
+    height: 20px;
+    transition: all .2s ease-out;
+    width: 20px;
 
     &:hover {
       opacity: .6;
     }
   }
 
-  & .locale-button {
-    width: 22px;
-    height: 22px;
-    background: ${props => props.theme.buttonColor};
-    box-sizing: border-box;
-    justify-content: center;
+  & > a {
     align-items: center;
+    background: ${props => props.theme.buttonColor};
+    border: none;
+    box-sizing: border-box;
+    color: ${props => props.theme.buttonTextColor};
+    cursor: pointer;
     display: flex;
     font-size: .8em;
-    padding-top: 4px;
-    cursor: pointer;
-    border: none;
-    color: ${props => props.theme.buttonTextColor};
-    transition: all .2s ease-out;
-    text-decoration: none;
+    height: 22px;
+    justify-content: center;
     outline: none;
+    padding-top: 4px;
+    text-decoration: none;
+    transition: all .2s ease-out;
+    width: 22px;
 
     &:hover {
       background: #fff;
@@ -74,8 +74,8 @@ export default class Footer extends PureComponent<Props> {
         <nav>
           <a className='github-button' href='https://github.com/andrewscwei/react-static-starter-kit'/>
         </nav>
-        <Link className='locale-button' to='/'>{t[`en`]}</Link>
-        <Link className='locale-button' to='/ja/'>{t[`jp`]}</Link>
+        <Link to='/'>{t[`en`]}</Link>
+        <Link to='/ja/'>{t[`jp`]}</Link>
       </StyledRoot>
     );
   }

@@ -8,18 +8,18 @@ const mapStateToProps = (state: any): Partial<Props> => ({ t: state.intl.transla
 const mapDispatchToProps = (dispatch: any): Partial<Props> => bindActionCreators({}, dispatch);
 
 const StyledRoot = styled.div`
-  padding: 10% 5%;
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  display: flex;
-  font-family: ${props => props.theme.font};
-  flex-direction: column;
-  justify-content: center;
   align-items: flex-start;
-  flex-wrap: nowrap;
-  color: ${props => props.theme.titleColor};
   box-sizing: border-box;
+  color: ${props => props.theme.titleColor};
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  font-family: ${props => props.theme.font};
+  height: 100%;
+  justify-content: center;
+  padding: 10% 5%;
+  position: absolute;
+  width: 100%;
 
   & > summary {
     max-width: 550px;
@@ -27,9 +27,9 @@ const StyledRoot = styled.div`
     & > h1 {
       font-size: 2.4em;
       font-weight: 700;
-      text-transform: uppercase;
       letter-spacing: 3px;
       margin: 0;
+      text-transform: uppercase;
     }
   }
 `;
@@ -43,15 +43,11 @@ class NotFound extends PureComponent<Props> {
     const { t } = this.props;
 
     return (
-      <Route render={ () => {
-        return (
-          <StyledRoot>
-            <summary>
-              <h1>{t[`not-found`]}</h1>
-            </summary>
-          </StyledRoot>
-        );
-      } }/>
+      <StyledRoot>
+        <summary>
+          <h1>{t[`not-found`]}</h1>
+        </summary>
+      </StyledRoot>
     );
   }
 }
