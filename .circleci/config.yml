@@ -8,9 +8,7 @@ jobs:
       - checkout
       - run:
           name: Install APT packages
-          command: |
-            apt-get update -y
-            apt-get install jq zip -y
+          command: apt-get update && apt-get install jq -y
       - restore_cache:
           keys:
             - dependency-cache-{{ checksum "yarn.lock" }}
@@ -28,11 +26,6 @@ jobs:
       - run:
           name: Test
           command: npm test
-      - run:
-          name: Pack
-          command: .circleci/pack.sh
-      - store_artifacts:
-          path: ~/repo/public
       - store_artifacts:
           path: ~/repo/build
 
@@ -44,9 +37,7 @@ jobs:
       - checkout
       - run:
           name: Install APT packages
-          command: |
-            apt-get update -y
-            apt-get install jq zip -y
+          command: apt-get update && apt-get install jq -y
       - restore_cache:
           keys:
             - dependency-cache-{{ checksum "yarn.lock" }}
@@ -64,11 +55,6 @@ jobs:
       - run:
           name: Test
           command: npm test
-      - run:
-          name: Pack
-          command: .circleci/pack.sh
-      - store_artifacts:
-          path: ~/repo/public
       - store_artifacts:
           path: ~/repo/build
       - deploy:
