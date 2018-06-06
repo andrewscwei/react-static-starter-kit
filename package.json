@@ -2,14 +2,7 @@
   "name": "react-static-starter-kit",
   "version": "2.0.0",
   "description": "Experimental React static prerendered app starter kit",
-  "keywords": [
-    "react",
-    "static",
-    "prerender",
-    "styled",
-    "components",
-    "typescript"
-  ],
+  "private": true,
   "license": "MIT",
   "scripts": {
     "clean": "rimraf build",
