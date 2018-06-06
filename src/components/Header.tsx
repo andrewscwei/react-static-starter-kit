@@ -6,19 +6,17 @@ const StyledRoot = styled.header`
   align-items: center;
   box-sizing: border-box;
   display: flex;
-  font-family: ${props => props.theme.font};
   height: 70px;
   justify-content: flex-end;
-  left: 0;
   padding: 0 5%;
   position: fixed;
-  top: 0;
   width: 100%;
   z-index: 10;
 
   & > a {
     color: ${props => props.theme.linkColor};
     cursor: pointer;
+    font-family: ${props => props.theme.font};
     font-size: .8em;
     font-weight: 400;
     letter-spacing: 1px;
@@ -36,14 +34,14 @@ const StyledRoot = styled.header`
   }
 `;
 
-export interface Props {
-  locale: string;
+interface Props {
   t: TranslationData;
+  locale: string;
 }
 
 class Header extends PureComponent<Props> {
   render() {
-    const { t, locale } = this.props;
+    const { locale, t } = this.props;
 
     return (
       <StyledRoot>

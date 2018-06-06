@@ -1,36 +1,31 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
-import { Route } from 'react-router-dom';
+import { Route, RouteComponentProps } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import styled from 'styled-components';
 
-const mapStateToProps = (state: any): Partial<Props> => ({ t: state.intl.translations });
-const mapDispatchToProps = (dispatch: any): Partial<Props> => bindActionCreators({}, dispatch);
-
 const StyledRoot = styled.div`
-  align-items: flex-start;
+  align-items: center;
   box-sizing: border-box;
-  color: ${props => props.theme.titleColor};
   display: flex;
+  font-family: ${props => props.theme.font};
   flex-direction: column;
   flex-wrap: nowrap;
-  font-family: ${props => props.theme.font};
   height: 100%;
   justify-content: center;
   padding: 10% 5%;
   position: absolute;
   width: 100%;
 
-  & > summary {
+  & h1 {
+    color: ${props => props.theme.titleColor};
+    font-size: 2.4em;
+    font-weight: 700;
+    letter-spacing: 3px;
+    margin: 0;
     max-width: 550px;
-
-    & > h1 {
-      font-size: 2.4em;
-      font-weight: 700;
-      letter-spacing: 3px;
-      margin: 0;
-      text-transform: uppercase;
-    }
+    text-align: center;
+    text-transform: uppercase;
   }
 `;
 
@@ -38,16 +33,25 @@ interface Props {
   t: TranslationData;
 }
 
+const mapStateToProps = (state: any): Partial<Props> => ({ t: state.intl.translations });
+const mapDispatchToProps = (dispatch: any): Partial<Props> => bindActionCreators({}, dispatch);
+
 class NotFound extends PureComponent<Props> {
   render() {
     const { t } = this.props;
 
     return (
-      <StyledRoot>
-        <summary>
-          <h1>{t[`not-found`]}</h1>
-        </summary>
-      </StyledRoot>
+      <Route render={(route: RouteComponentProps<any>) => {
+        if (route.staticContext) {
+          route.staticContext.statusCode = 404;
+        }
+
+        return (
+          <StyledRoot>
+            <h1>{t[`not-found`]}</h1>
+          </StyledRoot>
+        );
+      }}/>
     );
   }
 }

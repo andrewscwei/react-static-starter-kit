@@ -1,12 +1,13 @@
 import { fetchUsers } from '@/store/users';
-import { User } from '@/types';
+import { AppState, User } from '@/types';
 import React, { PureComponent } from 'react';
-import { connect } from 'react-redux';
+import Helmet from 'react-helmet';
+import { connect, Store } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import styled from 'styled-components';
 
 const StyledRoot = styled.div`
-  align-items: flex-start;
+  align-items: center;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -18,26 +19,28 @@ const StyledRoot = styled.div`
   position: absolute;
   width: 100%;
 
-  & > summary {
+  & h1 {
+    color: ${props => props.theme.titleColor};
+    font-size: 2.4em;
+    font-weight: 700;
+    letter-spacing: 3px;
+    margin: 0 0 20px;
     max-width: 550px;
+    text-align: center;
+    text-transform: uppercase;
+  }
 
-    & h1 {
-      color: ${props => props.theme.titleColor};
-      font-size: 2.4em;
-      font-weight: 700;
-      letter-spacing: 3px;
-      margin: 0;
-      text-transform: uppercase;
-    }
-
-    & span {
-      color: ${props => props.theme.textColor};
-      font-weight: 400;
-      letter-spacing: .6px;
-      line-height: 1.4em;
-    }
+  & span {
+    color: ${props => props.theme.textColor};
+    font-weight: 400;
+    letter-spacing: .6px;
+    line-height: 1.4em;
+    text-align: center;
   }
 `;
+
+const mapStateToProps = (state: any): Partial<Props> => ({ t: state.intl.translations, users: state.users.items });
+const mapDispatchToProps = (dispatch: any): Partial<Props> => bindActionCreators({ fetchUsers }, dispatch);
 
 interface Props {
   t: TranslationData;
@@ -45,10 +48,11 @@ interface Props {
   fetchUsers(): void;
 }
 
-const mapStateToProps = (state: any): Partial<Props> => ({ users: state.users.users, t: state.intl.translations });
-const mapDispatchToProps = (dispatch: any): Partial<Props> => bindActionCreators({ fetchUsers }, dispatch);
-
 class About extends PureComponent<Props> {
+  static fetchData(store: Store<AppState>) {
+    return store.dispatch(fetchUsers() as any); // TODO: Fix this
+  }
+
   componentDidMount() {
     this.props.fetchUsers();
   }
@@ -58,18 +62,19 @@ class About extends PureComponent<Props> {
 
     return (
       <StyledRoot>
-        <summary>
-          <h1>{t[`about-title`]}</h1>
-          {
-            this.props.users.map(user => {
-              return (
-                <div key={user.id} >
-                  <span>{user.name}</span>
-                </div>
-              );
-            })
-          }
-        </summary>
+        <Helmet>
+          <title>{t[`about`]}</title>
+        </Helmet>
+        <h1>{t[`about-title`]}</h1>
+        {
+          this.props.users.map((user: User) => {
+            return (
+              <div key={user.id} >
+                <span>{user.name}</span>
+              </div>
+            );
+          })
+        }
       </StyledRoot>
     );
   }

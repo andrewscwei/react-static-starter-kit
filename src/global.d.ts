@@ -1,6 +1,11 @@
-declare const $APP_CONFIG: any;
-declare const $LOCALE_CONFIG: any;
-declare const $ROUTES_CONFIG: any;
+declare const __APP_CONFIG__: { [key: string]: any };
+declare const __INTL_CONFIG__: {
+  defaultLocale: string;
+  localeData: Readonly<LocaleDataDict>;
+  locales: ReadonlyArray<string>;
+  dict: Readonly<TranslationDataDict>;
+};
+declare const __ROUTES_CONFIG__: RouteData[];
 
 declare module 'react-snapshot';
 

@@ -5,83 +5,22 @@
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 import { changeLocale } from '@/store/intl';
+import theme from '@/styles/theme';
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { Route, RouteComponentProps, Switch } from 'react-router-dom';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { bindActionCreators } from 'redux';
-import styled, { injectGlobal } from 'styled-components';
+import styled, { injectGlobal, ThemeProvider } from 'styled-components';
 import normalize from 'styled-normalize';
 
-interface Props {
-  locale: string;
-  route: RouteComponentProps<any>;
-  t: TranslationData;
-  changeLocale(locale: string): void;
-}
-
-const StyledRoot = styled.div`
-  height: 100%;
-  width: 100%;
-`;
-
-const mapStateToProps = (state: any): Partial<Props> => ({ t: state.intl.translations, locale: state.intl.locale });
-const mapDispatchToProps = (dispatch: any): Partial<Props> => bindActionCreators({ changeLocale }, dispatch);
-
-class App extends PureComponent<Props> {
-  generateRoutes = () => {
-    return $ROUTES_CONFIG.map((route: RouteData, index: number) => {
-      const Component = require(`@/containers/${route.component}`).default;
-      return <Route exact={route.exact} path={route.path} component={Component} key={index}/>;
-    });
-  }
-
-  updateLocale = () => {
-    const { route, changeLocale } = this.props;
-    const locales = $LOCALE_CONFIG.locales;
-    const locale = route.location.pathname.split('/')[1];
-
-    if (locales.includes(locale)) {
-      changeLocale(locale);
-    }
-    else {
-      changeLocale(locales[0]);
-    }
-  }
-
-  componentWillMount() {
-    this.updateLocale();
-  }
-
-  componentDidUpdate() {
-    this.updateLocale();
-  }
-
-  render() {
-    const { t, locale, route } = this.props;
-
-    return (
-      <StyledRoot>
-        <Header t={t} locale={locale}/>
-        <TransitionGroup>
-          <CSSTransition key={route.location.key} timeout={300} classNames='fade'>
-            <Switch location={route.location}>{this.generateRoutes()}</Switch>
-          </CSSTransition>
-        </TransitionGroup>
-        <Footer t={t}/>
-      </StyledRoot>
-    );
-  }
-}
-
-export default connect<{}, {}, Partial<Props>>(mapStateToProps, mapDispatchToProps)(App);
-
 injectGlobal`
-  ${normalize}
+  ${normalize} /* stylelint-disable-line max-empty-lines */
 
   html,
   body {
-    background: #111;
+    background: ${theme.backgroundColor};
+    font-family: 'Roboto', sans-serif;
     height: 100%;
     width: 100%;
   }
@@ -104,3 +43,69 @@ injectGlobal`
     transition: all .3s;
   }
 `;
+
+const StyledRoot = styled.div`
+  height: 100%;
+  position: absolute;
+  width: 100%;
+`;
+
+interface Props {
+  locale: string;
+  locales: Array<string>;
+  route: RouteComponentProps<any>;
+  t: TranslationData;
+  changeLocale(locale: string): void;
+}
+
+const mapStateToProps = (state: any): Partial<Props> => ({ t: state.intl.translations, locale: state.intl.locale, locales: state.intl.locales });
+const mapDispatchToProps = (dispatch: any): Partial<Props> => bindActionCreators({ changeLocale }, dispatch);
+
+class App extends PureComponent<Props> {
+  componentWillMount() {
+    this.updateLocale();
+  }
+
+  componentDidUpdate() {
+    this.updateLocale();
+  }
+
+  updateLocale = () => {
+    const { route, changeLocale, locales } = this.props;
+    const locale = route.location.pathname.split('/')[1];
+
+    if (~locales.indexOf(locale)) {
+      changeLocale(locale);
+    }
+    else {
+      changeLocale(locales[0]);
+    }
+  }
+
+  generateRoutes = () => {
+    return __ROUTES_CONFIG__.map((route: RouteData, index: number) => {
+      const Component = require(`@/containers/${route.component}`).default;
+      return <Route exact={route.exact} path={route.path} component={Component} key={index}/>;
+    });
+  }
+
+  render() {
+    const { locale, route, t } = this.props;
+
+    return (
+      <ThemeProvider theme={theme}>
+        <StyledRoot>
+          <Header locale={locale} t={t}/>
+          <TransitionGroup>
+            <CSSTransition key={route.location.key} timeout={300} classNames='fade'>
+              <Switch location={route.location}>{this.generateRoutes()}</Switch>
+            </CSSTransition>
+          </TransitionGroup>
+          <Footer t={t}/>
+        </StyledRoot>
+      </ThemeProvider>
+    );
+  }
+}
+
+export default connect<Partial<Props>, Partial<Props>, Partial<Props>>(mapStateToProps, mapDispatchToProps)(App);

@@ -4,24 +4,24 @@ import styled from 'styled-components';
 
 const StyledRoot = styled.footer`
   align-items: center;
-  box-sizing: border-box;
   border-top: 1px solid #1e1e1e;
   bottom: 0;
+  box-sizing: border-box;
   display: flex;
   font-family: ${props => props.theme.font};
   height: 50px;
   justify-content: flex-start;
   left: 0;
   padding: 0 5%;
-  position: fixed;
   width: 100%;
+  position: fixed;
   z-index: 10;
 
-  & > nav {
+  & nav {
     flex-grow: 1;
   }
 
-  & .github-button {
+  & nav > a {
     background: url(${require(`@/assets/images/github-icon.svg`)}) center / 100% no-repeat;
     display: block;
     height: 20px;
@@ -51,8 +51,8 @@ const StyledRoot = styled.footer`
     width: 22px;
 
     &:hover {
-      background: #fff;
-      color: #111;
+      background: ${props => props.theme.buttonHoverColor};
+      color: ${props => props.theme.buttonHoverTextColor};
     }
 
     &:not(:last-child) {
@@ -65,14 +65,14 @@ interface Props {
   t: TranslationData;
 }
 
-export default class Footer extends PureComponent<Props> {
+class Footer extends PureComponent<Props> {
   render() {
     const { t } = this.props;
 
     return (
       <StyledRoot>
         <nav>
-          <a className='github-button' href='https://github.com/andrewscwei/react-static-starter-kit'/>
+          <a href='https://github.com/andrewscwei/react-universal-starter-kit'/>
         </nav>
         <Link to='/'>{t[`en`]}</Link>
         <Link to='/ja/'>{t[`jp`]}</Link>
@@ -80,3 +80,5 @@ export default class Footer extends PureComponent<Props> {
     );
   }
 }
+
+export default Footer;

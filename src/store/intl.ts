@@ -1,11 +1,9 @@
-import { Action, ActionType, IntlState, LocaleChangeAction } from '@/types';
+import { AppAction, AppActionType, IntlState, LocaleChangeAction } from '@/types';
 import { addLocaleData } from 'react-intl';
 
-for (const locale of $APP_CONFIG.locales) {
-  addLocaleData($LOCALE_CONFIG.localeData[locale]);
-}
-
-const translations: TranslationDataDict = {};
+let defaultLocale: string;
+let locales: Array<string>;
+let translations: TranslationDataDict = {};
 
 if (process.env.NODE_ENV === `development`) {
   // Require context for all locale translation files and apply them to i18next
@@ -13,34 +11,40 @@ if (process.env.NODE_ENV === `development`) {
   const localeReq = require.context(`@/../config/locales`, true, /^.*\.json$/);
   localeReq.keys().forEach(path => {
     const locale = path.replace(`./`, ``).replace(`.json`, ``);
-    if (!~$APP_CONFIG.locales.indexOf(locale)) { return; }
+    if (!~__APP_CONFIG__.locales.indexOf(locale)) { return; }
     translations[locale] = localeReq(path) as TranslationData;
   });
+
+  defaultLocale = __APP_CONFIG__.locales[0];
+  locales = __APP_CONFIG__.locales;
 }
 else {
-  for (const locale in $LOCALE_CONFIG.translations) {
-    if (!$LOCALE_CONFIG.translations.hasOwnProperty(locale)) continue;
-    translations[locale] = $LOCALE_CONFIG.translations[locale] as TranslationData;
-  }
+  defaultLocale = __INTL_CONFIG__.defaultLocale;
+  locales = __INTL_CONFIG__.locales as Array<string>;
+  translations = __INTL_CONFIG__.dict;
+}
+
+for (const locale of __APP_CONFIG__.locales) {
+  addLocaleData(__INTL_CONFIG__.localeData[locale]);
 }
 
 const initialState: IntlState = {
-  locale: $APP_CONFIG.locales[0],
-  translations: translations[$APP_CONFIG.locales[0]],
+  locale: defaultLocale,
+  locales,
+  translations: translations[defaultLocale],
 };
 
 export function changeLocale(locale: string): LocaleChangeAction {
   return {
     locale,
-    type: ActionType.LOCALE_CHANGED,
+    type: AppActionType.LOCALE_CHANGED,
   };
 }
 
-export default function reducer(state = initialState, action: Action): IntlState {
+export default function reducer(state = initialState, action: AppAction): IntlState {
   switch (action.type) {
-  case ActionType.LOCALE_CHANGED:
-    const t = action as LocaleChangeAction;
-    return { ...state, locale: t.locale, translations: translations[t.locale] };
+  case AppActionType.LOCALE_CHANGED:
+    return { ...state, locale: action.locale, translations: translations[action.locale] };
   default:
     return state;
   }

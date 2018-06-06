@@ -1,4 +1,8 @@
+/* tslint:disable no-reference */
 ///<reference path='../../src/global.d.ts' />
+/**
+ * @file Utility functions for the build process.
+ */
 
 import fs from 'fs';
 import _ from 'lodash';

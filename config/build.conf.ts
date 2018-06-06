@@ -57,13 +57,14 @@ const config: Configuration = {
       NODE_ENV: `production`,
     }),
     new DefinePlugin({
-      $APP_CONFIG: JSON.stringify(appConfig),
-      $LOCALE_CONFIG: JSON.stringify({
+      __APP_CONFIG__: JSON.stringify(appConfig),
+      __INTL_CONFIG__: JSON.stringify({
+        defaultLocale: appConfig.locales[0],
         localeData: getLocaleDataFromDir(localesDir, locales),
         locales,
-        translations: getTranslationsFromDir(localesDir, locales),
+        dict: getTranslationsFromDir(localesDir, locales),
       }),
-      $ROUTES_CONFIG: JSON.stringify(getLocalizedRoutesFromDir(path.join(inputDir, `containers`), locales)),
+      __ROUTES_CONFIG__: JSON.stringify(getLocalizedRoutesFromDir(path.join(inputDir, `containers`), locales)),
     }),
     new HTMLPlugin({
       appConfig,
