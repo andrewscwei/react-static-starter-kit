@@ -4,5 +4,5 @@ set -e
 
 source .circleci/get_opts.sh
 
-mkdir -p pack
-zip -r pack/$PACKAGE_FILE.zip build
+mkdir -p package
+zip -r package/$PACKAGE_FILE.zip build
