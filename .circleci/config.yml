@@ -8,7 +8,9 @@ jobs:
       - checkout
       - run:
           name: Install APT packages
-          command: apt-get update && apt-get install jq -y
+          command: |
+            apt-get update -y
+            apt-get install jq zip -y
       - restore_cache:
           keys:
             - dependency-cache-{{ checksum "yarn.lock" }}
@@ -26,8 +28,13 @@ jobs:
       - run:
           name: Test
           command: npm test
+      - run:
+          name: Pack
+          command: .circleci/pack.sh
       - store_artifacts:
           path: ~/repo/build
+      - store_artifacts:
+          path: ~/repo/pack
 
   build_test_and_deploy:
     working_directory: ~/repo
@@ -37,7 +44,9 @@ jobs:
       - checkout
       - run:
           name: Install APT packages
-          command: apt-get update && apt-get install jq -y
+          command: |
+            apt-get update -y
+            apt-get install jq zip -y
       - restore_cache:
           keys:
             - dependency-cache-{{ checksum "yarn.lock" }}
@@ -55,8 +64,13 @@ jobs:
       - run:
           name: Test
           command: npm test
+      - run:
+          name: Pack
+          command: .circleci/pack.sh
       - store_artifacts:
           path: ~/repo/build
+      - store_artifacts:
+          path: ~/repo/pack
       - deploy:
           name: Deploy
           command: .circleci/deploy_to_netlify.sh
