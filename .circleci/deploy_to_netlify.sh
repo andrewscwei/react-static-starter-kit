@@ -38,7 +38,6 @@ if [[ $SITE_ID == "" ]]; then
 
   echo "$SITE_ID" > .circleci/netlify
 
-  git config push.default matching
   git config user.name "$CIRCLE_PROJECT_USERNAME"
   git config user.email "$CIRCLE_PROJECT_USERNAME@users.noreply.github.com"
   git add ./.circleci/netlify
