@@ -43,7 +43,7 @@ if [[ $SITE_ID == "" ]]; then
   git config user.email "$CIRCLE_PROJECT_USERNAME@users.noreply.github.com"
   git add ./.circleci/netlify
   git commit -m "[Skip CI] Adding generated netlify file"
-  git push -f $GIT_ORIGIN_URL
+  git push -f $GIT_ORIGIN_URL HEAD:master
 
   echo
   echo "Done! Your site URL is:"
