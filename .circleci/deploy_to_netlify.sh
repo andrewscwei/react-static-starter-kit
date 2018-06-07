@@ -37,6 +37,7 @@ if [[ $SITE_ID == "" ]]; then
   SITE_URL=https://$SITE_NAME.netlify.com
 
   echo "$SITE_ID" > .circleci/netlify
+  echo "$GIT_ORIGIN_URL"
 
   git config user.name "$CIRCLE_PROJECT_USERNAME"
   git config user.email "$CIRCLE_PROJECT_USERNAME@users.noreply.github.com"
