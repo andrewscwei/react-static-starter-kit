@@ -64,6 +64,8 @@ jobs:
   deploy:
     <<: *defaults
     steps:
+      - attach_workspace:
+          at: .
       - deploy:
           name: Deploy
           command: .circleci/deploy_to_netlify.sh
