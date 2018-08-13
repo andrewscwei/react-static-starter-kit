@@ -5,8 +5,11 @@
  */
 
 import fs from 'fs';
+import glob from 'glob';
 import _ from 'lodash';
 import path from 'path';
+
+const cwd = path.join(__dirname, `../../`);
 
 export function getRoutesFromDir(dir: string, baseDir: string = dir): Array<RouteData> {
   const pages: Array<string> = fs.readdirSync(dir);
@@ -76,16 +79,18 @@ export function getTranslationsFromDir(dir: string, whitelistedLocales?: Array<s
 }
 
 export function getLocaleDataFromDir(dir: string, whitelistedLocales?: Array<string>): LocaleDataDict {
+  const dict: LocaleDataDict = {};
   const locales = whitelistedLocales ? whitelistedLocales : getLocalesFromDir(dir);
 
-  return locales.reduce((dict: LocaleDataDict, locale:string) => {
-    try {
-      const data: ReactIntl.LocaleData = require(`react-intl/locale-data/${locale}`);
-      dict[locale] = data;
+  glob.sync(path.resolve(cwd, `node_modules/react-intl/locale-data/*.js`)).forEach((file: string) => {
+    const locale = path.basename(file, `.js`);
+
+    if (~locales.indexOf(locale)) {
+      dict[locale] = require(path.resolve(file));
     }
-    catch (err) {}
-    return dict;
-  }, {});
+  });
+
+  return dict;
 }
 
 export function getLocalizedRoutesFromDir(dir: string, whitelistedLocales: Array<string>): Array<RouteData> {

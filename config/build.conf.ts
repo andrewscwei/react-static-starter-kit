@@ -48,6 +48,9 @@ const config: Configuration = {
     publicPath: isDev ? `/` : appConfig.build.publicPath,
     sourceMapFilename: `[file].map`,
   },
+  performance: {
+    hints: isDev ? false : `warning`,
+  },
   plugins: [
     new CopyPlugin([{
       from: path.join(inputDir, `static`),
