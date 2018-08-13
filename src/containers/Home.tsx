@@ -1,8 +1,9 @@
 import ReactLogo from '@/components/ReactLogo';
-import React, { PureComponent } from 'react';
+import { AppState } from '@/store';
+import React, { ComponentType, PureComponent } from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import { Action, bindActionCreators, Dispatch } from 'redux';
 import styled from 'styled-components';
 
 const StyledRoot = styled.div`
@@ -39,17 +40,32 @@ const StyledRoot = styled.div`
   }
 `;
 
-const StyledReactLogo = styled(ReactLogo)`
+const StyledReactLogo = styled(ReactLogo as ComponentType)`
   height: 200px;
   margin-bottom: 30px;
 `;
 
-interface Props {
+interface StateProps {
   t: TranslationData;
 }
 
-const mapStateToProps = (state: any): Partial<Props> => ({ t: state.intl.translations });
-const mapDispatchToProps = (dispatch: any): Partial<Props> => bindActionCreators({}, dispatch);
+interface DispatchProps {
+
+}
+
+interface OwnProps {
+
+}
+
+interface Props extends StateProps, DispatchProps, OwnProps {}
+
+const mapStateToProps = (state: AppState): StateProps => ({
+  t: state.intl.translations,
+});
+
+const mapDispatchToProps = (dispatch: Dispatch<Action>): DispatchProps => bindActionCreators({
+
+}, dispatch);
 
 class Home extends PureComponent<Props> {
   render() {

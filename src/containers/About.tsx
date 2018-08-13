@@ -1,9 +1,9 @@
-import { fetchUsers } from '@/store/users';
-import { AppState, User } from '@/types';
+import { AppState } from '@/store';
+import { fetchUsers, User } from '@/store/users';
 import React, { PureComponent } from 'react';
 import Helmet from 'react-helmet';
-import { connect, Store } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { Action, bindActionCreators, Dispatch, Store } from 'redux';
 import styled from 'styled-components';
 
 const StyledRoot = styled.div`
@@ -39,8 +39,29 @@ const StyledRoot = styled.div`
   }
 `;
 
-const mapStateToProps = (state: any): Partial<Props> => ({ t: state.intl.translations, users: state.users.items });
-const mapDispatchToProps = (dispatch: any): Partial<Props> => bindActionCreators({ fetchUsers }, dispatch);
+interface StateProps {
+  t: TranslationData;
+  users: ReadonlyArray<User>;
+}
+
+interface DispatchProps {
+  fetchUsers(): void;
+}
+
+interface OwnProps {
+
+}
+
+interface Props extends StateProps, DispatchProps, OwnProps {}
+
+const mapStateToProps = (state: AppState): StateProps => ({
+  t: state.intl.translations,
+  users: state.users.items,
+});
+
+const mapDispatchToProps = (dispatch: Dispatch<Action>): DispatchProps => bindActionCreators({
+  fetchUsers,
+}, dispatch);
 
 interface Props {
   t: TranslationData;

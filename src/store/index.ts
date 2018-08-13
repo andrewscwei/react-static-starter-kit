@@ -1,6 +1,15 @@
-/**
- * @file This file bootstraps all reducers.
- */
+import intl, { IntlState } from '@/store/intl';
+import users, { UsersState } from '@/store/users';
+import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
+import thunk from 'redux-thunk';
 
-export { default as intl } from './intl';
-export { default as users } from './users';
+const composeEnhancers = process.env.NODE_ENV === `development` && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+export interface AppState {
+  intl: IntlState;
+  users: UsersState;
+}
+
+export const reducer = combineReducers({ intl, users });
+
+export default createStore(reducer, window.__INITIAL_STATE__ || {}, composeEnhancers(applyMiddleware(thunk)));

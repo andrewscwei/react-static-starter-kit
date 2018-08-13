@@ -6,7 +6,7 @@
 import CopyPlugin from 'copy-webpack-plugin';
 import HTMLPlugin from 'html-webpack-plugin';
 import path from 'path';
-import { Configuration, DefinePlugin, EnvironmentPlugin, IgnorePlugin } from 'webpack';
+import { Configuration, DefinePlugin, EnvironmentPlugin, IgnorePlugin, Plugin } from 'webpack';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import appConfig from './app.conf';
 import { getLocaleDataFromDir, getLocalesFromDir, getLocalizedRoutesFromDir, getTranslationsFromDir } from './utils';
@@ -83,12 +83,12 @@ const config: Configuration = {
     ...!useBundleAnalyzer ? [] : [
       new BundleAnalyzerPlugin(),
     ],
-  ],
+  ] as Array<Plugin>,
   ...!isDev ? {} : {
     devServer: {
       historyApiFallback: true,
     },
-  },
+  } as any,
   resolve: {
     alias: {
       '@': inputDir,

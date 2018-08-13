@@ -1,7 +1,24 @@
-import { AppAction, AppActionType, UsersLoadedAction, UsersState } from '@/types';
-import { Dispatch } from 'react-redux';
-import { Action } from 'redux';
+import { Action, Dispatch } from 'redux';
 import request from 'superagent';
+
+export interface User {
+  [key: string]: any;
+}
+
+export interface UsersState {
+  items: ReadonlyArray<User>;
+}
+
+export enum UsersActionType {
+  USERS_LOADED = 'usersLoaded',
+}
+
+export interface UsersLoadedAction {
+  items: ReadonlyArray<User>;
+  type: UsersActionType.USERS_LOADED;
+}
+
+export type UsersAction = UsersLoadedAction;
 
 const initialState: UsersState = {
   items: [],
@@ -13,16 +30,16 @@ export function fetchUsers() {
     const items = res.body;
     const action: UsersLoadedAction = {
       items,
-      type: AppActionType.USERS_LOADED,
+      type: UsersActionType.USERS_LOADED,
     };
 
     dispatch(action);
   };
 }
 
-export default function reducer(state = initialState, action: AppAction): UsersState {
+export default function reducer(state = initialState, action: UsersAction): UsersState {
   switch (action.type) {
-  case AppActionType.USERS_LOADED:
+  case UsersActionType.USERS_LOADED:
     return { ...state, items: action.items };
   default:
     return state;

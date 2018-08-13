@@ -3,22 +3,18 @@
  */
 
 import App from '@/containers/App';
-import * as reducers from '@/store';
+import store from '@/store';
 import React from 'react';
 import { IntlProvider } from 'react-intl';
 import { connect, Provider } from 'react-redux';
 import { BrowserRouter as Router, Route, RouteComponentProps } from 'react-router-dom';
 import { render } from 'react-snapshot';
-import { applyMiddleware, combineReducers, createStore } from 'redux';
-import thunk from 'redux-thunk';
 
 const ConnectedIntlProvider = connect((state: any) => ({
   key: state.intl.locale,
   locale: state.intl.locale,
   messages: state.intl.translations,
 }))(IntlProvider);
-
-const store = createStore(combineReducers(reducers), {}, applyMiddleware(thunk));
 
 render(
   <Provider store={store}>

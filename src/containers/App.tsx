@@ -4,13 +4,14 @@
 
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
+import { AppState } from '@/store';
 import { changeLocale } from '@/store/intl';
 import theme from '@/styles/theme';
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { Route, RouteComponentProps, Switch } from 'react-router-dom';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
-import { bindActionCreators } from 'redux';
+import { Action, bindActionCreators, Dispatch } from 'redux';
 import styled, { injectGlobal, ThemeProvider } from 'styled-components';
 import normalize from 'styled-normalize';
 
@@ -50,16 +51,31 @@ const StyledRoot = styled.div`
   width: 100%;
 `;
 
-interface Props {
+interface StateProps {
   locale: string;
-  locales: Array<string>;
-  route: RouteComponentProps<any>;
+  locales: ReadonlyArray<string>;
   t: TranslationData;
+}
+
+interface DispatchProps {
   changeLocale(locale: string): void;
 }
 
-const mapStateToProps = (state: any): Partial<Props> => ({ t: state.intl.translations, locale: state.intl.locale, locales: state.intl.locales });
-const mapDispatchToProps = (dispatch: any): Partial<Props> => bindActionCreators({ changeLocale }, dispatch);
+interface OwnProps {
+  route: RouteComponentProps<any>;
+}
+
+interface Props extends StateProps, DispatchProps, OwnProps {}
+
+const mapStateToProps = (state: AppState): StateProps => ({
+  t: state.intl.translations,
+  locale: state.intl.locale,
+  locales: state.intl.locales,
+});
+
+const mapDispatchToProps = (dispatch: Dispatch<Action>): DispatchProps => bindActionCreators({
+  changeLocale,
+}, dispatch);
 
 class App extends PureComponent<Props> {
   componentWillMount() {
@@ -95,17 +111,17 @@ class App extends PureComponent<Props> {
     return (
       <ThemeProvider theme={theme}>
         <StyledRoot>
-          <Header locale={locale} t={t}/>
+          <Header/>
           <TransitionGroup>
             <CSSTransition key={route.location.key} timeout={300} classNames='fade'>
               <Switch location={route.location}>{this.generateRoutes()}</Switch>
             </CSSTransition>
           </TransitionGroup>
-          <Footer t={t}/>
+          <Footer/>
         </StyledRoot>
       </ThemeProvider>
     );
   }
 }
 
-export default connect<Partial<Props>, Partial<Props>, Partial<Props>>(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
