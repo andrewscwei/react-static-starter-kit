@@ -36,7 +36,7 @@ jobs:
           command: npm test
       - run:
           name: Pack
-          command: .circleci/pack.sh
+          command: ./.circleci/pack.sh
       - store_artifacts:
           path: ~/repo/build
       - store_artifacts:
@@ -71,7 +71,7 @@ jobs:
           command: apt-get update && apt-get install jq -y
       - deploy:
           name: Deploy
-          command: .circleci/deploy_to_netlify.sh
+          command: ./.circleci/deploy_to_netlify.sh
 
 workflows:
   version: 2
