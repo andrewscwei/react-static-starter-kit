@@ -1,7 +1,7 @@
 defaults: &defaults
   working_directory: ~/repo
   docker:
-    - image: circleci/node:8.11.3-browsers
+    - image: node:8.11.3
 
 version: 2
 jobs:
@@ -11,7 +11,12 @@ jobs:
       - checkout
       - run:
           name: Install APT packages
-          command: sudo apt-get update && sudo apt-get install jq zip -y
+          command: |
+            apt-get update && apt-get install jq zip -y
+            apt-get update && apt-get install -yq libgconf-2-4
+            apt-get update && apt-get install -y wget --no-install-recommends
+            wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
+            apt-get update && apt-get install -y google-chrome-unstable fonts-ipafont-gothic fonts-wqy-zenhei fonts-thai-tlwg fonts-kacst ttf-freefont --no-install-recommends
       - restore_cache:
           keys:
             - dependency-cache-{{ checksum "yarn.lock" }}
