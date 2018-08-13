@@ -1,7 +1,5 @@
 #!/bin/bash
 
-set -e
-
 source .circleci/get_opts.sh
 
 mkdir -p package
