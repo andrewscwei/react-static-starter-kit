@@ -5,9 +5,9 @@
  */
 
 import fs from 'fs';
-import glob from 'glob';
 import _ from 'lodash';
 import path from 'path';
+import requireDir from 'require-dir';
 
 const cwd = path.join(__dirname, `../../`);
 
@@ -67,28 +67,29 @@ export function getLocalesFromDir(dir: string, defaultLocale?: string, whitelist
 }
 
 export function getTranslationsFromDir(dir: string, whitelistedLocales?: Array<string>): TranslationDataDict {
-  const locales = whitelistedLocales
-    ? whitelistedLocales
-    : getLocalesFromDir(dir);
+  const dict: TranslationDataDict = {};
+  const locales = whitelistedLocales ? whitelistedLocales : getLocalesFromDir(dir);
+  const t: { [key: string]: any } = requireDir(path.resolve(dir));
 
-  return locales.reduce((dict: TranslationDataDict, locale: string) => {
-    const translations: TranslationData = require(path.join(dir, `${locale}.json`));
-    dict[locale] = translations;
-    return dict;
-  }, {});
+  for (const locale in t) {
+    if (~locales.indexOf(locale)) {
+      dict[locale] = t[locale];
+    }
+  }
+
+  return dict;
 }
 
 export function getLocaleDataFromDir(dir: string, whitelistedLocales?: Array<string>): LocaleDataDict {
   const dict: LocaleDataDict = {};
   const locales = whitelistedLocales ? whitelistedLocales : getLocalesFromDir(dir);
+  const t: { [key: string]: any } = requireDir(path.resolve(cwd, `node_modules`, `react-intl/locale-data`));
 
-  glob.sync(path.resolve(cwd, `node_modules/react-intl/locale-data/*.js`)).forEach((file: string) => {
-    const locale = path.basename(file, `.js`);
-
+  for (const locale in t) {
     if (~locales.indexOf(locale)) {
-      dict[locale] = require(path.resolve(file));
+      dict[locale] = t[locale];
     }
-  });
+  }
 
   return dict;
 }
