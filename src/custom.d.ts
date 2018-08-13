@@ -1,13 +1,15 @@
 declare const __APP_CONFIG__: { [key: string]: any };
+
 declare const __INTL_CONFIG__: {
   defaultLocale: string;
   localeData: Readonly<LocaleDataDict>;
   locales: ReadonlyArray<string>;
   dict: Readonly<TranslationDataDict>;
 };
-declare const __ROUTES_CONFIG__: RouteData[];
 
-declare module 'react-snapshot';
+declare const __ROUTES_CONFIG__: Array<RouteData>;
+
+declare module 'prerender-spa-plugin';
 
 interface TranslationData {
   [key: string]: string;
@@ -30,4 +32,5 @@ interface RouteData {
 interface Window {
   __INITIAL_STATE__: any;
   __REDUX_DEVTOOLS_EXTENSION_COMPOSE__: any;
+  __PRERENDERING__: any;
 }

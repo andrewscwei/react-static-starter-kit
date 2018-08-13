@@ -6,6 +6,7 @@
 import CopyPlugin from 'copy-webpack-plugin';
 import HTMLPlugin from 'html-webpack-plugin';
 import path from 'path';
+import PrerenderSPAPlugin, { PuppeteerRenderer as Renderer } from 'prerender-spa-plugin';
 import { Configuration, DefinePlugin, EnvironmentPlugin, IgnorePlugin, Plugin } from 'webpack';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import appConfig from './app.conf';
@@ -83,6 +84,31 @@ const config: Configuration = {
     ...!useBundleAnalyzer ? [] : [
       new BundleAnalyzerPlugin(),
     ],
+    ...isDev ? [] : [
+      new PrerenderSPAPlugin({
+        staticDir: outputDir,
+        routes: [
+          `/`,
+          `/about/`,
+          `/ja/`,
+          `/ja/about/`,
+          `/404`,
+        ],
+        // Optional minification.
+        minify: {
+          collapseBooleanAttributes: true,
+          collapseWhitespace: true,
+          decodeEntities: true,
+          keepClosingSlash: true,
+          sortAttributes: true,
+        },
+        renderer: new Renderer({
+          renderAfterTime: 100,
+          injectProperty: `__PRERENDERING__`,
+          inject: {},
+        }),
+      }),
+    ]
   ] as Array<Plugin>,
   ...!isDev ? {} : {
     devServer: {

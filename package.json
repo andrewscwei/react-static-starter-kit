@@ -1,12 +1,12 @@
 {
   "name": "react-static-starter-kit",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "description": "Experimental React static prerendered app starter kit",
   "private": true,
   "license": "MIT",
   "scripts": {
     "clean": "rimraf build",
-    "build": "npm run clean && NODE_ENV=production webpack --colors --profile --config config/build.conf.ts --display-error-details && react-snapshot",
+    "build": "npm run clean && NODE_ENV=production webpack --colors --profile --config config/build.conf.ts --display-error-details",
     "test": "echo \"No tests yet\"",
     "dev": "NODE_ENV=development webpack-dev-server --display-error-details --config config/build.conf.ts --open",
     "lint": "npm run lint:js && npm run lint:css",
@@ -15,15 +15,6 @@
     "lint:js:fix": "npm run lint:js -- --fix",
     "lint:css": "stylelint \"src/**/*.tsx\"",
     "lint:css:fix": "npm run lint:css -- --fix"
-  },
-  "reactSnapshot": {
-    "include": [
-      "/",
-      "/about/",
-      "/ja/",
-      "/ja/about/",
-      "/404"
-    ]
   },
   "devDependencies": {
     "@types/copy-webpack-plugin": "^4.4.1",
@@ -46,6 +37,7 @@
     "file-loader": "^1.1.11",
     "html-webpack-plugin": "^3.2.0",
     "lodash": "^4.17.10",
+    "prerender-spa-plugin": "^3.2.1",
     "raw-loader": "^0.5.1",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
@@ -54,7 +46,6 @@
     "react-redux": "^5.0.7",
     "react-router-config": "^1.0.0-beta.4",
     "react-router-dom": "^4.3.1",
-    "react-snapshot": "^1.3.0",
     "react-transition-group": "^2.4.0",
     "redux": "^4.0.0",
     "redux-thunk": "^2.3.0",

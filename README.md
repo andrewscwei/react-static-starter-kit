@@ -4,7 +4,7 @@ This is an **experimental** starter kit for a React static app.
 
 ## Features
 
-1. Prerendering with [React Snapshot](https://github.com/geelen/react-snapshot) (in production)
+1. Prerendering with [Prerender SPA Plugin](https://github.com/chrisvfritz/prerender-spa-plugin) (in production)
 2. HMR (in development)
 3. [TypeScript](https://www.typescriptlang.org/)
 4. [React Router 4](https://reacttraining.com/react-router/), routes automatically generated and localized

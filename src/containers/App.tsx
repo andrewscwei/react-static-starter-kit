@@ -12,8 +12,10 @@ import { connect } from 'react-redux';
 import { Route, RouteComponentProps, Switch } from 'react-router-dom';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { Action, bindActionCreators, Dispatch } from 'redux';
-import styled, { injectGlobal, ThemeProvider } from 'styled-components';
+import * as styledComponents from 'styled-components';
 import normalize from 'styled-normalize';
+
+const { default: styled, __DO_NOT_USE_OR_YOU_WILL_BE_HAUNTED_BY_SPOOKY_GHOSTS: sc, injectGlobal, ThemeProvider } = styledComponents as any;
 
 injectGlobal`
   ${normalize} /* stylelint-disable-line max-empty-lines */
@@ -78,6 +80,13 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>): DispatchProps => bindAc
 }, dispatch);
 
 class App extends PureComponent<Props> {
+  componentDidMount() {
+    if (window.__PRERENDERING__) {
+      const styles = sc.StyleSheet.instance.toHTML();
+      document.getElementsByTagName('head')[0].innerHTML += styles;
+    }
+  }
+
   componentWillMount() {
     this.updateLocale();
   }

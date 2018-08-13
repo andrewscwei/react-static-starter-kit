@@ -5,10 +5,10 @@
 import App from '@/containers/App';
 import store from '@/store';
 import React from 'react';
+import { render } from 'react-dom';
 import { IntlProvider } from 'react-intl';
 import { connect, Provider } from 'react-redux';
 import { BrowserRouter as Router, Route, RouteComponentProps } from 'react-router-dom';
-import { render } from 'react-snapshot';
 
 const ConnectedIntlProvider = connect((state: any) => ({
   key: state.intl.locale,
