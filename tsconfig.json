@@ -16,6 +16,9 @@
         "src/*"
       ]
     },
+    "plugins": [{
+      "name": "typescript-styled-plugin"
+    }],
     "removeComments": true,
     "sourceMap": true,
     "strict": true,
@@ -23,6 +26,7 @@
   },
   "include": [
     "src/**/*",
+    "config/**/*",
   ],
   "exclude": [
     "node_modules",
