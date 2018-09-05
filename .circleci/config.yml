@@ -17,20 +17,21 @@ jobs:
             apt-get update && apt-get install -y wget --no-install-recommends
             wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
             apt-get update && apt-get install -y google-chrome-unstable fonts-ipafont-gothic fonts-wqy-zenhei fonts-thai-tlwg fonts-kacst ttf-freefont --no-install-recommends
+            apt-get update && apt-get install nasm -y
       - restore_cache:
           keys:
-            - dependency-cache-{{ checksum "yarn.lock" }}
-            - dependency-cache-
+            - v1-npm-deps-{{ checksum "yarn.lock" }}
+            - v1-npm-deps-
       - run:
           name: Install NPM dependencies
           command: yarn
       - save_cache:
-          key: dependency-cache-{{ checksum "yarn.lock" }}
+          key: v1-npm-deps-{{ checksum "yarn.lock" }}
           paths:
             - "node_modules"
       - run:
           name: Build
-          command: npm run build
+          command: BUILD_NUMBER=$CIRCLE_SHA1 npm run build
       - run:
           name: Test
           command: npm test

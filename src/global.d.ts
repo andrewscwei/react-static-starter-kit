@@ -9,6 +9,7 @@ declare const __INTL_CONFIG__: {
 
 declare const __ROUTES_CONFIG__: Array<RouteData>;
 
+declare module 'happypack';
 declare module 'prerender-spa-plugin';
 
 interface TranslationData {
