@@ -67,13 +67,19 @@ interface OwnProps {
   route: RouteComponentProps<any>;
 }
 
-export interface Props extends StateProps, DispatchProps, OwnProps {}
+interface Props extends StateProps, DispatchProps, OwnProps {}
 
-export interface State {
+const mapStateToProps = (state: AppState): StateProps => ({
+  t: state.intl.translations,
+  locale: state.intl.locale,
+  locales: state.intl.locales,
+});
 
-}
+const mapDispatchToProps = (dispatch: Dispatch<Action>): DispatchProps => bindActionCreators({
+  changeLocale,
+}, dispatch);
 
-class App extends PureComponent<Props, State> {
+class App extends PureComponent<Props> {
   componentDidMount() {
     if (window.__PRERENDERING__) {
       const styles = sc.StyleSheet.instance.toHTML();
@@ -127,13 +133,4 @@ class App extends PureComponent<Props, State> {
   }
 }
 
-export default connect(
-  (state: AppState): StateProps => ({
-    t: state.intl.translations,
-    locale: state.intl.locale,
-    locales: state.intl.locales,
-  }),
-  (dispatch: Dispatch<Action>): DispatchProps => bindActionCreators({
-    changeLocale,
-  }, dispatch),
-)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);

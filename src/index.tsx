@@ -26,5 +26,5 @@ render(
       </Router>
     </ConnectedIntlProvider>
   </Provider>,
-  document.getElementById('app'),
+  document.getElementById(`app`),
 );

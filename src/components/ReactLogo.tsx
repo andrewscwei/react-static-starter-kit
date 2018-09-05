@@ -1,4 +1,7 @@
-import React, { ReactNode, SFC } from 'react';
+import { AppState } from '@/store';
+import React, { PureComponent } from 'react';
+import { connect } from 'react-redux';
+import { Action, bindActionCreators, Dispatch } from 'redux';
 import styled from 'styled-components';
 
 const StyledRoot = styled.figure`
@@ -8,7 +11,7 @@ const StyledRoot = styled.figure`
   padding: 0;
   transform-origin: center;
 
-  > svg {
+  & > svg {
     height: 100%;
     width: auto;
   }
@@ -19,13 +22,32 @@ const StyledRoot = styled.figure`
   }
 `;
 
-export interface Props {
+interface StateProps {}
+
+interface DispatchProps {}
+
+interface OwnProps {
   className?: string;
-  children?: ReactNode;
 }
 
-const ReactLogo: SFC<Props> = ({ className }) => (
-  <StyledRoot className={className} dangerouslySetInnerHTML={{ __html: require('!raw-loader!@/assets/images/react-logo.svg') }}/>
-);
+interface Props extends StateProps, DispatchProps, OwnProps {}
 
-export default ReactLogo;
+const mapStateToProps = (state: AppState): StateProps => ({
+
+});
+
+const mapDispatchToProps = (dispatch: Dispatch<Action>): DispatchProps => bindActionCreators({
+
+}, dispatch);
+
+class ReactLogo extends PureComponent<Partial<Props>> {
+  render() {
+    const { className } = this.props;
+
+    return (
+      <StyledRoot className={className} dangerouslySetInnerHTML={{ __html: require(`!raw-loader!@/assets/images/react-logo.svg`) }}/>
+    );
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ReactLogo);

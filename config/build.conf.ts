@@ -4,7 +4,6 @@
  */
 
 import CopyPlugin from 'copy-webpack-plugin';
-import HappyPack from 'happypack';
 import HTMLPlugin from 'html-webpack-plugin';
 import path from 'path';
 import PrerenderSPAPlugin, { PuppeteerRenderer as Renderer } from 'prerender-spa-plugin';
@@ -13,64 +12,53 @@ import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import appConfig from './app.conf';
 import { getLocaleDataFromDir, getLocalesFromDir, getLocalizedRoutesFromDir, getTranslationsFromDir } from './utils';
 
-const isDev: boolean = process.env.NODE_ENV === 'development';
+const isDev: boolean = process.env.NODE_ENV === `development`;
 const useBundleAnalyzer: boolean = (!isDev && appConfig.build.analyzer);
-const cwd: string = path.join(__dirname, '../');
-const inputDir: string = path.join(cwd, 'src');
-const outputDir: string = path.join(cwd, 'build');
-const localesDir: string = path.join(cwd, 'config/locales');
+const cwd: string = path.join(__dirname, `../`);
+const inputDir: string = path.join(cwd, `src`);
+const outputDir: string = path.join(cwd, `build`);
+const localesDir: string = path.join(cwd, `config/locales`);
 const locales = getLocalesFromDir(localesDir, appConfig.locales[0], appConfig.locales);
 
 const config: Configuration = {
-  devtool: isDev ? 'eval-source-map' : (appConfig.build.sourceMap ? 'source-map' : false),
+  devtool: isDev ? `eval-source-map` : (appConfig.build.sourceMap ? `source-map` : false),
   entry: {
-    bundle: path.join(inputDir, 'index.tsx'),
+    bundle: path.join(inputDir, `index.tsx`),
   },
-  mode: isDev ? 'development' : 'production',
+  mode: isDev ? `development` : `production`,
   module: {
     rules: [{
       exclude: /node_modules/,
       test: /\.tsx?$/,
-      use: 'happypack/loader?id=ts',
+      use: `ts-loader`,
     }, {
-      test: /\.(jpe?g|png|gif|svg)(\?.*)?$/,
-      loaders: [
-        `url-loader?limit=8192&name=assets/images/[name]${isDev ? '' : '.[hash:6]'}.[ext]`,
-        `image-webpack-loader?${isDev ? 'disable' : ''}`,
-      ],
+      test: /\.(jpe?g|png|gif|svg|ico)(\?.*)?$/,
+      use: `url-loader?limit=10000&name=assets/images/[name]${isDev ? `` : `.[hash:6]`}.[ext]`,
     }, {
       test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
-      use: `url-loader?limit=8192&name=assets/media/[name]${isDev ? '' : '.[hash:6]'}.[ext]`,
+      use: `url-loader?limit=10000&name=assets/media/[name]${isDev ? `` : `.[hash:6]`}.[ext]`,
     }, {
       test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
-      use: `url-loader?limit=8192&name=assets/fonts/[name]${isDev ? '' : '.[hash:6]'}.[ext]`,
+      use: `url-loader?limit=10000&name=assets/fonts/[name]${isDev ? `` : `.[hash:6]`}.[ext]`,
     }],
   },
   output: {
-    filename: isDev ? '[name].js' : '[name].[chunkhash].js',
+    filename: isDev ? `[name].js` : `[name].[chunkhash].js`,
     path: outputDir,
-    publicPath: isDev ? '/' : appConfig.build.publicPath,
-    sourceMapFilename: '[file].map',
+    publicPath: isDev ? `/` : appConfig.build.publicPath,
+    sourceMapFilename: `[file].map`,
   },
   performance: {
-    hints: isDev ? false : 'warning',
+    hints: isDev ? false : `warning`,
   },
   plugins: [
     new CopyPlugin([{
-      from: path.join(inputDir, 'static'),
-      ignore: ['.*'],
+      from: path.join(inputDir, `static`),
+      ignore: [`.*`],
       to: outputDir,
     }]),
     new EnvironmentPlugin({
-      NODE_ENV: 'production',
-    }),
-    new HappyPack({
-      id: 'ts',
-      threads: 2,
-      loaders: [{
-        path: 'ts-loader',
-        query: { happyPackMode: true },
-      }],
+      NODE_ENV: `production`,
     }),
     new DefinePlugin({
       __APP_CONFIG__: JSON.stringify(appConfig),
@@ -80,18 +68,18 @@ const config: Configuration = {
         locales,
         dict: getTranslationsFromDir(localesDir, locales),
       }),
-      __ROUTES_CONFIG__: JSON.stringify(getLocalizedRoutesFromDir(path.join(inputDir, 'containers'), locales)),
+      __ROUTES_CONFIG__: JSON.stringify(getLocalizedRoutesFromDir(path.join(inputDir, `containers`), locales)),
     }),
     new HTMLPlugin({
       appConfig,
-      filename: 'index.html',
+      filename: `index.html`,
       inject: true,
       minify: {
         collapseWhitespace: true,
         removeAttributeQuotes: true,
         removeComments: true,
       },
-      template: path.join(inputDir, 'templates', 'index.html'),
+      template: path.join(inputDir, `templates`, `index.html`),
     }),
     ...isDev ? [] : [
       new IgnorePlugin(/^.*\/config\/.*$/),
@@ -103,11 +91,11 @@ const config: Configuration = {
       new PrerenderSPAPlugin({
         staticDir: outputDir,
         routes: [
-          '/',
-          '/about/',
-          '/ja/',
-          '/ja/about/',
-          '/404',
+          `/`,
+          `/about/`,
+          `/ja/`,
+          `/ja/about/`,
+          `/404`,
         ],
         // Optional minification.
         minify: {
@@ -119,11 +107,11 @@ const config: Configuration = {
         },
         renderer: new Renderer({
           renderAfterTime: 100,
-          injectProperty: '__PRERENDERING__',
+          injectProperty: `__PRERENDERING__`,
           inject: {},
         }),
       }),
-    ],
+    ]
   ] as Array<Plugin>,
   ...!isDev ? {} : {
     devServer: {
@@ -134,7 +122,7 @@ const config: Configuration = {
     alias: {
       '@': inputDir,
     },
-    extensions: ['.js', '.ts', '.tsx'],
+    extensions: [`.js`, `.ts`, `.tsx`],
   },
   stats: {
     colors: true,
@@ -142,7 +130,7 @@ const config: Configuration = {
     modules: true,
     reasons: true,
   },
-  target: 'web',
+  target: `web`,
 };
 
 export default config;

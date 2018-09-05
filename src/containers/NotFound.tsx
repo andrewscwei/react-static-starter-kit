@@ -19,7 +19,7 @@ const StyledRoot = styled.div`
   position: absolute;
   width: 100%;
 
-  h1 {
+  & h1 {
     color: ${props => props.theme.titleColor};
     font-size: 2.4em;
     font-weight: 700;
@@ -43,13 +43,17 @@ interface OwnProps {
 
 }
 
-export interface Props extends StateProps, DispatchProps, OwnProps {}
+interface Props extends StateProps, DispatchProps, OwnProps {}
 
-export interface State {
+const mapStateToProps = (state: AppState): StateProps => ({
+  t: state.intl.translations,
+});
 
-}
+const mapDispatchToProps = (dispatch: Dispatch<Action>): DispatchProps => bindActionCreators({
 
-class NotFound extends PureComponent<Props, State> {
+}, dispatch);
+
+class NotFound extends PureComponent<Props> {
   render() {
     const { t } = this.props;
 
@@ -62,9 +66,9 @@ class NotFound extends PureComponent<Props, State> {
         return (
           <StyledRoot>
             <Helmet>
-              <title>{t['not-found-title']}</title>
+              <title>{t[`not-found-title`]}</title>
             </Helmet>
-            <h1>{t['not-found']}</h1>
+            <h1>{t[`not-found`]}</h1>
           </StyledRoot>
         );
       }}/>
@@ -72,11 +76,4 @@ class NotFound extends PureComponent<Props, State> {
   }
 }
 
-export default connect(
-  (state: AppState): StateProps => ({
-    t: state.intl.translations,
-  }),
-  (dispatch: Dispatch<Action>): DispatchProps => bindActionCreators({
-
-  }, dispatch),
-)(NotFound);
+export default connect(mapStateToProps, mapDispatchToProps)(NotFound);
