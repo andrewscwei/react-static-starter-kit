@@ -4,18 +4,18 @@
 
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
-import { AppState } from '@/store';
 import { changeLocale } from '@/store/intl';
 import theme from '@/styles/theme';
+import PropTypes from 'prop-types';
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
-import { Route, RouteComponentProps, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
-import { Action, bindActionCreators, Dispatch } from 'redux';
+import { bindActionCreators } from 'redux';
 import * as styledComponents from 'styled-components';
 import normalize from 'styled-normalize';
 
-const { default: styled, __DO_NOT_USE_OR_YOU_WILL_BE_HAUNTED_BY_SPOOKY_GHOSTS: sc, injectGlobal, ThemeProvider } = styledComponents as any;
+const { default: styled, __DO_NOT_USE_OR_YOU_WILL_BE_HAUNTED_BY_SPOOKY_GHOSTS: sc, injectGlobal, ThemeProvider } = styledComponents;
 
 injectGlobal`
   ${normalize} /* stylelint-disable-line max-empty-lines */
@@ -53,27 +53,13 @@ const StyledRoot = styled.div`
   width: 100%;
 `;
 
-interface StateProps {
-  locale: string;
-  locales: ReadonlyArray<string>;
-  t: TranslationData;
-}
+class App extends PureComponent {
+  static propTypes = {
+    locales: PropTypes.array.isRequired,
+    changeLocale: PropTypes.func.isRequired,
+    route: PropTypes.object.isRequired,
+  }
 
-interface DispatchProps {
-  changeLocale(locale: string): void;
-}
-
-interface OwnProps {
-  route: RouteComponentProps<any>;
-}
-
-export interface Props extends StateProps, DispatchProps, OwnProps {}
-
-export interface State {
-
-}
-
-class App extends PureComponent<Props, State> {
   componentDidMount() {
     if (window.__PRERENDERING__) {
       const styles = sc.StyleSheet.instance.toHTML();
@@ -102,14 +88,14 @@ class App extends PureComponent<Props, State> {
   }
 
   generateRoutes = () => {
-    return __ROUTES_CONFIG__.map((route: RouteData, index: number) => {
+    return __ROUTES_CONFIG__.map((route, index) => {
       const Component = require(`@/containers/${route.component}`).default;
       return <Route exact={route.exact} path={route.path} component={Component} key={index}/>;
     });
   }
 
   render() {
-    const { locale, route, t } = this.props;
+    const { route } = this.props;
 
     return (
       <ThemeProvider theme={theme}>
@@ -128,12 +114,10 @@ class App extends PureComponent<Props, State> {
 }
 
 export default connect(
-  (state: AppState): StateProps => ({
-    t: state.intl.translations,
-    locale: state.intl.locale,
+  (state) => ({
     locales: state.intl.locales,
   }),
-  (dispatch: Dispatch<Action>): DispatchProps => bindActionCreators({
+  (dispatch) => bindActionCreators({
     changeLocale,
   }, dispatch),
 )(App);

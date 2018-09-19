@@ -10,7 +10,7 @@ import { IntlProvider } from 'react-intl';
 import { connect, Provider } from 'react-redux';
 import { BrowserRouter as Router, Route, RouteComponentProps } from 'react-router-dom';
 
-const ConnectedIntlProvider = connect((state: any) => ({
+const ConnectedIntlProvider = connect((state) => ({
   key: state.intl.locale,
   locale: state.intl.locale,
   messages: state.intl.translations,
@@ -20,7 +20,7 @@ render(
   <Provider store={store}>
     <ConnectedIntlProvider>
       <Router>
-        <Route render={(routeProps: RouteComponentProps<any>) => (
+        <Route render={(routeProps) => (
           <App route={routeProps}/>
         )}/>
       </Router>

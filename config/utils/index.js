@@ -1,5 +1,3 @@
-/* tslint:disable no-reference */
-///<reference path='../../src/global.d.ts' />
 /**
  * @file Utility functions for the build process.
  */
@@ -11,18 +9,18 @@ import requireDir from 'require-dir';
 
 const cwd = path.join(__dirname, '../../');
 
-export function getRoutesFromDir(dir: string, baseDir: string = dir): Array<RouteData> {
-  const pages: Array<string> = fs.readdirSync(dir);
-  let out: Array<RouteData> = [];
+export function getRoutesFromDir(dir, baseDir = dir) {
+  const pages = fs.readdirSync(dir);
+  let out = [];
 
-  pages.forEach((fileName: string) => {
+  pages.forEach((fileName) => {
     if ((/(^|\/)\.[^/.]/g).test(fileName)) return;
 
-    const basename = path.basename(fileName, '.tsx');
+    const basename = path.basename(fileName, '.jsx');
     const ignorePattern = ['404', 'NotFound', 'Root', 'App'];
     const indexPattern = ['index', 'home'];
 
-    // Ignore files with certain names (i.e. NotFound.tsx). No need to generate a
+    // Ignore files with certain names (i.e. NotFound.jsx). No need to generate a
     // route for these files.
     if (~ignorePattern.indexOf(basename)) return;
 
@@ -33,8 +31,8 @@ export function getRoutesFromDir(dir: string, baseDir: string = dir): Array<Rout
     }
 
     // Infer the route for each valid file.
-    const tmp: Array<string> = path.join(dir, basename).replace(baseDir, '').split('/').filter((val: string) => val);
-    const url: string = tmp
+    const tmp = path.join(dir, basename).replace(baseDir, '').split('/').filter((val) => val);
+    const url = tmp
       .map((v, i)  => {
         const t = _.kebabCase(v);
         return ~indexPattern.indexOf(t) && (i === tmp.length - 1) ? '' : t;
@@ -42,7 +40,7 @@ export function getRoutesFromDir(dir: string, baseDir: string = dir): Array<Rout
       .join('/');
 
     out.push({
-      component: `${path.join(dir, fileName).replace(baseDir, '')}`.split('/').filter((val: string) => val).join('/'),
+      component: `${path.join(dir, fileName).replace(baseDir, '')}`.split('/').filter((val) => val).join('/'),
       exact: url === '',
       path: `/${url}`,
     });
@@ -51,12 +49,12 @@ export function getRoutesFromDir(dir: string, baseDir: string = dir): Array<Rout
   return out;
 }
 
-export function getLocalesFromDir(dir: string, defaultLocale?: string, whitelistedLocales?: Array<string>): Array<string> {
+export function getLocalesFromDir(dir, defaultLocale, whitelistedLocales) {
   const t = fs
     .readdirSync(dir)
-    .filter((val: string) => !(/(^|\/)\.[^/.]/g).test(val))
-    .map((val: string) => path.basename(val, '.json'))
-    .filter((val: string) => whitelistedLocales ? ~whitelistedLocales.indexOf(val) : true);
+    .filter((val) => !(/(^|\/)\.[^/.]/g).test(val))
+    .map((val) => path.basename(val, '.json'))
+    .filter((val) => whitelistedLocales ? ~whitelistedLocales.indexOf(val) : true);
 
   if (defaultLocale && ~t.indexOf(defaultLocale)) {
     t.splice(t.indexOf(defaultLocale), 1);
@@ -66,10 +64,10 @@ export function getLocalesFromDir(dir: string, defaultLocale?: string, whitelist
   return t;
 }
 
-export function getTranslationsFromDir(dir: string, whitelistedLocales?: Array<string>): TranslationDataDict {
-  const dict: TranslationDataDict = {};
+export function getTranslationsFromDir(dir, whitelistedLocales) {
+  const dict = {};
   const locales = whitelistedLocales ? whitelistedLocales : getLocalesFromDir(dir);
-  const t: { [key: string]: any } = requireDir(path.resolve(dir));
+  const t = requireDir(path.resolve(dir));
 
   for (const locale in t) {
     if (~locales.indexOf(locale)) {
@@ -80,10 +78,10 @@ export function getTranslationsFromDir(dir: string, whitelistedLocales?: Array<s
   return dict;
 }
 
-export function getLocaleDataFromDir(dir: string, whitelistedLocales?: Array<string>): LocaleDataDict {
-  const dict: LocaleDataDict = {};
+export function getLocaleDataFromDir(dir, whitelistedLocales) {
+  const dict = {};
   const locales = whitelistedLocales ? whitelistedLocales : getLocalesFromDir(dir);
-  const t: { [key: string]: any } = requireDir(path.resolve(cwd, 'node_modules', 'react-intl/locale-data'));
+  const t = requireDir(path.resolve(cwd, 'node_modules', 'react-intl/locale-data'));
 
   for (const locale in t) {
     if (~locales.indexOf(locale)) {
@@ -94,16 +92,16 @@ export function getLocaleDataFromDir(dir: string, whitelistedLocales?: Array<str
   return dict;
 }
 
-export function getLocalizedRoutesFromDir(dir: string, whitelistedLocales: Array<string>): Array<RouteData> {
+export function getLocalizedRoutesFromDir(dir, whitelistedLocales) {
   // Generate routes based on the pages directory.
   const routes = getRoutesFromDir(dir);
-  let localizedRoutes: Array<RouteData> = [];
+  let localizedRoutes = [];
 
   // Generate localized routes for each supported locale if there are multiple
   // supported locales. Ignore the default locale (first in the array).
   for (let i = 1, locale = whitelistedLocales[i]; i < whitelistedLocales.length; i++) {
-    localizedRoutes = localizedRoutes.concat(_.cloneDeep(routes).map((route: RouteData) => {
-      const url = path.join(locale, route.path).split('/').filter((val: string) => val).join('/');
+    localizedRoutes = localizedRoutes.concat(_.cloneDeep(routes).map((route) => {
+      const url = path.join(locale, route.path).split('/').filter((val) => val).join('/');
       route.exact = false;
       route.path = `/${url}`;
       return route;
@@ -114,9 +112,9 @@ export function getLocalizedRoutesFromDir(dir: string, whitelistedLocales: Array
   const out = routes.concat(localizedRoutes);
 
   // Finally, add the wildcard route at the end to redirect to 404 page.
-  if (fs.existsSync(path.resolve(dir, 'NotFound.tsx'))) {
+  if (fs.existsSync(path.resolve(dir, 'NotFound.jsx'))) {
     out.push({
-      component: 'NotFound.tsx',
+      component: 'NotFound.jsx',
       exact: false,
       path: '*',
     });

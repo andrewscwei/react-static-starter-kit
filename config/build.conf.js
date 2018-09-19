@@ -8,30 +8,30 @@ import HappyPack from 'happypack';
 import HTMLPlugin from 'html-webpack-plugin';
 import path from 'path';
 import PrerenderSPAPlugin, { PuppeteerRenderer as Renderer } from 'prerender-spa-plugin';
-import { Configuration, DefinePlugin, EnvironmentPlugin, IgnorePlugin, Plugin } from 'webpack';
+import { DefinePlugin, EnvironmentPlugin, IgnorePlugin } from 'webpack';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import appConfig from './app.conf';
 import { getLocaleDataFromDir, getLocalesFromDir, getLocalizedRoutesFromDir, getTranslationsFromDir } from './utils';
 
-const isDev: boolean = process.env.NODE_ENV === 'development';
-const useBundleAnalyzer: boolean = (!isDev && appConfig.build.analyzer);
-const cwd: string = path.join(__dirname, '../');
-const inputDir: string = path.join(cwd, 'src');
-const outputDir: string = path.join(cwd, 'build');
-const localesDir: string = path.join(cwd, 'config/locales');
+const isDev = process.env.NODE_ENV === 'development';
+const useBundleAnalyzer = (!isDev && appConfig.build.analyzer);
+const cwd = path.join(__dirname, '../');
+const inputDir = path.join(cwd, 'src');
+const outputDir = path.join(cwd, 'build');
+const localesDir = path.join(cwd, 'config/locales');
 const locales = getLocalesFromDir(localesDir, appConfig.locales[0], appConfig.locales);
 
-const config: Configuration = {
-  devtool: isDev ? 'eval-source-map' : (appConfig.build.sourceMap ? 'source-map' : false),
+const config = {
+  devtool: isDev ? 'cheap-eval-source-map' : (appConfig.build.sourceMap ? 'source-map' : false),
   entry: {
-    bundle: path.join(inputDir, 'index.tsx'),
+    bundle: path.join(inputDir, 'index.jsx'),
   },
   mode: isDev ? 'development' : 'production',
   module: {
     rules: [{
       exclude: /node_modules/,
-      test: /\.tsx?$/,
-      use: 'happypack/loader?id=ts',
+      test: /\.jsx?$/,
+      use: 'happypack/loader?id=babel',
     }, {
       test: /\.(jpe?g|png|gif|svg)(\?.*)?$/,
       loaders: [
@@ -65,11 +65,10 @@ const config: Configuration = {
       NODE_ENV: 'production',
     }),
     new HappyPack({
-      id: 'ts',
+      id: 'babel',
       threads: 2,
       loaders: [{
-        path: 'ts-loader',
-        query: { happyPackMode: true },
+        path: 'babel-loader',
       }],
     }),
     new DefinePlugin({
@@ -124,17 +123,17 @@ const config: Configuration = {
         }),
       }),
     ],
-  ] as Array<Plugin>,
+  ],
   ...!isDev ? {} : {
     devServer: {
       historyApiFallback: true,
     },
-  } as any,
+  },
   resolve: {
     alias: {
       '@': inputDir,
     },
-    extensions: ['.js', '.ts', '.tsx'],
+    extensions: ['.js', '.jsx'],
   },
   stats: {
     colors: true,

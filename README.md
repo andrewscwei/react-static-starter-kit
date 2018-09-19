@@ -6,13 +6,13 @@ This is an **experimental** starter kit for a React static app.
 
 1. Prerendering with [Prerender SPA Plugin](https://github.com/chrisvfritz/prerender-spa-plugin) (in production)
 2. HMR (in development)
-3. [TypeScript](https://www.typescriptlang.org/)
+3. [Babel](https://babeljs.io/)
 4. [React Router 4](https://reacttraining.com/react-router/), routes automatically generated and localized
 5. [Redux](https://redux.js.org/introduction)
 6. [React Intl](https://github.com/yahoo/react-intl/wiki)
 7. [Styled Components](https://www.styled-components.com/)
 8. [React Transition Group](http://reactcommunity.org/react-transition-group/)
-9. [TSLint](https://palantir.github.io/tslint/) and [StyleLint](https://stylelint.io/) config
+9. [ESLint](https://eslint.org/) and [StyleLint](https://stylelint.io/) config
 10. [Netlify](https://netlify.com) manual deploy setup
 
 ## Usage

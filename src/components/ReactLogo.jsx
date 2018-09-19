@@ -1,4 +1,5 @@
-import React, { ReactNode, SFC } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import styled from 'styled-components';
 
 const StyledRoot = styled.figure`
@@ -19,13 +20,12 @@ const StyledRoot = styled.figure`
   }
 `;
 
-export interface Props {
-  className?: string;
-  children?: ReactNode;
-}
-
-const ReactLogo: SFC<Props> = ({ className }) => (
+const ReactLogo = ({ className }) => (
   <StyledRoot className={className} dangerouslySetInnerHTML={{ __html: require('!raw-loader!@/assets/images/react-logo.svg') }}/>
 );
+
+ReactLogo.propTypes = {
+  className: PropTypes.string,
+};
 
 export default ReactLogo;

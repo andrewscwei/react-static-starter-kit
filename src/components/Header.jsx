@@ -1,8 +1,8 @@
-import { AppState } from '@/store';
-import React, { ReactNode, SFC } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Action, bindActionCreators, Dispatch } from 'redux';
+import { bindActionCreators } from 'redux';
 import styled from 'styled-components';
 
 const StyledRoot = styled.header`
@@ -37,32 +37,24 @@ const StyledRoot = styled.header`
   }
 `;
 
-interface StateProps {
-  t: TranslationData;
-  locale: string;
-}
-
-interface DispatchProps {}
-
-interface OwnProps {
-  children?: ReactNode;
-}
-
-export interface Props extends StateProps, DispatchProps, OwnProps {}
-
-const Header: SFC<Props> = ({ locale, t }) => (
+const Header = ({ locale, t }) => (
   <StyledRoot>
     <Link to={locale === 'en' ? '/' : '/ja/'}>{t['home']}</Link>
     <Link to={locale === 'en' ? '/about/' : '/ja/about/'}>{t['about']}</Link>
   </StyledRoot>
 );
 
+Header.propTypes = {
+  locale: PropTypes.string.isRequired,
+  t: PropTypes.object.isRequired,
+};
+
 export default connect(
-  (state: AppState): StateProps => ({
+  (state) => ({
     t: state.intl.translations,
     locale: state.intl.locale,
   }),
-  (dispatch: Dispatch<Action>): DispatchProps => bindActionCreators({
+  (dispatch) => bindActionCreators({
 
   }, dispatch),
 )(Header);
