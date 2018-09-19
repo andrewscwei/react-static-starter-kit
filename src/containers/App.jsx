@@ -60,15 +60,17 @@ class App extends PureComponent {
     route: PropTypes.object.isRequired,
   }
 
+  constructor(props) {
+    super(props);
+
+    this.updateLocale();
+  }
+
   componentDidMount() {
     if (window.__PRERENDERING__) {
       const styles = sc.StyleSheet.instance.toHTML();
       document.getElementsByTagName('head')[0].innerHTML += styles;
     }
-  }
-
-  componentWillMount() {
-    this.updateLocale();
   }
 
   componentDidUpdate() {

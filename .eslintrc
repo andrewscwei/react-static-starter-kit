@@ -14,7 +14,8 @@
   },
   "globals": {
     "__APP_CONFIG__": true,
-    "__INTL_CONFIG__": true
+    "__INTL_CONFIG__": true,
+    "__ROUTES_CONFIG__": true
   },
   "env": {
     "es6": true,

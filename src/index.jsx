@@ -8,7 +8,7 @@ import React from 'react';
 import { render } from 'react-dom';
 import { IntlProvider } from 'react-intl';
 import { connect, Provider } from 'react-redux';
-import { BrowserRouter as Router, Route, RouteComponentProps } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 const ConnectedIntlProvider = connect((state) => ({
   key: state.intl.locale,
@@ -28,3 +28,7 @@ render(
   </Provider>,
   document.getElementById('app'),
 );
+
+if (module.hot) {
+  module.hot.accept();
+}
