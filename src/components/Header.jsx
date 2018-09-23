@@ -5,6 +5,28 @@ import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import styled from 'styled-components';
 
+const Header = ({ locale, t }) => (
+  <StyledRoot>
+    <Link to={locale === 'en' ? '/' : '/ja/'}>{t['home']}</Link>
+    <Link to={locale === 'en' ? '/about/' : '/ja/about/'}>{t['about']}</Link>
+  </StyledRoot>
+);
+
+Header.propTypes = {
+  locale: PropTypes.string.isRequired,
+  t: PropTypes.object.isRequired,
+};
+
+export default connect(
+  (state) => ({
+    t: state.intl.translations,
+    locale: state.intl.locale,
+  }),
+  (dispatch) => bindActionCreators({
+
+  }, dispatch),
+)(Header);
+
 const StyledRoot = styled.header`
   align-items: center;
   box-sizing: border-box;
@@ -36,25 +58,3 @@ const StyledRoot = styled.header`
     }
   }
 `;
-
-const Header = ({ locale, t }) => (
-  <StyledRoot>
-    <Link to={locale === 'en' ? '/' : '/ja/'}>{t['home']}</Link>
-    <Link to={locale === 'en' ? '/about/' : '/ja/about/'}>{t['about']}</Link>
-  </StyledRoot>
-);
-
-Header.propTypes = {
-  locale: PropTypes.string.isRequired,
-  t: PropTypes.object.isRequired,
-};
-
-export default connect(
-  (state) => ({
-    t: state.intl.translations,
-    locale: state.intl.locale,
-  }),
-  (dispatch) => bindActionCreators({
-
-  }, dispatch),
-)(Header);

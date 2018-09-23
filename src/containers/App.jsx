@@ -67,9 +67,11 @@ class App extends PureComponent {
       <ThemeProvider theme={theme}>
         <StyledRoot>
           <Header/>
-          <CSSTransition key={route.location.key} timeout={300} classNames='fade'>
-            <Switch location={route.location}>{this.generateRoutes()}</Switch>
-          </CSSTransition>
+          <StyledBody>
+            <CSSTransition key={route.location.key} timeout={300} classNames='fade'>
+              <Switch location={route.location}>{this.generateRoutes()}</Switch>
+            </CSSTransition>
+          </StyledBody>
           <Footer/>
         </StyledRoot>
       </ThemeProvider>
@@ -90,7 +92,13 @@ injectGlobal`
   ${globalStyles}
 `;
 
-const StyledRoot = styled(TransitionGroup)`
+const StyledRoot = styled.div`
+  height: 100%;
+  position: absolute;
+  width: 100%;
+`;
+
+const StyledBody = styled(TransitionGroup)`
   height: 100%;
   position: absolute;
   width: 100%;

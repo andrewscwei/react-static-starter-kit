@@ -2,6 +2,16 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import styled from 'styled-components';
 
+const ReactLogo = ({ className }) => (
+  <StyledRoot className={className} dangerouslySetInnerHTML={{ __html: require('!raw-loader!@/assets/images/react-logo.svg') }}/>
+);
+
+ReactLogo.propTypes = {
+  className: PropTypes.string,
+};
+
+export default ReactLogo;
+
 const StyledRoot = styled.figure`
   animation: rotate 5s linear infinite;
   height: 100%;
@@ -19,13 +29,3 @@ const StyledRoot = styled.figure`
     to { transform: rotate(360deg); }
   }
 `;
-
-const ReactLogo = ({ className }) => (
-  <StyledRoot className={className} dangerouslySetInnerHTML={{ __html: require('!raw-loader!@/assets/images/react-logo.svg') }}/>
-);
-
-ReactLogo.propTypes = {
-  className: PropTypes.string,
-};
-
-export default ReactLogo;

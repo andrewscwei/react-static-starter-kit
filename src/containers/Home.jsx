@@ -6,6 +6,36 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import styled from 'styled-components';
 
+class Home extends PureComponent {
+  static propTypes = {
+    t: PropTypes.object.isRequired,
+  }
+
+  render() {
+    const { t } = this.props;
+
+    return (
+      <StyledRoot>
+        <Helmet>
+          <title>{t['home']}</title>
+        </Helmet>
+        <StyledReactLogo/>
+        <h1>{t['hello']}</h1>
+        <p>{t['description']}</p>
+      </StyledRoot>
+    );
+  }
+}
+
+export default connect(
+  (state) => ({
+    t: state.intl.translations,
+  }),
+  (dispatch) => bindActionCreators({
+
+  }, dispatch),
+)(Home);
+
 const StyledRoot = styled.div`
   align-items: center;
   box-sizing: border-box;
@@ -44,33 +74,3 @@ const StyledReactLogo = styled(ReactLogo)`
   height: 200px;
   margin-bottom: 30px;
 `;
-
-class Home extends PureComponent {
-  static propTypes = {
-    t: PropTypes.object.isRequired,
-  }
-
-  render() {
-    const { t } = this.props;
-
-    return (
-      <StyledRoot>
-        <Helmet>
-          <title>{t['home']}</title>
-        </Helmet>
-        <StyledReactLogo/>
-        <h1>{t['hello']}</h1>
-        <p>{t['description']}</p>
-      </StyledRoot>
-    );
-  }
-}
-
-export default connect(
-  (state) => ({
-    t: state.intl.translations,
-  }),
-  (dispatch) => bindActionCreators({
-
-  }, dispatch),
-)(Home);

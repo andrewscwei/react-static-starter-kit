@@ -6,31 +6,6 @@ import { Route } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import styled from 'styled-components';
 
-const StyledRoot = styled.div`
-  align-items: center;
-  box-sizing: border-box;
-  display: flex;
-  font-family: ${props => props.theme.font};
-  flex-direction: column;
-  flex-wrap: nowrap;
-  height: 100%;
-  justify-content: center;
-  padding: 10% 5%;
-  position: absolute;
-  width: 100%;
-
-  h1 {
-    color: ${props => props.theme.titleColor};
-    font-size: 2.4em;
-    font-weight: 700;
-    letter-spacing: 3px;
-    margin: 0;
-    max-width: 550px;
-    text-align: center;
-    text-transform: uppercase;
-  }
-`;
-
 class NotFound extends PureComponent {
   static propTypes = {
     t: PropTypes.object.isRequired,
@@ -66,3 +41,28 @@ export default connect(
 
   }, dispatch),
 )(NotFound);
+
+const StyledRoot = styled.div`
+  align-items: center;
+  box-sizing: border-box;
+  display: flex;
+  font-family: ${props => props.theme.font};
+  flex-direction: column;
+  flex-wrap: nowrap;
+  height: 100%;
+  justify-content: center;
+  padding: 10% 5%;
+  position: absolute;
+  width: 100%;
+
+  h1 {
+    color: ${props => props.theme.titleColor};
+    font-size: 2.4em;
+    font-weight: 700;
+    letter-spacing: 3px;
+    margin: 0;
+    max-width: 550px;
+    text-align: center;
+    text-transform: uppercase;
+  }
+`;
