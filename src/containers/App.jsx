@@ -5,6 +5,7 @@
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 import { changeLocale } from '@/store/intl';
+import globalStyles from '@/styles/global';
 import theme from '@/styles/theme';
 import PropTypes from 'prop-types';
 import React, { PureComponent } from 'react';
@@ -13,45 +14,8 @@ import { Route, Switch } from 'react-router-dom';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { bindActionCreators } from 'redux';
 import * as styledComponents from 'styled-components';
-import normalize from 'styled-normalize';
 
 const { default: styled, __DO_NOT_USE_OR_YOU_WILL_BE_HAUNTED_BY_SPOOKY_GHOSTS: sc, injectGlobal, ThemeProvider } = styledComponents;
-
-injectGlobal`
-  ${normalize} /* stylelint-disable-line max-empty-lines */
-
-  html,
-  body {
-    background: ${theme.backgroundColor};
-    font-family: 'Roboto', sans-serif;
-    height: 100%;
-    width: 100%;
-  }
-
-  .fade-enter {
-    opacity: 0;
-  }
-
-  .fade-enter.fade-enter-active {
-    opacity: 1;
-    transition: all .3s;
-  }
-
-  .fade-exit {
-    opacity: 1;
-  }
-
-  .fade-exit.fade-exit-active {
-    opacity: 0;
-    transition: all .3s;
-  }
-`;
-
-const StyledRoot = styled.div`
-  height: 100%;
-  position: absolute;
-  width: 100%;
-`;
 
 class App extends PureComponent {
   static propTypes = {
@@ -103,11 +67,9 @@ class App extends PureComponent {
       <ThemeProvider theme={theme}>
         <StyledRoot>
           <Header/>
-          <TransitionGroup>
-            <CSSTransition key={route.location.key} timeout={300} classNames='fade'>
-              <Switch location={route.location}>{this.generateRoutes()}</Switch>
-            </CSSTransition>
-          </TransitionGroup>
+          <CSSTransition key={route.location.key} timeout={300} classNames='fade'>
+            <Switch location={route.location}>{this.generateRoutes()}</Switch>
+          </CSSTransition>
           <Footer/>
         </StyledRoot>
       </ThemeProvider>
@@ -123,3 +85,13 @@ export default connect(
     changeLocale,
   }, dispatch),
 )(App);
+
+injectGlobal`
+  ${globalStyles}
+`;
+
+const StyledRoot = styled(TransitionGroup)`
+  height: 100%;
+  position: absolute;
+  width: 100%;
+`;
