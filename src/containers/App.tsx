@@ -36,15 +36,17 @@ export interface State {
 }
 
 class App extends PureComponent<Props, State> {
+  constructor(props: Props) {
+    super(props);
+
+    this.updateLocale();
+  }
+
   componentDidMount() {
     if (window.__PRERENDERING__) {
       const styles = sc.StyleSheet.instance.toHTML();
       document.getElementsByTagName('head')[0].innerHTML += styles;
     }
-  }
-
-  componentWillMount() {
-    this.updateLocale();
   }
 
   componentDidUpdate() {
