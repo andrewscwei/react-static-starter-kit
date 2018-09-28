@@ -11,7 +11,7 @@
     "dev": "NODE_ENV=development node -r @babel/register ./node_modules/.bin/webpack-dev-server --display-error-details --hot --config config/build.conf.js --open",
     "lint": "npm run lint:js && npm run lint:css",
     "lint:fix": "npm run lint:js:fix && npm run lint:css:fix",
-    "lint:js": "eslint . --ignore-path .gitignore",
+    "lint:js": "eslint . --ignore-path .gitignore --ext .jsx --ext .js",
     "lint:js:fix": "npm run lint:js -- --fix",
     "lint:css": "stylelint \"src/**/*.jsx\"",
     "lint:css:fix": "npm run lint:css -- --fix"
