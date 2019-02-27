@@ -13,6 +13,9 @@ export default {
   // Build number.
   buildNumber: process.env.BUILD_NUMBER || 0,
 
+  // Google Analytics ID (i.e. UA-XXXXXXXX-1)
+  ga: undefined,
+
   // HTML metadata.
   meta: {
     // Title of the app.

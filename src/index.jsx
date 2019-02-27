@@ -2,13 +2,13 @@
  * @file Entry file.
  */
 
-import App from '@/containers/App';
-import store from '@/store';
 import React from 'react';
 import { render } from 'react-dom';
 import { IntlProvider } from 'react-intl';
 import { connect, Provider } from 'react-redux';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
+import App from './containers/App';
+import store from './store';
 
 const ConnectedIntlProvider = connect((state) => ({
   key: state.intl.locale,

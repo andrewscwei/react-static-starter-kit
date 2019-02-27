@@ -4,25 +4,24 @@
  */
 
 import CopyPlugin from 'copy-webpack-plugin';
-import HappyPack from 'happypack';
 import HTMLPlugin from 'html-webpack-plugin';
 import path from 'path';
 import PrerenderSPAPlugin, { PuppeteerRenderer as Renderer } from 'prerender-spa-plugin';
 import { DefinePlugin, EnvironmentPlugin, IgnorePlugin } from 'webpack';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
-import appConfig from './app.conf';
+import appConf from './app.conf';
 import { getLocaleDataFromDir, getLocalesFromDir, getLocalizedRoutesFromDir, getTranslationsFromDir } from './utils';
 
 const isDev = process.env.NODE_ENV === 'development';
-const useBundleAnalyzer = (!isDev && appConfig.build.analyzer);
+const useBundleAnalyzer = (!isDev && appConf.build.analyzer);
 const cwd = path.join(__dirname, '../');
 const inputDir = path.join(cwd, 'src');
 const outputDir = path.join(cwd, 'build');
 const localesDir = path.join(cwd, 'config/locales');
-const locales = getLocalesFromDir(localesDir, appConfig.locales[0], appConfig.locales);
+const locales = getLocalesFromDir(localesDir, appConf.locales[0], appConf.locales);
 
 const config = {
-  devtool: isDev ? 'cheap-eval-source-map' : (appConfig.build.sourceMap ? 'source-map' : false),
+  devtool: isDev ? 'cheap-eval-source-map' : (appConf.build.sourceMap ? 'source-map' : false),
   entry: {
     bundle: path.join(inputDir, 'index.jsx'),
   },
@@ -31,7 +30,7 @@ const config = {
     rules: [{
       exclude: /node_modules/,
       test: /\.jsx?$/,
-      use: 'happypack/loader?id=babel',
+      use: 'babel-loader?cacheDirectory',
     }, {
       test: /\.(jpe?g|png|gif|svg)(\?.*)?$/,
       loaders: [
@@ -49,7 +48,7 @@ const config = {
   output: {
     filename: isDev ? '[name].js' : '[name].[chunkhash].js',
     path: outputDir,
-    publicPath: isDev ? '/' : appConfig.build.publicPath,
+    publicPath: appConf.build.publicPath,
     sourceMapFilename: '[file].map',
   },
   performance: {
@@ -64,17 +63,10 @@ const config = {
     new EnvironmentPlugin({
       NODE_ENV: 'production',
     }),
-    new HappyPack({
-      id: 'babel',
-      threads: 2,
-      loaders: [{
-        path: 'babel-loader',
-      }],
-    }),
     new DefinePlugin({
-      __APP_CONFIG__: JSON.stringify(appConfig),
+      __APP_CONFIG__: JSON.stringify(appConf),
       __INTL_CONFIG__: JSON.stringify({
-        defaultLocale: appConfig.locales[0],
+        defaultLocale: appConf.locales[0],
         localeData: getLocaleDataFromDir(localesDir, locales),
         locales,
         dict: getTranslationsFromDir(localesDir, locales),
@@ -82,7 +74,7 @@ const config = {
       __ROUTES_CONFIG__: JSON.stringify(getLocalizedRoutesFromDir(path.join(inputDir, 'containers'), locales)),
     }),
     new HTMLPlugin({
-      appConfig,
+      appConf,
       filename: 'index.html',
       inject: true,
       minify: {
@@ -131,7 +123,9 @@ const config = {
   },
   resolve: {
     alias: {
-      '@': inputDir,
+      ...!isDev ? {} : {
+        'react-dom': '@hot-loader/react-dom',
+      },
     },
     extensions: ['.js', '.jsx'],
   },
