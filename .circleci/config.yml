@@ -47,6 +47,7 @@ jobs:
           paths:
             - .circleci/
             - build/
+            - package/
             - config/
             - node_modules/
             - src/
