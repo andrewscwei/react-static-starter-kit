@@ -2,13 +2,13 @@
  * @file Entry file.
  */
 
-import App from '@/containers/App';
-import store from '@/store';
 import React from 'react';
-import { render } from 'react-dom';
+import { hydrate, render } from 'react-dom';
 import { IntlProvider } from 'react-intl';
 import { connect, Provider } from 'react-redux';
 import { BrowserRouter as Router, Route, RouteComponentProps } from 'react-router-dom';
+import App from './containers/App';
+import store from './store';
 
 const ConnectedIntlProvider = connect((state: any) => ({
   key: state.intl.locale,
@@ -16,7 +16,8 @@ const ConnectedIntlProvider = connect((state: any) => ({
   messages: state.intl.translations,
 }))(IntlProvider);
 
-render(
+// Generator for base markup.
+const markup = () => (
   <Provider store={store}>
     <ConnectedIntlProvider>
       <Router>
@@ -25,10 +26,13 @@ render(
         )}/>
       </Router>
     </ConnectedIntlProvider>
-  </Provider>,
-  document.getElementById('app'),
+  </Provider>
 );
 
-if (module.hot) {
-  module.hot.accept();
+// Render the app.
+if (process.env.NODE_ENV === 'development') {
+  render(markup(), document.getElementById('app'));
+}
+else {
+  hydrate(markup(), document.getElementById('app'));
 }

@@ -2,20 +2,21 @@
  * @file Client app root.
  */
 
-import Footer from '@/components/Footer';
-import Header from '@/components/Header';
-import { AppState } from '@/store';
-import { changeLocale } from '@/store/intl';
-import globalStyles from '@/styles/global';
-import theme from '@/styles/theme';
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { Route, RouteComponentProps, Switch } from 'react-router-dom';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { Action, bindActionCreators, Dispatch } from 'redux';
 import * as styledComponents from 'styled-components';
+import Footer from '../components/Footer';
+import Header from '../components/Header';
+import routes from '../routes';
+import { AppState } from '../store';
+import { changeLocale } from '../store/intl';
+import globalStyles from '../styles/global';
+import theme from '../styles/theme';
 
-const { default: styled, __DO_NOT_USE_OR_YOU_WILL_BE_HAUNTED_BY_SPOOKY_GHOSTS: sc, injectGlobal, ThemeProvider } = styledComponents as any;
+const { default: styled, __DO_NOT_USE_OR_YOU_WILL_BE_HAUNTED_BY_SPOOKY_GHOSTS: sc, createGlobalStyle, ThemeProvider } = styledComponents as any;
 
 interface StateProps {
   locales: ReadonlyArray<string>;
@@ -66,9 +67,9 @@ class App extends PureComponent<Props, State> {
   }
 
   generateRoutes = () => {
-    return __ROUTES_CONFIG__.map((route: RouteData, index: number) => {
-      const Component = require(`@/containers/${route.component}`).default;
-      return <Route exact={route.exact} path={route.path} component={Component} key={index}/>;
+    return routes.map((route, index) => {
+      const { exact, path, component } = route;
+      return <Route exact={exact} path={path} component={component} key={index}/>;
     });
   }
 
@@ -78,6 +79,7 @@ class App extends PureComponent<Props, State> {
     return (
       <ThemeProvider theme={theme}>
         <StyledRoot>
+          <GlobalStyles/>
           <Header/>
           <StyledBody>
             <CSSTransition key={route.location.key} timeout={300} classNames='fade'>
@@ -91,16 +93,18 @@ class App extends PureComponent<Props, State> {
   }
 }
 
-export default connect(
-  (state: AppState): StateProps => ({
+export default (component => {
+  if (process.env.NODE_ENV === 'development') return require('react-hot-loader/root').hot(component);
+  return component;
+})(connect((state: AppState): StateProps => ({
     locales: state.intl.locales,
   }),
   (dispatch: Dispatch<Action>): DispatchProps => bindActionCreators({
     changeLocale,
   }, dispatch),
-)(App);
+)(App));
 
-injectGlobal`
+const GlobalStyles = createGlobalStyle<any>`
   ${globalStyles}
 `;
 
@@ -114,4 +118,22 @@ const StyledBody = styled(TransitionGroup)`
   height: 100%;
   position: absolute;
   width: 100%;
+
+  .fade-enter {
+    opacity: 0;
+  }
+
+  .fade-enter.fade-enter-active {
+    opacity: 1;
+    transition: all .3s;
+  }
+
+  .fade-exit {
+    opacity: 1;
+  }
+
+  .fade-exit.fade-exit-active {
+    opacity: 0;
+    transition: all .3s;
+  }
 `;

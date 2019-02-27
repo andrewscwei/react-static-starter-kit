@@ -1,7 +1,7 @@
-import intl, { IntlState } from '@/store/intl';
-import users, { UsersState } from '@/store/users';
 import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 import thunk from 'redux-thunk';
+import intl, { IntlState } from './intl';
+import users, { UsersState } from './users';
 
 const composeEnhancers = process.env.NODE_ENV === 'development' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 

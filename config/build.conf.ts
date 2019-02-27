@@ -4,25 +4,25 @@
  */
 
 import CopyPlugin from 'copy-webpack-plugin';
-import HappyPack from 'happypack';
+import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 import HTMLPlugin from 'html-webpack-plugin';
 import path from 'path';
 import PrerenderSPAPlugin, { PuppeteerRenderer as Renderer } from 'prerender-spa-plugin';
 import { Configuration, DefinePlugin, EnvironmentPlugin, IgnorePlugin, Plugin } from 'webpack';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
-import appConfig from './app.conf';
+import appConf from './app.conf';
 import { getLocaleDataFromDir, getLocalesFromDir, getLocalizedRoutesFromDir, getTranslationsFromDir } from './utils';
 
 const isDev: boolean = process.env.NODE_ENV === 'development';
-const useBundleAnalyzer: boolean = (!isDev && appConfig.build.analyzer);
+const useBundleAnalyzer: boolean = (!isDev && appConf.build.analyzer);
 const cwd: string = path.join(__dirname, '../');
 const inputDir: string = path.join(cwd, 'src');
 const outputDir: string = path.join(cwd, 'build');
 const localesDir: string = path.join(cwd, 'config/locales');
-const locales = getLocalesFromDir(localesDir, appConfig.locales[0], appConfig.locales);
+const locales = getLocalesFromDir(localesDir, appConf.locales[0], appConf.locales);
 
 const config: Configuration = {
-  devtool: isDev ? 'eval-source-map' : (appConfig.build.sourceMap ? 'source-map' : false),
+  devtool: isDev ? 'eval-source-map' : (appConf.build.sourceMap ? 'source-map' : false),
   entry: {
     bundle: path.join(inputDir, 'index.tsx'),
   },
@@ -31,7 +31,7 @@ const config: Configuration = {
     rules: [{
       exclude: /node_modules/,
       test: /\.tsx?$/,
-      use: 'happypack/loader?id=ts',
+      use: 'babel-loader?cacheDirectory',
     }, {
       test: /\.(jpe?g|png|gif|svg)(\?.*)?$/,
       loaders: [
@@ -49,13 +49,14 @@ const config: Configuration = {
   output: {
     filename: isDev ? '[name].js' : '[name].[chunkhash].js',
     path: outputDir,
-    publicPath: isDev ? '/' : appConfig.build.publicPath,
+    publicPath: appConf.build.publicPath,
     sourceMapFilename: '[file].map',
   },
   performance: {
     hints: isDev ? false : 'warning',
   },
   plugins: [
+    new ForkTsCheckerWebpackPlugin(),
     new CopyPlugin([{
       from: path.join(inputDir, 'static'),
       ignore: ['.*'],
@@ -64,18 +65,10 @@ const config: Configuration = {
     new EnvironmentPlugin({
       NODE_ENV: 'production',
     }),
-    new HappyPack({
-      id: 'ts',
-      threads: 2,
-      loaders: [{
-        path: 'ts-loader',
-        query: { happyPackMode: true },
-      }],
-    }),
     new DefinePlugin({
-      __APP_CONFIG__: JSON.stringify(appConfig),
+      __APP_CONFIG__: JSON.stringify(appConf),
       __INTL_CONFIG__: JSON.stringify({
-        defaultLocale: appConfig.locales[0],
+        defaultLocale: appConf.locales[0],
         localeData: getLocaleDataFromDir(localesDir, locales),
         locales,
         dict: getTranslationsFromDir(localesDir, locales),
@@ -83,7 +76,7 @@ const config: Configuration = {
       __ROUTES_CONFIG__: JSON.stringify(getLocalizedRoutesFromDir(path.join(inputDir, 'containers'), locales)),
     }),
     new HTMLPlugin({
-      appConfig,
+      appConf,
       filename: 'index.html',
       inject: true,
       minify: {
@@ -132,7 +125,9 @@ const config: Configuration = {
   } as any,
   resolve: {
     alias: {
-      '@': inputDir,
+      ...!isDev ? {} : {
+        'react-dom': '@hot-loader/react-dom',
+      },
     },
     extensions: ['.js', '.ts', '.tsx'],
   },
