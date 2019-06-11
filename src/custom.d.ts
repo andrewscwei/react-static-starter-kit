@@ -11,7 +11,7 @@ declare const __ROUTES_CONFIG__: Array<RouteData>;
 
 declare module 'prerender-spa-plugin';
 
-declare module "worker-loader!*" {
+declare module 'worker-loader!*' {
   class WebpackWorker extends Worker {
     constructor();
   }
