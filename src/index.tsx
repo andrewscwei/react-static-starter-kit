@@ -10,7 +10,6 @@ import { BrowserRouter as Router, Route, RouteComponentProps } from 'react-route
 import Worker from 'worker-loader!./workers/web';
 import App from './containers/App';
 import store from './store';
-import * as serviceWorker from './workers/service';
 
 if (process.env.NODE_ENV === 'development') {
   window.localStorage.debug = 'app*,worker*';
@@ -49,12 +48,4 @@ if (process.env.NODE_ENV === 'development') {
 }
 else {
   hydrate(markup(), document.getElementById('app'));
-}
-
-// Configure service worker.
-if (__APP_CONFIG__.serviceWorkerEnabled) {
-  serviceWorker.register();
-}
-else {
-  serviceWorker.unregister();
 }
