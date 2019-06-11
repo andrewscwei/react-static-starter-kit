@@ -16,6 +16,7 @@ import { changeLocale } from '../store/intl';
 import globalStyles from '../styles/global';
 import theme from '../styles/theme';
 
+const debug = require('debug')('app');
 const { default: styled, __DO_NOT_USE_OR_YOU_WILL_BE_HAUNTED_BY_SPOOKY_GHOSTS: sc, createGlobalStyle, ThemeProvider } = styledComponents as any;
 
 interface StateProps {
@@ -39,6 +40,10 @@ export interface State {
 class App extends PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
+
+    if (process.env.NODE_ENV === 'development') {
+      debug('Hello, world!');
+    }
 
     this.updateLocale();
   }

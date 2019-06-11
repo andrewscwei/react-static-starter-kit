@@ -1,5 +1,4 @@
 import { Action, Dispatch } from 'redux';
-import request from 'superagent';
 
 export interface User {
   [key: string]: any;
@@ -26,8 +25,8 @@ const initialState: UsersState = {
 
 export function fetchUsers() {
   return async (dispatch: Dispatch<Action>) => {
-    const res = await request.get('//jsonplaceholder.typicode.com/users');
-    const items = res.body;
+    const res = await fetch('//jsonplaceholder.typicode.com/users');
+    const items = await res.json();
     const action: UsersLoadedAction = {
       items,
       type: UsersActionType.USERS_LOADED,

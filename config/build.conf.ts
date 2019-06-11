@@ -4,7 +4,6 @@
  */
 
 import CopyPlugin from 'copy-webpack-plugin';
-import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 import HTMLPlugin from 'html-webpack-plugin';
 import path from 'path';
 import PrerenderSPAPlugin, { PuppeteerRenderer as Renderer } from 'prerender-spa-plugin';
@@ -34,16 +33,36 @@ const config: Configuration = {
       use: 'babel-loader?cacheDirectory',
     }, {
       test: /\.(jpe?g|png|gif|svg)(\?.*)?$/,
-      loaders: [
-        `url-loader?limit=8192&name=assets/images/[name]${isDev ? '' : '.[hash:6]'}.[ext]`,
-        `image-webpack-loader?${isDev ? 'disable' : ''}`,
-      ],
+      use: [{
+        loader: 'url-loader',
+        options: {
+          limit: 8192,
+          name: `assets/images/[name]${isDev ? '' : '.[hash:6]'}.[ext]`,
+        },
+      }, {
+        loader: 'image-webpack-loader',
+        options: {
+          disable: isDev,
+        },
+      }],
     }, {
       test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
-      use: `url-loader?limit=8192&name=assets/media/[name]${isDev ? '' : '.[hash:6]'}.[ext]`,
+      use: [{
+        loader: 'url-loader',
+        options: {
+          limit: 8192,
+          name: `assets/media/[name]${isDev ? '' : '.[hash:6]'}.[ext]`,
+        },
+      }],
     }, {
       test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
-      use: `url-loader?limit=8192&name=assets/fonts/[name]${isDev ? '' : '.[hash:6]'}.[ext]`,
+      use: [{
+        loader: 'url-loader',
+        options: {
+          limit: 8192,
+          name: `assets/fonts/[name]${isDev ? '' : '.[hash:6]'}.[ext]`,
+        },
+      }],
     }],
   },
   output: {
@@ -54,9 +73,10 @@ const config: Configuration = {
   },
   performance: {
     hints: isDev ? false : 'warning',
+    maxEntrypointSize: 512 * 1024,
+    maxAssetSize: 512 * 1024,
   },
   plugins: [
-    new ForkTsCheckerWebpackPlugin(),
     new CopyPlugin([{
       from: path.join(inputDir, 'static'),
       ignore: ['.*'],

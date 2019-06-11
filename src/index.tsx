@@ -31,6 +31,7 @@ const markup = () => (
 
 // Render the app.
 if (process.env.NODE_ENV === 'development') {
+  window.localStorage.debug = 'app*';
   render(markup(), document.getElementById('app'));
 }
 else {
