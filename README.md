@@ -7,7 +7,7 @@ This is an **experimental** starter kit for a React static app.
 1. Prerendering with [Prerender SPA Plugin](https://github.com/chrisvfritz/prerender-spa-plugin) (in production)
 2. HMR (in development)
 3. [TypeScript](https://www.typescriptlang.org/)
-4. [React Router 4](https://reacttraining.com/react-router/), routes automatically generated and localized
+4. [React Router](https://reacttraining.com/react-router/), routes automatically generated and localized
 5. [Redux](https://redux.js.org/introduction)
 6. [React Intl](https://github.com/yahoo/react-intl/wiki)
 7. [Styled Components](https://www.styled-components.com/)
@@ -19,7 +19,7 @@ This is an **experimental** starter kit for a React static app.
 
 ```sh
 # Install dependencies
-$ yarn
+$ npm install
 
 # Run in dev
 $ npm run dev
