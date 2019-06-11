@@ -1,6 +1,6 @@
 {
   "name": "react-static-starter-kit",
-  "version": "4.1.1",
+  "version": "4.2.0",
   "description": "Experimental React static prerendered app starter kit",
   "private": true,
   "license": "MIT",
@@ -40,7 +40,7 @@
     "@types/react-router-dom": "^4.3.3",
     "@types/react-transition-group": "^2.9.2",
     "@types/require-dir": "^1.0.0",
-    "@types/styled-components": "4.1.16",
+    "@types/styled-components": "4.1.8",
     "@types/webpack": "^4.4.32",
     "@types/webpack-bundle-analyzer": "^2.13.1",
     "@types/webpack-env": "^1.13.9",
@@ -85,7 +85,8 @@
     "webpack-bundle-analyzer": "^3.3.2",
     "webpack-cli": "^3.3.4",
     "webpack-dev-server": "^3.7.1",
-    "whatwg-fetch": "^3.0.0"
+    "whatwg-fetch": "^3.0.0",
+    "worker-loader": "^2.0.0"
   },
   "dependencies": {}
 }

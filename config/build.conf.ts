@@ -9,11 +9,11 @@ import path from 'path';
 import PrerenderSPAPlugin, { PuppeteerRenderer as Renderer } from 'prerender-spa-plugin';
 import { Configuration, DefinePlugin, EnvironmentPlugin, IgnorePlugin, Plugin } from 'webpack';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
-import appConf from './app.conf';
+import appConf from '../src/app.conf';
 import { getLocaleDataFromDir, getLocalesFromDir, getLocalizedRoutesFromDir, getTranslationsFromDir } from './utils';
 
 const isDev: boolean = process.env.NODE_ENV === 'development';
-const useBundleAnalyzer: boolean = (!isDev && appConf.build.analyzer);
+const useBundleAnalyzer: boolean = process.env.ANALYZE_BUNDLE === 'true' ? true : false;
 const cwd: string = path.join(__dirname, '../');
 const inputDir: string = path.join(cwd, 'src');
 const outputDir: string = path.join(cwd, 'build');
@@ -21,7 +21,7 @@ const localesDir: string = path.join(cwd, 'config/locales');
 const locales = getLocalesFromDir(localesDir, appConf.locales[0], appConf.locales);
 
 const config: Configuration = {
-  devtool: isDev ? 'eval-source-map' : (appConf.build.sourceMap ? 'source-map' : false),
+  devtool: isDev ? 'eval-source-map' : 'source-map',
   entry: {
     bundle: path.join(inputDir, 'index.tsx'),
   },
@@ -68,8 +68,9 @@ const config: Configuration = {
   output: {
     filename: isDev ? '[name].js' : '[name].[chunkhash].js',
     path: outputDir,
-    publicPath: appConf.build.publicPath,
+    publicPath: process.env.PUBLIC_PATH || '/',
     sourceMapFilename: '[file].map',
+    globalObject: 'this',
   },
   performance: {
     hints: isDev ? false : 'warning',
