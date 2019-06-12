@@ -21,7 +21,7 @@ class Home extends PureComponent {
         </Helmet>
         <StyledReactLogo/>
         <h1>{t['hello']}</h1>
-        <p>v{__APP_CONFIG__.version} Build {__APP_CONFIG__.buildNumber}</p>
+        <p>v{__APP_CONFIG__.version} ({__APP_CONFIG__.buildNumber})</p>
         <p>{t['description']}</p>
       </StyledRoot>
     );
