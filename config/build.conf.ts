@@ -30,7 +30,12 @@ const config: Configuration = {
     rules: [{
       exclude: /node_modules/,
       test: /\.tsx?$/,
-      use: 'babel-loader?cacheDirectory',
+      use: [{
+        loader: 'babel-loader',
+        options: {
+          cacheDirectory: true,
+        },
+      }],
     }, {
       test: /\.(jpe?g|png|gif|svg)(\?.*)?$/,
       use: [{
