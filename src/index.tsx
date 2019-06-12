@@ -7,6 +7,7 @@ import { hydrate, render } from 'react-dom';
 import { IntlProvider } from 'react-intl';
 import { connect, Provider } from 'react-redux';
 import { BrowserRouter as Router, Route, RouteComponentProps } from 'react-router-dom';
+import 'whatwg-fetch';
 import Worker from 'worker-loader!./workers/web';
 import App from './containers/App';
 import store from './store';

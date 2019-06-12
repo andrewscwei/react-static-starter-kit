@@ -70,7 +70,7 @@ const config: Configuration = {
     path: outputDir,
     publicPath: process.env.PUBLIC_PATH || '/',
     sourceMapFilename: '[file].map',
-    globalObject: 'this',
+    globalObject: 'this', // https://github.com/webpack/webpack/issues/6642#issuecomment-371087342
   },
   performance: {
     hints: isDev ? false : 'warning',
