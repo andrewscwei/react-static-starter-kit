@@ -1,5 +1,3 @@
-import request from 'superagent';
-
 const UsersActionType = {
   USERS_LOADED: 'usersLoaded',
 };
@@ -9,9 +7,9 @@ const initialState = {
 };
 
 export function fetchUsers() {
-  return async(dispatch) => {
-    const res = await request.get('//jsonplaceholder.typicode.com/users');
-    const items = res.body;
+  return async (dispatch) => {
+    const res = await fetch('//jsonplaceholder.typicode.com/users');
+    const items = await res.json();
     const action = {
       items,
       type: UsersActionType.USERS_LOADED,

@@ -9,11 +9,11 @@ import path from 'path';
 import PrerenderSPAPlugin, { PuppeteerRenderer as Renderer } from 'prerender-spa-plugin';
 import { DefinePlugin, EnvironmentPlugin, IgnorePlugin } from 'webpack';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
-import appConf from './app.conf';
+import appConf from '../src/app.conf';
 import { getLocaleDataFromDir, getLocalesFromDir, getLocalizedRoutesFromDir, getTranslationsFromDir } from './utils';
 
 const isDev = process.env.NODE_ENV === 'development';
-const useBundleAnalyzer = (!isDev && appConf.build.analyzer);
+const useBundleAnalyzer = process.env.ANALYZE_BUNDLE === 'true' ? true : false;
 const cwd = path.join(__dirname, '../');
 const inputDir = path.join(cwd, 'src');
 const outputDir = path.join(cwd, 'build');
@@ -21,7 +21,7 @@ const localesDir = path.join(cwd, 'config/locales');
 const locales = getLocalesFromDir(localesDir, appConf.locales[0], appConf.locales);
 
 const config = {
-  devtool: isDev ? 'cheap-eval-source-map' : (appConf.build.sourceMap ? 'source-map' : false),
+  devtool: isDev ? 'cheap-eval-source-map' : 'source-map',
   entry: {
     bundle: path.join(inputDir, 'index.jsx'),
   },
@@ -30,26 +30,52 @@ const config = {
     rules: [{
       exclude: /node_modules/,
       test: /\.jsx?$/,
-      use: 'babel-loader?cacheDirectory',
+      use: [{
+        loader: 'babel-loader',
+        options: {
+          cacheDirectory: true,
+        },
+      }],
     }, {
       test: /\.(jpe?g|png|gif|svg)(\?.*)?$/,
-      loaders: [
-        `url-loader?limit=8192&name=assets/images/[name]${isDev ? '' : '.[hash:6]'}.[ext]`,
-        `image-webpack-loader?${isDev ? 'disable' : ''}`,
-      ],
+      use: [{
+        loader: 'url-loader',
+        options: {
+          limit: 8192,
+          name: `assets/images/[name]${isDev ? '' : '.[hash:6]'}.[ext]`,
+        },
+      }, {
+        loader: 'image-webpack-loader',
+        options: {
+          disable: isDev,
+        },
+      }],
     }, {
       test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
-      use: `url-loader?limit=8192&name=assets/media/[name]${isDev ? '' : '.[hash:6]'}.[ext]`,
+      use: [{
+        loader: 'url-loader',
+        options: {
+          limit: 8192,
+          name: `assets/media/[name]${isDev ? '' : '.[hash:6]'}.[ext]`,
+        },
+      }],
     }, {
       test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
-      use: `url-loader?limit=8192&name=assets/fonts/[name]${isDev ? '' : '.[hash:6]'}.[ext]`,
+      use: [{
+        loader: 'url-loader',
+        options: {
+          limit: 8192,
+          name: `assets/fonts/[name]${isDev ? '' : '.[hash:6]'}.[ext]`,
+        },
+      }],
     }],
   },
   output: {
     filename: isDev ? '[name].js' : '[name].[chunkhash].js',
     path: outputDir,
-    publicPath: appConf.build.publicPath,
+    publicPath: process.env.PUBLIC_PATH || '/',
     sourceMapFilename: '[file].map',
+    globalObject: 'this', // https://github.com/webpack/webpack/issues/6642#issuecomment-371087342
   },
   performance: {
     hints: isDev ? false : 'warning',
