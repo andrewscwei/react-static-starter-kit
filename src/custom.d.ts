@@ -9,8 +9,6 @@ declare const __INTL_CONFIG__: {
 
 declare const __ROUTES_CONFIG__: Array<RouteData>;
 
-declare module 'prerender-spa-plugin';
-
 declare module 'worker-loader!*' {
   class WebpackWorker extends Worker {
     constructor();
@@ -40,5 +38,4 @@ interface RouteData {
 interface Window {
   __INITIAL_STATE__: any;
   __REDUX_DEVTOOLS_EXTENSION_COMPOSE__: any;
-  __PRERENDERING__: any;
 }

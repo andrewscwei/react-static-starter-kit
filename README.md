@@ -4,7 +4,7 @@ This is an **experimental** starter kit for a React static app.
 
 ## Features
 
-1. Prerendering with [Prerender SPA Plugin](https://github.com/chrisvfritz/prerender-spa-plugin) (in production)
+1. Prerendering with [react-snap](https://github.com/stereobooster/react-snap)
 2. HMR (in development)
 3. [TypeScript](https://www.typescriptlang.org/)
 4. [React Router](https://reacttraining.com/react-router/), routes automatically generated and localized

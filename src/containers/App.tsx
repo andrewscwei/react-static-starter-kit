@@ -43,13 +43,6 @@ class App extends PureComponent<Props, State> {
     this.updateLocale();
   }
 
-  componentDidMount() {
-    if (window.__PRERENDERING__) {
-      const styles = sc.StyleSheet.instance.toHTML();
-      document.getElementsByTagName('head')[0].innerHTML += styles;
-    }
-  }
-
   componentDidUpdate() {
     this.updateLocale();
   }
