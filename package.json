@@ -1,12 +1,13 @@
 {
   "name": "react-static-starter-kit",
-  "version": "4.2.0",
+  "version": "4.3.0",
   "description": "Experimental React static prerendered app starter kit",
   "private": true,
   "license": "MIT",
   "scripts": {
     "clean": "rimraf build",
     "build": "npm run clean && NODE_ENV=production node -r @babel/register ./node_modules/.bin/webpack --colors --profile --config config/build.conf.js --display-error-details",
+    "postbuild": "react-snap",
     "test": "echo \"No tests yet\"",
     "dev": "NODE_ENV=development node -r @babel/register ./node_modules/.bin/webpack-dev-server --display-error-details --hot --config config/build.conf.js --open",
     "lint": "npm run lint:js && npm run lint:css",
@@ -15,6 +16,9 @@
     "lint:js:fix": "npm run lint:js -- --fix",
     "lint:css": "stylelint \"src/**/*.jsx\"",
     "lint:css:fix": "npm run lint:css -- --fix"
+  },
+  "reactSnap": {
+    "source": "build"
   },
   "devDependencies": {
     "@babel/core": "^7.4.5",
@@ -39,7 +43,6 @@
     "html-webpack-plugin": "^3.2.0",
     "image-webpack-loader": "^5.0.0",
     "lodash": "^4.17.11",
-    "prerender-spa-plugin": "^3.4.0",
     "prop-types": "^15.7.2",
     "raw-loader": "^3.0.0",
     "react": "^16.8.6",
@@ -51,6 +54,7 @@
     "react-router": "^5.0.1",
     "react-router-config": "^5.0.1",
     "react-router-dom": "^5.0.1",
+    "react-snap": "^1.23.0",
     "react-transition-group": "^4.1.1",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",

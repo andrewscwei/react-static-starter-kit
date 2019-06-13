@@ -3,7 +3,7 @@
  */
 
 import React from 'react';
-import { render } from 'react-dom';
+import { hydrate, render } from 'react-dom';
 import { IntlProvider } from 'react-intl';
 import { connect, Provider } from 'react-redux';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
@@ -30,7 +30,8 @@ const ConnectedIntlProvider = connect((state) => ({
   messages: state.intl.translations,
 }))(IntlProvider);
 
-render(
+// Generator for base markup.
+const markup = () => (
   <Provider store={store}>
     <ConnectedIntlProvider>
       <Router>
@@ -39,10 +40,15 @@ render(
         )}/>
       </Router>
     </ConnectedIntlProvider>
-  </Provider>,
-  document.getElementById('app'),
+  </Provider>
 );
 
-if (module.hot) {
-  module.hot.accept();
+// Render the app.
+const root = document.getElementById('app');
+
+if (root.hasChildNodes()) {
+  hydrate(markup(), root);
+}
+else {
+  render(markup(), root);
 }

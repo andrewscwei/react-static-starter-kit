@@ -8,15 +8,13 @@ import { connect } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { bindActionCreators } from 'redux';
-import * as styledComponents from 'styled-components';
+import styled, { createGlobalStyle, ThemeProvider } from 'styled-components';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import routes from '../routes';
 import { changeLocale } from '../store/intl';
 import globalStyles from '../styles/global';
 import theme from '../styles/theme';
-
-const { default: styled, __DO_NOT_USE_OR_YOU_WILL_BE_HAUNTED_BY_SPOOKY_GHOSTS: sc, createGlobalStyle, ThemeProvider } = styledComponents;
 
 class App extends PureComponent {
   static propTypes = {
@@ -29,13 +27,6 @@ class App extends PureComponent {
     super(props);
 
     this.updateLocale();
-  }
-
-  componentDidMount() {
-    if (window.__PRERENDERING__) {
-      const styles = sc.StyleSheet.instance.toHTML();
-      document.getElementsByTagName('head')[0].innerHTML += styles;
-    }
   }
 
   componentDidUpdate() {
