@@ -1,13 +1,19 @@
-import React, { ComponentType, PureComponent } from 'react';
+import _ from 'lodash';
+import { Document } from 'prismic-javascript/d.ts/documents';
+import { RichText } from 'prismic-reactjs';
+import React, { ComponentType, Fragment, PureComponent } from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { Action, bindActionCreators, Dispatch } from 'redux';
 import styled from 'styled-components';
 import ReactLogo from '../components/ReactLogo';
-import { AppState } from '../store';
+import withPrismicDoc from '../decorators/withPrismicDoc';
+
+const debug = require('debug')('app:home');
 
 interface StateProps {
   t: TranslationData;
+  locale: string;
 }
 
 interface DispatchProps {
@@ -15,7 +21,7 @@ interface DispatchProps {
 }
 
 interface OwnProps {
-
+  docs?: { [locale: string]: ReadonlyArray<Document>};
 }
 
 export interface Props extends StateProps, DispatchProps, OwnProps {}
@@ -26,7 +32,8 @@ export interface State {
 
 class Home extends PureComponent<Props, State> {
   render() {
-    const { t } = this.props;
+    const { t, docs, locale } = this.props;
+    const doc = _.get(docs, `${locale}[0]`) as any;
 
     return (
       <StyledRoot>
@@ -34,9 +41,13 @@ class Home extends PureComponent<Props, State> {
           <title>{t['home']}</title>
         </Helmet>
         <StyledReactLogo/>
-        <h1>{t['hello']}</h1>
-        <p>v{__APP_CONFIG__.version} ({__APP_CONFIG__.buildNumber})</p>
-        <p>{t['description']}</p>
+        { doc &&
+          <Fragment>
+            <h1>{RichText.asText(doc!.data.title)}</h1>
+            <p>v{__APP_CONFIG__.version} ({__APP_CONFIG__.buildNumber})</p>
+            <p>{RichText.asText(doc!.data.body)}</p>
+          </Fragment>
+        }
       </StyledRoot>
     );
   }
@@ -45,11 +56,12 @@ class Home extends PureComponent<Props, State> {
 export default connect(
   (state: AppState): StateProps => ({
     t: state.intl.translations,
+    locale: state.intl.locale,
   }),
   (dispatch: Dispatch<Action>): DispatchProps => bindActionCreators({
 
   }, dispatch),
-)(Home);
+)(withPrismicDoc('home')(Home));
 
 const StyledRoot = styled.div`
   align-items: center;

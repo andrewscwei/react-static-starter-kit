@@ -9,6 +9,8 @@ declare const __INTL_CONFIG__: {
 
 declare const __ROUTES_CONFIG__: Array<RouteData>;
 
+declare module 'prismic-reactjs';
+
 declare module 'worker-loader!*' {
   class WebpackWorker extends Worker {
     constructor();
@@ -37,5 +39,7 @@ interface RouteData {
 
 interface Window {
   __INITIAL_STATE__: any;
+  __PRISMIC_REF__: any;
   __REDUX_DEVTOOLS_EXTENSION_COMPOSE__: any;
+  snapSaveState: () => {};
 }

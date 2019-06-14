@@ -16,6 +16,15 @@ export default {
   // Google Analytics ID (i.e. UA-XXXXXXXX-1)
   ga: undefined,
 
+  // Prismic config.
+  prismic: {
+    // API endpoint.
+    apiEndpoint: 'https://react-static-starter-kit.cdn.prismic.io/api/v2',
+
+    // Secret access token.
+    accessToken: process.env.PRISMIC_ACCESS_TOKEN,
+  },
+
   // HTML metadata.
   meta: {
     // Title of the app.
