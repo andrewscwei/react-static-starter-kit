@@ -2,17 +2,15 @@ import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 import thunk from 'redux-thunk';
 import intl, { IntlState } from './intl';
 import prismic, { PrismicState } from './prismic';
-import users, { UsersState } from './users';
 
 const composeEnhancers = process.env.NODE_ENV === 'development' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 export interface AppState {
   intl: IntlState;
   prismic: PrismicState;
-  users: UsersState;
 }
 
-export const reducer = combineReducers({ intl, prismic, users });
+export const reducer = combineReducers({ intl, prismic });
 
 const initialState = window.__INITIAL_STATE__;
 delete window.__INITIAL_STATE__;

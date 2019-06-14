@@ -1,22 +1,23 @@
-import React, { PureComponent } from 'react';
+import _ from 'lodash';
+import { RichText } from 'prismic-reactjs';
+import React, { Fragment, PureComponent } from 'react';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
-import { Action, bindActionCreators, Dispatch, Store } from 'redux';
+import { Action, bindActionCreators, Dispatch } from 'redux';
 import styled from 'styled-components';
+import withPrismicDoc from '../decorators/withPrismicDoc';
 import { AppState } from '../store';
-import { fetchUsers, User } from '../store/users';
 
 interface StateProps {
   t: TranslationData;
-  users: ReadonlyArray<User>;
+  locale: string;
 }
 
 interface DispatchProps {
-  fetchUsers(): void;
 }
 
 interface OwnProps {
-
+  docs?: { [locale: string]: ReadonlyArray<Document>};
 }
 
 export interface Props extends StateProps, DispatchProps, OwnProps {}
@@ -26,31 +27,20 @@ export interface State {
 }
 
 class About extends PureComponent<Props, State> {
-  static fetchData(store: Store<AppState>) {
-    return store.dispatch(fetchUsers() as any); // TODO: Fix this
-  }
-
-  componentDidMount() {
-    this.props.fetchUsers();
-  }
-
   render() {
-    const { t } = this.props;
+    const { t, docs, locale } = this.props;
+    const doc = _.get(docs, `${locale}[0]`) as any;
 
     return (
       <StyledRoot>
         <Helmet>
           <title>{t['about']}</title>
         </Helmet>
-        <h1>{t['about-title']}</h1>
-        {
-          this.props.users.map((user: User) => {
-            return (
-              <div key={user.id} >
-                <span>{user.name}</span>
-              </div>
-            );
-          })
+        { doc &&
+          <Fragment>
+            <h1>{RichText.asText(doc!.data.title)}</h1>
+            <p>{RichText.asText(doc!.data.body)}</p>
+          </Fragment>
         }
       </StyledRoot>
     );
@@ -60,12 +50,11 @@ class About extends PureComponent<Props, State> {
 export default connect(
   (state: AppState): StateProps => ({
     t: state.intl.translations,
-    users: state.users.items,
+    locale: state.intl.locale,
   }),
   (dispatch: Dispatch<Action>): DispatchProps => bindActionCreators({
-    fetchUsers,
   }, dispatch),
-)(About);
+)(withPrismicDoc('about')(About));
 
 const StyledRoot = styled.div`
   align-items: center;
@@ -82,20 +71,22 @@ const StyledRoot = styled.div`
 
   h1 {
     color: ${props => props.theme.titleColor};
-    font-size: 2.4em;
+    font-size: 5em;
     font-weight: 700;
     letter-spacing: 3px;
-    margin: 0 0 20px;
+    margin: 0;
     max-width: 550px;
     text-align: center;
     text-transform: uppercase;
   }
 
-  span {
+  p {
     color: ${props => props.theme.textColor};
     font-weight: 400;
     letter-spacing: .6px;
-    line-height: 1.4em;
+    line-height: 1.6em;
+    margin: 0;
+    max-width: 400px;
     text-align: center;
   }
 `;

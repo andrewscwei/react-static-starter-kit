@@ -8,6 +8,7 @@ import { Action, bindActionCreators, Dispatch } from 'redux';
 import styled from 'styled-components';
 import ReactLogo from '../components/ReactLogo';
 import withPrismicDoc from '../decorators/withPrismicDoc';
+import { AppState } from '../store';
 
 const debug = require('debug')('app:home');
 
