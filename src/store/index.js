@@ -7,4 +7,13 @@ const composeEnhancers = process.env.NODE_ENV === 'development' && window.__REDU
 
 export const reducer = combineReducers({ intl, users });
 
-export default createStore(reducer, window.__INITIAL_STATE__ || {}, composeEnhancers(applyMiddleware(thunk)));
+const initialState = window.__INITIAL_STATE__;
+delete window.__INITIAL_STATE__;
+
+const store = createStore(reducer, initialState || {}, composeEnhancers(applyMiddleware(thunk)));
+
+window.snapSaveState = () => ({
+  __INITIAL_STATE__: store.getState(),
+});
+
+export default store;

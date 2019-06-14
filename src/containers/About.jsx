@@ -17,7 +17,8 @@ class About extends PureComponent {
     return store.dispatch(fetchUsers()); // TODO: Fix this
   }
 
-  componentDidMount() {
+  constructor(props) {
+    super(props);
     this.props.fetchUsers();
   }
 

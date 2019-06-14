@@ -1,5 +1,7 @@
 import { addLocaleData } from 'react-intl';
 
+const debug = require('debug')('app:intl');
+
 const IntlActionType = {
   LOCALE_CHANGED: 'localeChanged',
 };
@@ -38,6 +40,8 @@ const initialState = {
 };
 
 export function changeLocale(locale) {
+  debug('Changing locale...', 'OK', locale);
+
   return {
     locale,
     type: IntlActionType.LOCALE_CHANGED,

@@ -11,13 +11,16 @@ import { bindActionCreators } from 'redux';
 import styled, { createGlobalStyle, ThemeProvider } from 'styled-components';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
-import routes from '../routes';
+import routes, { getLocaleFromPath } from '../routes';
 import { changeLocale } from '../store/intl';
 import globalStyles from '../styles/global';
 import theme from '../styles/theme';
 
+const debug = require('debug')('app');
+
 class App extends PureComponent {
   static propTypes = {
+    locale: PropTypes.string.isRequired,
     locales: PropTypes.array.isRequired,
     changeLocale: PropTypes.func.isRequired,
     route: PropTypes.object.isRequired,
@@ -25,24 +28,27 @@ class App extends PureComponent {
 
   constructor(props) {
     super(props);
+    this.syncLocaleWithUrl();
 
-    this.updateLocale();
+    debug('Initializing...', 'OK');
   }
 
-  componentDidUpdate() {
-    this.updateLocale();
+  componentDidUpdate(prevProps, prevState) {
+    if ((prevProps.locale !== this.props.locale) || (prevProps.route.location.pathname !== this.props.route.location.pathname)) {
+      this.syncLocaleWithUrl();
+    }
   }
 
-  updateLocale = () => {
-    const { route, changeLocale, locales } = this.props;
-    const locale = route.location.pathname.split('/')[1];
+  syncLocaleWithUrl = () => {
+    const { route, changeLocale, locale, locales } = this.props;
+    const newLocale = getLocaleFromPath(route.location.pathname);
 
-    if (~locales.indexOf(locale)) {
-      changeLocale(locale);
+    if (newLocale === locale) {
+      debug(`Syncing locale with URL path "${route.location.pathname}"...`, 'SKIPPED');
+      return;
     }
-    else {
-      changeLocale(locales[0]);
-    }
+
+    changeLocale(newLocale);
   }
 
   generateRoutes = () => {
@@ -77,6 +83,7 @@ export default (component => {
   return component;
 })(connect(
   (state) => ({
+    locale: state.intl.locale,
     locales: state.intl.locales,
   }),
   (dispatch) => bindActionCreators({

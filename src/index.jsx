@@ -46,7 +46,7 @@ const markup = () => (
 // Render the app.
 const root = document.getElementById('app');
 
-if (root.hasChildNodes()) {
+if (root.hasChildNodes() && process.env.NODE_ENV !== 'development') {
   hydrate(markup(), root);
 }
 else {
