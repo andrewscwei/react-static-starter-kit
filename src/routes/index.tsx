@@ -6,6 +6,18 @@ import About from '../containers/About';
 import Home from '../containers/Home';
 import NotFound from '../containers/NotFound';
 
+export function getLocaleFromPath(path: string): string {
+  const locales = __INTL_CONFIG__.locales;
+  const possibleLocale = path.split('/')[1];
+
+  if (~locales.indexOf(possibleLocale)) {
+    return possibleLocale;
+  }
+  else {
+    return locales[0];
+  }
+}
+
 export default [{
   path: '/',
   exact: true,

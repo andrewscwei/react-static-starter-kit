@@ -30,7 +30,8 @@ class About extends PureComponent<Props, State> {
     return store.dispatch(fetchUsers() as any); // TODO: Fix this
   }
 
-  componentDidMount() {
+  constructor(props: Props) {
+    super(props);
     this.props.fetchUsers();
   }
 
