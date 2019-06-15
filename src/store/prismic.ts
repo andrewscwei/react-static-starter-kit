@@ -60,21 +60,3 @@ export function fetchDocsByType(type: string, locale: string = __APP_CONFIG__.lo
     });
   };
 }
-
-export function fetchDocById(id: string, locale: string = __APP_CONFIG__.locales[0]) {
-  return async (dispatch: Dispatch<PrismicAction>) => {
-    const api = await getAPI();
-    const res = await api.getByID(id, { ref: loadPreviewToken(id) || api.master(), lang: localeResolver(locale) });
-
-    debug(`Fetching doc from Prismic by ID "${id}" and locale "${locale}"...`, 'OK', res);
-
-    dispatch({
-      type: PrismicActionType.DOC_LOADED,
-      payload: {
-        type: res.type,
-        locale,
-        docs: [res],
-      },
-    });
-  };
-}

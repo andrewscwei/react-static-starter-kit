@@ -6,8 +6,8 @@ import { connect } from 'react-redux';
 import { Action, bindActionCreators, Dispatch } from 'redux';
 import { getLocaleFromPath } from '../routes';
 import { AppState } from '../store';
-import { fetchDocById, fetchDocsByType } from '../store/prismic';
-import { loadPreviewToken, getPreviewPath } from '../utils/prismic';
+import { fetchDocsByType } from '../store/prismic';
+import { getPreviewPath, loadPreviewToken } from '../utils/prismic';
 
 const debug = require('debug')('app:prismic-doc');
 
@@ -16,7 +16,6 @@ interface StateProps {
 }
 
 interface DispatchProps {
-  fetchDocById: typeof fetchDocById;
   fetchDocsByType: typeof fetchDocsByType;
 }
 
@@ -79,7 +78,6 @@ export default function withPrismicDoc(type: string) {
     return connect((state: AppState): StateProps => ({
         docs: state.prismic.docs[type],
       }), (dispatch: Dispatch<Action>): DispatchProps => bindActionCreators({
-        fetchDocById,
         fetchDocsByType,
       }, dispatch),
     )(hoistNonReactStatics(WithPrismicDoc, WrappedComponent));
