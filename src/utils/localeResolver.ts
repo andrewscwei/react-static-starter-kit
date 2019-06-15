@@ -1,8 +1,19 @@
-export default function localeResolver(locale: string): string {
-  if (__APP_CONFIG__.locales.indexOf(locale) < 0) return localeResolver(__APP_CONFIG__.locales[0]);
+export default function localeResolver(locale: string, reverse: boolean = false): string {
+  const defaultLocale = __INTL_CONFIG__.defaultLocale;
+  const supportedLocales = __INTL_CONFIG__.locales;
 
-  switch (locale) {
-  case 'ja': return 'ja-jp';
-  default: return 'en-us';
+  if (reverse) {
+    switch (locale) {
+    case 'ja-jp': return 'ja';
+    default: return 'en';
+    }
+  }
+  else {
+    if (supportedLocales.indexOf(locale) < 0) return defaultLocale;
+
+    switch (locale) {
+    case 'ja': return 'ja-jp';
+    default: return 'en-us';
+    }
   }
 }

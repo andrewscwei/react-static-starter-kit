@@ -15,6 +15,7 @@ import { AppState } from '../store';
 import { changeLocale } from '../store/intl';
 import globalStyles from '../styles/global';
 import theme from '../styles/theme';
+import { loadPreviewToken } from '../utils/prismic';
 
 const debug = require('debug')('app');
 

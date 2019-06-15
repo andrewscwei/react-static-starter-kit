@@ -1,0 +1,48 @@
+import { Location } from 'history';
+import React, { Fragment, PureComponent } from 'react';
+import { RouteComponentProps, withRouter } from 'react-router';
+import { getPreviewPath, savePreviewToken } from '../utils/prismic';
+
+const debug = require('debug')('app:preview');
+
+export interface Props extends RouteComponentProps<{}> {
+  location: Location;
+}
+
+class Preview extends PureComponent<Props> {
+  constructor(props: Props) {
+    super(props);
+
+    const params = new URLSearchParams(props.location.search);
+    const token = params.get('token');
+    const documentId = params.get('documentId');
+
+    if (token && documentId) {
+      this.redirect(token);
+      debug(`Initializing preview for document <${documentId}>...`, 'OK', token);
+    }
+    else {
+      debug(`Initializing preview for document <${documentId}>...`, 'ERR', 'Missing token from query string');
+    }
+  }
+
+  async redirect(token: string) {
+    savePreviewToken(token);
+
+    const path = await getPreviewPath(token);
+
+    debug('Redirecting...', 'OK', path);
+
+    this.props.history.push({
+      pathname: path,
+    });
+  }
+
+  render() {
+    return (
+      <Fragment/>
+    );
+  }
+}
+
+export default withRouter(Preview);

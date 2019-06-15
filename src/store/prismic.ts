@@ -3,6 +3,7 @@ import Prismic from 'prismic-javascript';
 import { Document } from 'prismic-javascript/d.ts/documents';
 import { Action, Dispatch } from 'redux';
 import localeResolver from '../utils/localeResolver';
+import { getAPI, loadPreviewToken } from '../utils/prismic';
 
 const debug = require('debug')('app:prismic');
 
@@ -41,24 +42,13 @@ export default function reducer(state = initialState, action: PrismicAction): Pr
   }
 }
 
-export function fetchDocsByType(type: string, locale: string = __APP_CONFIG__.locales[0]) {
+export function fetchDocsByType(type: string, locale: string = __APP_CONFIG__.locales[0], ref?: string) {
   return async (dispatch: Dispatch<PrismicAction>) => {
-    const { apiEndpoint, accessToken } = __APP_CONFIG__.prismic;
-    const api = await Prismic.api(apiEndpoint, { accessToken });
-
-    let ref;
-
-    try {
-      ref = window.__PRISMIC_REF__ || api.master();
-    }
-    catch (err) {
-      ref = api.master();
-    }
-
-    const res = await api.query(Prismic.Predicates.at('document.type', type), { ref, lang: localeResolver(locale) });
+    const api = await getAPI();
+    const res = await api.query(Prismic.Predicates.at('document.type', type), { ref: ref || api.master(), lang: localeResolver(locale) });
     const docs = res.results;
 
-    debug(`Fetching doc from Prismic for type "${type}" and locale "${locale}"...`, 'OK', docs);
+    debug(`Fetching docs from Prismic for type "${type}" and locale "${locale}"...`, 'OK', docs);
 
     dispatch({
       type: PrismicActionType.DOC_LOADED,
@@ -66,6 +56,24 @@ export function fetchDocsByType(type: string, locale: string = __APP_CONFIG__.lo
         type,
         locale,
         docs,
+      },
+    });
+  };
+}
+
+export function fetchDocById(id: string, locale: string = __APP_CONFIG__.locales[0]) {
+  return async (dispatch: Dispatch<PrismicAction>) => {
+    const api = await getAPI();
+    const res = await api.getByID(id, { ref: loadPreviewToken(id) || api.master(), lang: localeResolver(locale) });
+
+    debug(`Fetching doc from Prismic by ID "${id}" and locale "${locale}"...`, 'OK', res);
+
+    dispatch({
+      type: PrismicActionType.DOC_LOADED,
+      payload: {
+        type: res.type,
+        locale,
+        docs: [res],
       },
     });
   };

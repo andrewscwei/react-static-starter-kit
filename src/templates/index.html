@@ -46,7 +46,12 @@
   </head>
   <body>
     <script>window.__BUILD_NUMBER__='<%= htmlWebpackPlugin.options.appConf.buildNumber %>';</script>
-    <div id='app'>
-    </div>
+
+    <div id='app'></div>
+
+    <% if (htmlWebpackPlugin.options.appConf.prismic.previewsEnabled) { %>
+      <script>window.prismic = { endpoint: '<%= htmlWebpackPlugin.options.appConf.prismic.apiEndpoint %>' };</script>
+      <script type="text/javascript" src='https://static.cdn.prismic.io/prismic.min.js'></script>
+    <% } %>
   </body>
 </html>

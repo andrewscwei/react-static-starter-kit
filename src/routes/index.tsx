@@ -5,6 +5,7 @@
 import About from '../containers/About';
 import Home from '../containers/Home';
 import NotFound from '../containers/NotFound';
+import Preview from '../containers/Preview';
 
 export function getLocaleFromPath(path: string): string {
   const locales = __INTL_CONFIG__.locales;
@@ -25,6 +26,9 @@ export default [{
 }, {
   path: '/about',
   component: About,
+}, {
+  path: '/preview',
+  component: Preview,
 }, {
   path: '/ja',
   exact: true,
