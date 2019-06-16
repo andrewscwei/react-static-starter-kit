@@ -7,7 +7,7 @@
   "scripts": {
     "clean": "rimraf build",
     "build": "npm run clean && NODE_ENV=production webpack --colors --profile --config config/build.conf.ts --display-error-details",
-    "postbuild": "react-snap",
+    "postbuild": "react-snap && ts-node config/build.post",
     "test": "echo \"No tests yet\"",
     "dev": "NODE_ENV=development webpack-dev-server --display-error-details --hot --config config/build.conf.ts",
     "lint": "npm run lint:ts && npm run lint:css",
@@ -19,10 +19,9 @@
   },
   "reactSnap": {
     "source": "build",
-    "puppeteer": {
-      "networkIdleTimeout": 5000,
-      "waitUntil": "networkidle"
-    },
+    "include": [
+      "/preview"
+    ],
     "puppeteerArgs": [
       "--no-sandbox",
       "--disable-setuid-sandbox"
@@ -36,6 +35,7 @@
     "@babel/preset-react": "^7.0.0",
     "@babel/preset-typescript": "^7.3.3",
     "@hot-loader/react-dom": "^16.8.6",
+    "@types/chalk": "^2.2.0",
     "@types/cookie": "^0.3.3",
     "@types/copy-webpack-plugin": "^5.0.0",
     "@types/dotenv": "^6.1.1",
@@ -59,6 +59,7 @@
     "@types/whatwg-fetch": "0.0.33",
     "babel-loader": "^8.0.6",
     "babel-plugin-styled-components": "^1.10.0",
+    "chalk": "^2.4.2",
     "cookie": "^0.4.0",
     "copy-webpack-plugin": "^5.0.3",
     "debug": "^4.1.1",

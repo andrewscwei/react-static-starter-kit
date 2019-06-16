@@ -23,9 +23,6 @@ export default {
 
     // Secret access token.
     accessToken: process.env.PRISMIC_ACCESS_TOKEN,
-
-    // Specifies whether previews are enabled.
-    previewsEnabled: true,
   },
 
   // HTML metadata.

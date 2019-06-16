@@ -64,7 +64,7 @@ export default function withPrismicDoc(type: string) {
           debug(`A preview reference exists for the current path "${currentPath}", fetching the preview doc...`, 'OK');
         }
         else {
-          debug(`Fetchning doc for path "${currentPath}"...`, 'OK');
+          debug(`Fetching doc for path "${currentPath}"...`, 'OK');
         }
       }
 

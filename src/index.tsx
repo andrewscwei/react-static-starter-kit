@@ -11,9 +11,9 @@ import Worker from 'worker-loader!./workers/web';
 import App from './containers/App';
 import store from './store';
 
-// if (process.env.NODE_ENV === 'development') {
-window.localStorage.debug = 'app*,worker*';
-// }
+if (process.env.NODE_ENV === 'development') {
+  window.localStorage.debug = 'app*,worker*';
+}
 
 const debug = require('debug')('app');
 const worker = new Worker();

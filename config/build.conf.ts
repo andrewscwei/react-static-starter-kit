@@ -107,7 +107,7 @@ const config: Configuration = {
       minify: {
         collapseWhitespace: true,
         removeAttributeQuotes: true,
-        removeComments: true,
+        removeComments: false,
       },
       template: path.join(inputDir, 'templates', 'index.html'),
     }),
