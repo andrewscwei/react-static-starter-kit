@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import React, { PureComponent } from 'react';
-import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import styled from 'styled-components';
@@ -19,6 +18,8 @@ class About extends PureComponent {
 
   constructor(props) {
     super(props);
+    document.title = this.props.t['about'];
+
     this.props.fetchUsers();
   }
 
@@ -27,9 +28,6 @@ class About extends PureComponent {
 
     return (
       <StyledRoot>
-        <Helmet>
-          <title>{t['about']}</title>
-        </Helmet>
         <h1>{t['about-title']}</h1>
         {
           this.props.users.map((user) => {

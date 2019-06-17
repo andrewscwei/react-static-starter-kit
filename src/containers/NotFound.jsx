@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import React, { PureComponent } from 'react';
-import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { Route } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
@@ -9,6 +8,11 @@ import styled from 'styled-components';
 class NotFound extends PureComponent {
   static propTypes = {
     t: PropTypes.object.isRequired,
+  }
+
+  constructor(props) {
+    super(props);
+    document.title = this.props.t['not-found-title'];
   }
 
   render() {
@@ -22,9 +26,6 @@ class NotFound extends PureComponent {
 
         return (
           <StyledRoot>
-            <Helmet>
-              <title>{t['not-found-title']}</title>
-            </Helmet>
             <h1>{t['not-found']}</h1>
           </StyledRoot>
         );

@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import React, { PureComponent } from 'react';
-import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import styled from 'styled-components';
@@ -11,14 +10,16 @@ class Home extends PureComponent {
     t: PropTypes.object.isRequired,
   }
 
+  constructor(props) {
+    super(props);
+    document.title = this.props.t['home'];
+  }
+
   render() {
     const { t } = this.props;
 
     return (
       <StyledRoot>
-        <Helmet>
-          <title>{t['home']}</title>
-        </Helmet>
         <StyledReactLogo/>
         <h1>{t['hello']}</h1>
         <p>v{__APP_CONFIG__.version} ({__APP_CONFIG__.buildNumber})</p>
