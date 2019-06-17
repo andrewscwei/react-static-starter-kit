@@ -23,7 +23,10 @@
       "networkIdleTimeout": 5000,
       "waitUntil": "networkidle"
     },
-    "puppeteerArgs": ["--no-sandbox", "--disable-setuid-sandbox"]
+    "puppeteerArgs": [
+      "--no-sandbox",
+      "--disable-setuid-sandbox"
+    ]
   },
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.4.4",
@@ -40,7 +43,6 @@
     "@types/node": "^12.0.7",
     "@types/react": "^16.8.19",
     "@types/react-dom": "^16.8.4",
-    "@types/react-helmet": "^5.0.8",
     "@types/react-hot-loader": "^4.1.0",
     "@types/react-intl": "^2.3.18",
     "@types/react-redux": "^7.0.9",
@@ -66,7 +68,6 @@
     "raw-loader": "^3.0.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "react-helmet": "^5.2.1",
     "react-hot-loader": "^4.11.0",
     "react-intl": "^2.9.0",
     "react-redux": "^7.1.0",
