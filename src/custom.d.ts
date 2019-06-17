@@ -9,6 +9,11 @@ declare const __INTL_CONFIG__: {
 
 declare const __ROUTES_CONFIG__: Array<RouteData>;
 
+declare module '*.svg' {
+  const content: any;
+  export default content;
+}
+
 declare module 'worker-loader!*' {
   class WebpackWorker extends Worker {
     constructor();
