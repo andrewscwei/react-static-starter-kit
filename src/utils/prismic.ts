@@ -1,9 +1,41 @@
 import cookie from 'cookie';
 import Prismic from 'prismic-javascript';
+import { Document } from 'prismic-javascript/d.ts/documents';
 import ResolvedApi from 'prismic-javascript/d.ts/ResolvedApi';
-import linkResolver from './linkResolver';
+import { getLocalizedPath } from '../routes';
 
 const debug = require('debug')('app:prismic');
+
+export function linkResolver(doc: Document): string {
+  const locale = doc.lang ? localeResolver(doc.lang, true) : 'en';
+
+  switch (doc.type) {
+  case 'home': return getLocalizedPath('/', locale);
+  case 'blog_post': return getLocalizedPath(`/blog/${doc.uid}`, locale);
+  default: return '/404';
+  }
+}
+
+export function localeResolver(locale: string, reverse: boolean = false): string {
+  const defaultLocale = __INTL_CONFIG__.defaultLocale;
+  const supportedLocales = __INTL_CONFIG__.locales;
+
+  if (reverse) {
+    switch (locale) {
+    case 'ja-jp': return 'ja';
+    default: return 'en';
+    }
+  }
+  else {
+    if (supportedLocales.indexOf(locale) < 0) return defaultLocale;
+
+    switch (locale) {
+    case 'ja': return 'ja-jp';
+    default: return 'en-us';
+    }
+  }
+}
+
 
 export function getAPI(): Promise<ResolvedApi> {
   const { apiEndpoint, accessToken } = __APP_CONFIG__.prismic;

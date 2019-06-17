@@ -9,8 +9,6 @@ declare const __INTL_CONFIG__: {
 
 declare const __ROUTES_CONFIG__: Array<RouteData>;
 
-declare module 'prismic-reactjs';
-
 declare module 'worker-loader!*' {
   class WebpackWorker extends Worker {
     constructor();

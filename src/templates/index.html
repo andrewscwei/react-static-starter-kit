@@ -47,6 +47,12 @@
   <body>
     <script>window.__BUILD_NUMBER__='<%= htmlWebpackPlugin.options.appConf.buildNumber %>';</script>
     <div id='app'></div>
-    <!-- [POSTBUILD] <script>window.prismic = { endpoint: '<%= htmlWebpackPlugin.options.appConf.prismic.apiEndpoint %>' };</script><script type='text/javascript' src='https://static.cdn.prismic.io/prismic.min.js'></script> [POSTBUILD] -->
+
+    <% if (process.env.NODE_ENV === 'development') { %>
+      <script>window.prismic = { endpoint: '<%= htmlWebpackPlugin.options.appConf.prismic.apiEndpoint %>' };</script>
+      <script type='text/javascript' src='https://static.cdn.prismic.io/prismic.min.js'></script>
+    <% } else { %>
+      <!-- [POSTBUILD] <script>window.prismic = { endpoint: '<%= htmlWebpackPlugin.options.appConf.prismic.apiEndpoint %>' };</script><script type='text/javascript' src='https://static.cdn.prismic.io/prismic.min.js'></script> [POSTBUILD] -->
+    <% } %>
   </body>
 </html>

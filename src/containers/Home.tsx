@@ -1,13 +1,12 @@
 import _ from 'lodash';
+import { RichText } from 'prismic-dom';
 import { Document } from 'prismic-javascript/d.ts/documents';
-import { RichText } from 'prismic-reactjs';
 import React, { ComponentType, Fragment, PureComponent } from 'react';
-import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { Action, bindActionCreators, Dispatch } from 'redux';
 import styled from 'styled-components';
 import ReactLogo from '../components/ReactLogo';
-import withPrismicDoc from '../decorators/withPrismicDoc';
+import withPrismicDocs from '../decorators/withPrismicDocs';
 import { AppState } from '../store';
 
 const debug = require('debug')('app:home');
@@ -32,21 +31,23 @@ export interface State {
 }
 
 class Home extends PureComponent<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    document.title = this.props.t['home'];
+  }
+
   render() {
     const { t, docs, locale } = this.props;
-    const doc = _.get(docs, `${locale}[0]`) as any;
+    const doc = _.get(docs, `${locale}[0]`) as Document | undefined;
 
     return (
       <StyledRoot>
-        <Helmet>
-          <title>{t['home']}</title>
-        </Helmet>
         <StyledReactLogo/>
         { doc &&
           <Fragment>
-            <h1>{RichText.asText(doc!.data.title)}</h1>
+            <h1>{RichText.asText(doc.data.title)}</h1>
             <p>v{__APP_CONFIG__.version} ({__APP_CONFIG__.buildNumber})</p>
-            <p>{RichText.asText(doc!.data.body)}</p>
+            <p>{RichText.asText(doc.data.body)}</p>
           </Fragment>
         }
       </StyledRoot>
@@ -62,7 +63,7 @@ export default connect(
   (dispatch: Dispatch<Action>): DispatchProps => bindActionCreators({
 
   }, dispatch),
-)(withPrismicDoc('home')(Home));
+)(withPrismicDocs('home')(Home));
 
 const StyledRoot = styled.div`
   align-items: center;

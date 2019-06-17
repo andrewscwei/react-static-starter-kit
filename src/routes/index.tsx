@@ -2,7 +2,8 @@
  * @file Route definitions for React router.
  */
 
-import About from '../containers/About';
+import Blog from '../containers/Blog';
+import BlogPost from '../containers/BlogPost';
 import Home from '../containers/Home';
 import NotFound from '../containers/NotFound';
 import Preview from '../containers/Preview';
@@ -19,13 +20,32 @@ export function getLocaleFromPath(path: string): string {
   }
 }
 
+export function getLocalizedPath(path: string, locale: string = __INTL_CONFIG__.defaultLocale): string {
+  const t = path.split('/').filter(v => v);
+
+  if (t.length > 0 && __INTL_CONFIG__.locales.indexOf(t[0]) >= 0) {
+    t.shift();
+  }
+
+  switch (locale) {
+  case __INTL_CONFIG__.defaultLocale:
+    return `/${t.join('/')}`;
+  default:
+    return `/${locale}/${t.join('/')}`;
+  }
+}
+
 export default [{
   path: '/',
   exact: true,
   component: Home,
 }, {
-  path: '/about',
-  component: About,
+  path: '/blog',
+  exact: true,
+  component: Blog,
+}, {
+  path: '/blog/:uid',
+  component: BlogPost,
 }, {
   path: '/preview',
   component: Preview,
@@ -34,8 +54,12 @@ export default [{
   exact: true,
   component: Home,
 }, {
-  path: '/ja/about',
-  component: About,
+  path: '/ja/blog',
+  exact: true,
+  component: Blog,
+}, {
+  path: '/ja/blog/:uid',
+  component: BlogPost,
 }, {
   path: '*',
   component: NotFound,

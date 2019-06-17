@@ -9,7 +9,11 @@ export default css`
   body {
     background: ${theme.backgroundColor};
     font-family: 'Roboto', sans-serif;
-    height: 100%;
     width: 100%;
+  }
+
+  body {
+    height: auto;
+    min-height: 100%;
   }
 `;
