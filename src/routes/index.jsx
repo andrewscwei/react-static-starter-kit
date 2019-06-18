@@ -10,11 +10,26 @@ export function getLocaleFromPath(path) {
   const locales = __INTL_CONFIG__.locales;
   const possibleLocale = path.split('/')[1];
 
-   if (~locales.indexOf(possibleLocale)) {
+  if (~locales.indexOf(possibleLocale)) {
     return possibleLocale;
   }
   else {
     return locales[0];
+  }
+}
+
+export function getLocalizedPath(path, locale = __INTL_CONFIG__.defaultLocale) {
+  const t = path.split('/').filter(v => v);
+
+  if (t.length > 0 && __INTL_CONFIG__.locales.indexOf(t[0]) >= 0) {
+    t.shift();
+  }
+
+  switch (locale) {
+  case __INTL_CONFIG__.defaultLocale:
+    return `/${t.join('/')}`;
+  default:
+    return `/${locale}/${t.join('/')}`;
   }
 }
 
@@ -24,6 +39,7 @@ export default [{
   component: Home,
 }, {
   path: '/about',
+  exact: true,
   component: About,
 }, {
   path: '/ja',
@@ -31,6 +47,7 @@ export default [{
   component: Home,
 }, {
   path: '/ja/about',
+  exact: true,
   component: About,
 }, {
   path: '*',

@@ -21,7 +21,6 @@ const debug = require('debug')('app');
 class App extends PureComponent {
   static propTypes = {
     locale: PropTypes.string.isRequired,
-    locales: PropTypes.array.isRequired,
     changeLocale: PropTypes.func.isRequired,
     route: PropTypes.object.isRequired,
   }
@@ -40,7 +39,7 @@ class App extends PureComponent {
   }
 
   syncLocaleWithUrl = () => {
-    const { route, changeLocale, locale, locales } = this.props;
+    const { route, changeLocale, locale } = this.props;
     const newLocale = getLocaleFromPath(route.location.pathname);
 
     if (newLocale === locale) {
@@ -84,7 +83,6 @@ export default (component => {
 })(connect(
   (state) => ({
     locale: state.intl.locale,
-    locales: state.intl.locales,
   }),
   (dispatch) => bindActionCreators({
     changeLocale,
