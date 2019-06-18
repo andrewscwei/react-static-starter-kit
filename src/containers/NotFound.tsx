@@ -19,11 +19,7 @@ interface OwnProps {
 
 export interface Props extends StateProps, DispatchProps, OwnProps {}
 
-export interface State {
-
-}
-
-class NotFound extends PureComponent<Props, State> {
+class NotFound extends PureComponent<Props> {
   constructor(props: Props) {
     super(props);
     document.title = this.props.t['not-found-title'];

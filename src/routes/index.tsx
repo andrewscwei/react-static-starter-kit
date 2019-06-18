@@ -39,6 +39,7 @@ export default [{
   component: Home,
 }, {
   path: '/about',
+  exact: true,
   component: About,
 }, {
   path: '/ja',
@@ -46,6 +47,7 @@ export default [{
   component: Home,
 }, {
   path: '/ja/about',
+  exact: true,
   component: About,
 }, {
   path: '*',
