@@ -9,8 +9,6 @@ import ReactLogo from '../components/ReactLogo';
 import withPrismicDocs from '../decorators/withPrismicDocs';
 import { AppState } from '../store';
 
-const debug = require('debug')('app:home');
-
 interface StateProps {
   t: TranslationData;
   locale: string;

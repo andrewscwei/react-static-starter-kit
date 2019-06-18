@@ -7,9 +7,9 @@ import { Action, bindActionCreators, Dispatch } from 'redux';
 import { getLocaleFromPath } from '../routes';
 import { AppState } from '../store';
 import { fetchDocsByType } from '../store/prismic';
-import { getPreviewPath, loadPreviewToken, localeResolver } from '../utils/prismic';
+import { loadPreviewToken, localeResolver } from '../utils/prismic';
 
-const debug = require('debug')('app:prismic-doc');
+const debug = require('debug')('app:prismic-docs');
 
 interface StateProps {
   docs?: { [locale: string]: ReadonlyArray<Document> };
