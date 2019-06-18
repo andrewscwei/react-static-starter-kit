@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Action, bindActionCreators, Dispatch } from 'redux';
 import styled from 'styled-components';
+import { getLocalizedPath } from '../routes';
 import { AppState } from '../store';
 
 interface StateProps {
@@ -22,8 +23,8 @@ const Footer: SFC<Props> = ({ t }) => (
     <nav>
       <a href='https://github.com/andrewscwei/react-static-starter-kit'/>
     </nav>
-    <Link to='/'>{t['en']}</Link>
-    <Link to='/ja/'>{t['jp']}</Link>
+    <Link to={getLocalizedPath('/', 'en')}>{t['en']}</Link>
+    <Link to={getLocalizedPath('/', 'ja')}>{t['jp']}</Link>
   </StyledRoot>
 );
 

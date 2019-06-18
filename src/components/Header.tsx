@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Action, bindActionCreators, Dispatch } from 'redux';
 import styled from 'styled-components';
+import { getLocalizedPath } from '../routes';
 import { AppState } from '../store';
 
 interface StateProps {
@@ -20,8 +21,8 @@ export interface Props extends StateProps, DispatchProps, OwnProps {}
 
 const Header: SFC<Props> = ({ locale, t }) => (
   <StyledRoot>
-    <Link to={locale === 'en' ? '/' : '/ja/'}>{t['home']}</Link>
-    <Link to={locale === 'en' ? '/about/' : '/ja/about/'}>{t['about']}</Link>
+    <Link to={getLocalizedPath('/', locale)}>{t['home']}</Link>
+    <Link to={getLocalizedPath('/about', locale)}>{t['about']}</Link>
   </StyledRoot>
 );
 

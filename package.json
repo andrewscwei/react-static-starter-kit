@@ -1,6 +1,6 @@
 {
   "name": "react-static-starter-kit",
-  "version": "4.5.0",
+  "version": "4.6.0",
   "description": "Experimental React static prerendered app starter kit",
   "private": true,
   "license": "MIT",
@@ -19,10 +19,6 @@
   },
   "reactSnap": {
     "source": "build",
-    "puppeteer": {
-      "networkIdleTimeout": 5000,
-      "waitUntil": "networkidle"
-    },
     "puppeteerArgs": [
       "--no-sandbox",
       "--disable-setuid-sandbox"
