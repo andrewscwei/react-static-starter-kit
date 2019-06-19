@@ -9,7 +9,7 @@ This is an **experimental** starter kit for a React static app.
 3. [Babel](https://babeljs.io/)
 4. [React Router](https://reacttraining.com/react-router/), routes automatically generated and localized
 5. [Redux](https://redux.js.org/introduction)
-6. [React Intl](https://github.com/yahoo/react-intl/wiki)
+6. [Polyglot](http://airbnb.io/polyglot.js/)
 7. [Styled Components](https://www.styled-components.com/)
 8. [React Transition Group](http://reactcommunity.org/react-transition-group/)
 9. [ESLint](https://eslint.org/) and [StyleLint](https://stylelint.io/) config

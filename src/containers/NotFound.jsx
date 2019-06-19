@@ -5,18 +5,26 @@ import { Route } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import styled from 'styled-components';
 
-class NotFound extends PureComponent {
+@connect(
+  (state) => ({
+    ltxt: state.i18n.ltxt,
+  }),
+  (dispatch) => bindActionCreators({
+
+  }, dispatch),
+)
+export default class NotFound extends PureComponent {
   static propTypes = {
-    t: PropTypes.object.isRequired,
+    ltxt: PropTypes.func.isRequired,
   }
 
   constructor(props) {
     super(props);
-    document.title = this.props.t['not-found-title'];
+    document.title = this.props.ltxt('not-found-title');
   }
 
   render() {
-    const { t } = this.props;
+    const { ltxt } = this.props;
 
     return (
       <Route render={(route) => {
@@ -26,22 +34,13 @@ class NotFound extends PureComponent {
 
         return (
           <StyledRoot>
-            <h1>{t['not-found']}</h1>
+            <h1>{ltxt('not-found')}</h1>
           </StyledRoot>
         );
       }}/>
     );
   }
 }
-
-export default connect(
-  (state) => ({
-    t: state.intl.translations,
-  }),
-  (dispatch) => bindActionCreators({
-
-  }, dispatch),
-)(NotFound);
 
 const StyledRoot = styled.div`
   align-items: center;

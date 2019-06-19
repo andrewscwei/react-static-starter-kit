@@ -9,7 +9,7 @@ import path from 'path';
 import { DefinePlugin, EnvironmentPlugin, IgnorePlugin } from 'webpack';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import appConf from '../src/app.conf';
-import { getLocaleDataFromDir, getLocalesFromDir, getLocalizedRoutesFromDir, getTranslationsFromDir } from './utils';
+import { getLocalesFromDir, getTranslationsFromDir } from './utils';
 
 const isDev = process.env.NODE_ENV === 'development';
 const useBundleAnalyzer = process.env.ANALYZE_BUNDLE === 'true' ? true : false;
@@ -92,11 +92,9 @@ const config = {
       __APP_CONFIG__: JSON.stringify(appConf),
       __INTL_CONFIG__: JSON.stringify({
         defaultLocale: appConf.locales[0],
-        localeData: getLocaleDataFromDir(localesDir, locales),
         locales,
         dict: getTranslationsFromDir(localesDir, locales),
       }),
-      __ROUTES_CONFIG__: JSON.stringify(getLocalizedRoutesFromDir(path.join(inputDir, 'containers'), locales)),
     }),
     new HTMLPlugin({
       appConf,

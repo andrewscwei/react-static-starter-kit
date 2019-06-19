@@ -12,13 +12,25 @@ import styled, { createGlobalStyle, ThemeProvider } from 'styled-components';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import routes, { getLocaleFromPath } from '../routes';
-import { changeLocale } from '../store/intl';
+import { changeLocale } from '../store/i18n';
 import globalStyles from '../styles/global';
 import theme from '../styles/theme';
 
 const debug = require('debug')('app');
 
-class App extends PureComponent {
+@(component => {
+  if (process.env.NODE_ENV === 'development') return require('react-hot-loader/root').hot(component);
+  return component;
+})
+@connect(
+  state => ({
+    locale: state.i18n.locale,
+  }),
+  dispatch => bindActionCreators({
+    changeLocale,
+  }, dispatch),
+)
+export default class App extends PureComponent {
   static propTypes = {
     locale: PropTypes.string.isRequired,
     changeLocale: PropTypes.func.isRequired,
@@ -76,18 +88,6 @@ class App extends PureComponent {
     );
   }
 }
-
-export default (component => {
-  if (process.env.NODE_ENV === 'development') return require('react-hot-loader/root').hot(component);
-  return component;
-})(connect(
-  (state) => ({
-    locale: state.intl.locale,
-  }),
-  (dispatch) => bindActionCreators({
-    changeLocale,
-  }, dispatch),
-)(App));
 
 const GlobalStyles = createGlobalStyle`
   ${globalStyles}

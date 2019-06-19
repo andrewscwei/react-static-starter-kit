@@ -4,8 +4,7 @@
 
 import React from 'react';
 import { hydrate, render } from 'react-dom';
-import { IntlProvider } from 'react-intl';
-import { connect, Provider } from 'react-redux';
+import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import 'whatwg-fetch';
 import Worker from 'worker-loader!./workers/web';
@@ -24,22 +23,14 @@ worker.addEventListener('message', event => {
   debug(event.data.message);
 });
 
-const ConnectedIntlProvider = connect((state) => ({
-  key: state.intl.locale,
-  locale: state.intl.locale,
-  messages: state.intl.translations,
-}))(IntlProvider);
-
 // Generator for base markup.
 const markup = () => (
   <Provider store={store}>
-    <ConnectedIntlProvider>
-      <Router>
-        <Route render={(routeProps) => (
-          <App route={routeProps}/>
-        )}/>
-      </Router>
-    </ConnectedIntlProvider>
+    <Router>
+      <Route render={(routeProps) => (
+        <App route={routeProps}/>
+      )}/>
+    </Router>
   </Provider>
 );
 

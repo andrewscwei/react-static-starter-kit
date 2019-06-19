@@ -3,32 +3,37 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import styled from 'styled-components';
+import withPageTitle from '../decorators/withPageTitle';
 import { fetchUsers } from '../store/users';
 
-class About extends PureComponent {
+@connect(
+  state => ({
+    ltxt: state.i18n.ltxt,
+    users: state.users.items,
+  }),
+  dispatch => bindActionCreators({
+    fetchUsers,
+  }, dispatch),
+)
+@withPageTitle('about')
+export default class About extends PureComponent {
   static propTypes = {
-    t: PropTypes.object.isRequired,
+    ltxt: PropTypes.func.isRequired,
     users: PropTypes.array.isRequired,
     fetchUsers: PropTypes.func.isRequired,
   }
 
-  static fetchData(store) {
-    return store.dispatch(fetchUsers()); // TODO: Fix this
-  }
-
   constructor(props) {
     super(props);
-    document.title = this.props.t['about'];
-
     this.props.fetchUsers();
   }
 
   render() {
-    const { t } = this.props;
+    const { ltxt } = this.props;
 
     return (
       <StyledRoot>
-        <h1>{t['about-title']}</h1>
+        <h1>{ltxt('about-title')}</h1>
         {
           this.props.users.map((user) => {
             return (
@@ -42,16 +47,6 @@ class About extends PureComponent {
     );
   }
 }
-
-export default connect(
-  (state) => ({
-    t: state.intl.translations,
-    users: state.users.items,
-  }),
-  (dispatch) => bindActionCreators({
-    fetchUsers,
-  }, dispatch),
-)(About);
 
 const StyledRoot = styled.div`
   align-items: center;
