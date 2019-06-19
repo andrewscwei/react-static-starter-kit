@@ -10,21 +10,18 @@ export default css`
     src: url('${require('../assets/fonts/Roboto-Bold.ttf')}') format('truetype');
     font-style: normal;
     font-weight: 700;
-    font-display: fallback;
   }
   @font-face {
     font-family: 'Roboto';
     src: url('${require('../assets/fonts/Roboto-Regular.ttf')}') format('truetype');
     font-style: normal;
     font-weight: 400;
-    font-display: fallback;
   }
   @font-face {
     font-family: 'Roboto';
     src: url('${require('../assets/fonts/Roboto-Light.ttf')}') format('truetype');
     font-style: normal;
     font-weight: 300;
-    font-display: fallback;
   }
 
   html,
