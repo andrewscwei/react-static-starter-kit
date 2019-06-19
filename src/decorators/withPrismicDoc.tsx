@@ -2,7 +2,7 @@ import { Location } from 'history';
 import hoistNonReactStatics from 'hoist-non-react-statics';
 import _ from 'lodash';
 import { Document } from 'prismic-javascript/d.ts/documents';
-import React, { PureComponent } from 'react';
+import React, { Component, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { match } from 'react-router';
 import { Action, bindActionCreators, Dispatch } from 'redux';
@@ -29,7 +29,7 @@ interface OwnProps {
 interface Props extends StateProps, DispatchProps, OwnProps {}
 
 export default function withPrismicDoc(type: string) {
-  return (WrappedComponent: typeof PureComponent) => {
+  return (WrappedComponent: typeof Component) => {
     class WithPrismicDoc extends PureComponent<Props> {
       constructor(props: Props) {
         super(props);
