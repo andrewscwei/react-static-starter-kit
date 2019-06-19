@@ -4,9 +4,10 @@ import { Route, RouteComponentProps } from 'react-router-dom';
 import { Action, bindActionCreators, Dispatch } from 'redux';
 import styled from 'styled-components';
 import { AppState } from '../store';
+import { I18nState } from '../store/i18n';
 
 interface StateProps {
-  t: TranslationData;
+  ltxt: I18nState['ltxt'];
 }
 
 interface DispatchProps {
@@ -22,11 +23,11 @@ export interface Props extends StateProps, DispatchProps, OwnProps {}
 class NotFound extends PureComponent<Props> {
   constructor(props: Props) {
     super(props);
-    document.title = this.props.t['not-found-title'];
+    document.title = this.props.ltxt('not-found-title') ;
   }
 
   render() {
-    const { t } = this.props;
+    const { ltxt } = this.props;
 
     return (
       <Route render={(route: RouteComponentProps<any>) => {
@@ -36,7 +37,7 @@ class NotFound extends PureComponent<Props> {
 
         return (
           <StyledRoot>
-            <h1>{t['not-found']}</h1>
+            <h1>{ltxt('not-found') }</h1>
           </StyledRoot>
         );
       }}/>
@@ -46,7 +47,7 @@ class NotFound extends PureComponent<Props> {
 
 export default connect(
   (state: AppState): StateProps => ({
-    t: state.intl.translations,
+    ltxt: state.i18n.ltxt,
   }),
   (dispatch: Dispatch<Action>): DispatchProps => bindActionCreators({
 

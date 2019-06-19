@@ -5,9 +5,10 @@ import { Action, bindActionCreators, Dispatch } from 'redux';
 import styled from 'styled-components';
 import { getLocalizedPath } from '../routes';
 import { AppState } from '../store';
+import { I18nState } from '../store/i18n';
 
 interface StateProps {
-  t: TranslationData;
+  ltxt: I18nState['ltxt'];
   locale: string;
 }
 
@@ -19,17 +20,17 @@ interface OwnProps {
 
 export interface Props extends StateProps, DispatchProps, OwnProps {}
 
-const Header: SFC<Props> = ({ locale, t }) => (
+const Header: SFC<Props> = ({ locale, ltxt }) => (
   <StyledRoot>
-    <Link to={getLocalizedPath('/', locale)}>{t['home']}</Link>
-    <Link to={getLocalizedPath('/about', locale)}>{t['about']}</Link>
+    <Link to={getLocalizedPath('/', locale)}>{ltxt('home') }</Link>
+    <Link to={getLocalizedPath('/about', locale)}>{ltxt('about') }</Link>
   </StyledRoot>
 );
 
 export default connect(
   (state: AppState): StateProps => ({
-    t: state.intl.translations,
-    locale: state.intl.locale,
+    ltxt: state.i18n.ltxt,
+    locale: state.i18n.locale,
   }),
   (dispatch: Dispatch<Action>): DispatchProps => bindActionCreators({
 

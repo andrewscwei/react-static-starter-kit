@@ -12,7 +12,7 @@ import Footer from '../components/Footer';
 import Header from '../components/Header';
 import routes, { getLocaleFromPath } from '../routes';
 import { AppState } from '../store';
-import { changeLocale } from '../store/intl';
+import { changeLocale } from '../store/i18n';
 import globalStyles from '../styles/global';
 import theme from '../styles/theme';
 
@@ -93,7 +93,7 @@ export default (component => {
   if (process.env.NODE_ENV === 'development') return require('react-hot-loader/root').hot(component);
   return component;
 })(connect((state: AppState): StateProps => ({
-    locale: state.intl.locale,
+    locale: state.i18n.locale,
   }),
   (dispatch: Dispatch<Action>): DispatchProps => bindActionCreators({
     changeLocale,

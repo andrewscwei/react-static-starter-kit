@@ -2,10 +2,10 @@
  * @file Entry file.
  */
 
+import 'abortcontroller-polyfill/dist/polyfill-patch-fetch';
 import React from 'react';
 import { hydrate, render } from 'react-dom';
-import { IntlProvider } from 'react-intl';
-import { connect, Provider } from 'react-redux';
+import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Route, RouteComponentProps } from 'react-router-dom';
 import 'whatwg-fetch';
 import Worker from 'worker-loader!./workers/web';
@@ -24,22 +24,14 @@ worker.addEventListener('message', event => {
   debug(event.data.message);
 });
 
-const ConnectedIntlProvider = connect((state: any) => ({
-  key: state.intl.locale,
-  locale: state.intl.locale,
-  messages: state.intl.translations,
-}))(IntlProvider);
-
 // Generator for base markup.
 const markup = () => (
   <Provider store={store}>
-    <ConnectedIntlProvider>
-      <Router>
-        <Route render={(routeProps: RouteComponentProps<any>) => (
-          <App route={routeProps}/>
-        )}/>
-      </Router>
-    </ConnectedIntlProvider>
+    <Router>
+      <Route render={(routeProps: RouteComponentProps<any>) => (
+        <App route={routeProps}/>
+      )}/>
+    </Router>
   </Provider>
 );
 

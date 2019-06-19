@@ -4,9 +4,10 @@ import { Action, bindActionCreators, Dispatch } from 'redux';
 import styled from 'styled-components';
 import ReactLogo from '../components/ReactLogo';
 import { AppState } from '../store';
+import { I18nState } from '../store/i18n';
 
 interface StateProps {
-  t: TranslationData;
+  ltxt: I18nState['ltxt'];
 }
 
 interface DispatchProps {
@@ -26,18 +27,18 @@ export interface State {
 class Home extends PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
-    document.title = this.props.t['home'];
+    document.title = this.props.ltxt('home');
   }
 
   render() {
-    const { t } = this.props;
+    const { ltxt } = this.props;
 
     return (
       <StyledRoot>
         <StyledReactLogo/>
-        <h1>{t['hello']}</h1>
+        <h1>{ltxt('hello')}</h1>
         <p>v{__APP_CONFIG__.version} ({__APP_CONFIG__.buildNumber})</p>
-        <p>{t['description']}</p>
+        <p>{ltxt('description') }</p>
       </StyledRoot>
     );
   }
@@ -45,7 +46,7 @@ class Home extends PureComponent<Props, State> {
 
 export default connect(
   (state: AppState): StateProps => ({
-    t: state.intl.translations,
+    ltxt: state.i18n.ltxt,
   }),
   (dispatch: Dispatch<Action>): DispatchProps => bindActionCreators({
 

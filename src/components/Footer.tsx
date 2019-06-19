@@ -5,9 +5,10 @@ import { Action, bindActionCreators, Dispatch } from 'redux';
 import styled from 'styled-components';
 import { getLocalizedPath } from '../routes';
 import { AppState } from '../store';
+import { I18nState } from '../store/i18n';
 
 interface StateProps {
-  t: TranslationData;
+  ltxt: I18nState['ltxt'];
 }
 
 interface DispatchProps {}
@@ -18,19 +19,19 @@ interface OwnProps {
 
 export interface Props extends StateProps, DispatchProps, OwnProps {}
 
-const Footer: SFC<Props> = ({ t }) => (
+const Footer: SFC<Props> = ({ ltxt }) => (
   <StyledRoot>
     <nav>
       <a href='https://github.com/andrewscwei/react-static-starter-kit'/>
     </nav>
-    <Link to={getLocalizedPath('/', 'en')}>{t['en']}</Link>
-    <Link to={getLocalizedPath('/', 'ja')}>{t['jp']}</Link>
+    <Link to={getLocalizedPath('/', 'en')}>{ltxt('en') }</Link>
+    <Link to={getLocalizedPath('/', 'ja')}>{ltxt('jp') }</Link>
   </StyledRoot>
 );
 
 export default connect(
   (state: AppState): StateProps => ({
-    t: state.intl.translations,
+    ltxt: state.i18n.ltxt,
   }),
   (dispatch: Dispatch<Action>): DispatchProps => bindActionCreators({
 
