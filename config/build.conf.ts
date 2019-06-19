@@ -92,7 +92,7 @@ const config: Configuration = {
     }),
     new DefinePlugin({
       __APP_CONFIG__: JSON.stringify(appConf),
-      __INTL_CONFIG__: JSON.stringify({
+      __I18N_CONFIG__: JSON.stringify({
         defaultLocale: appConf.locales[0],
         locales,
         dict: getTranslationsFromDir(localesDir, locales),

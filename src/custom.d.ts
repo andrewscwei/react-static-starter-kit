@@ -1,6 +1,6 @@
 declare const __APP_CONFIG__: Readonly<{ [key: string]: any }>;
 
-declare const __INTL_CONFIG__: Readonly<{
+declare const __I18N_CONFIG__: Readonly<{
   defaultLocale: string;
   locales: string;
   dict: TranslationDataDict;
