@@ -36,7 +36,6 @@ export function localeResolver(locale: string, reverse: boolean = false): string
   }
 }
 
-
 export function getAPI(): Promise<ResolvedApi> {
   const { apiEndpoint, accessToken } = __APP_CONFIG__.prismic;
   return Prismic.api(apiEndpoint, { accessToken });
