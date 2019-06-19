@@ -1,4 +1,4 @@
-# react-static-starter-kit [![CircleCI](https://circleci.com/gh/andrewscwei/react-static-starter-kit/tree/javascript.svg?style=svg)](https://circleci.com/gh/andrewscwei/react-static-starter-kit/tree/javascript)
+# react-static-starter-kit [![CircleCI](https://circleci.com/gh/andrewscwei/react-static-starter-kit/tree/javascript.svg?style=svg)](https://circleci.com/gh/andrewscwei/react-static-starter-kit/tree/javascript)[![Netlify Status](https://api.netlify.com/api/v1/badges/8fc40796-fac4-41bb-8e59-8d1ee7338966/deploy-status)](https://app.netlify.com/sites/react-static-starter-kit-javascript/deploys)
 
 This is an **experimental** starter kit for a React static app.
 

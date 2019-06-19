@@ -15,7 +15,7 @@
   },
   "globals": {
     "__APP_CONFIG__": true,
-    "__INTL_CONFIG__": true,
+    "__I18N_CONFIG__": true,
   },
   "env": {
     "browser": true,
