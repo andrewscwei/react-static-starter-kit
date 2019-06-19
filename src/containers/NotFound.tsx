@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Route, RouteComponentProps } from 'react-router-dom';
 import { Action, bindActionCreators, Dispatch } from 'redux';
 import styled from 'styled-components';
+import withPageTitle from '../decorators/withPageTitle';
 import { AppState } from '../store';
 import { I18nState } from '../store/i18n';
 
@@ -21,11 +22,6 @@ interface OwnProps {
 export interface Props extends StateProps, DispatchProps, OwnProps {}
 
 class NotFound extends PureComponent<Props> {
-  constructor(props: Props) {
-    super(props);
-    document.title = this.props.ltxt('not-found-title') ;
-  }
-
   render() {
     const { ltxt } = this.props;
 
@@ -52,7 +48,7 @@ export default connect(
   (dispatch: Dispatch<Action>): DispatchProps => bindActionCreators({
 
   }, dispatch),
-)(NotFound);
+)(withPageTitle('not-found-title')(NotFound));
 
 const StyledRoot = styled.div`
   align-items: center;

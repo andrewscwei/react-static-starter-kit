@@ -2,7 +2,7 @@ import Polyglot from 'node-polyglot';
 import { Action } from 'redux';
 import { getPolyglotByLocale } from '../utils/i18n';
 
-const debug = require('debug')('app:intl');
+const debug = require('debug')('app:i18n');
 
 export enum I18nActionType {
   LOCALE_CHANGED = 'locale-changed',

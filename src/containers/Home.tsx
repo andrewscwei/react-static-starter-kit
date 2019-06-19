@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Action, bindActionCreators, Dispatch } from 'redux';
 import styled from 'styled-components';
 import ReactLogo from '../components/ReactLogo';
+import withPageTitle from '../decorators/withPageTitle';
 import { AppState } from '../store';
 import { I18nState } from '../store/i18n';
 
@@ -25,11 +26,6 @@ export interface State {
 }
 
 class Home extends PureComponent<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    document.title = this.props.ltxt('home');
-  }
-
   render() {
     const { ltxt } = this.props;
 
@@ -51,7 +47,7 @@ export default connect(
   (dispatch: Dispatch<Action>): DispatchProps => bindActionCreators({
 
   }, dispatch),
-)(Home);
+)(withPageTitle('home')(Home));
 
 const StyledRoot = styled.div`
   align-items: center;
