@@ -20,7 +20,7 @@ const localesDir = path.join(cwd, 'config/locales');
 const locales = getLocalesFromDir(localesDir, appConf.locales[0], appConf.locales);
 
 const config = {
-  devtool: isDev ? 'cheap-eval-source-map' : 'source-map',
+  devtool: isDev ? 'cheap-eval-source-map' : false,
   entry: {
     bundle: path.join(inputDir, 'index.jsx'),
   },

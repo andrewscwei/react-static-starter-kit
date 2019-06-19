@@ -19,9 +19,11 @@ if (process.env.NODE_ENV === 'development') {
 // Instantiate one polyglot instance per locale.
 for (const locale in dict) {
   if (!dict.hasOwnProperty(locale)) continue;
-  const polyglot = new Polyglot({ locale });
-  polyglot.extend(dict[locale]);
-  polyglots[locale] = polyglot;
+
+  polyglots[locale] = new Polyglot({
+    locale,
+    phrases: dict[locale],
+  });
 }
 
 debug('Initializing locale translations...', 'OK', locales);
