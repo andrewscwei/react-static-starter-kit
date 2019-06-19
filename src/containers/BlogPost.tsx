@@ -8,11 +8,11 @@ import { Action, bindActionCreators, Dispatch } from 'redux';
 import styled from 'styled-components';
 import withPrismicDoc from '../decorators/withPrismicDoc';
 import { AppState } from '../store';
+import { I18nState } from '../store/i18n';
 import { linkResolver } from '../utils/prismic';
 
 interface StateProps {
-  t: TranslationData;
-  locale: string;
+  ltxt: I18nState['ltxt'];
 }
 
 interface DispatchProps {
@@ -29,10 +29,19 @@ export interface State {
 }
 
 class BlogPost extends PureComponent<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    if (this.props.doc) document.title = RichText.asText(this.props.doc.data.title);
+  }
+
+  componentDidUpdate(prevProps: Props, prevState: State) {
+    if (prevProps.doc === undefined && this.props.doc !== undefined) {
+      document.title = RichText.asText(this.props.doc.data.title);
+    }
+  }
+
   render() {
     const { doc } = this.props;
-
-    if (doc) document.title = RichText.asText(doc.data.title);
 
     return (
       <StyledRoot>
@@ -64,8 +73,7 @@ class BlogPost extends PureComponent<Props, State> {
 
 export default connect(
   (state: AppState): StateProps => ({
-    t: state.intl.translations,
-    locale: state.intl.locale,
+    ltxt: state.i18n.ltxt,
   }),
   (dispatch: Dispatch<Action>): DispatchProps => bindActionCreators({
   }, dispatch),

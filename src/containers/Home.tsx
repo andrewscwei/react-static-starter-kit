@@ -6,11 +6,13 @@ import { connect } from 'react-redux';
 import { Action, bindActionCreators, Dispatch } from 'redux';
 import styled from 'styled-components';
 import ReactLogo from '../components/ReactLogo';
+import withPageTitle from '../decorators/withPageTitle';
 import withPrismicDocs from '../decorators/withPrismicDocs';
 import { AppState } from '../store';
+import { I18nState } from '../store/i18n';
 
 interface StateProps {
-  t: TranslationData;
+  ltxt: I18nState['ltxt'];
   locale: string;
 }
 
@@ -29,13 +31,8 @@ export interface State {
 }
 
 class Home extends PureComponent<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    document.title = this.props.t['home'];
-  }
-
   render() {
-    const { t, docs, locale } = this.props;
+    const { docs, locale } = this.props;
     const doc = _.get(docs, `${locale}[0]`) as Document | undefined;
 
     return (
@@ -55,13 +52,13 @@ class Home extends PureComponent<Props, State> {
 
 export default connect(
   (state: AppState): StateProps => ({
-    t: state.intl.translations,
-    locale: state.intl.locale,
+    ltxt: state.i18n.ltxt,
+    locale: state.i18n.locale,
   }),
   (dispatch: Dispatch<Action>): DispatchProps => bindActionCreators({
 
   }, dispatch),
-)(withPrismicDocs('home')(Home));
+)(withPrismicDocs('home')(withPageTitle('home')(Home)));
 
 const StyledRoot = styled.div`
   align-items: center;
