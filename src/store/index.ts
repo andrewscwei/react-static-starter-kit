@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 import thunk from 'redux-thunk';
 import i18n, { I18nState } from './i18n';
@@ -18,7 +19,7 @@ delete window.__INITIAL_STATE__;
 const store = createStore(reducer, initialState || {}, composeEnhancers(applyMiddleware(thunk)));
 
 window.snapSaveState = () => ({
-  __INITIAL_STATE__: store.getState(),
+  __INITIAL_STATE__: _.omit(store.getState(), 'i18n'),
 });
 
 export default store;
