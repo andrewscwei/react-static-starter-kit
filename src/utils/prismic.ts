@@ -17,8 +17,8 @@ export function linkResolver(doc: Document): string {
 }
 
 export function localeResolver(locale: string, reverse: boolean = false): string {
-  const defaultLocale = __INTL_CONFIG__.defaultLocale;
-  const supportedLocales = __INTL_CONFIG__.locales;
+  const defaultLocale = __I18N_CONFIG__.defaultLocale;
+  const supportedLocales = __I18N_CONFIG__.locales;
 
   if (reverse) {
     switch (locale) {

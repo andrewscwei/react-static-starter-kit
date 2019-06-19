@@ -52,7 +52,7 @@ export function fetchDocByTypeUID(type: string, uid: string, options: Partial<Qu
     const api = await getAPI();
     const opts = {
       ref: api.master(),
-      lang: localeResolver(__INTL_CONFIG__.defaultLocale),
+      lang: localeResolver(__I18N_CONFIG__.defaultLocale),
       ...options,
     };
 
@@ -76,7 +76,7 @@ export function fetchDocsByType(type: string, options: Partial<QueryOptions> = {
   return async (dispatch: Dispatch<PrismicAction>) => {
     const api = await getAPI();
     const opts = {
-      lang: localeResolver(__INTL_CONFIG__.defaultLocale),
+      lang: localeResolver(__I18N_CONFIG__.defaultLocale),
       ref: api.master(),
       orderings : '[document.first_publication_date desc]',
       ...options,
