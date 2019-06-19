@@ -9,8 +9,6 @@ import _ from 'lodash';
 import path from 'path';
 import requireDir from 'require-dir';
 
-const cwd = path.join(__dirname, '../../');
-
 export function getLocalesFromDir(dir: string, defaultLocale?: string, whitelistedLocales?: Array<string>): Array<string> {
   const t = fs
     .readdirSync(dir)
