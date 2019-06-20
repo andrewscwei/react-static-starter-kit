@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import { RichText } from 'prismic-dom';
 import { Document } from 'prismic-javascript/d.ts/documents';
 import React, { ComponentType, Fragment, PureComponent } from 'react';
@@ -7,13 +6,12 @@ import { Action, bindActionCreators, Dispatch } from 'redux';
 import styled from 'styled-components';
 import ReactLogo from '../components/ReactLogo';
 import withPageTitle from '../decorators/withPageTitle';
-import withPrismicDocs from '../decorators/withPrismicDocs';
+import withPrismicDoc from '../decorators/withPrismicDoc';
 import { AppState } from '../store';
 import { I18nState } from '../store/i18n';
 
 interface StateProps {
   ltxt: I18nState['ltxt'];
-  locale: string;
 }
 
 interface DispatchProps {
@@ -21,7 +19,7 @@ interface DispatchProps {
 }
 
 interface OwnProps {
-  docs?: { [locale: string]: ReadonlyArray<Document>};
+  doc?: Document;
 }
 
 export interface Props extends StateProps, DispatchProps, OwnProps {}
@@ -32,8 +30,7 @@ export interface State {
 
 class Home extends PureComponent<Props, State> {
   render() {
-    const { docs, locale } = this.props;
-    const doc = _.get(docs, `${locale}[0]`) as Document | undefined;
+    const { doc } = this.props;
 
     return (
       <StyledRoot>
@@ -53,12 +50,11 @@ class Home extends PureComponent<Props, State> {
 export default connect(
   (state: AppState): StateProps => ({
     ltxt: state.i18n.ltxt,
-    locale: state.i18n.locale,
   }),
   (dispatch: Dispatch<Action>): DispatchProps => bindActionCreators({
 
   }, dispatch),
-)(withPrismicDocs('home')(withPageTitle('home')(Home)));
+)(withPrismicDoc('home')(withPageTitle('home')(Home)));
 
 const StyledRoot = styled.div`
   align-items: center;
