@@ -8,15 +8,10 @@ import ReactLogo from '../components/ReactLogo';
 import withPageTitle from '../decorators/withPageTitle';
 import withPrismicDoc from '../decorators/withPrismicDoc';
 import { AppState } from '../store';
-import { I18nState } from '../store/i18n';
 
-interface StateProps {
-  ltxt: I18nState['ltxt'];
-}
+interface StateProps {}
 
-interface DispatchProps {
-
-}
+interface DispatchProps {}
 
 interface OwnProps {
   doc?: Document;
@@ -24,9 +19,7 @@ interface OwnProps {
 
 export interface Props extends StateProps, DispatchProps, OwnProps {}
 
-export interface State {
-
-}
+export interface State {}
 
 class Home extends PureComponent<Props, State> {
   render() {
@@ -49,10 +42,8 @@ class Home extends PureComponent<Props, State> {
 
 export default connect(
   (state: AppState): StateProps => ({
-    ltxt: state.i18n.ltxt,
   }),
   (dispatch: Dispatch<Action>): DispatchProps => bindActionCreators({
-
   }, dispatch),
 )(withPrismicDoc('home')(withPageTitle('home')(Home)));
 

@@ -8,15 +8,11 @@ import { Action, bindActionCreators, Dispatch } from 'redux';
 import styled from 'styled-components';
 import withPrismicDoc from '../decorators/withPrismicDoc';
 import { AppState } from '../store';
-import { I18nState } from '../store/i18n';
 import { linkResolver } from '../utils/prismic';
 
-interface StateProps {
-  ltxt: I18nState['ltxt'];
-}
+interface StateProps {}
 
-interface DispatchProps {
-}
+interface DispatchProps {}
 
 interface OwnProps {
   doc?: Document;
@@ -24,9 +20,7 @@ interface OwnProps {
 
 export interface Props extends StateProps, DispatchProps, OwnProps {}
 
-export interface State {
-
-}
+export interface State {}
 
 class BlogPost extends PureComponent<Props, State> {
   constructor(props: Props) {
@@ -73,7 +67,6 @@ class BlogPost extends PureComponent<Props, State> {
 
 export default connect(
   (state: AppState): StateProps => ({
-    ltxt: state.i18n.ltxt,
   }),
   (dispatch: Dispatch<Action>): DispatchProps => bindActionCreators({
   }, dispatch),

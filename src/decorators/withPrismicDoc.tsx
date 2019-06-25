@@ -2,7 +2,7 @@ import { Location } from 'history';
 import hoistNonReactStatics from 'hoist-non-react-statics';
 import _ from 'lodash';
 import { Document } from 'prismic-javascript/d.ts/documents';
-import React, { Component, PureComponent } from 'react';
+import React, { ComponentType, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { match } from 'react-router';
 import { Action, bindActionCreators, Dispatch } from 'redux';
@@ -30,7 +30,7 @@ interface OwnProps {
 interface Props extends StateProps, DispatchProps, OwnProps {}
 
 export default function withPrismicDoc(type: string, uid?: string) {
-  return (WrappedComponent: typeof Component) => {
+  return (WrappedComponent: ComponentType<any>) => {
     class WithPrismicDoc extends PureComponent<Props> {
       constructor(props: Props) {
         super(props);
@@ -83,11 +83,10 @@ export default function withPrismicDoc(type: string, uid?: string) {
     }
 
     return connect((state: AppState): StateProps => ({
-        docs: state.prismic.docs[type],
-      }), (dispatch: Dispatch<Action>): DispatchProps => bindActionCreators({
-        fetchDocByTypeUID,
-        fetchDocsByType,
-      }, dispatch),
-    )(hoistNonReactStatics(WithPrismicDoc, WrappedComponent));
+      docs: state.prismic.docs[type],
+    }), (dispatch: Dispatch<Action>): DispatchProps => bindActionCreators({
+      fetchDocByTypeUID,
+      fetchDocsByType,
+    }, dispatch))(hoistNonReactStatics(WithPrismicDoc, WrappedComponent));
   };
 }

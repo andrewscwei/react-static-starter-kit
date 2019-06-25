@@ -14,8 +14,7 @@ import { AppState } from '../store';
 import { I18nState } from '../store/i18n';
 
 interface StateProps {
-  ltxt: I18nState['ltxt'];
-  locale: string;
+  i18n: I18nState;
 }
 
 interface DispatchProps {
@@ -33,15 +32,15 @@ export interface State {
 
 class Blog extends PureComponent<Props, State> {
   render() {
-    const { locale } = this.props;
-    const docs = _.get(this.props.docs, locale) as ReadonlyArray<Document> | undefined;
+    const { i18n } = this.props;
+    const docs = _.get(this.props.docs, i18n.locale) as ReadonlyArray<Document> | undefined;
 
     return (
       <StyledRoot>
         { docs &&
           <StyledLinks>
             { docs.map(doc => (
-              <Link key={doc.id} to={getLocalizedPath(`/blog/${doc.uid}`, locale)}>
+              <Link key={doc.id} to={getLocalizedPath(`/blog/${doc.uid}`, i18n.locale)}>
                 <span>{moment(doc.first_publication_date!).fromNow()}</span>
                 <h3>{RichText.asText(doc.data.title)}</h3>
               </Link>
@@ -55,8 +54,7 @@ class Blog extends PureComponent<Props, State> {
 
 export default connect(
   (state: AppState): StateProps => ({
-    ltxt: state.i18n.ltxt,
-    locale: state.i18n.locale,
+    i18n: state.i18n,
   }),
   (dispatch: Dispatch<Action>): DispatchProps => bindActionCreators({
   }, dispatch),

@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { SFC } from 'react';
 import { connect } from 'react-redux';
 import { Route, RouteComponentProps } from 'react-router-dom';
 import { Action, bindActionCreators, Dispatch } from 'redux';
@@ -8,45 +8,34 @@ import { AppState } from '../store';
 import { I18nState } from '../store/i18n';
 
 interface StateProps {
-  ltxt: I18nState['ltxt'];
+  i18n: I18nState;
 }
 
-interface DispatchProps {
+interface DispatchProps {}
 
-}
-
-interface OwnProps {
-
-}
+interface OwnProps {}
 
 export interface Props extends StateProps, DispatchProps, OwnProps {}
 
-class NotFound extends PureComponent<Props> {
-  render() {
-    const { ltxt } = this.props;
+const NotFound: SFC<Props> = ({ i18n }) => (
+  <Route render={(route: RouteComponentProps<any>) => {
+    if (route.staticContext) {
+      route.staticContext.statusCode = 404;
+    }
 
     return (
-      <Route render={(route: RouteComponentProps<any>) => {
-        if (route.staticContext) {
-          route.staticContext.statusCode = 404;
-        }
-
-        return (
-          <StyledRoot>
-            <h1>{ltxt('not-found')}</h1>
-          </StyledRoot>
-        );
-      }}/>
+      <StyledRoot>
+        <h1>{i18n.ltxt('not-found')}</h1>
+      </StyledRoot>
     );
-  }
-}
+  }}/>
+);
 
 export default connect(
   (state: AppState): StateProps => ({
-    ltxt: state.i18n.ltxt,
+    i18n: state.i18n,
   }),
   (dispatch: Dispatch<Action>): DispatchProps => bindActionCreators({
-
   }, dispatch),
 )(withPageTitle('not-found-title')(NotFound));
 
