@@ -4,34 +4,31 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import styled from 'styled-components';
 import ReactLogo from '../components/ReactLogo';
+import withPageTitle from '../decorators/withPageTitle';
 
 @connect(
   (state) => ({
-    ltxt: state.i18n.ltxt,
+    i18n: state.i18n,
   }),
   (dispatch) => bindActionCreators({
 
   }, dispatch),
 )
+@withPageTitle('home')
 export default class Home extends PureComponent {
   static propTypes = {
-    ltxt: PropTypes.func.isRequired,
-  }
-
-  constructor(props) {
-    super(props);
-    document.title = this.props.ltxt('home');
+    i18n: PropTypes.object.isRequired,
   }
 
   render() {
-    const { ltxt } = this.props;
+    const { i18n } = this.props;
 
     return (
       <StyledRoot>
         <StyledReactLogo/>
-        <h1>{ltxt('hello')}</h1>
+        <h1>{i18n.ltxt('hello')}</h1>
         <p>v{__APP_CONFIG__.version} ({__APP_CONFIG__.buildNumber})</p>
-        <p>{ltxt('description')}</p>
+        <p>{i18n.ltxt('description')}</p>
       </StyledRoot>
     );
   }

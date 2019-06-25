@@ -8,8 +8,8 @@ import { fetchUsers } from '../store/users';
 
 @connect(
   state => ({
-    ltxt: state.i18n.ltxt,
-    users: state.users.items,
+    i18n: state.i18n,
+    users: state.users,
   }),
   dispatch => bindActionCreators({
     fetchUsers,
@@ -18,8 +18,8 @@ import { fetchUsers } from '../store/users';
 @withPageTitle('about')
 export default class About extends PureComponent {
   static propTypes = {
-    ltxt: PropTypes.func.isRequired,
-    users: PropTypes.array.isRequired,
+    i18n: PropTypes.object.isRequired,
+    users: PropTypes.object.isRequired,
     fetchUsers: PropTypes.func.isRequired,
   }
 
@@ -29,13 +29,13 @@ export default class About extends PureComponent {
   }
 
   render() {
-    const { ltxt } = this.props;
+    const { i18n } = this.props;
 
     return (
       <StyledRoot>
-        <h1>{ltxt('about-title')}</h1>
+        <h1>{i18n.ltxt('about-title')}</h1>
         {
-          this.props.users.map((user) => {
+          this.props.users.items.map((user) => {
             return (
               <div key={user.id} >
                 <span>{user.name}</span>

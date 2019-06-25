@@ -4,27 +4,25 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-export default function withPageTitle(locKey) {
+export default function withPageTitle(titleId) {
   return (WrappedComponent) => {
     class WithPageTitle extends PureComponent {
       static propTypes = {
-        ltxt: PropTypes.func.isRequired,
+        i18n: PropTypes.object.isRequired,
       }
 
       constructor(props) {
         super(props);
-        document.title = this.props.ltxt(locKey);
+        document.title = this.props.i18n.ltxt(titleId);
       }
 
       render() {
-        return (
-          <WrappedComponent {...this.props}/>
-        );
+        return <WrappedComponent {...this.props}/>;
       }
     }
 
     return connect(state => ({
-      ltxt: state.i18n.ltxt,
+      i18n: state.i18n,
     }), dispatch => bindActionCreators({
 
     }, dispatch),

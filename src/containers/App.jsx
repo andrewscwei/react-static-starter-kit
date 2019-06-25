@@ -3,7 +3,8 @@
  */
 
 import PropTypes from 'prop-types';
-import React, { PureComponent } from 'react';
+import React, { Fragment, PureComponent } from 'react';
+import { hot } from 'react-hot-loader/root';
 import { connect } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
@@ -18,19 +19,7 @@ import theme from '../styles/theme';
 
 const debug = require('debug')('app');
 
-@(component => {
-  if (process.env.NODE_ENV === 'development') return require('react-hot-loader/root').hot(component);
-  return component;
-})
-@connect(
-  state => ({
-    locale: state.i18n.locale,
-  }),
-  dispatch => bindActionCreators({
-    changeLocale,
-  }, dispatch),
-)
-export default class App extends PureComponent {
+class App extends PureComponent {
   static propTypes = {
     locale: PropTypes.string.isRequired,
     changeLocale: PropTypes.func.isRequired,
@@ -74,7 +63,7 @@ export default class App extends PureComponent {
 
     return (
       <ThemeProvider theme={theme}>
-        <StyledRoot>
+        <Fragment>
           <GlobalStyles/>
           <Header/>
           <StyledBody>
@@ -83,20 +72,23 @@ export default class App extends PureComponent {
             </CSSTransition>
           </StyledBody>
           <Footer/>
-        </StyledRoot>
+        </Fragment>
       </ThemeProvider>
     );
   }
 }
 
+export default hot(connect(
+  state => ({
+    locale: state.i18n.locale,
+  }),
+  dispatch => bindActionCreators({
+    changeLocale,
+  }, dispatch),
+)(App));
+
 const GlobalStyles = createGlobalStyle`
   ${globalStyles}
-`;
-
-const StyledRoot = styled.div`
-  height: 100%;
-  position: absolute;
-  width: 100%;
 `;
 
 const StyledBody = styled(TransitionGroup)`

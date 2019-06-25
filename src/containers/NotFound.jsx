@@ -4,27 +4,24 @@ import { connect } from 'react-redux';
 import { Route } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import styled from 'styled-components';
+import withPageTitle from '../decorators/withPageTitle';
 
 @connect(
   (state) => ({
-    ltxt: state.i18n.ltxt,
+    i18n: state.i18n,
   }),
   (dispatch) => bindActionCreators({
 
   }, dispatch),
 )
+@withPageTitle('not-found-title')
 export default class NotFound extends PureComponent {
   static propTypes = {
-    ltxt: PropTypes.func.isRequired,
-  }
-
-  constructor(props) {
-    super(props);
-    document.title = this.props.ltxt('not-found-title');
+    i18n: PropTypes.object.isRequired,
   }
 
   render() {
-    const { ltxt } = this.props;
+    const { i18n } = this.props;
 
     return (
       <Route render={(route) => {
@@ -34,7 +31,7 @@ export default class NotFound extends PureComponent {
 
         return (
           <StyledRoot>
-            <h1>{ltxt('not-found')}</h1>
+            <h1>{i18n.ltxt('not-found')}</h1>
           </StyledRoot>
         );
       }}/>
