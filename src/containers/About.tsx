@@ -5,11 +5,11 @@ import styled from 'styled-components';
 import withPageTitle from '../decorators/withPageTitle';
 import { AppState } from '../store';
 import { I18nState } from '../store/i18n';
-import { fetchUsers, User } from '../store/users';
+import { fetchUsers, User, UsersState } from '../store/users';
 
 interface StateProps {
   i18n: I18nState;
-  users: ReadonlyArray<User>;
+  users: UsersState;
 }
 
 interface DispatchProps {
@@ -39,7 +39,7 @@ class About extends PureComponent<Props, State> {
       <StyledRoot>
         <h1>{i18n.ltxt('about-title') }</h1>
         {
-          this.props.users.map((user: User) => {
+          this.props.users.items.map((user: User) => {
             return (
               <div key={user.id} >
                 <span>{user.name}</span>
@@ -55,7 +55,7 @@ class About extends PureComponent<Props, State> {
 export default connect(
   (state: AppState): StateProps => ({
     i18n: state.i18n,
-    users: state.users.items,
+    users: state.users,
   }),
   (dispatch: Dispatch<Action>): DispatchProps => bindActionCreators({
     fetchUsers,
