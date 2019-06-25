@@ -8,7 +8,7 @@ import { I18nState } from '../store/i18n';
 import { fetchUsers, User } from '../store/users';
 
 interface StateProps {
-  ltxt: I18nState['ltxt'];
+  i18n: I18nState;
   users: ReadonlyArray<User>;
 }
 
@@ -33,11 +33,11 @@ class About extends PureComponent<Props, State> {
   }
 
   render() {
-    const { ltxt } = this.props;
+    const { i18n } = this.props;
 
     return (
       <StyledRoot>
-        <h1>{ltxt('about-title') }</h1>
+        <h1>{i18n.ltxt('about-title') }</h1>
         {
           this.props.users.map((user: User) => {
             return (
@@ -54,7 +54,7 @@ class About extends PureComponent<Props, State> {
 
 export default connect(
   (state: AppState): StateProps => ({
-    ltxt: state.i18n.ltxt,
+    i18n: state.i18n,
     users: state.users.items,
   }),
   (dispatch: Dispatch<Action>): DispatchProps => bindActionCreators({

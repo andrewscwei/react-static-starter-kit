@@ -1,6 +1,6 @@
 {
   "name": "react-static-starter-kit",
-  "version": "5.2.0",
+  "version": "5.3.0",
   "description": "Experimental React static prerendered app starter kit",
   "private": true,
   "license": "MIT",
@@ -67,7 +67,7 @@
     "raw-loader": "^3.0.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "react-hot-loader": "^4.11.0",
+    "react-hot-loader": "^4.11.1",
     "react-redux": "^7.1.0",
     "react-router": "^5.0.1",
     "react-router-config": "^5.0.1",

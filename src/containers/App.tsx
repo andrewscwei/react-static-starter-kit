@@ -2,7 +2,8 @@
  * @file Client app root.
  */
 
-import React, { PureComponent } from 'react';
+import React, { Fragment, PureComponent } from 'react';
+import { hot } from 'react-hot-loader/root';
 import { connect } from 'react-redux';
 import { Route, RouteComponentProps, Switch } from 'react-router-dom';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
@@ -74,7 +75,7 @@ class App extends PureComponent<Props, State> {
 
     return (
       <ThemeProvider theme={theme}>
-        <StyledRoot>
+        <Fragment>
           <GlobalStyles/>
           <Header/>
           <StyledBody>
@@ -83,16 +84,13 @@ class App extends PureComponent<Props, State> {
             </CSSTransition>
           </StyledBody>
           <Footer/>
-        </StyledRoot>
+        </Fragment>
       </ThemeProvider>
     );
   }
 }
 
-export default (component => {
-  if (process.env.NODE_ENV === 'development') return require('react-hot-loader/root').hot(component);
-  return component;
-})(connect((state: AppState): StateProps => ({
+export default hot(connect((state: AppState): StateProps => ({
     locale: state.i18n.locale,
   }),
   (dispatch: Dispatch<Action>): DispatchProps => bindActionCreators({
@@ -102,12 +100,6 @@ export default (component => {
 
 const GlobalStyles = createGlobalStyle<any>`
   ${globalStyles}
-`;
-
-const StyledRoot = styled.div`
-  height: 100%;
-  position: absolute;
-  width: 100%;
 `;
 
 const StyledBody = styled(TransitionGroup)`
