@@ -26,7 +26,7 @@ interface State {
 
 class NotFound extends PureComponent<Props, State> {
   componentDidMount() {
-    document.title = this.props.i18n.ltxt('not-found-title');
+    document.title = this.props.i18n.ltxt('not-found');
   }
 
   render() {
@@ -40,7 +40,7 @@ class NotFound extends PureComponent<Props, State> {
 
         return (
           <StyledRoot>
-            <h1>{ltxt('not-found')}</h1>
+            <h1>{ltxt('not-found-title')}</h1>
           </StyledRoot>
         );
       }}/>
