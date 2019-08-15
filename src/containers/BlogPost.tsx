@@ -1,76 +1,89 @@
 import _ from 'lodash';
 import moment from 'moment';
-import { RichText } from 'prismic-dom';
+import PrismicDOM from 'prismic-dom';
 import { Document } from 'prismic-javascript/d.ts/documents';
-import React, { Fragment, PureComponent } from 'react';
+import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
+import { RouteComponentProps } from 'react-router';
 import { Action, bindActionCreators, Dispatch } from 'redux';
 import styled from 'styled-components';
-import withPrismicDoc from '../decorators/withPrismicDoc';
 import { AppState } from '../store';
-import { linkResolver } from '../utils/prismic';
+import { I18nState } from '../store/i18n';
+import { fetchDocs, reduceDoc } from '../store/prismic';
+import { linkResolver, localeResolver } from '../utils/prismic';
 
-interface StateProps {}
-
-interface DispatchProps {}
-
-interface OwnProps {
+interface StateProps {
+  i18n: I18nState;
   doc?: Document;
 }
 
-export interface Props extends StateProps, DispatchProps, OwnProps {}
+interface DispatchProps {
+  fetchDocs: typeof fetchDocs;
+}
 
-export interface State {}
+interface OwnProps extends RouteComponentProps<{ uid: string }> {
+
+}
+
+interface Props extends StateProps, DispatchProps, OwnProps {}
+
+interface State {
+
+}
 
 class BlogPost extends PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
-    if (this.props.doc) document.title = RichText.asText(this.props.doc.data.title);
+
+    this.props.fetchDocs('blog_post', this.props.match.params.uid, {
+      lang: localeResolver(this.props.i18n.locale),
+    });
   }
 
   componentDidUpdate(prevProps: Props, prevState: State) {
-    if (prevProps.doc === undefined && this.props.doc !== undefined) {
-      document.title = RichText.asText(this.props.doc.data.title);
-    }
+    const titleFragment = _.get(this.props.doc, 'data.title');
+    const title = titleFragment && PrismicDOM.RichText.asText(titleFragment);
+    if (title && document.title !== title) document.title = title;
   }
 
   render() {
-    const { doc } = this.props;
+    const date = _.get(this.props.doc, 'first_publication_date');
+    const title = _.get(this.props.doc, 'data.title');
+    const sections = _.get(this.props.doc, 'data.body');
 
     return (
       <StyledRoot>
-        { doc &&
-          <Fragment>
-            <StyledDate>{moment(doc.first_publication_date!).fromNow()}</StyledDate>
-            <StyledTitle>{RichText.asText(doc.data.title)}</StyledTitle>
-            <StyledBody>
-              { doc.data.body.map((section: any) => {
-                const sectionTitle = RichText.asText(section.primary.subtitle);
-                const sectionRef = _.kebabCase(sectionTitle);
+        { date && <StyledDate>{moment(date).fromNow()}</StyledDate> }
+        { title && <StyledTitle>{PrismicDOM.RichText.asText(title)}</StyledTitle> }
+        <StyledBody>
+          { sections && sections.map((section: any) => {
+            const sectionTitle = PrismicDOM.RichText.asText(section.primary.subtitle);
+            const sectionRef = _.kebabCase(sectionTitle);
 
-                return (
-                  <section key={sectionRef}>
-                    <h2>{sectionTitle}</h2>
-                    { section.items.map((item: any, idx: number) => (
-                      <div key={`${sectionRef}-${idx}`} dangerouslySetInnerHTML={{ __html: RichText.asHtml(item.content, doc => linkResolver(doc)) }}/>
-                    )) }
-                  </section>
-                );
-              })}
-            </StyledBody>
-          </Fragment>
-        }
+            return (
+              <section key={sectionRef}>
+                <h2>{sectionTitle}</h2>
+                { section.items.map((item: any, idx: number) => (
+                  <div key={`${sectionRef}-${idx}`} dangerouslySetInnerHTML={{ __html: PrismicDOM.RichText.asHtml(item.content, doc => linkResolver(doc)) }}/>
+                )) }
+              </section>
+            );
+          })}
+        </StyledBody>
       </StyledRoot>
     );
   }
 }
 
 export default connect(
-  (state: AppState): StateProps => ({
+  (state: AppState, ownProps: OwnProps): StateProps => ({
+    i18n: state.i18n,
+    doc: reduceDoc(state.prismic, 'blog_post', ownProps.match.params.uid, state.i18n.locale),
   }),
   (dispatch: Dispatch<Action>): DispatchProps => bindActionCreators({
+    fetchDocs,
   }, dispatch),
-)(withPrismicDoc('blog_post')(BlogPost));
+)(BlogPost);
 
 const StyledRoot = styled.div`
   align-items: center;

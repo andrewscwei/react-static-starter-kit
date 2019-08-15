@@ -1,38 +1,57 @@
-import { RichText } from 'prismic-dom';
+import PrismicDOM from 'prismic-dom';
 import { Document } from 'prismic-javascript/d.ts/documents';
 import React, { ComponentType, Fragment, PureComponent } from 'react';
 import { connect } from 'react-redux';
+import { RouteComponentProps } from 'react-router';
 import { Action, bindActionCreators, Dispatch } from 'redux';
 import styled from 'styled-components';
 import ReactLogo from '../components/ReactLogo';
-import withPageTitle from '../decorators/withPageTitle';
-import withPrismicDoc from '../decorators/withPrismicDoc';
 import { AppState } from '../store';
+import { I18nState } from '../store/i18n';
+import { fetchDocs, reduceDoc } from '../store/prismic';
+import { localeResolver } from '../utils/prismic';
 
-interface StateProps {}
-
-interface DispatchProps {}
-
-interface OwnProps {
+interface StateProps {
+  i18n: I18nState;
   doc?: Document;
+}
+
+interface DispatchProps {
+  fetchDocs: typeof fetchDocs;
+}
+
+interface OwnProps extends RouteComponentProps<{}> {
+
 }
 
 export interface Props extends StateProps, DispatchProps, OwnProps {}
 
-export interface State {}
+export interface State {
+
+}
 
 class Home extends PureComponent<Props, State> {
-  render() {
-    const { doc } = this.props;
+  constructor(props: Props) {
+    super(props);
 
+    this.props.fetchDocs('home', undefined, {
+      lang: localeResolver(this.props.i18n.locale),
+    });
+  }
+
+  componentDidMount() {
+    document.title = this.props.i18n.ltxt('home');
+  }
+
+  render() {
     return (
       <StyledRoot>
         <StyledReactLogo/>
-        { doc &&
+        { this.props.doc &&
           <Fragment>
-            <h1>{RichText.asText(doc.data.title)}</h1>
+            <h1>{PrismicDOM.RichText.asText(this.props.doc.data.title)}</h1>
             <p>v{__APP_CONFIG__.version} ({__APP_CONFIG__.buildNumber})</p>
-            <p>{RichText.asText(doc.data.body)}</p>
+            <p>{PrismicDOM.RichText.asText(this.props.doc.data.body)}</p>
           </Fragment>
         }
       </StyledRoot>
@@ -41,11 +60,14 @@ class Home extends PureComponent<Props, State> {
 }
 
 export default connect(
-  (state: AppState): StateProps => ({
+  (state: AppState, ownProps: OwnProps): StateProps => ({
+    i18n: state.i18n,
+    doc: reduceDoc(state.prismic, 'home', undefined, state.i18n.locale),
   }),
   (dispatch: Dispatch<Action>): DispatchProps => bindActionCreators({
+    fetchDocs,
   }, dispatch),
-)(withPrismicDoc('home')(withPageTitle('home')(Home)));
+)(Home);
 
 const StyledRoot = styled.div`
   align-items: center;

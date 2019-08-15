@@ -3,7 +3,7 @@ import Prismic from 'prismic-javascript';
 import { Document } from 'prismic-javascript/d.ts/documents';
 import { QueryOptions } from 'prismic-javascript/d.ts/ResolvedApi';
 import { Action, Dispatch } from 'redux';
-import { getAPI, localeResolver } from '../utils/prismic';
+import { getAPI, loadPreviewToken, localeResolver } from '../utils/prismic';
 
 const debug = require('debug')('app:prismic');
 
@@ -27,6 +27,14 @@ const initialState: PrismicState = {
   docs: {},
 };
 
+/**
+ * Reducer of the Prismic state.
+ *
+ * @param state - State to reduce.
+ * @param action - Action to reduce.
+ *
+ * @returns Reduced state.
+ */
 export default function reducer(state = initialState, action: PrismicAction): PrismicState {
   switch (action.type) {
   case PrismicActionType.DOC_LOADED:
@@ -47,45 +55,67 @@ export default function reducer(state = initialState, action: PrismicAction): Pr
   }
 }
 
-export function fetchDocByTypeUID(type: string, uid: string, options: Partial<QueryOptions> = {}) {
-  return async (dispatch: Dispatch<PrismicAction>) => {
-    const api = await getAPI();
-    const opts = {
-      ref: api.master(),
-      lang: localeResolver(__I18N_CONFIG__.defaultLocale),
-      ...options,
-    };
+export function reduceDoc(state: PrismicState, type: string, uidOrIndex?: string | number, locale: string = __I18N_CONFIG__.defaultLocale): Document | undefined {
+  const docs = reduceDocs(state, type, locale);
 
-    const res = await api.query(Prismic.Predicates.at(`my.${type}.uid`, uid), opts);
-    const docs = res.results;
+  if (!docs) return undefined;
 
-    debug(`Fetching docs from Prismic for UID "${uid}" and language "${opts.lang}"...`, 'OK', docs);
-
-    dispatch({
-      type: PrismicActionType.DOC_LOADED,
-      payload: {
-        type,
-        locale: localeResolver(opts.lang, true),
-        docs,
-      },
-    });
-  };
+  if (typeof uidOrIndex === 'string') {
+    return _.find(docs, doc => doc.uid === uidOrIndex);
+  }
+  else if (typeof uidOrIndex === 'number') {
+    if (uidOrIndex >= docs.length) return undefined;
+    return docs[uidOrIndex];
+  }
+  else {
+    if (docs.length < 1) return undefined;
+    return docs[0];
+  }
 }
 
-export function fetchDocsByType(type: string, options: Partial<QueryOptions> = {}) {
+export function reduceDocs(state: PrismicState, type: string, locale: string = __I18N_CONFIG__.defaultLocale): ReadonlyArray<Document> | undefined {
+  const docs = state.docs[type];
+
+  if (!docs) return undefined;
+
+  const localizedDocs = docs[locale];
+
+  if (!localizedDocs) return undefined;
+
+  return localizedDocs;
+}
+
+/**
+ * Fetches Prismic docs by doc type and optional UID, then stores the results.
+ * This operation uses the default locale and automatically accounts for
+ * existing preview tokens in browser cookies.
+ *
+ * @param type - Prismic doc type.
+ * @param uid - Prismic doc UID.
+ * @param options - Customizable options for the API query. @see QueryOptions
+ *
+ * @returns Async action.
+ */
+export function fetchDocs(type: string, uid?: string, options: Partial<QueryOptions> = {}) {
   return async (dispatch: Dispatch<PrismicAction>) => {
     const api = await getAPI();
+    const previewToken = loadPreviewToken();
     const opts = {
       lang: localeResolver(__I18N_CONFIG__.defaultLocale),
-      ref: api.master(),
       orderings : '[document.first_publication_date desc]',
+      ref: previewToken || api.master(),
       ...options,
     };
 
-    const res = await api.query(Prismic.Predicates.at('document.type', type), opts);
+    const res = uid ? await api.query(Prismic.Predicates.at(`my.${type}.uid`, uid), opts) : await api.query(Prismic.Predicates.at('document.type', type), opts);
     const docs = res.results;
 
-    debug(`Fetching docs from Prismic for type "${type}" and language "${opts.lang}"...`, 'OK', docs);
+    if (opts.ref === previewToken) {
+      debug(`Previewing docs from Prismic for type "${type}" and language "${opts.lang}"...`, 'OK', docs);
+    }
+    else {
+      debug(`Fetching docs from Prismic for type "${type}" and language "${opts.lang}"...`, 'OK', docs);
+    }
 
     dispatch({
       type: PrismicActionType.DOC_LOADED,

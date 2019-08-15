@@ -11,8 +11,8 @@ export function linkResolver(doc: Document): string {
 
   switch (doc.type) {
   case 'home': return getLocalizedPath('/', locale);
-  case 'blog_post': return getLocalizedPath(`/blog/${doc.uid}`, locale);
-  default: return '/404';
+  case 'testimony': return getLocalizedPath(`/testimony/${doc.uid}`, locale);
+  default: return '/';
   }
 }
 

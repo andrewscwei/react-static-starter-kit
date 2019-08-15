@@ -1,4 +1,3 @@
-import { Location } from 'history';
 import React, { Fragment, PureComponent } from 'react';
 import { RouteComponentProps, withRouter } from 'react-router';
 import { getPreviewPath, savePreviewToken } from '../utils/prismic';
@@ -6,7 +5,7 @@ import { getPreviewPath, savePreviewToken } from '../utils/prismic';
 const debug = require('debug')('app:preview');
 
 export interface Props extends RouteComponentProps<{}> {
-  location: Location;
+
 }
 
 class Preview extends PureComponent<Props> {

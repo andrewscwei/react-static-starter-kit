@@ -1,27 +1,29 @@
-import _ from 'lodash';
 import moment from 'moment';
-import { RichText } from 'prismic-dom';
+import PrismicDOM from 'prismic-dom';
 import { Document } from 'prismic-javascript/d.ts/documents';
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
+import { RouteComponentProps } from 'react-router';
 import { Link } from 'react-router-dom';
 import { Action, bindActionCreators, Dispatch } from 'redux';
 import styled from 'styled-components';
-import withPageTitle from '../decorators/withPageTitle';
-import withPrismicDocs from '../decorators/withPrismicDocs';
 import { getLocalizedPath } from '../routes';
 import { AppState } from '../store';
 import { I18nState } from '../store/i18n';
+import { fetchDocs, reduceDocs } from '../store/prismic';
+import { localeResolver } from '../utils/prismic';
 
 interface StateProps {
   i18n: I18nState;
+  docs?: ReadonlyArray<Document>;
 }
 
 interface DispatchProps {
+  fetchDocs: typeof fetchDocs;
 }
 
-interface OwnProps {
-  docs?: { [locale: string]: ReadonlyArray<Document>};
+interface OwnProps extends RouteComponentProps<{}> {
+
 }
 
 export interface Props extends StateProps, DispatchProps, OwnProps {}
@@ -31,18 +33,29 @@ export interface State {
 }
 
 class Blog extends PureComponent<Props, State> {
+  constructor(props: Props) {
+    super(props);
+
+    this.props.fetchDocs('blog_post', undefined, {
+      lang: localeResolver(this.props.i18n.locale),
+    });
+  }
+
+  componentDidMount() {
+    document.title = this.props.i18n.ltxt('blog');
+  }
+
   render() {
-    const { i18n } = this.props;
-    const docs = _.get(this.props.docs, i18n.locale) as ReadonlyArray<Document> | undefined;
+    const { locale } = this.props.i18n;
 
     return (
       <StyledRoot>
-        { docs &&
+        { this.props.docs &&
           <StyledLinks>
-            { docs.map(doc => (
-              <Link key={doc.id} to={getLocalizedPath(`/blog/${doc.uid}`, i18n.locale)}>
+            { this.props.docs.map(doc => (
+              <Link key={doc.id} to={getLocalizedPath(`/blog/${doc.uid}`, locale)}>
                 <span>{moment(doc.first_publication_date!).fromNow()}</span>
-                <h3>{RichText.asText(doc.data.title)}</h3>
+                <h3>{PrismicDOM.RichText.asText(doc.data.title)}</h3>
               </Link>
             )) }
           </StyledLinks>
@@ -55,10 +68,12 @@ class Blog extends PureComponent<Props, State> {
 export default connect(
   (state: AppState): StateProps => ({
     i18n: state.i18n,
+    docs: reduceDocs(state.prismic, 'blog_post', state.i18n.locale),
   }),
   (dispatch: Dispatch<Action>): DispatchProps => bindActionCreators({
+    fetchDocs,
   }, dispatch),
-)(withPrismicDocs('blog_post')(withPageTitle('blog')(Blog)));
+)(Blog);
 
 const StyledRoot = styled.div`
   align-items: center;
