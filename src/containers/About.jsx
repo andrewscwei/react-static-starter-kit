@@ -29,11 +29,11 @@ export default class About extends PureComponent {
   }
 
   render() {
-    const { i18n } = this.props;
+    const { ltxt } = this.props.i18n;
 
     return (
       <StyledRoot>
-        <h1>{i18n.ltxt('about-title')}</h1>
+        <h1>{ltxt('about-title')}</h1>
         {
           this.props.users.items.map((user) => {
             return (

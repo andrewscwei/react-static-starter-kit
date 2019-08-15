@@ -14,14 +14,14 @@ import withPageTitle from '../decorators/withPageTitle';
 
   }, dispatch),
 )
-@withPageTitle('not-found-title')
+@withPageTitle('not-found')
 export default class NotFound extends PureComponent {
   static propTypes = {
     i18n: PropTypes.object.isRequired,
   }
 
   render() {
-    const { i18n } = this.props;
+    const { ltxt } = this.props.i18n;
 
     return (
       <Route render={(route) => {
@@ -31,7 +31,7 @@ export default class NotFound extends PureComponent {
 
         return (
           <StyledRoot>
-            <h1>{i18n.ltxt('not-found')}</h1>
+            <h1>{ltxt('not-found-title')}</h1>
           </StyledRoot>
         );
       }}/>

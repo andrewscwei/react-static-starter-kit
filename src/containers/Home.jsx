@@ -21,14 +21,14 @@ export default class Home extends PureComponent {
   }
 
   render() {
-    const { i18n } = this.props;
+    const { ltxt } = this.props.i18n;
 
     return (
       <StyledRoot>
         <StyledReactLogo/>
-        <h1>{i18n.ltxt('hello')}</h1>
+        <h1>{ltxt('hello')}</h1>
         <p>v{__APP_CONFIG__.version} ({__APP_CONFIG__.buildNumber})</p>
-        <p>{i18n.ltxt('description')}</p>
+        <p>{ltxt('description')}</p>
       </StyledRoot>
     );
   }
