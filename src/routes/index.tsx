@@ -8,7 +8,8 @@ import NotFound from '../containers/NotFound';
 
 export function getLocaleFromPath(path: string): string {
   const locales = __I18N_CONFIG__.locales;
-  const possibleLocale = path.split('/')[1];
+  const normalizedPath = path.replace(/\/*$/, '') + '/';
+  const possibleLocale = normalizedPath.split('/')[1];
 
   if (~locales.indexOf(possibleLocale)) {
     return possibleLocale;

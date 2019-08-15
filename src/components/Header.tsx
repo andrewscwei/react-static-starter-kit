@@ -17,7 +17,7 @@ interface OwnProps {
   children?: ReactNode;
 }
 
-export interface Props extends StateProps, DispatchProps, OwnProps {}
+interface Props extends StateProps, DispatchProps, OwnProps {}
 
 const Header: SFC<Props> = ({ i18n }) => (
   <StyledRoot>

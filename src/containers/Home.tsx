@@ -1,9 +1,9 @@
 import React, { ComponentType, PureComponent } from 'react';
 import { connect } from 'react-redux';
+import { RouteComponentProps } from 'react-router';
 import { Action, bindActionCreators, Dispatch } from 'redux';
 import styled from 'styled-components';
 import ReactLogo from '../components/ReactLogo';
-import withPageTitle from '../decorators/withPageTitle';
 import { AppState } from '../store';
 import { I18nState } from '../store/i18n';
 
@@ -11,15 +11,25 @@ interface StateProps {
   i18n: I18nState;
 }
 
-interface DispatchProps {}
+interface DispatchProps {
 
-interface OwnProps {}
+}
+
+interface OwnProps extends RouteComponentProps<{}> {
+
+}
 
 export interface Props extends StateProps, DispatchProps, OwnProps {}
 
-export interface State {}
+export interface State {
+
+}
 
 class Home extends PureComponent<Props, State> {
+  componentDidMount() {
+    document.title = this.props.i18n.ltxt('home');
+  }
+
   render() {
     const { i18n } = this.props;
 
@@ -41,7 +51,7 @@ export default connect(
   (dispatch: Dispatch<Action>): DispatchProps => bindActionCreators({
 
   }, dispatch),
-)(withPageTitle('home')(Home));
+)(Home);
 
 const StyledRoot = styled.div`
   align-items: center;

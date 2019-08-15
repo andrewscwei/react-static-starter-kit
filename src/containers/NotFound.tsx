@@ -1,9 +1,8 @@
-import React, { SFC } from 'react';
+import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { Route, RouteComponentProps } from 'react-router-dom';
 import { Action, bindActionCreators, Dispatch } from 'redux';
 import styled from 'styled-components';
-import withPageTitle from '../decorators/withPageTitle';
 import { AppState } from '../store';
 import { I18nState } from '../store/i18n';
 
@@ -15,25 +14,38 @@ interface DispatchProps {
 
 }
 
-interface OwnProps {
+interface OwnProps extends RouteComponentProps<{}> {
 
 }
 
-export interface Props extends StateProps, DispatchProps, OwnProps {}
+interface Props extends StateProps, DispatchProps, OwnProps {}
 
-const NotFound: SFC<Props> = ({ i18n }) => (
-  <Route render={(route: RouteComponentProps<any>) => {
-    if (route.staticContext) {
-      route.staticContext.statusCode = 404;
-    }
+interface State {
 
+}
+
+class NotFound extends PureComponent<Props, State> {
+  componentDidMount() {
+    document.title = this.props.i18n.ltxt('not-found');
+  }
+
+  render() {
+    const { ltxt } = this.props.i18n;
     return (
-      <StyledRoot>
-        <h1>{i18n.ltxt('not-found') }</h1>
-      </StyledRoot>
+      <Route render={(route: RouteComponentProps<any>) => {
+        if (route.staticContext) {
+          route.staticContext.statusCode = 404;
+        }
+
+        return (
+          <StyledRoot>
+            <h1>{ltxt('not-found-title') }</h1>
+          </StyledRoot>
+        );
+      }}/>
     );
-  }}/>
-);
+  }
+}
 
 export default connect(
   (state: AppState): StateProps => ({
@@ -42,7 +54,7 @@ export default connect(
   (dispatch: Dispatch<Action>): DispatchProps => bindActionCreators({
 
   }, dispatch),
-)(withPageTitle('not-found-title')(NotFound));
+)(NotFound);
 
 const StyledRoot = styled.div`
   align-items: center;

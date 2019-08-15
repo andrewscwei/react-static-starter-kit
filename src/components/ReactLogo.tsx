@@ -2,7 +2,7 @@ import $$Logo from '!!raw-loader!../assets/images/react-logo.svg';
 import React, { ReactNode, SFC } from 'react';
 import styled from 'styled-components';
 
-export interface Props {
+interface Props {
   className?: string;
   children?: ReactNode;
 }
