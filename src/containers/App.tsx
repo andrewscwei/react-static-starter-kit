@@ -56,7 +56,7 @@ class App extends PureComponent<Props, State> {
     this.syncLocaleWithUrl();
 
     return routes.map((route, index) => (
-      <Route exact={route.exact} path={route.path} key={index} component={route.component}/>
+      <Route exact={route.exact} path={route.path} key={`route-${index}`} component={route.component}/>
     ));
   }
 
