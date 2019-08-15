@@ -24,14 +24,14 @@ interface StateProps {
 }
 
 interface DispatchProps {
-  changeLocale(locale: string): void;
+  changeLocale: typeof changeLocale;
 }
 
-export interface Props extends StateProps, DispatchProps {
+interface Props extends StateProps, DispatchProps {
   route: RouteComponentProps<{}>;
 }
 
-export interface State {}
+interface State {}
 
 class App extends PureComponent<Props, State> {
   constructor(props: Props) {
@@ -40,7 +40,7 @@ class App extends PureComponent<Props, State> {
     debug('Initializing...', 'OK');
   }
 
-  syncLocaleWithUrl = () => {
+  syncLocaleWithUrl() {
     const { route, changeLocale, i18n } = this.props;
     const newLocale = getLocaleFromPath(route.location.pathname);
 
@@ -52,7 +52,7 @@ class App extends PureComponent<Props, State> {
     changeLocale(newLocale);
   }
 
-  generateRoutes = () => {
+  generateRoutes() {
     this.syncLocaleWithUrl();
 
     return routes.map((route, index) => (

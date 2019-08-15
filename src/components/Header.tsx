@@ -1,4 +1,4 @@
-import React, { ReactNode, SFC } from 'react';
+import React, { PropsWithChildren, SFC } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Action, bindActionCreators, Dispatch } from 'redux';
@@ -11,10 +11,12 @@ interface StateProps {
   i18n: I18nState;
 }
 
-interface DispatchProps {}
+interface DispatchProps {
 
-interface OwnProps {
-  children?: ReactNode;
+}
+
+interface OwnProps extends PropsWithChildren<{}> {
+
 }
 
 export interface Props extends StateProps, DispatchProps, OwnProps {}

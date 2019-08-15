@@ -4,7 +4,7 @@ import { getPreviewPath, savePreviewToken } from '../utils/prismic';
 
 const debug = require('debug')('app:preview');
 
-export interface Props extends RouteComponentProps<{}> {
+interface Props extends RouteComponentProps<{}> {
 
 }
 
