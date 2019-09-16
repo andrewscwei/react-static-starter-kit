@@ -23,6 +23,7 @@ const config: Configuration = {
   devtool: isDev ? 'eval-source-map' : false,
   entry: {
     bundle: path.join(inputDir, 'index.tsx'),
+    polyfills: path.join(inputDir, 'polyfills.tsx'),
   },
   mode: isDev ? 'development' : 'production',
   module: {
@@ -69,6 +70,18 @@ const config: Configuration = {
       }],
     }],
   },
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        common: {
+          test: /node_modules/,
+          chunks: 'all',
+          name: 'common',
+          enforce: true,
+        },
+      },
+    },
+  },
   output: {
     filename: isDev ? '[name].js' : '[name].[chunkhash].js',
     path: outputDir,
@@ -100,6 +113,8 @@ const config: Configuration = {
     }),
     new HTMLPlugin({
       appConf,
+      chunks: ['polyfills', 'common', 'bundle'],
+      chunksSortMode: 'manual',
       filename: 'index.html',
       inject: true,
       minify: {

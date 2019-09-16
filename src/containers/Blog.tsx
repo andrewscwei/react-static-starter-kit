@@ -52,7 +52,7 @@ class Blog extends PureComponent<Props, State> {
       <StyledRoot>
         { this.props.docs &&
           <StyledLinks>
-            { this.props.docs.map(doc => (
+            { this.props.docs.map((doc) => (
               <Link key={doc.id} to={getLocalizedPath(`/blog/${doc.uid}`, locale)}>
                 <span>{moment(doc.first_publication_date!).fromNow()}</span>
                 <h3>{PrismicDOM.RichText.asText(doc.data.title)}</h3>
@@ -81,7 +81,7 @@ const StyledRoot = styled.div`
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
-  font-family: ${props => props.theme.font};
+  font-family: ${(props) => props.theme.font};
   height: 100%;
   justify-content: center;
   padding: 10% 5%;
@@ -104,9 +104,9 @@ const StyledLinks = styled.ul`
     flex-direction: column;
     flex-wrap: nowrap;
     justify-content: center;
-    color: ${props => props.theme.linkColor};
+    color: ${(props) => props.theme.linkColor};
     cursor: pointer;
-    font-family: ${props => props.theme.font};
+    font-family: ${(props) => props.theme.font};
     text-decoration: none;
     transition: all .2s ease-out;
 

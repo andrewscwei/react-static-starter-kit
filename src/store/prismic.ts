@@ -5,7 +5,7 @@ import { QueryOptions } from 'prismic-javascript/d.ts/ResolvedApi';
 import { Action, Dispatch } from 'redux';
 import { getAPI, loadPreviewToken, localeResolver } from '../utils/prismic';
 
-const debug = require('debug')('app:prismic');
+const debug = process.env.NODE_ENV === 'development' ? require('debug')('app:prismic') : () => {};
 
 export enum PrismicActionType {
   DOC_LOADED = 'doc-loaded',
@@ -61,7 +61,7 @@ export function reduceDoc(state: PrismicState, type: string, uidOrIndex?: string
   if (!docs) return undefined;
 
   if (typeof uidOrIndex === 'string') {
-    return _.find(docs, doc => doc.uid === uidOrIndex);
+    return _.find(docs, (doc) => doc.uid === uidOrIndex);
   }
   else if (typeof uidOrIndex === 'number') {
     if (uidOrIndex >= docs.length) return undefined;

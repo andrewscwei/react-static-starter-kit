@@ -2,7 +2,7 @@ import React, { Fragment, PureComponent } from 'react';
 import { RouteComponentProps, withRouter } from 'react-router';
 import { getPreviewPath, savePreviewToken } from '../utils/prismic';
 
-const debug = require('debug')('app:preview');
+const debug = process.env.NODE_ENV === 'development' ? require('debug')('app:preview') : () => {};
 
 interface Props extends RouteComponentProps<{}> {
 

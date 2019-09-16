@@ -64,7 +64,7 @@ class BlogPost extends PureComponent<Props, State> {
               <section key={sectionRef}>
                 <h2>{sectionTitle}</h2>
                 { section.items.map((item: any, idx: number) => (
-                  <div key={`${sectionRef}-${idx}`} dangerouslySetInnerHTML={{ __html: PrismicDOM.RichText.asHtml(item.content, doc => linkResolver(doc)) }}/>
+                  <div key={`${sectionRef}-${idx}`} dangerouslySetInnerHTML={{ __html: PrismicDOM.RichText.asHtml(item.content, (doc) => linkResolver(doc)) }}/>
                 )) }
               </section>
             );
@@ -91,14 +91,14 @@ const StyledRoot = styled.div`
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
-  font-family: ${props => props.theme.font};
+  font-family: ${(props) => props.theme.font};
   justify-content: center;
   padding: 10% 5%;
   width: 100%;
 `;
 
 const StyledDate = styled.span`
-  color: ${props => props.theme.titleColor};
+  color: ${(props) => props.theme.titleColor};
   font-size: 1rem;
   font-weight: 300;
   letter-spacing: 3px;
@@ -109,7 +109,7 @@ const StyledDate = styled.span`
 `;
 
 const StyledTitle = styled.h1`
-  color: ${props => props.theme.titleColor};
+  color: ${(props) => props.theme.titleColor};
   font-size: 5em;
   font-weight: 700;
   letter-spacing: 3px;
@@ -120,13 +120,13 @@ const StyledTitle = styled.h1`
 `;
 
 const StyledBody = styled.div`
-  color: ${props => props.theme.textColor};
+  color: ${(props) => props.theme.textColor};
   line-height: 1.6em;
   text-align: center;
   max-width: 600px;
 
   h2 {
-    color: ${props => props.theme.titleColor};
+    color: ${(props) => props.theme.titleColor};
   }
 
   img {
