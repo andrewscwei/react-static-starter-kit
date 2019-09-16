@@ -31,7 +31,7 @@ export function fetchUsers() {
     const res = await fetch('//jsonplaceholder.typicode.com/users', {
       signal: request.signal,
     })
-      .catch(err => {
+      .catch((err) => {
         if (err.name !== 'AbortError') throw err;
       });
 
