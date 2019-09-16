@@ -1,6 +1,6 @@
 import Polyglot from 'node-polyglot';
 
-const debug = require('debug')('app:i18n');
+const debug = process.env.NODE_ENV === 'development' ? require('debug')('app:i18n') : () => {};
 const locales = __I18N_CONFIG__.locales;
 const dict = __I18N_CONFIG__.dict;
 const polyglots = {};
@@ -18,7 +18,7 @@ if (process.env.NODE_ENV === 'development') {
 
 // Instantiate one polyglot instance per locale.
 for (const locale in dict) {
-  if (!dict.hasOwnProperty(locale)) continue;
+  if (!dict[locale]) continue;
 
   polyglots[locale] = new Polyglot({
     locale,

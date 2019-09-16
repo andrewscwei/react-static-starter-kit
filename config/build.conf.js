@@ -22,6 +22,7 @@ const locales = getLocalesFromDir(localesDir, appConf.locales[0], appConf.locale
 const config = {
   devtool: isDev ? 'cheap-eval-source-map' : false,
   entry: {
+    polyfills: path.join(inputDir, 'polyfills.jsx'),
     bundle: path.join(inputDir, 'index.jsx'),
   },
   mode: isDev ? 'development' : 'production',
@@ -69,6 +70,18 @@ const config = {
       }],
     }],
   },
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        common: {
+          test: /node_modules/,
+          chunks: 'all',
+          name: 'common',
+          enforce: true,
+        },
+      },
+    },
+  },
   output: {
     filename: isDev ? '[name].js' : '[name].[chunkhash].js',
     path: outputDir,
@@ -98,6 +111,8 @@ const config = {
     }),
     new HTMLPlugin({
       appConf,
+      chunks: ['polyfills', 'common', 'bundle'],
+      chunksSortMode: 'manual',
       filename: 'index.html',
       inject: true,
       minify: {

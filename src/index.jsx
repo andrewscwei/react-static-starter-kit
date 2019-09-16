@@ -6,7 +6,6 @@ import React from 'react';
 import { hydrate, render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import 'whatwg-fetch';
 import Worker from 'worker-loader!./workers/web';
 import App from './containers/App';
 import store from './store';
@@ -15,7 +14,7 @@ if (process.env.NODE_ENV === 'development') {
   window.localStorage.debug = 'app*,worker*';
 }
 
-const debug = require('debug')('app');
+const debug = process.env.NODE_ENV === 'development' ? require('debug')('app') : () => {};
 const worker = new Worker();
 
 worker.postMessage({ message: 'Hello, world!' });
