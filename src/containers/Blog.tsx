@@ -7,10 +7,10 @@ import { RouteComponentProps } from 'react-router';
 import { Link } from 'react-router-dom';
 import { Action, bindActionCreators, Dispatch } from 'redux';
 import styled from 'styled-components';
-import { getLocalizedPath } from '../routes';
 import { AppState } from '../store';
 import { I18nState } from '../store/i18n';
 import { fetchDocs, reduceDocs } from '../store/prismic';
+import { getLocalizedPath } from '../utils/i18n';
 import { localeResolver } from '../utils/prismic';
 
 interface StateProps {
