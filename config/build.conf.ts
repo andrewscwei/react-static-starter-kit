@@ -18,6 +18,7 @@ const inputDir: string = path.join(cwd, 'src');
 const outputDir: string = path.join(cwd, 'build');
 const localesDir: string = path.join(cwd, 'config/locales');
 const locales = getLocalesFromDir(localesDir, appConf.locales[0], appConf.locales);
+const port = Number(process.env.PORT) || 8080;
 
 const config: Configuration = {
   devtool: isDev ? 'eval-source-map' : false,
@@ -133,7 +134,17 @@ const config: Configuration = {
   ] as Array<Plugin>,
   ...!isDev ? {} : {
     devServer: {
+      headers: {
+        'Access-Control-Allow-Origin': `http://localhost:${port}`,
+        'Access-Control-Allow-Methods': 'GET,OPTIONS,HEAD,PUT,POST,DELETE,PATCH',
+        'Access-Control-Allow-Headers': 'Origin, Content-Type, Accept, Authorization, X-Request-With',
+        'Access-Control-Allow-Credentials': 'true',
+      },
       historyApiFallback: true,
+      hot: true,
+      port,
+      publicPath: process.env.PUBLIC_PATH || '/',
+      stats: { colors: true },
     },
   } as any,
   resolve: {
