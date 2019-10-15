@@ -46,7 +46,7 @@ const StyledRoot = styled.div`
   align-items: center;
   box-sizing: border-box;
   display: flex;
-  font-family: ${props => props.theme.font};
+  font-family: ${props => props.theme.fonts.body};
   flex-direction: column;
   flex-wrap: nowrap;
   height: 100%;
@@ -56,7 +56,7 @@ const StyledRoot = styled.div`
   width: 100%;
 
   h1 {
-    color: ${props => props.theme.titleColor};
+    color: ${props => props.theme.colors.title};
     font-size: 2.4em;
     font-weight: 700;
     letter-spacing: 3px;
