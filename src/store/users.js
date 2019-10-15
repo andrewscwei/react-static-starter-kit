@@ -2,7 +2,7 @@
 let request = undefined;
 
 export const UsersActionType = {
-  USERS_LOADED: 'users-loaded',
+  LOADED: 'users/LOADED',
 };
 
 const initialState = {
@@ -28,7 +28,7 @@ export function fetchUsers() {
 
     const items = await res.json();
     const action = {
-      type: UsersActionType.USERS_LOADED,
+      type: UsersActionType.LOADED,
       payload: {
         items,
       },
@@ -40,7 +40,7 @@ export function fetchUsers() {
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
-  case UsersActionType.USERS_LOADED:
+  case UsersActionType.LOADED:
     return {
       ...state,
       ...action.payload,
