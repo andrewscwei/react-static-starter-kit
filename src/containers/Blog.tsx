@@ -81,7 +81,7 @@ const StyledRoot = styled.div`
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
-  font-family: ${(props) => props.theme.font};
+  font-family: ${(props) => props.theme.fonts.body};
   height: 100%;
   justify-content: center;
   padding: 10% 5%;
@@ -104,9 +104,9 @@ const StyledLinks = styled.ul`
     flex-direction: column;
     flex-wrap: nowrap;
     justify-content: center;
-    color: ${(props) => props.theme.linkColor};
+    color: ${(props) => props.theme.colors.link};
     cursor: pointer;
-    font-family: ${(props) => props.theme.font};
+    font-family: ${(props) => props.theme.fonts.body};
     text-decoration: none;
     transition: all .2s ease-out;
 

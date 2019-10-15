@@ -1,8 +1,8 @@
 {
   "home": "ホーム",
   "blog": "ブログ",
-  "not-found": "ページが表示できません",
-  "not-found-title": "404",
+  "not-found": "404",
+  "not-found-title": "ページが表示できません",
   "en": "EN",
   "jp": "日"
 }
