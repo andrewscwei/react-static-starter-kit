@@ -38,6 +38,27 @@
     <meta name='msapplication-config' content='/browserconfig.xml'>
     <meta name='msapplication-navbutton-color' content='#000000'>
 
+    <style>
+      @font-face {
+        font-family: 'Roboto';
+        src: url('/fonts/Roboto-Bold.ttf') format('truetype');
+        font-style: normal;
+        font-weight: 700;
+      }
+      @font-face {
+        font-family: 'Roboto';
+        src: url('/fonts/Roboto-Regular.ttf') format('truetype');
+        font-style: normal;
+        font-weight: 400;
+      }
+      @font-face {
+        font-family: 'Roboto';
+        src: url('/fonts/Roboto-Light.ttf') format('truetype');
+        font-style: normal;
+        font-weight: 300;
+      }
+    </style>
+
     <% if (htmlWebpackPlugin.options.appConf.ga) { %>
       <script async src='https://www.googletagmanager.com/gtag/js?id=<%= htmlWebpackPlugin.options.appConf.ga %>'></script>
       <script>window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', '<%= htmlWebpackPlugin.options.appConf.ga %>');</script>
