@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { Route } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import styled from 'styled-components';
-import withPageTitle from '../decorators/withPageTitle';
 
 @connect(
   (state) => ({
@@ -14,10 +13,14 @@ import withPageTitle from '../decorators/withPageTitle';
 
   }, dispatch),
 )
-@withPageTitle('not-found')
 export default class NotFound extends PureComponent {
   static propTypes = {
     i18n: PropTypes.object.isRequired,
+  }
+
+  constructor(props) {
+    super(props);
+    document.title = this.props.i18n.ltxt('not-found');
   }
 
   render() {

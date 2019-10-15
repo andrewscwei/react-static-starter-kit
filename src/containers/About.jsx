@@ -3,7 +3,6 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import styled from 'styled-components';
-import withPageTitle from '../decorators/withPageTitle';
 import { fetchUsers } from '../store/users';
 
 @connect(
@@ -15,7 +14,6 @@ import { fetchUsers } from '../store/users';
     fetchUsers,
   }, dispatch),
 )
-@withPageTitle('about')
 export default class About extends PureComponent {
   static propTypes = {
     i18n: PropTypes.object.isRequired,
@@ -25,6 +23,7 @@ export default class About extends PureComponent {
 
   constructor(props) {
     super(props);
+    document.title = this.props.i18n.ltxt('about');
     this.props.fetchUsers();
   }
 
