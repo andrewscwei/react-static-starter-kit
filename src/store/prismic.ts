@@ -8,7 +8,7 @@ import { getAPI, loadPreviewToken, localeResolver } from '../utils/prismic';
 const debug = process.env.NODE_ENV === 'development' ? require('debug')('app:prismic') : () => {};
 
 export enum PrismicActionType {
-  DOC_LOADED = 'doc-loaded',
+  DOC_LOADED = 'prismic/DOC_LOADED',
 }
 
 export interface PrismicState {
