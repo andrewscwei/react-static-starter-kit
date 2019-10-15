@@ -1,5 +1,4 @@
 import moment from 'moment';
-import PrismicDOM from 'prismic-dom';
 import { Document } from 'prismic-javascript/d.ts/documents';
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
@@ -11,7 +10,7 @@ import { AppState } from '../store';
 import { I18nState } from '../store/i18n';
 import { fetchDocs, reduceDocs } from '../store/prismic';
 import { getLocalizedPath } from '../utils/i18n';
-import { localeResolver } from '../utils/prismic';
+import { getText, localeResolver } from '../utils/prismic';
 
 interface StateProps {
   i18n: I18nState;
@@ -55,7 +54,7 @@ class Blog extends PureComponent<Props, State> {
             { this.props.docs.map((doc) => (
               <Link key={doc.id} to={getLocalizedPath(`/blog/${doc.uid}`, locale)}>
                 <span>{moment(doc.first_publication_date!).fromNow()}</span>
-                <h3>{PrismicDOM.RichText.asText(doc.data.title)}</h3>
+                <h3>{getText(doc, 'data.title')}</h3>
               </Link>
             )) }
           </StyledLinks>

@@ -134,16 +134,10 @@ const config: Configuration = {
   ] as Array<Plugin>,
   ...!isDev ? {} : {
     devServer: {
-      headers: {
-        'Access-Control-Allow-Origin': `http://localhost:${port}`,
-        'Access-Control-Allow-Methods': 'GET,OPTIONS,HEAD,PUT,POST,DELETE,PATCH',
-        'Access-Control-Allow-Headers': 'Origin, Content-Type, Accept, Authorization, X-Request-With',
-        'Access-Control-Allow-Credentials': 'true',
-      },
       historyApiFallback: true,
       hot: true,
+      host: '0.0.0.0',
       port,
-      publicPath: process.env.PUBLIC_PATH || '/',
       stats: { colors: true },
     },
   } as any,

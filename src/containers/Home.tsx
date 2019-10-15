@@ -1,4 +1,3 @@
-import PrismicDOM from 'prismic-dom';
 import { Document } from 'prismic-javascript/d.ts/documents';
 import React, { ComponentType, Fragment, PureComponent } from 'react';
 import { connect } from 'react-redux';
@@ -9,7 +8,7 @@ import ReactLogo from '../components/ReactLogo';
 import { AppState } from '../store';
 import { I18nState } from '../store/i18n';
 import { fetchDocs, reduceDoc } from '../store/prismic';
-import { localeResolver } from '../utils/prismic';
+import { getText, localeResolver } from '../utils/prismic';
 
 interface StateProps {
   i18n: I18nState;
@@ -49,9 +48,9 @@ class Home extends PureComponent<Props, State> {
         <StyledReactLogo/>
         { this.props.doc &&
           <Fragment>
-            <h1>{PrismicDOM.RichText.asText(this.props.doc.data.title)}</h1>
+            <h1>{getText(this.props.doc, 'data.title')}</h1>
             <p>v{__APP_CONFIG__.version} ({__APP_CONFIG__.buildNumber})</p>
-            <p>{PrismicDOM.RichText.asText(this.props.doc.data.body)}</p>
+            <p>{getText(this.props.doc, 'data.body')}</p>
           </Fragment>
         }
       </StyledRoot>

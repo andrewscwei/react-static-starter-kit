@@ -1,6 +1,5 @@
 import _ from 'lodash';
 import moment from 'moment';
-import PrismicDOM from 'prismic-dom';
 import { Document } from 'prismic-javascript/d.ts/documents';
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
@@ -10,7 +9,7 @@ import styled from 'styled-components';
 import { AppState } from '../store';
 import { I18nState } from '../store/i18n';
 import { fetchDocs, reduceDoc } from '../store/prismic';
-import { linkResolver, localeResolver } from '../utils/prismic';
+import { getMarkups, getText, localeResolver } from '../utils/prismic';
 
 interface StateProps {
   i18n: I18nState;
@@ -41,30 +40,30 @@ class BlogPost extends PureComponent<Props, State> {
   }
 
   componentDidUpdate(prevProps: Props, prevState: State) {
-    const titleFragment = _.get(this.props.doc, 'data.title');
-    const title = titleFragment && PrismicDOM.RichText.asText(titleFragment);
+    const title = getText(this.props.doc, 'data.title');
     if (title && document.title !== title) document.title = title;
   }
 
   render() {
     const date = _.get(this.props.doc, 'first_publication_date');
-    const title = _.get(this.props.doc, 'data.title');
+    const title = getText(this.props.doc, 'data.title');
     const sections = _.get(this.props.doc, 'data.body');
 
     return (
       <StyledRoot>
         { date && <StyledDate>{moment(date).fromNow()}</StyledDate> }
-        { title && <StyledTitle>{PrismicDOM.RichText.asText(title)}</StyledTitle> }
+        { title && <StyledTitle>{title}</StyledTitle> }
         <StyledBody>
           { sections && sections.map((section: any) => {
-            const sectionTitle = PrismicDOM.RichText.asText(section.primary.subtitle);
+            const sectionTitle = getText(section, 'primary.subtitle');
             const sectionRef = _.kebabCase(sectionTitle);
+            const contentMarkups = getMarkups(section, 'items', 'content');
 
             return (
               <section key={sectionRef}>
                 <h2>{sectionTitle}</h2>
-                { section.items.map((item: any, idx: number) => (
-                  <div key={`${sectionRef}-${idx}`} dangerouslySetInnerHTML={{ __html: PrismicDOM.RichText.asHtml(item.content, (doc) => linkResolver(doc)) }}/>
+                { contentMarkups && contentMarkups.map((markup: string, idx: number) => (
+                  <div key={`${sectionRef}-${idx}`} dangerouslySetInnerHTML={{ __html: markup }}/>
                 )) }
               </section>
             );
