@@ -42,6 +42,7 @@ const config = {
       use: [{
         loader: 'url-loader',
         options: {
+          esModule: false,
           limit: 8192,
           name: `assets/images/[name]${isDev ? '' : '.[hash:6]'}.[ext]`,
         },
@@ -56,6 +57,7 @@ const config = {
       use: [{
         loader: 'url-loader',
         options: {
+          esModule: false,
           limit: 8192,
           name: `assets/media/[name]${isDev ? '' : '.[hash:6]'}.[ext]`,
         },
@@ -65,6 +67,7 @@ const config = {
       use: [{
         loader: 'url-loader',
         options: {
+          esModule: false,
           limit: 8192,
           name: `assets/fonts/[name]${isDev ? '' : '.[hash:6]'}.[ext]`,
         },
@@ -96,7 +99,6 @@ const config = {
   plugins: [
     new CopyPlugin([{
       from: path.join(inputDir, 'static'),
-      ignore: ['.*'],
       to: outputDir,
     }]),
     new EnvironmentPlugin({
@@ -119,7 +121,7 @@ const config = {
       minify: {
         collapseWhitespace: true,
         removeAttributeQuotes: true,
-        removeComments: true,
+        removeComments: false,
       },
       template: path.join(inputDir, 'templates', 'index.html'),
     }),
