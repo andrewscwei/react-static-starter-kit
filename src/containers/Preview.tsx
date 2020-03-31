@@ -17,7 +17,7 @@ class Preview extends PureComponent<Props> {
     const documentId = params.get('documentId');
 
     if (token && documentId) {
-      this.redirect(token);
+      this.redirect(token, documentId);
       debug(`Initializing preview for document <${documentId}>...`, 'OK', token);
     }
     else {
@@ -25,10 +25,10 @@ class Preview extends PureComponent<Props> {
     }
   }
 
-  async redirect(token: string) {
+  async redirect(token: string, documentId: string) {
     savePreviewToken(token);
 
-    const path = await getPreviewPath(token);
+    const path = await getPreviewPath(token, documentId);
 
     debug('Redirecting...', 'OK', path);
 

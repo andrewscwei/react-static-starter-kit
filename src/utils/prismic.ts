@@ -43,9 +43,9 @@ export function getAPI(): Promise<ResolvedApi> {
   return Prismic.api(apiEndpoint, { accessToken });
 }
 
-export async function getPreviewPath(token: string): Promise<string> {
+export async function getPreviewPath(token: string, documentId: string): Promise<string> {
   const api = await getAPI();
-  return api.previewSession(token, linkResolver, '/');
+  return api.getPreviewResolver(token, documentId).resolve(linkResolver, '/');
 }
 
 export function savePreviewToken(token: string) {
@@ -54,7 +54,7 @@ export function savePreviewToken(token: string) {
     path: '/',
   });
 
-  if (cookie.parse(document.cookie)[Prismic.previewCookie]) {
+  if (loadPreviewToken()) {
     debug('Saving preview token to cookies...', 'OK');
   }
   else {
