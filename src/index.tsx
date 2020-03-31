@@ -2,7 +2,6 @@
  * @file Entry file.
  */
 
-import 'abortcontroller-polyfill/dist/polyfill-patch-fetch';
 import React from 'react';
 import { hydrate, render } from 'react-dom';
 import { Provider } from 'react-redux';
