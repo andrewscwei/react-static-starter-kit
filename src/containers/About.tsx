@@ -41,12 +41,12 @@ class About extends PureComponent<Props, State> {
 
     return (
       <StyledRoot>
-        <h1>{i18n.ltxt('about-title') }</h1>
+        <h1>{i18n.ltxt('about-title')}</h1>
         {
           this.props.users.items.map((user: User) => {
             return (
               <div key={user.id} >
-                <span>{user.name}</span>
+                <span>{user.first_name} {user.last_name}</span>
               </div>
             );
           })
