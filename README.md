@@ -1,4 +1,4 @@
-# React Static Starter Kit [![CircleCI](https://img.shields.io/circleci/build/github/andrewscwei/react-static-starter-kit.svg)](https://circleci.com/gh/andrewscwei/react-static-starter-kit) [![Netlify Status](https://img.shields.io/netlify/8fc40796-fac4-41bb-8e59-8d1ee7338966)](https://app.netlify.com/sites/react-static-starter-kit-javascript/deploys)
+# React Static Starter Kit [![CI](https://github.com/andrewscwei/react-static-starter-kit/workflows/CI/badge.svg)](https://github.com/andrewscwei/react-static-starter-kit/actions?query=workflow%3ACI) [![Netlify Status](https://img.shields.io/netlify/8fc40796-fac4-41bb-8e59-8d1ee7338966)](https://app.netlify.com/sites/react-static-starter-kit/deploys)
 
 This is an **experimental** starter kit for a React static app.
 
@@ -13,7 +13,6 @@ This is an **experimental** starter kit for a React static app.
 7. [Styled Components](https://www.styled-components.com/)
 8. [React Transition Group](http://reactcommunity.org/react-transition-group/)
 9. [ESLint](https://eslint.org/) and [StyleLint](https://stylelint.io/) config
-10. [Netlify](https://netlify.com) manual deploy setup
 
 ## Usage
 
