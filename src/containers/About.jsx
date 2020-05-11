@@ -37,7 +37,7 @@ export default class About extends PureComponent {
           this.props.users.items.map((user) => {
             return (
               <div key={user.id} >
-                <span>{user.name}</span>
+                <span>{user.first_name} {user.last_name}</span>
               </div>
             );
           })

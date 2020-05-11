@@ -15,7 +15,7 @@ export function fetchUsers() {
 
     request = new AbortController();
 
-    const res = await fetch('//jsonplaceholder.typicode.com/users', {
+    const res = await fetch('https://reqres.in/api/users', {
       signal: request.signal,
     })
       .catch(err => {
@@ -26,7 +26,7 @@ export function fetchUsers() {
 
     request = undefined;
 
-    const items = await res.json();
+    const { data: items } = await res.json();
     const action = {
       type: UsersActionType.LOADED,
       payload: {
