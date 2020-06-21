@@ -39,6 +39,7 @@
     "@types/chalk": "^2.2.0",
     "@types/cookie": "^0.4.0",
     "@types/copy-webpack-plugin": "^6.0.0",
+    "@types/debug": "^4.1.5",
     "@types/dotenv": "^8.2.0",
     "@types/html-webpack-plugin": "^3.2.3",
     "@types/lodash": "^4.14.155",
@@ -87,8 +88,13 @@
     "worker-loader": "^2.0.0"
   },
   "dependencies": {
+    "apollo-cache-inmemory": "^1.6.6",
+    "apollo-client": "^2.6.10",
+    "apollo-link-prismic": "^1.0.7",
     "cookie": "^0.4.1",
     "core-js": "^3.6.5",
+    "graphql": "^15.1.0",
+    "graphql-tag": "^2.10.3",
     "lodash": "^4.17.15",
     "moment": "^2.27.0",
     "node-polyglot": "^2.4.0",

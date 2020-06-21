@@ -16,9 +16,8 @@ import { AppState } from '../store';
 import { changeLocale, I18nState } from '../store/i18n';
 import globalStyles from '../styles/global';
 import * as theme from '../styles/theme';
+import debug from '../utils/debug';
 import { getLocaleFromPath } from '../utils/i18n';
-
-const debug = process.env.NODE_ENV === 'development' ? require('debug')('app') : () => {};
 
 interface StateProps {
   i18n: I18nState;

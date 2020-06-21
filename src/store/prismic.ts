@@ -1,11 +1,10 @@
 import _ from 'lodash';
 import Prismic from 'prismic-javascript';
-import { Document } from 'prismic-javascript/d.ts/documents';
-import { QueryOptions } from 'prismic-javascript/d.ts/ResolvedApi';
+import { Document } from 'prismic-javascript/types/documents';
+import { QueryOptions } from 'prismic-javascript/types/ResolvedApi';
 import { Action, Dispatch } from 'redux';
+import debug from '../utils/debug';
 import { getAPI, loadPreviewToken, localeResolver } from '../utils/prismic';
-
-const debug = process.env.NODE_ENV === 'development' ? require('debug')('app:prismic') : () => {};
 
 export enum PrismicActionType {
   DOC_LOADED = 'prismic/DOC_LOADED',
