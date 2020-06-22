@@ -97,10 +97,12 @@ const config = {
     hints: isDev ? false : 'warning',
   },
   plugins: [
-    new CopyPlugin([{
-      from: path.join(inputDir, 'static'),
-      to: outputDir,
-    }]),
+    new CopyPlugin({
+      patterns: [{
+        from: path.join(inputDir, 'static'),
+        to: outputDir,
+      }],
+    }),
     new EnvironmentPlugin({
       NODE_ENV: 'production',
     }),
