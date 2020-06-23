@@ -21,7 +21,7 @@ interface DispatchProps {
   fetchDocs: typeof fetchDocs;
 }
 
-interface OwnProps extends RouteComponentProps<{}> {
+interface OwnProps extends RouteComponentProps {
 
 }
 
@@ -53,7 +53,7 @@ class Blog extends PureComponent<Props, State> {
           <StyledLinks>
             { this.props.docs.map((doc) => (
               <Link key={doc.id} to={getLocalizedPath(`/blog/${doc.uid}`, locale)}>
-                <span>{moment(doc.first_publication_date!).fromNow()}</span>
+                <span>{moment(doc.first_publication_date ?? '').fromNow()}</span>
                 <h3>{getText(doc, 'data.title')}</h3>
               </Link>
             )) }

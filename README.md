@@ -12,7 +12,7 @@ This is an **experimental** starter kit for a React static app.
 6. [Polyglot](http://airbnb.io/polyglot.js/)
 7. [Styled Components](https://www.styled-components.com/)
 8. [React Transition Group](http://reactcommunity.org/react-transition-group/)
-9. [TSLint](https://palantir.github.io/tslint/) and [StyleLint](https://stylelint.io/) config
+9. [ESLint](https://eslint.org/) and [StyleLint](https://stylelint.io/) config
 
 ## Usage
 

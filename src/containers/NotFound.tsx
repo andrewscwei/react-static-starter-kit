@@ -14,7 +14,7 @@ interface DispatchProps {
 
 }
 
-interface OwnProps extends RouteComponentProps<{}> {
+interface OwnProps extends RouteComponentProps {
 
 }
 

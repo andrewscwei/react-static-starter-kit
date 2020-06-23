@@ -3,7 +3,7 @@ import { RouteComponentProps, withRouter } from 'react-router';
 import debug from '../utils/debug';
 import { getPreviewPath, savePreviewToken } from '../utils/prismic';
 
-interface Props extends RouteComponentProps<{}> {
+interface Props extends RouteComponentProps {
 
 }
 

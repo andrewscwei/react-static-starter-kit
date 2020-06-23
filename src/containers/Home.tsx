@@ -19,7 +19,7 @@ interface DispatchProps {
   fetchDocs: typeof fetchDocs;
 }
 
-interface OwnProps extends RouteComponentProps<{}> {
+interface OwnProps extends RouteComponentProps {
 
 }
 
@@ -59,7 +59,7 @@ class Home extends PureComponent<Props, State> {
 }
 
 export default connect(
-  (state: AppState, ownProps: OwnProps): StateProps => ({
+  (state: AppState): StateProps => ({
     i18n: state.i18n,
     doc: reduceDoc(state.prismic, 'home', undefined, state.i18n.locale),
   }),

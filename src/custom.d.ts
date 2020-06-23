@@ -37,6 +37,6 @@ interface Window {
   __INITIAL_STATE__: any;
   __PRISMIC_REF__: any;
   __REDUX_DEVTOOLS_EXTENSION_COMPOSE__: any;
-  prismic: { endpoint: any; };
-  snapSaveState: () => {};
+  prismic: { endpoint: any };
+  snapSaveState: () => void;
 }

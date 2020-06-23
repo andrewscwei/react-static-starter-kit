@@ -39,7 +39,7 @@ export function linkResolver(doc: Document): string {
  *
  * @returns The mapped locale code.
  */
-export function localeResolver(locale: string, reverse: boolean = false): string {
+export function localeResolver(locale: string, reverse = false): string {
   const defaultLocale = __I18N_CONFIG__.defaultLocale;
   const supportedLocales = __I18N_CONFIG__.locales;
 
@@ -120,7 +120,7 @@ export function loadPreviewToken(): string | undefined {
  *
  * @returns The text if available, `undefined` otherwise.
  */
-export function getText(doc?: Document, path: string = ''): string | undefined {
+export function getText(doc?: Document, path = ''): string | undefined {
   const fragment = _.get(doc, path);
 
   if (!fragment) return undefined;
@@ -142,7 +142,7 @@ export function getText(doc?: Document, path: string = ''): string | undefined {
  *          but the target subpath contains no text, an empty array is returned.
  *          If the target path is not an array, `undefined` is returned.
  */
-export function getTexts(doc?: Document, path: string = '', subpath: string = ''): ReadonlyArray<string> | undefined {
+export function getTexts(doc?: Document, path = '', subpath = ''): ReadonlyArray<string> | undefined {
   const fragments = _.get(doc, path);
 
   if (!_.isArray(fragments)) return undefined;
@@ -173,7 +173,7 @@ export function getTexts(doc?: Document, path: string = '', subpath: string = ''
  *
  * @returns The number if available, `undefined` otherwise.
  */
-export function getNumber(doc?: Document, path: string = ''): number | undefined {
+export function getNumber(doc?: Document, path = ''): number | undefined {
   const fragment = _.get(doc, path);
 
   if (!fragment) return undefined;
@@ -196,7 +196,7 @@ export function getNumber(doc?: Document, path: string = ''): number | undefined
  *          returned. If the target path is not an array, `undefined` is
  *          returned.
  */
-export function getNumbers(doc?: Document, path: string = '', subpath: string = ''): ReadonlyArray<number> | undefined {
+export function getNumbers(doc?: Document, path = '', subpath = ''): ReadonlyArray<number> | undefined {
   const fragments = _.get(doc, path);
 
   if (!_.isArray(fragments)) return undefined;
@@ -227,7 +227,7 @@ export function getNumbers(doc?: Document, path: string = '', subpath: string = 
  *
  * @returns The URL if available, `undefined` otherwise.
  */
-export function getUrl(doc?: Document, path: string = ''): string | undefined {
+export function getUrl(doc?: Document, path = ''): string | undefined {
   const fragment = _.get(doc, path);
 
   if (!fragment) return undefined;
@@ -248,7 +248,7 @@ export function getUrl(doc?: Document, path: string = ''): string | undefined {
  *          but the target subpath contains no URL, an empty array is returned.
  *          If the target path is not an array, `undefined` is returned.
  */
-export function getUrls(doc?: Document, path: string = '', subpath: string = ''): ReadonlyArray<string> | undefined {
+export function getUrls(doc?: Document, path = '', subpath = ''): ReadonlyArray<string> | undefined {
   const fragments = _.get(doc, path);
 
   if (!_.isArray(fragments)) return undefined;
@@ -275,7 +275,7 @@ export function getUrls(doc?: Document, path: string = '', subpath: string = '')
  *
  * @returns The HTML markup if available, `undefined` otherwise.
  */
-export function getMarkup(doc?: Document, path: string = ''): string | undefined {
+export function getMarkup(doc?: Document, path = ''): string | undefined {
   const fragment = _.get(doc, path);
 
   if (!fragment) return undefined;
@@ -298,7 +298,7 @@ export function getMarkup(doc?: Document, path: string = ''): string | undefined
  *          is returned. If the target path is not an array, `undefined` is
  *          returned.
  */
-export function getMarkups(doc?: Document, path: string = '', subpath: string = ''): ReadonlyArray<string> | undefined {
+export function getMarkups(doc?: Document, path = '', subpath = ''): ReadonlyArray<string> | undefined {
   const fragments = _.get(doc, path);
 
   if (!_.isArray(fragments)) return undefined;
@@ -325,7 +325,7 @@ export function getMarkups(doc?: Document, path: string = '', subpath: string = 
  *
  * @returns The HTML markup if available, `undefined` otherwise.
  */
-export function getDoc(doc?: Document, path: string = '', lookupDocs?: ReadonlyArray<Document>): Document | undefined {
+export function getDoc(doc?: Document, path = '', lookupDocs?: ReadonlyArray<Document>): Document | undefined {
   const fragment = _.get(doc, path);
 
   if (!fragment) return undefined;
@@ -351,7 +351,7 @@ export function getDoc(doc?: Document, path: string = '', lookupDocs?: ReadonlyA
  *          empty array is returned. If the target path is not an array,
  *          `undefined` is returned.
  */
-export function getDocs(doc?: Document, path: string = '', subpath: string = '', lookupDocs?: ReadonlyArray<Document>): ReadonlyArray<Document> | undefined {
+export function getDocs(doc?: Document, path = '', subpath = '', lookupDocs?: ReadonlyArray<Document>): ReadonlyArray<Document> | undefined {
   const fragments = _.get(doc, path);
 
   if (!fragments) return undefined;

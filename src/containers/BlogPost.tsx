@@ -39,7 +39,7 @@ class BlogPost extends PureComponent<Props, State> {
     });
   }
 
-  componentDidUpdate(prevProps: Props, prevState: State) {
+  componentDidUpdate() {
     const title = getText(this.props.doc, 'data.title');
     if (title && document.title !== title) document.title = title;
   }

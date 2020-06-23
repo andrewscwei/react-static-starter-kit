@@ -101,7 +101,7 @@ export function fetchDocs(type: string, uid?: string, options: Partial<QueryOpti
     const previewToken = loadPreviewToken();
     const opts = {
       lang: localeResolver(__I18N_CONFIG__.defaultLocale),
-      orderings : '[document.first_publication_date desc]',
+      orderings: '[document.first_publication_date desc]',
       ref: previewToken || api.master(),
       ...options,
     };
