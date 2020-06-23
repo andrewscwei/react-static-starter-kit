@@ -16,9 +16,9 @@ interface DispatchProps {
   fetchUsers(): void;
 }
 
-interface OwnProps extends RouteComponentProps<{}> {
+type OwnProps = RouteComponentProps<{
 
-}
+}>;
 
 interface Props extends StateProps, DispatchProps, OwnProps {}
 
@@ -43,13 +43,11 @@ class About extends PureComponent<Props, State> {
       <StyledRoot>
         <h1>{i18n.ltxt('about-title')}</h1>
         {
-          this.props.users.items.map((user: User) => {
-            return (
-              <div key={user.id} >
-                <span>{user.first_name} {user.last_name}</span>
-              </div>
-            );
-          })
+          this.props.users.items.map((user: User) => (
+            <div key={user.id} >
+              <span>{user.first_name} {user.last_name}</span>
+            </div>
+          ))
         }
       </StyledRoot>
     );

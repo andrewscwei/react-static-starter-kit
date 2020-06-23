@@ -15,9 +15,9 @@ interface DispatchProps {
 
 }
 
-interface OwnProps extends RouteComponentProps<{}> {
+type OwnProps = RouteComponentProps<{
 
-}
+}>;
 
 export interface Props extends StateProps, DispatchProps, OwnProps {}
 

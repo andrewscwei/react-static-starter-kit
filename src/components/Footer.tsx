@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, SFC } from 'react';
+import React, { PropsWithChildren, ReactElement } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Action, bindActionCreators, Dispatch } from 'redux';
@@ -13,21 +13,23 @@ interface StateProps {
 
 interface DispatchProps {}
 
-interface OwnProps extends PropsWithChildren<{}> {
+type OwnProps = PropsWithChildren<{
 
-}
+}>;
 
 interface Props extends StateProps, DispatchProps, OwnProps {}
 
-const Footer: SFC<Props> = ({ i18n }) => (
-  <StyledRoot>
-    <nav>
-      <a href='https://github.com/andrewscwei/react-static-starter-kit'/>
-    </nav>
-    <Link to={getLocalizedPath('/', 'en')}>{i18n.ltxt('en') }</Link>
-    <Link to={getLocalizedPath('/', 'ja')}>{i18n.ltxt('jp') }</Link>
-  </StyledRoot>
-);
+function Footer({ i18n }: Props): ReactElement {
+  return (
+    <StyledRoot>
+      <nav>
+        <a href='https://github.com/andrewscwei/react-static-starter-kit'/>
+      </nav>
+      <Link to={getLocalizedPath('/', 'en')}>{i18n.ltxt('en') }</Link>
+      <Link to={getLocalizedPath('/', 'ja')}>{i18n.ltxt('jp') }</Link>
+    </StyledRoot>
+  );
+}
 
 export default connect(
   (state: AppState): StateProps => ({
