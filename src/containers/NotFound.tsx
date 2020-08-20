@@ -5,6 +5,7 @@ import { Action, bindActionCreators, Dispatch } from 'redux';
 import styled from 'styled-components';
 import { AppState } from '../store';
 import { I18nState } from '../store/i18n';
+import { setPageTitle } from '../utils/prismic';
 
 interface StateProps {
   i18n: I18nState;
@@ -26,7 +27,7 @@ interface State {
 
 class NotFound extends PureComponent<Props, State> {
   componentDidMount() {
-    document.title = this.props.i18n.ltxt('not-found');
+    setPageTitle(this.props.i18n.ltxt('not-found'));
   }
 
   render() {

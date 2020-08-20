@@ -1,46 +1,32 @@
-import React, { Fragment, PureComponent } from 'react';
-import { RouteComponentProps, withRouter } from 'react-router';
+import { SFC, useEffect } from 'react';
+import { RouteComponentProps } from 'react-router';
 import debug from '../utils/debug';
 import { getPreviewPath, savePreviewToken } from '../utils/prismic';
 
-interface Props extends RouteComponentProps {
+interface Props extends RouteComponentProps {}
 
-}
-
-class Preview extends PureComponent<Props> {
-  constructor(props: Props) {
-    super(props);
-
-    const params = new URLSearchParams(props.location.search);
+const Preview: SFC<Props> = ({ location, history}) => {
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
     const token = params.get('token');
     const documentId = params.get('documentId');
 
     if (token && documentId) {
-      this.redirect(token, documentId);
-      debug(`Initializing preview for document <${documentId}>...`, 'OK', token);
+      document.title = 'Previewing...';
+
+      debug(`Previewing document <${documentId}>...`);
+
+      savePreviewToken(token);
+
+      getPreviewPath(token, documentId).then((path) => {
+        history.push({
+          pathname: path,
+        });
+      });
     }
-    else {
-      debug(`Initializing preview for document <${documentId}>...`, 'ERR', 'Missing token from query string');
-    }
-  }
+  }, []);
 
-  async redirect(token: string, documentId: string) {
-    savePreviewToken(token);
+  return null;
+};
 
-    const path = await getPreviewPath(token, documentId);
-
-    debug('Redirecting...', 'OK', path);
-
-    this.props.history.push({
-      pathname: path,
-    });
-  }
-
-  render() {
-    return (
-      <Fragment/>
-    );
-  }
-}
-
-export default withRouter(Preview);
+export default Preview;

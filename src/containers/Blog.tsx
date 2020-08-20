@@ -10,7 +10,7 @@ import { AppState } from '../store';
 import { I18nState } from '../store/i18n';
 import { fetchDocs, reduceDocs } from '../store/prismic';
 import { getLocalizedPath } from '../utils/i18n';
-import { getText, localeResolver } from '../utils/prismic';
+import { getText, localeResolver, setPageTitle } from '../utils/prismic';
 
 interface StateProps {
   i18n: I18nState;
@@ -41,7 +41,7 @@ class Blog extends PureComponent<Props, State> {
   }
 
   componentDidMount() {
-    document.title = this.props.i18n.ltxt('blog');
+    setPageTitle(this.props.i18n.ltxt('blog'));
   }
 
   render() {

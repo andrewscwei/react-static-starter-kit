@@ -8,7 +8,7 @@ import ReactLogo from '../components/ReactLogo';
 import { AppState } from '../store';
 import { I18nState } from '../store/i18n';
 import { fetchDocs, reduceDoc } from '../store/prismic';
-import { getText, localeResolver } from '../utils/prismic';
+import { getText, localeResolver, setPageTitle } from '../utils/prismic';
 
 interface StateProps {
   i18n: I18nState;
@@ -39,7 +39,7 @@ class Home extends PureComponent<Props, State> {
   }
 
   componentDidMount() {
-    document.title = this.props.i18n.ltxt('home');
+    setPageTitle(this.props.i18n.ltxt('home'));
   }
 
   render() {

@@ -1,11 +1,21 @@
-import cookie from 'cookie';
+import Cookies from 'js-cookie';
 import _ from 'lodash';
 import PrismicDOM from 'prismic-dom';
 import Prismic from 'prismic-javascript';
 import { Document } from 'prismic-javascript/types/documents';
 import ResolvedApi from 'prismic-javascript/types/ResolvedApi';
+import resolveLinks from '../links.conf';
 import debug from './debug';
 import { getLocalizedPath } from './i18n';
+
+/**
+ * Sets the page title, adds the preview tag if currently in preview mode.
+ *
+ * @param title - The title of the page to set to.
+ */
+export function setPageTitle(title: string) {
+  document.title = hasPreviewToken() ? `[PREVIEW] ${title}` : title;
+}
 
 /**
  * Maps a Prismic document to its URL in the app. An example of when this is
@@ -17,12 +27,7 @@ import { getLocalizedPath } from './i18n';
  */
 export function linkResolver(doc: Document): string {
   const locale = doc.lang ? localeResolver(doc.lang, true) : 'en';
-
-  switch (doc.type) {
-  case 'home': return getLocalizedPath('/', locale);
-  case 'blog_post': return getLocalizedPath(`/blog/${doc.uid}`, locale);
-  default: return '/';
-  }
+  return getLocalizedPath(resolveLinks(doc), locale);
 }
 
 /**
@@ -44,17 +49,52 @@ export function localeResolver(locale: string, reverse = false): string {
   const supportedLocales = __I18N_CONFIG__.locales;
 
   if (reverse) {
-    switch (locale) {
-    case 'ja-jp': return 'ja';
-    default: return 'en';
-    }
+    const matches = locale.match(/^([a-zA-Z0-9]*)-?.*$/);
+    return matches && matches.length > 0 && matches[1] || 'en';
   }
   else {
     if (supportedLocales.indexOf(locale) < 0) return defaultLocale;
 
     switch (locale) {
-    case 'ja': return 'ja-jp';
-    default: return 'en-us';
+    case 'ar': return 'ar-ae'; // Arabic
+    case 'bg': return 'bg'; // Bulgarian
+    case 'ca': return 'ca'; // Catalan
+    case 'cs': return 'cs-cz'; // Czech
+    case 'da': return 'da-dk'; // Danish
+    case 'de': return 'de-de'; // German
+    case 'el': return 'el-gr'; // Greek
+    case 'es': return 'es-es'; // Spanish
+    case 'eu': return 'eu'; // Basque
+    case 'fa': return 'fa-ir'; // Farsi
+    case 'fi': return 'fi'; // Finnish
+    case 'fr': return 'fr-fr'; // French
+    case 'he': return 'he'; // Hebrew
+    case 'hi': return 'hi-in'; // Hindi
+    case 'hr': return 'hr'; // Croatian
+    case 'hu': return 'hu'; // Hungarian
+    case 'hy': return 'hy-am'; // Armenian
+    case 'id': return 'id'; // Indonesian
+    case 'is': return 'is'; // Icelandic
+    case 'it': return 'it-it'; // Italian
+    case 'ja': return 'ja-jp'; // Japanese
+    case 'ko': return 'ko-kr'; // Korean
+    case 'lt': return 'lt'; // Lithuanian
+    case 'lv': return 'lv'; // Latvian
+    case 'ms': return 'ms-my'; // Malay
+    case 'nl': return 'nl-nl'; // Dutch
+    case 'no': return 'no'; // Norwegian
+    case 'pl': return 'pl'; // Polish
+    case 'pt': return 'pt-pt'; // Portuguese
+    case 'ro': return 'ro'; // Romanian
+    case 'ru': return 'ru'; // Russian
+    case 'sk': return 'sk'; // Slovak
+    case 'sl': return 'sl'; // Slovenian
+    case 'sv': return 'sv-se'; // Swedish
+    case 'th': return 'th'; // Thai
+    case 'tr': return 'tr'; // Turkish
+    case 'vi': return 'vi'; // Vietnamese
+    case 'zh': return 'zh-cn'; // Chinese
+    default: return 'en-us'; // English
     }
   }
 }
@@ -83,15 +123,22 @@ export async function getPreviewPath(token: string, documentId: string): Promise
 }
 
 /**
+ * Indicates if there exists a preview token.
+ *
+ * @returns `true` if a preview token exists, `false` otherwise.
+ */
+export function hasPreviewToken(): boolean {
+  const token = loadPreviewToken();
+  return token !== undefined;
+}
+
+/**
  * Saves the preview token to browser cookies.
  *
  * @param token - The preview token.
  */
 export function savePreviewToken(token: string) {
-  document.cookie = cookie.serialize(Prismic.previewCookie, token, {
-    expires: new Date(Date.now() + 60 * 60 * 1000),
-    path: '/',
-  });
+  Cookies.set(Prismic.previewCookie, token, { expires: 1/24, path: '/' });
 
   if (loadPreviewToken()) {
     debug('Saving preview token to cookies...', 'OK');
@@ -107,8 +154,15 @@ export function savePreviewToken(token: string) {
  * @returns The preview token.
  */
 export function loadPreviewToken(): string | undefined {
-  const token = cookie.parse(document.cookie)[Prismic.previewCookie];
+  const token = Cookies.get(Prismic.previewCookie);
   return token;
+}
+
+/**
+ * Removes the preview token from browser cookies.
+ */
+export function removePreviewToken() {
+  Cookies.remove(Prismic.previewCookie);
 }
 
 /**

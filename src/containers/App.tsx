@@ -11,6 +11,7 @@ import { Action, bindActionCreators, Dispatch } from 'redux';
 import styled, { createGlobalStyle, ThemeProvider } from 'styled-components';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
+import PreviewIndicator from '../components/PreviewIndicator';
 import routes from '../routes';
 import { AppState } from '../store';
 import { changeLocale, I18nState } from '../store/i18n';
@@ -18,6 +19,7 @@ import globalStyles from '../styles/global';
 import * as theme from '../styles/theme';
 import debug from '../utils/debug';
 import { getLocaleFromPath } from '../utils/i18n';
+import { hasPreviewToken } from '../utils/prismic';
 
 interface StateProps {
   i18n: I18nState;
@@ -59,6 +61,7 @@ class App extends PureComponent<Props, State> {
       <ThemeProvider theme={theme}>
         <Fragment>
           <GlobalStyles/>
+          {hasPreviewToken() && <PreviewIndicator/>}
           <Header/>
           <StyledBody>
             <CSSTransition key={route.location.key} timeout={300} classNames='route-transition'>

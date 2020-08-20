@@ -9,7 +9,7 @@ import styled from 'styled-components';
 import { AppState } from '../store';
 import { I18nState } from '../store/i18n';
 import { fetchDocs, reduceDoc } from '../store/prismic';
-import { getMarkups, getText, localeResolver } from '../utils/prismic';
+import { getMarkups, getText, localeResolver, setPageTitle } from '../utils/prismic';
 
 interface StateProps {
   i18n: I18nState;
@@ -40,8 +40,7 @@ class BlogPost extends PureComponent<Props, State> {
   }
 
   componentDidUpdate() {
-    const title = getText(this.props.doc, 'data.title');
-    if (title && document.title !== title) document.title = title;
+    setPageTitle(getText(this.props.doc, 'data.title'));
   }
 
   render() {
