@@ -21,17 +21,11 @@ interface DispatchProps {
   fetchDocs: typeof fetchDocs;
 }
 
-interface OwnProps extends RouteComponentProps {
-
-}
+interface OwnProps extends RouteComponentProps {}
 
 interface Props extends StateProps, DispatchProps, OwnProps {}
 
-interface State {
-
-}
-
-class Blog extends PureComponent<Props, State> {
+class Blog extends PureComponent<Props> {
   constructor(props: Props) {
     super(props);
 

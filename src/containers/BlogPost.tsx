@@ -40,7 +40,11 @@ class BlogPost extends PureComponent<Props, State> {
   }
 
   componentDidUpdate() {
-    setPageTitle(getText(this.props.doc, 'data.title'));
+    const pageTitle = getText(this.props.doc, 'data.title');
+
+    if (pageTitle) {
+      setPageTitle(pageTitle);
+    }
   }
 
   render() {

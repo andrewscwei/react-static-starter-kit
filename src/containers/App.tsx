@@ -102,7 +102,7 @@ export default hot(connect((state: AppState): StateProps => ({
 }, dispatch))(App));
 
 const GlobalStyles = createGlobalStyle<any>`
-  ${globalStyles}
+  ${globalStyles} /* stylelint-disable-line */
 `;
 
 const StyledBody = styled(TransitionGroup)`

@@ -1,11 +1,13 @@
-import { SFC, useEffect } from 'react';
+import { FunctionComponent, useEffect } from 'react';
 import { RouteComponentProps } from 'react-router';
 import debug from '../utils/debug';
 import { getPreviewPath, savePreviewToken } from '../utils/prismic';
 
-interface Props extends RouteComponentProps {}
+interface Props extends RouteComponentProps {
 
-const Preview: SFC<Props> = ({ location, history}) => {
+}
+
+const Preview: FunctionComponent<Props> = ({ location, history }) => {
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const token = params.get('token');
