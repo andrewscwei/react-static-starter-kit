@@ -21,6 +21,7 @@ export default [{
   component: BlogPost,
 }, {
   path: '/preview',
+  exact: true,
   component: Preview,
 }, {
   path: '/ja',
