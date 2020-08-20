@@ -1,13 +1,11 @@
-import { FunctionComponent, useEffect } from 'react';
+import React, { Fragment, FunctionComponent, useEffect } from 'react';
 import { RouteComponentProps } from 'react-router';
 import debug from '../utils/debug';
 import { getPreviewPath, savePreviewToken } from '../utils/prismic';
 
-interface Props extends RouteComponentProps {
+interface Props extends RouteComponentProps {}
 
-}
-
-const Preview: FunctionComponent<Props> = ({ location, history }) => {
+const Preview: FunctionComponent<Props> = ({ location, history }: Props) => {
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const token = params.get('token');
@@ -28,7 +26,7 @@ const Preview: FunctionComponent<Props> = ({ location, history }) => {
     }
   }, []);
 
-  return null;
+  return <Fragment/>;
 };
 
 export default Preview;
