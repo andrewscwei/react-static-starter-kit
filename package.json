@@ -98,6 +98,7 @@
     "node-polyglot": "^2.4.0",
     "prismic-dom": "^2.2.3",
     "prismic-javascript": "^3.0.2",
+    "query-string": "^6.13.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-redux": "^7.2.1",

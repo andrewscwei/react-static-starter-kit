@@ -1,3 +1,5 @@
+import _ from 'lodash';
+import qs from 'query-string';
 import React, { Fragment, FunctionComponent, useEffect } from 'react';
 import { RouteComponentProps } from 'react-router';
 import debug from '../utils/debug';
@@ -12,15 +14,17 @@ const Preview: FunctionComponent<Props> = ({ location, history }: Props) => {
     const documentId = params.get('documentId');
 
     if (token && documentId) {
-      document.title = 'Previewing...';
-
       debug(`Previewing document <${documentId}>...`);
 
       savePreviewToken(token);
 
       getPreviewPath(token, documentId).then((path) => {
+        const parsed = qs.parseUrl(path, { parseFragmentIdentifier: true });
+
         history.push({
-          pathname: path,
+          pathname: parsed.url,
+          hash: parsed.fragmentIdentifier,
+          search: _.isEmpty(params) ? undefined : `?${qs.stringify(parsed.query)}`,
         });
       });
     }
