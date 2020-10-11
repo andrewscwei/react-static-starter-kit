@@ -21,7 +21,7 @@ const locales = getLocalesFromDir(localesDir, appConf.locales[0], appConf.locale
 const port = Number(process.env.PORT) || 8080;
 
 const config = {
-  devtool: isDev ? 'cheap-eval-source-map' : false,
+  devtool: isDev ? 'eval-cheap-source-map' : false,
   entry: {
     polyfills: path.join(inputDir, 'polyfills.jsx'),
     bundle: path.join(inputDir, 'index.jsx'),
@@ -128,7 +128,9 @@ const config = {
       template: path.join(inputDir, 'templates', 'index.html'),
     }),
     ...isDev ? [] : [
-      new IgnorePlugin(/^.*\/config\/.*$/),
+      new IgnorePlugin({
+        resourceRegExp: /^.*\/config\/.*$/,
+      }),
     ],
     ...!useBundleAnalyzer ? [] : [
       new BundleAnalyzerPlugin(),
