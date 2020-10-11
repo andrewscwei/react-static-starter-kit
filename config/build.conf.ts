@@ -6,7 +6,7 @@
 import CopyPlugin from 'copy-webpack-plugin';
 import HTMLPlugin from 'html-webpack-plugin';
 import path from 'path';
-import { Configuration, DefinePlugin, EnvironmentPlugin, IgnorePlugin, Plugin } from 'webpack';
+import { Configuration, DefinePlugin, EnvironmentPlugin, IgnorePlugin } from 'webpack';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import appConf from '../src/app.conf';
 import { getLocalesFromDir, getTranslationsFromDir } from './utils';
@@ -130,12 +130,14 @@ const config: Configuration = {
       template: path.join(inputDir, 'templates', 'index.html'),
     }),
     ...isDev ? [] : [
-      new IgnorePlugin(/^.*\/config\/.*$/),
+      new IgnorePlugin({
+        resourceRegExp: /^.*\/config\/.*$/,
+      }),
     ],
     ...!useBundleAnalyzer ? [] : [
       new BundleAnalyzerPlugin(),
     ],
-  ] as Array<Plugin>,
+  ],
   ...!isDev ? {} : {
     devServer: {
       historyApiFallback: true,
