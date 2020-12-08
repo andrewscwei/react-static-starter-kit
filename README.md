@@ -1,5 +1,7 @@
 # React Static Starter Kit [![CI](https://github.com/andrewscwei/react-static-starter-kit/workflows/CI/badge.svg)](https://github.com/andrewscwei/react-static-starter-kit/actions?query=workflow%3ACI) [![Netlify Status](https://img.shields.io/netlify/8fc40796-fac4-41bb-8e59-8d1ee7338966)](https://app.netlify.com/sites/react-static-starter-kit/deploys)
 
+> **DEPRECATED** This branch is now deprecated. Only the master branch (TypeScript) is maintained.
+
 This is an **experimental** starter kit for a React static app.
 
 ## Features
