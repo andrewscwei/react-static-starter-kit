@@ -6,10 +6,7 @@ declare const __I18N_CONFIG__: Readonly<{
   dict: TranslationDataDict
 }>
 
-declare module '*.svg' {
-  const content: any
-  export default content
-}
+declare module '*.svg'
 
 declare module 'worker-loader!*' {
   class WebpackWorker extends Worker {
@@ -19,19 +16,8 @@ declare module 'worker-loader!*' {
   export default WebpackWorker
 }
 
-interface TranslationData {
-  [key: string]: TranslationData | string
-}
-
-interface TranslationDataDict {
-  [locale: string]: TranslationData
-}
-
-interface RouteData {
-  component: string
-  exact?: boolean
-  path: string
-}
+interface TranslationData { [key: string]: TranslationData | string }
+type TranslationDataDict = Record<string, TranslationData>
 
 interface Window {
   __INITIAL_STATE__: any

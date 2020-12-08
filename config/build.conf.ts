@@ -23,8 +23,8 @@ const port = Number(process.env.PORT) || 8080
 const config: Configuration = {
   devtool: isDev ? 'eval-source-map' : false,
   entry: {
-    bundle: path.join(inputDir, 'index.tsx'),
-    polyfills: path.join(inputDir, 'polyfills.tsx'),
+    main: path.join(inputDir, 'index.ts'),
+    polyfills: path.join(inputDir, 'polyfills.ts'),
   },
   mode: isDev ? 'development' : 'production',
   module: {
@@ -118,7 +118,7 @@ const config: Configuration = {
     }),
     new HTMLPlugin({
       appConf,
-      chunks: ['polyfills', 'common', 'bundle'],
+      chunks: ['polyfills', 'common', 'main'],
       chunksSortMode: 'manual',
       filename: 'index.html',
       inject: true,

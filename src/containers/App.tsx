@@ -8,14 +8,13 @@ import { connect } from 'react-redux'
 import { Route, RouteComponentProps, Switch } from 'react-router-dom'
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
 import { Action, bindActionCreators, Dispatch } from 'redux'
-import styled, { createGlobalStyle, ThemeProvider } from 'styled-components'
+import styled, { createGlobalStyle } from 'styled-components'
 import Footer from '../components/Footer'
 import Header from '../components/Header'
 import routesConf from '../routes.conf'
 import { AppState } from '../store'
 import { changeLocale, I18nState } from '../store/i18n'
 import globalStyles from '../styles/global'
-import * as theme from '../styles/theme'
 import debug from '../utils/debug'
 import { getLocaleFromPath } from '../utils/i18n'
 
@@ -60,18 +59,16 @@ class App extends PureComponent<Props, State> {
     const { route } = this.props
 
     return (
-      <ThemeProvider theme={theme}>
-        <Fragment>
-          <GlobalStyles/>
-          <Header/>
-          <StyledBody>
-            <CSSTransition key={route.location.key} timeout={300} classNames='route-transition'>
-              <Switch location={route.location}>{this.generateRoutes()}</Switch>
-            </CSSTransition>
-          </StyledBody>
-          <Footer/>
-        </Fragment>
-      </ThemeProvider>
+      <Fragment>
+        <GlobalStyles/>
+        <Header/>
+        <StyledBody>
+          <CSSTransition key={route.location.key} timeout={300} classNames='route-transition'>
+            <Switch location={route.location}>{this.generateRoutes()}</Switch>
+          </CSSTransition>
+        </StyledBody>
+        <Footer/>
+      </Fragment>
     )
   }
 
