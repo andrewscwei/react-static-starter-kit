@@ -3,22 +3,22 @@
  *       `development` and `production` environments.
  */
 
-import CopyPlugin from 'copy-webpack-plugin';
-import HTMLPlugin from 'html-webpack-plugin';
-import path from 'path';
-import { Configuration, DefinePlugin, EnvironmentPlugin, IgnorePlugin } from 'webpack';
-import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
-import appConf from '../src/app.conf';
-import { getLocalesFromDir, getTranslationsFromDir } from './utils';
+import CopyPlugin from 'copy-webpack-plugin'
+import HTMLPlugin from 'html-webpack-plugin'
+import path from 'path'
+import { Configuration, DefinePlugin, EnvironmentPlugin, IgnorePlugin } from 'webpack'
+import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
+import appConf from '../src/app.conf'
+import { getLocalesFromDir, getTranslationsFromDir } from './utils'
 
-const isDev: boolean = process.env.NODE_ENV === 'development';
-const useBundleAnalyzer: boolean = process.env.ANALYZE_BUNDLE === 'true' ? true : false;
-const cwd: string = path.join(__dirname, '../');
-const inputDir: string = path.join(cwd, 'src');
-const outputDir: string = path.join(cwd, 'build');
-const localesDir: string = path.join(cwd, 'config/locales');
-const locales = getLocalesFromDir(localesDir, appConf.locales[0], appConf.locales);
-const port = Number(process.env.PORT) || 8080;
+const isDev: boolean = process.env.NODE_ENV === 'development'
+const useBundleAnalyzer: boolean = process.env.ANALYZE_BUNDLE === 'true' ? true : false
+const cwd: string = path.join(__dirname, '../')
+const inputDir: string = path.join(cwd, 'src')
+const outputDir: string = path.join(cwd, 'build')
+const localesDir: string = path.join(cwd, 'config/locales')
+const locales = getLocalesFromDir(localesDir, appConf.locales[0], appConf.locales)
+const port = Number(process.env.PORT) || 8080
 
 const config: Configuration = {
   devtool: isDev ? 'eval-source-map' : false,
@@ -169,6 +169,6 @@ const config: Configuration = {
     reasons: true,
   },
   target: 'web',
-};
+}
 
-export default config;
+export default config

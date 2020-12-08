@@ -1,3 +1,3 @@
-import 'core-js/stable';
-import 'whatwg-fetch';
-import 'abortcontroller-polyfill';
+import 'core-js/stable'
+import 'whatwg-fetch'
+import 'abortcontroller-polyfill'

@@ -2,9 +2,9 @@
  * @file Route definitions for React router.
  */
 
-import About from '../containers/About';
-import Home from '../containers/Home';
-import NotFound from '../containers/NotFound';
+import About from './containers/About'
+import Home from './containers/Home'
+import NotFound from './containers/NotFound'
 
 export default [{
   path: '/',
@@ -25,4 +25,4 @@ export default [{
 }, {
   path: '*',
   component: NotFound,
-}];
+}]

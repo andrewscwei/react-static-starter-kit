@@ -2,33 +2,33 @@
  * @file Client app root.
  */
 
-import React, { Fragment, PureComponent } from 'react';
-import { hot } from 'react-hot-loader/root';
-import { connect } from 'react-redux';
-import { Route, RouteComponentProps, Switch } from 'react-router-dom';
-import { CSSTransition, TransitionGroup } from 'react-transition-group';
-import { Action, bindActionCreators, Dispatch } from 'redux';
-import styled, { createGlobalStyle, ThemeProvider } from 'styled-components';
-import Footer from '../components/Footer';
-import Header from '../components/Header';
-import routes from '../routes';
-import { AppState } from '../store';
-import { changeLocale, I18nState } from '../store/i18n';
-import globalStyles from '../styles/global';
-import * as theme from '../styles/theme';
-import debug from '../utils/debug';
-import { getLocaleFromPath } from '../utils/i18n';
+import React, { Fragment, PureComponent } from 'react'
+import { hot } from 'react-hot-loader/root'
+import { connect } from 'react-redux'
+import { Route, RouteComponentProps, Switch } from 'react-router-dom'
+import { CSSTransition, TransitionGroup } from 'react-transition-group'
+import { Action, bindActionCreators, Dispatch } from 'redux'
+import styled, { createGlobalStyle, ThemeProvider } from 'styled-components'
+import Footer from '../components/Footer'
+import Header from '../components/Header'
+import routesConf from '../routes.conf'
+import { AppState } from '../store'
+import { changeLocale, I18nState } from '../store/i18n'
+import globalStyles from '../styles/global'
+import * as theme from '../styles/theme'
+import debug from '../utils/debug'
+import { getLocaleFromPath } from '../utils/i18n'
 
 interface StateProps {
-  i18n: I18nState;
+  i18n: I18nState
 }
 
 interface DispatchProps {
-  changeLocale: typeof changeLocale;
+  changeLocale: typeof changeLocale
 }
 
 interface OwnProps {
-  route: RouteComponentProps;
+  route: RouteComponentProps
 }
 
 interface Props extends StateProps, DispatchProps, OwnProps {}
@@ -38,26 +38,26 @@ interface State {
 }
 
 class App extends PureComponent<Props, State> {
-  unlistenHistory?: () => any = undefined;
+  unlistenHistory?: () => any = undefined
 
   constructor(props: Props) {
-    super(props);
+    super(props)
 
-    this.syncLocaleWithUrl(this.props.route.location.pathname);
+    this.syncLocaleWithUrl(this.props.route.location.pathname)
 
-    debug('Initializing...', 'OK');
+    debug('Initializing...', 'OK')
   }
 
   componentDidMount() {
-    this.unlistenHistory = this.props.route.history.listen((location) => this.syncLocaleWithUrl(location.pathname));
+    this.unlistenHistory = this.props.route.history.listen(location => this.syncLocaleWithUrl(location.pathname))
   }
 
   componentWillUnmount() {
-    this.unlistenHistory?.();
+    this.unlistenHistory?.()
   }
 
   render() {
-    const { route } = this.props;
+    const { route } = this.props
 
     return (
       <ThemeProvider theme={theme}>
@@ -72,27 +72,27 @@ class App extends PureComponent<Props, State> {
           <Footer/>
         </Fragment>
       </ThemeProvider>
-    );
+    )
   }
 
   private syncLocaleWithUrl(url: string) {
-    const { route, changeLocale, i18n } = this.props;
-    const newLocale = getLocaleFromPath(url);
+    const { route, changeLocale, i18n } = this.props
+    const newLocale = getLocaleFromPath(url)
 
     if (newLocale === i18n.locale) {
-      debug(`Syncing locale with URL path "${route.location.pathname}"...`, 'SKIPPED');
-      return;
+      debug(`Syncing locale with URL path "${route.location.pathname}"...`, 'SKIPPED')
+      return
     }
 
-    debug(`Syncing locale with URL path "${route.location.pathname}"...`, 'OK');
+    debug(`Syncing locale with URL path "${route.location.pathname}"...`, 'OK')
 
-    changeLocale(newLocale);
+    changeLocale(newLocale)
   }
 
   private generateRoutes() {
-    return routes.map((route, index) => (
+    return routesConf.map((route, index) => (
       <Route exact={route.exact} path={route.path} key={`route-${index}`} component={route.component}/>
-    ));
+    ))
   }
 }
 
@@ -100,11 +100,11 @@ export default hot(connect((state: AppState): StateProps => ({
   i18n: state.i18n,
 }), (dispatch: Dispatch<Action>): DispatchProps => bindActionCreators({
   changeLocale,
-}, dispatch))(App));
+}, dispatch))(App))
 
 const GlobalStyles = createGlobalStyle<any>`
   ${globalStyles}
-`;
+`
 
 const StyledBody = styled(TransitionGroup)`
   height: 100%;
@@ -128,4 +128,4 @@ const StyledBody = styled(TransitionGroup)`
     opacity: 0;
     transition: all .3s;
   }
-`;
+`
