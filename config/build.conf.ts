@@ -3,6 +3,7 @@
  *       `development` and `production` environments.
  */
 
+import ReactRefreshPlugin from '@pmmmwh/react-refresh-webpack-plugin'
 import CopyPlugin from 'copy-webpack-plugin'
 import HTMLPlugin from 'html-webpack-plugin'
 import path from 'path'
@@ -35,6 +36,9 @@ const config: Configuration = {
         loader: 'babel-loader',
         options: {
           cacheDirectory: true,
+          ...isDev ? {
+            plugins: [require.resolve('react-refresh/babel')],
+          } : {},
         },
       }],
     }, {
@@ -118,7 +122,7 @@ const config: Configuration = {
     }),
     new HTMLPlugin({
       appConf,
-      chunks: ['polyfills', 'common', 'main'],
+      chunks: ['common', 'main'].concat(isDev ? [] : ['polyfills']),
       chunksSortMode: 'manual',
       filename: 'index.html',
       inject: true,
@@ -129,7 +133,9 @@ const config: Configuration = {
       },
       template: path.join(inputDir, 'templates', 'index.html'),
     }),
-    ...isDev ? [] : [
+    ...isDev ? [
+      new ReactRefreshPlugin(),
+    ] : [
       new IgnorePlugin({
         resourceRegExp: /^.*\/config\/.*$/,
       }),
@@ -155,11 +161,6 @@ const config: Configuration = {
     },
   } as any,
   resolve: {
-    alias: {
-      ...!isDev ? {} : {
-        'react-dom': '@hot-loader/react-dom',
-      },
-    },
     extensions: ['.js', '.ts', '.tsx'],
   },
   stats: {

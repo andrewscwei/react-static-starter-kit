@@ -7,33 +7,25 @@ import { AppState } from '../store'
 import { I18nState } from '../store/i18n'
 import { fetchUsers, User, UsersState } from '../store/users'
 
-interface StateProps {
+type StateProps = {
   i18n: I18nState
   users: UsersState
 }
 
-interface DispatchProps {
-  fetchUsers(): void
+type DispatchProps = {
+  fetchUsers: typeof fetchUsers
 }
 
-type OwnProps = RouteComponentProps<{
+type Props = StateProps & DispatchProps & RouteComponentProps
 
-}>
-
-interface Props extends StateProps, DispatchProps, OwnProps {}
-
-interface State {
-
-}
-
-class About extends PureComponent<Props, State> {
+class About extends PureComponent<Props> {
   constructor(props: Props) {
     super(props)
     this.props.fetchUsers()
   }
 
   componentDidMount() {
-    document.title = this.props.i18n.ltxt('about')
+    document.title = this.props.i18n.ltxt('page-title-about')
   }
 
   render() {

@@ -3,7 +3,6 @@
  */
 
 import React, { Fragment, PureComponent } from 'react'
-import { hot } from 'react-hot-loader/root'
 import { connect } from 'react-redux'
 import { Route, RouteComponentProps, Switch } from 'react-router-dom'
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
@@ -18,25 +17,19 @@ import globalStyles from '../styles/global'
 import debug from '../utils/debug'
 import { getLocaleFromPath } from '../utils/i18n'
 
-interface StateProps {
+type StateProps = {
   i18n: I18nState
 }
 
-interface DispatchProps {
+type DispatchProps = {
   changeLocale: typeof changeLocale
 }
 
-interface OwnProps {
+type Props = StateProps & DispatchProps & {
   route: RouteComponentProps
 }
 
-interface Props extends StateProps, DispatchProps, OwnProps {}
-
-interface State {
-
-}
-
-class App extends PureComponent<Props, State> {
+class App extends PureComponent<Props> {
   unlistenHistory?: () => any = undefined
 
   constructor(props: Props) {
@@ -93,11 +86,11 @@ class App extends PureComponent<Props, State> {
   }
 }
 
-export default hot(connect((state: AppState): StateProps => ({
+export default connect((state: AppState): StateProps => ({
   i18n: state.i18n,
 }), (dispatch: Dispatch<Action>): DispatchProps => bindActionCreators({
   changeLocale,
-}, dispatch))(App))
+}, dispatch))(App)
 
 const GlobalStyles = createGlobalStyle<any>`
   ${globalStyles}

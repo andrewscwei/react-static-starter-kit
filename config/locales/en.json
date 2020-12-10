@@ -1,9 +1,9 @@
 {
+  "page-title-home": "Home",
+  "page-title-about": "About",
+  "page-title-not-found": "404",
   "hello": "Hello, world!",
   "description": "This is an experimental React static app starter kit.",
-  "home": "Home",
-  "about": "About",
-  "not-found": "404",
   "not-found-title": "This page does not exist",
   "about-title": "Just some random names fetched from the Internet",
   "en": "EN",
