@@ -1,33 +1,22 @@
 import React, { PropsWithChildren, ReactElement } from 'react'
-import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-import { AppState } from '../store'
-import { I18nState } from '../store/i18n'
-import { getLocalizedPath } from '../utils/i18n'
+import { getLocalizedPath, I18nComponentProps, withI18n } from '../utils/i18n'
 
-type StateProps = {
-  i18n: I18nState
-}
-
-type Props = PropsWithChildren<StateProps & {
+type Props = PropsWithChildren<I18nComponentProps & {
   className?: string
 }>
 
-function Header({ className, i18n }: Props): ReactElement {
+function Header({ className, ltxt, locale }: Props): ReactElement {
   return (
     <StyledRoot className={className}>
-      <Link to={getLocalizedPath('/', i18n.locale)}>{i18n.ltxt('page-title-home') }</Link>
-      <Link to={getLocalizedPath('/about', i18n.locale)}>{i18n.ltxt('page-title-about') }</Link>
+      <Link to={getLocalizedPath('/', locale)}>{ltxt('page-title-home') }</Link>
+      <Link to={getLocalizedPath('/about', locale)}>{ltxt('page-title-about') }</Link>
     </StyledRoot>
   )
 }
 
-export default connect(
-  (state: AppState): StateProps => ({
-    i18n: state.i18n,
-  }),
-)(Header)
+export default withI18n(Header)
 
 const StyledRoot = styled.header`
   align-items: center;

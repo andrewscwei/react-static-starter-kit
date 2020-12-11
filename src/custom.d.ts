@@ -20,7 +20,7 @@ interface TranslationData { [key: string]: TranslationData | string }
 type TranslationDataDict = Record<string, TranslationData>
 
 interface Window {
-  __INITIAL_STATE__: any
-  __REDUX_DEVTOOLS_EXTENSION_COMPOSE__: any
-  snapSaveState: () => void
+  __INITIAL_STATE__?: Record<string, any>
+  __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: () => void
+  snapSaveState?: () => void
 }

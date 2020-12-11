@@ -1,36 +1,25 @@
 import React, { PropsWithChildren, ReactElement } from 'react'
-import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-import { AppState } from '../store'
-import { I18nState } from '../store/i18n'
-import { getLocalizedPath } from '../utils/i18n'
+import { getLocalizedPath, ltxt } from '../utils/i18n'
 
-type StateProps = {
-  i18n: I18nState
-}
-
-type Props = PropsWithChildren<StateProps & {
+type Props = PropsWithChildren<{
   className?: string
 }>
 
-function Footer({ className, i18n }: Props): ReactElement {
+function Footer({ className }: Props): ReactElement {
   return (
     <StyledRoot className={className}>
       <nav>
         <a href='https://github.com/andrewscwei/react-static-starter-kit'/>
       </nav>
-      <Link to={getLocalizedPath('/', 'en')}>{i18n.ltxt('en') }</Link>
-      <Link to={getLocalizedPath('/', 'ja')}>{i18n.ltxt('jp') }</Link>
+      <Link to={getLocalizedPath('/', 'en')}>{ltxt('en') }</Link>
+      <Link to={getLocalizedPath('/', 'ja')}>{ltxt('jp') }</Link>
     </StyledRoot>
   )
 }
 
-export default connect(
-  (state: AppState): StateProps => ({
-    i18n: state.i18n,
-  }),
-)(Footer)
+export default Footer
 
 const StyledRoot = styled.footer`
   align-items: center;

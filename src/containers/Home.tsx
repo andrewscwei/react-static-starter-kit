@@ -1,41 +1,31 @@
 import React, { ComponentType, PureComponent } from 'react'
-import { connect } from 'react-redux'
 import { RouteComponentProps } from 'react-router'
 import styled from 'styled-components'
 import ReactLogo from '../components/ReactLogo'
-import { AppState } from '../store'
-import { I18nState } from '../store/i18n'
+import { I18nComponentProps, withI18n } from '../utils/i18n'
 
-type StateProps = {
-  i18n: I18nState
-}
-
-type Props = StateProps & RouteComponentProps
+type Props = RouteComponentProps & I18nComponentProps
 
 class Home extends PureComponent<Props> {
   componentDidMount() {
-    document.title = this.props.i18n.ltxt('page-title-home')
+    document.title = this.props.ltxt('page-title-home')
   }
 
   render() {
-    const { i18n } = this.props
+    const { ltxt } = this.props
 
     return (
       <StyledRoot>
         <StyledReactLogo/>
-        <h1>{i18n.ltxt('hello')}</h1>
+        <h1>{ltxt('hello')}</h1>
         <p>v{__APP_CONFIG__.version} ({__APP_CONFIG__.buildNumber})</p>
-        <p>{i18n.ltxt('description') }</p>
+        <p>{ltxt('description') }</p>
       </StyledRoot>
     )
   }
 }
 
-export default connect(
-  (state: AppState): StateProps => ({
-    i18n: state.i18n,
-  }),
-)(Home)
+export default withI18n(Home)
 
 const StyledRoot = styled.div`
   align-items: center;

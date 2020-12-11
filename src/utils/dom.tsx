@@ -9,6 +9,7 @@ import { BrowserRouter, BrowserRouterProps, Route, RouteComponentProps } from 'r
 import { ThemeProvider } from 'styled-components'
 import store from '../store'
 import * as theme from '../styles/theme'
+import { I18nRouterProvider } from './i18n'
 
 /**
  * Factory function for generating base React app markup.
@@ -21,13 +22,15 @@ import * as theme from '../styles/theme'
 export function markup(Component: ComponentType<{ route: RouteComponentProps }>, options: BrowserRouterProps = {}): JSX.Element {
   return (
     <Provider store={store}>
-      <ThemeProvider theme={theme}>
-        <BrowserRouter {...options}>
-          <Route render={route => (
-            <Component route={route}/>
-          )}/>
-        </BrowserRouter>
-      </ThemeProvider>
+        <ThemeProvider theme={theme}>
+          <BrowserRouter {...options}>
+            <Route render={route => (
+              <I18nRouterProvider route={route}>
+                <Component route={route}/>
+              </I18nRouterProvider>
+            )}/>
+          </BrowserRouter>
+        </ThemeProvider>
     </Provider>
   )
 }
