@@ -3,8 +3,8 @@
  */
 
 import React, { Fragment, PureComponent } from 'react'
-import { Route, RouteComponentProps, Switch, withRouter } from 'react-router-dom'
-import { CSSTransition, TransitionGroup } from 'react-transition-group'
+import { Route, RouteComponentProps, Switch } from 'react-router-dom'
+import { TransitionGroup } from 'react-transition-group'
 import styled, { createGlobalStyle } from 'styled-components'
 import Footer from '../components/Footer'
 import Header from '../components/Header'
@@ -24,9 +24,7 @@ class App extends PureComponent<Props> {
         <GlobalStyles/>
         <Header/>
         <StyledBody>
-          {/* <CSSTransition key={route.location.key} timeout={300} classNames='route-transition'> */}
-            <Switch location={route.location}>{this.generateRoutes()}</Switch>
-          {/* </CSSTransition> */}
+          <Switch location={route.location}>{this.generateRoutes()}</Switch>
         </StyledBody>
         <Footer/>
       </Fragment>
@@ -44,6 +42,7 @@ class App extends PureComponent<Props> {
 export default App
 
 const GlobalStyles = createGlobalStyle<any>`
+  /* stylelint-disable-next-line value-keyword-case */
   ${globalStyles}
 `
 

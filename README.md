@@ -25,6 +25,12 @@ $ npm run dev
 
 # Build for prod
 $ npm run build
+
+# Analyzes the size the generated bundle(s) and displays a visual report in the default browser
+$ npm run build --analyze
+
+# Measures the speed of the build pipeline and outputs a report to console
+$ npm run build --speed
 ```
 
 See `scripts` in `package.json` for additional commands.

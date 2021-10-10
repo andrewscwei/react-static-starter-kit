@@ -22,15 +22,15 @@ import { I18nRouterProvider } from './i18n'
 export function markup(Component: ComponentType<{ route: RouteComponentProps }>, options: BrowserRouterProps = {}): JSX.Element {
   return (
     <Provider store={store}>
-        <ThemeProvider theme={theme}>
-          <BrowserRouter {...options}>
-            <Route render={route => (
-              <I18nRouterProvider route={route}>
-                <Component route={route}/>
-              </I18nRouterProvider>
-            )}/>
-          </BrowserRouter>
-        </ThemeProvider>
+      <ThemeProvider theme={theme}>
+        <BrowserRouter {...options}>
+          <Route render={route => (
+            <I18nRouterProvider route={route}>
+              <Component route={route}/>
+            </I18nRouterProvider>
+          )}/>
+        </BrowserRouter>
+      </ThemeProvider>
     </Provider>
   )
 }

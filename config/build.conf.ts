@@ -1,10 +1,11 @@
 /**
- * @file This is the Webpack config for compiling client assets in both
- *       `development` and `production` environments.
+ * @file This is the Webpack config for compiling client assets in both `development` and
+ *       `production` environments.
  */
 
 import ReactRefreshPlugin from '@pmmmwh/react-refresh-webpack-plugin'
 import CopyPlugin from 'copy-webpack-plugin'
+import ForkTSCheckerPlugin from 'fork-ts-checker-webpack-plugin'
 import HTMLPlugin from 'html-webpack-plugin'
 import path from 'path'
 import { Configuration, DefinePlugin, EnvironmentPlugin, IgnorePlugin } from 'webpack'
@@ -12,20 +13,24 @@ import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
 import appConf from '../src/app.conf'
 import { getLocalesFromDir, getTranslationsFromDir } from './utils'
 
-const isDev: boolean = process.env.NODE_ENV === 'development'
-const useBundleAnalyzer: boolean = process.env.ANALYZE_BUNDLE === 'true' ? true : false
-const cwd: string = path.join(__dirname, '../')
-const inputDir: string = path.join(cwd, 'src')
-const outputDir: string = path.join(cwd, 'build')
-const localesDir: string = path.join(cwd, 'config/locales')
+const isDev = process.env.NODE_ENV === 'development'
+const cwd = path.join(__dirname, '../')
+const inputDir = path.join(cwd, 'src')
+const outputDir = path.join(cwd, 'build')
+const localesDir = path.join(cwd, 'config/locales')
 const locales = getLocalesFromDir(localesDir, appConf.locales[0], appConf.locales)
 const port = Number(process.env.PORT) || 8080
+const useBundleAnalyzer = process.env.npm_config_analyze === 'true' ? true : false
+const useSpeedMeasurer = process.env.npm_config_speed === 'true' ? true : false
 
 const config: Configuration = {
   devtool: isDev ? 'eval-source-map' : false,
   entry: {
     main: path.join(inputDir, 'index.ts'),
     polyfills: path.join(inputDir, 'polyfills.ts'),
+  },
+  infrastructureLogging: {
+    level: 'error',
   },
   mode: isDev ? 'development' : 'production',
   module: {
@@ -103,6 +108,7 @@ const config: Configuration = {
     maxAssetSize: 512 * 1024,
   },
   plugins: [
+    new ForkTSCheckerPlugin(),
     new CopyPlugin({
       patterns: [{
         from: path.join(inputDir, 'static'),
@@ -141,11 +147,16 @@ const config: Configuration = {
       }),
     ],
     ...!useBundleAnalyzer ? [] : [
-      new BundleAnalyzerPlugin(),
+      new BundleAnalyzerPlugin({
+        analyzerMode: 'static',
+      }),
     ],
   ],
   ...!isDev ? {} : {
     devServer: {
+      client: {
+        logging: 'error',
+      },
       headers: {
         'Access-Control-Allow-Origin': `http://localhost:${port}`,
         'Access-Control-Allow-Methods': 'GET,OPTIONS,HEAD,PUT,POST,DELETE,PATCH',
@@ -160,7 +171,7 @@ const config: Configuration = {
         publicPath: process.env.PUBLIC_PATH || '/',
       },
     },
-  } as any,
+  },
   resolve: {
     extensions: ['.js', '.ts', '.tsx'],
   },
@@ -173,4 +184,4 @@ const config: Configuration = {
   target: 'web',
 }
 
-export default config
+export default useSpeedMeasurer ? (new (require('speed-measure-webpack-plugin'))()).wrap(config) : config

@@ -2,8 +2,7 @@
 /* eslint-disable no-console */
 
 /**
- * @file Postbuild script used for uncommenting HTML comments marked with
- *       [POSTBUILD] tag.
+ * @file Postbuild script used for uncommenting HTML comments marked with [POSTBUILD] tag.
  */
 
 import chalk from 'chalk'
