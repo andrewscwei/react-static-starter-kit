@@ -156,8 +156,9 @@ const config: Configuration = {
       host: '0.0.0.0',
       hot: true,
       port,
-      publicPath: process.env.PUBLIC_PATH || '/',
-      stats: { colors: true },
+      static: {
+        publicPath: process.env.PUBLIC_PATH || '/',
+      },
     },
   } as any,
   resolve: {
