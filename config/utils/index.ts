@@ -7,7 +7,7 @@ import fs from 'fs'
 import path from 'path'
 import requireDir from 'require-dir'
 
-export function getLocalesFromDir(dir: string, defaultLocale?: string, whitelistedLocales?: Array<string>): Array<string> {
+export function getLocalesFromDir(dir: string, defaultLocale?: string, whitelistedLocales?: string[]): string[] {
   const t = fs
     .readdirSync(dir)
     .filter((val: string) => !(/(^|\/)\.[^/.]/g).test(val))
@@ -22,7 +22,7 @@ export function getLocalesFromDir(dir: string, defaultLocale?: string, whitelist
   return t
 }
 
-export function getTranslationsFromDir(dir: string, whitelistedLocales?: Array<string>): TranslationDataDict {
+export function getTranslationsFromDir(dir: string, whitelistedLocales?: string[]): TranslationDataDict {
   const dict: TranslationDataDict = {}
   const locales = whitelistedLocales ? whitelistedLocales : getLocalesFromDir(dir)
   const t: { [key: string]: any } = requireDir(path.resolve(dir))

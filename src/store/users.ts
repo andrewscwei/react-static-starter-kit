@@ -15,7 +15,7 @@ export interface UsersAction extends Action<UsersActionType> {
 }
 
 export interface UsersState {
-  items: ReadonlyArray<User>
+  items: readonly User[]
 }
 
 const initialState: UsersState = {
