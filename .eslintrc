@@ -1,7 +1,6 @@
 {
   "root": true,
   "extends": [
-    "plugin:react/recommended",
     "plugin:@typescript-eslint/recommended"
   ],
   "parser": "@typescript-eslint/parser",
@@ -18,8 +17,8 @@
   },
   "env": {
     "browser": true,
-    "es6": true,
-    "node": true
+    "es6": false,
+    "node": false
   },
   "rules": {
     "@typescript-eslint/adjacent-overload-signatures": "error",
