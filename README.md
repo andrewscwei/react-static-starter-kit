@@ -34,3 +34,16 @@ $ npm run build --speed
 ```
 
 See `scripts` in `package.json` for additional commands.
+
+## Repository Template
+
+When creating a new repository using `react-static-starter-kit` as a template, follow the steps below to remove the original branding:
+
+1. In `/package.json`, edit the fields: `name`, `version`, `description`, `private` and `license`
+2. Remove `LICENSE` file
+3. Edit the `README.md` file to suit your repository
+4. In `/resources/`, edit the app icon and favicon regenerate the sources
+  1. In `/src/static/`, replace the app icon and favicon sources
+  2. Update `/src/static/manifest.json`
+
+In terms of configuration and metadata, that is it. The remaining changes are in the individual pages in `/src/containers/` and the assets, components and states that they use.
