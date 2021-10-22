@@ -194,6 +194,13 @@ export function withI18n<P>(Component: ComponentType<P & I18nComponentProps>): F
   return WithI18n
 }
 
+/**
+ * Creates a JSX element that contains a localized text.
+ *
+ * @param args - Args for `Polyglot.t`.
+ *
+ * @returns A JSX element with the localized text.
+ */
 export function ltxt(...args: Parameters<typeof Polyglot.prototype.t>): JSX.Element {
   return (
     <I18nContext.Consumer>
