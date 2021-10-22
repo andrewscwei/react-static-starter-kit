@@ -44,6 +44,7 @@ When creating a new repository using `react-static-starter-kit` as a template, f
 3. Edit `/README.md` to suit your project
 4. In `/src/app.conf.ts`, edit `meta.title` and `locales` fields
   1. Edit translation files in `/config/locales/` to reflect locale changes
+  2. Edit `/src/routes.conf.ts` to reflect locale changes
 5. In `/resources/`, edit the app icon and favicon regenerate the sources
   1. In `/src/static/`, replace the app icon and favicon sources
   2. Update `/src/static/manifest.json`
