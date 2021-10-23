@@ -24,7 +24,7 @@ class About extends PureComponent<Props> {
   }
 
   componentDidMount() {
-    document.title = this.props.ltxt('page-title-about')
+    document.title = this.props.ltxt('window-title-about')
   }
 
   render() {
@@ -55,34 +55,28 @@ export default connect(
 )(withI18n(About))
 
 const StyledRoot = styled.div`
+  ${props => props.theme.layout.ph}
   align-items: center;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
-  font-family: ${props => props.theme.fonts.body};
   height: 100%;
   justify-content: center;
-  padding: 10% 5%;
   position: absolute;
   width: 100%;
 
   h1 {
-    color: ${props => props.theme.colors.title};
-    font-size: 2.4em;
-    font-weight: 700;
-    letter-spacing: 3px;
+    ${props => props.theme.texts.h2}
+    color: ${props => props.theme.colors.white};
     margin: 0 0 20px;
     max-width: 550px;
     text-align: center;
-    text-transform: uppercase;
   }
 
   span {
-    color: ${props => props.theme.colors.text};
-    font-weight: 400;
-    letter-spacing: .6px;
-    line-height: 1.4em;
+    ${props => props.theme.texts.p1}
+    color: ${props => props.theme.colors.grey};
     text-align: center;
   }
 `

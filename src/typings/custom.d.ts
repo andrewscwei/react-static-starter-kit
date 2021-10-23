@@ -7,6 +7,8 @@ declare const __I18N_CONFIG__: Readonly<{
 }>
 
 declare module '*.svg'
+declare module '*.jpg'
+declare module '*.png'
 
 declare module 'worker-loader!*' {
   class WebpackWorker extends Worker {

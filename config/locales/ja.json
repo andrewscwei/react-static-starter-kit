@@ -1,7 +1,7 @@
 {
-  "page-title-home": "ホーム",
-  "page-title-about": "アバウト",
-  "page-title-not-found": "404",
+  "window-title-home": "ホーム",
+  "window-title-about": "アバウト",
+  "window-title-not-found": "404",
   "hello": "こんにちは、世界！",
   "description": "実験的なReactスタティックアプリケーションのスターターキット。",
   "not-found-title": "ページが表示できません",

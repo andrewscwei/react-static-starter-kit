@@ -1,20 +1,18 @@
-import React, { PropsWithChildren, ReactElement } from 'react'
+import React, { FunctionComponent } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { getLocalizedPath, I18nComponentProps, withI18n } from '../utils/i18n'
 
-type Props = PropsWithChildren<I18nComponentProps & {
+type Props = I18nComponentProps & {
   className?: string
-}>
-
-function Header({ className, ltxt, locale }: Props): ReactElement {
-  return (
-    <StyledRoot className={className}>
-      <Link to={getLocalizedPath('/', locale)}>{ltxt('page-title-home') }</Link>
-      <Link to={getLocalizedPath('/about', locale)}>{ltxt('page-title-about') }</Link>
-    </StyledRoot>
-  )
 }
+
+const Header: FunctionComponent<Props> = ({ className, ltxt, locale }) => (
+  <StyledRoot className={className}>
+    <Link to={getLocalizedPath('/', locale)}>{ltxt('window-title-home') }</Link>
+    <Link to={getLocalizedPath('/about', locale)}>{ltxt('window-title-about') }</Link>
+  </StyledRoot>
+)
 
 export default withI18n(Header)
 
@@ -30,14 +28,9 @@ const StyledRoot = styled.header`
   z-index: 10;
 
   > a {
-    color: ${props => props.theme.colors.link};
+    ${props => props.theme.texts.n1};
+    color: ${props => props.theme.colors.white};
     cursor: pointer;
-    font-family: ${props => props.theme.fonts.body};
-    font-size: .8em;
-    font-weight: 400;
-    letter-spacing: 1px;
-    text-decoration: none;
-    text-transform: uppercase;
     transition: all .2s ease-out;
 
     :hover {
