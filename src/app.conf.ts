@@ -21,7 +21,8 @@ export default {
 
   // HTML metadata.
   meta: {
-    // Title of the app.
+    // Fallback default window title (the window title should be set by individual contianers for
+    // localization support).
     title: 'React Static Starter Kit',
 
     // Short description of the app.
