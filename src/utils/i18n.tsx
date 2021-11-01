@@ -79,9 +79,9 @@ debug('Initializing locale translations...', 'OK', locales)
  *
  * @param path - The URL path.
  *
- * @returns The inferred locale or the default locale if inferrence is not possible.
+ * @returns The inferred locale if it exists.
  */
-export function getLocaleFromPath(path: string): string {
+export function getLocaleFromPath(path: string): string | null {
   const locales = __I18N_CONFIG__.locales
   const normalizedPath = path.replace(/\/*$/, '') + '/'
   const possibleLocale = normalizedPath.split('/')[1]
@@ -90,7 +90,7 @@ export function getLocaleFromPath(path: string): string {
     return possibleLocale
   }
   else {
-    return locales[0]
+    return null
   }
 }
 
@@ -114,6 +114,24 @@ export function getLocalizedPath(path: string, locale: string = defaultLocale): 
     return `/${t.join('/')}`
   default:
     return `/${locale}/${t.join('/')}`
+  }
+}
+
+/**
+ * Returns the unlocalized version of a URL.
+ *
+ * @param path - The URL path.
+ *
+ * @returns The unlocalized path.
+ */
+export function getUnlocalizedPath(path: string): string {
+  const locale = getLocaleFromPath(path)
+
+  if (locale) {
+    return path.replace(new RegExp(`^\\/${locale}\\b`, 'i'), '/')
+  }
+  else {
+    return path
   }
 }
 
@@ -159,7 +177,7 @@ export const I18nProvider: FunctionComponent<I18nProviderProps> = props => {
  */
 export const I18nRouterProvider: FunctionComponent<I18nRouterProviderProps> = ({ route, children }) => {
   const [state, dispatch] = useReducer(reducer, initialState)
-  const locale = getLocaleFromPath(route.location.pathname)
+  const locale = getLocaleFromPath(route.location.pathname) ?? locales[0]
 
   return (
     <I18nContext.Provider value={{
@@ -194,13 +212,6 @@ export function withI18n<P>(Component: ComponentType<P & I18nComponentProps>): F
   return WithI18n
 }
 
-/**
- * Renders a localized string in place.
- *
- * @param args @see Polyglot.prototype.t
- *
- * @returns The rendered element.
- */
 export function ltxt(...args: Parameters<typeof Polyglot.prototype.t>): JSX.Element {
   return (
     <I18nContext.Consumer>
