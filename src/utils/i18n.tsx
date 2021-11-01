@@ -75,6 +75,15 @@ for (const locale in dict) {
 debug('Initializing locale translations...', 'OK', locales)
 
 /**
+ * Gets the default locale of this app.
+ *
+ * @returns The default locale.
+ */
+export function getDefaultLocale(): string {
+  return defaultLocale
+}
+
+/**
  * Infers the current locale from a URL.
  *
  * @param path - The URL path.
