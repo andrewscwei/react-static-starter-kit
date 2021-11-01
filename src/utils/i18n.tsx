@@ -212,6 +212,13 @@ export function withI18n<P>(Component: ComponentType<P & I18nComponentProps>): F
   return WithI18n
 }
 
+/**
+ * Renders a localized string in place.
+ *
+ * @param args @see Polyglot.prototype.t
+ *
+ * @returns The rendered element.
+ */
 export function ltxt(...args: Parameters<typeof Polyglot.prototype.t>): JSX.Element {
   return (
     <I18nContext.Consumer>
