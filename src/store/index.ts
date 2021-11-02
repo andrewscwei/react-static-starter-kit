@@ -8,7 +8,9 @@ export type AppState = NonNullable<Parameters<typeof reducer>[0]>
 
 export type AppAction = NonNullable<Parameters<typeof reducer>[1]>
 
-export const reducer = combineReducers({ users })
+export const reducer = combineReducers({
+  users,
+})
 
 const initialState = window.__INITIAL_STATE__
 delete window.__INITIAL_STATE__
