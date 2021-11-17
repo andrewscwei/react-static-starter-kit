@@ -5,7 +5,7 @@
 import React, { ComponentType } from 'react'
 import { hydrate, render } from 'react-dom'
 import { Provider } from 'react-redux'
-import { BrowserRouter, BrowserRouterProps, Route, RouteComponentProps } from 'react-router-dom'
+import { BrowserRouter, BrowserRouterProps } from 'react-router-dom'
 import { ThemeProvider } from 'styled-components'
 import store from '../store'
 import * as theme from '../styles/theme'
@@ -19,16 +19,14 @@ import { I18nRouterProvider } from './i18n'
  *
  * @returns The JSX markup.
  */
-export function markup(Component: ComponentType<{ route: RouteComponentProps }>, options: BrowserRouterProps = {}): JSX.Element {
+export function markup(Component: ComponentType, options: BrowserRouterProps = {}): JSX.Element {
   return (
     <Provider store={store}>
       <ThemeProvider theme={theme}>
         <BrowserRouter {...options}>
-          <Route render={route => (
-            <I18nRouterProvider route={route}>
-              <Component route={route}/>
-            </I18nRouterProvider>
-          )}/>
+          <I18nRouterProvider>
+            <Component/>
+          </I18nRouterProvider>
         </BrowserRouter>
       </ThemeProvider>
     </Provider>
@@ -41,7 +39,7 @@ export function markup(Component: ComponentType<{ route: RouteComponentProps }>,
  * @param Component - The React component to mount.
  * @param elementId - The ID of the DOM element to mount the React component to.
  */
-export function mount(Component: ComponentType<{ route: RouteComponentProps }>, elementId = 'app') {
+export function mount(Component: ComponentType, elementId = 'app') {
   if (process.env.NODE_ENV === 'development') {
     render(markup(Component), document.getElementById(elementId))
   }
