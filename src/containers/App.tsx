@@ -2,7 +2,7 @@
  * @file Client app root.
  */
 
-import React, { Fragment, PureComponent } from 'react'
+import React, { Fragment, FunctionComponent } from 'react'
 import { Route, RouteComponentProps, Switch } from 'react-router-dom'
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
 import styled, { createGlobalStyle } from 'styled-components'
@@ -15,31 +15,26 @@ type Props = {
   route: RouteComponentProps
 }
 
-class App extends PureComponent<Props> {
-  render() {
-    const { route } = this.props
-
-    return (
-      <Fragment>
-        <GlobalStyles/>
-        <Header/>
-        <StyledBody>
-          <CSSTransition key={route.location.key} timeout={300} classNames='route-transition'>
-            <Switch location={route.location}>{this.generateRoutes()}</Switch>
-          </CSSTransition>
-        </StyledBody>
-        <Footer/>
-      </Fragment>
-    )
-  }
-
-  private generateRoutes() {
+const App: FunctionComponent<Props> = ({ route }) => {
+  function generateRoutes() {
     return routesConf.map((route, index) => (
       <Route exact={route.exact} path={route.path} key={`route-${index}`} component={route.component}/>
     ))
   }
-}
 
+  return (
+    <Fragment>
+      <GlobalStyles/>
+      <Header/>
+      <StyledBody>
+        <CSSTransition key={route.location.key} timeout={300} classNames='route-transition'>
+          <Switch location={route.location}>{generateRoutes()}</Switch>
+        </CSSTransition>
+      </StyledBody>
+      <Footer/>
+    </Fragment>
+  )
+}
 
 export default App
 
