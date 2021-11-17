@@ -1,30 +1,25 @@
-import React, { PureComponent } from 'react'
+import React, { FunctionComponent, useEffect } from 'react'
 import styled from 'styled-components'
 import { I18nComponentProps, withI18n } from '../utils/i18n'
 
 type Props = I18nComponentProps
 
-class NotFound extends PureComponent<Props> {
+const NotFound: FunctionComponent<Props> = ({ ltxt }) => {
+  useEffect(() => {
+    document.title = ltxt('window-title-not-found')
+  })
 
-  componentDidMount() {
-    document.title = this.props.ltxt('window-title-not-found')
-  }
-
-  render() {
-    const { ltxt } = this.props
-
-    return (
-      <StyledRoot>
-        <h1>{ltxt('not-found-title') }</h1>
-      </StyledRoot>
-    )
-  }
+  return (
+    <StyledRoot>
+      <h1>{ltxt('not-found-title') }</h1>
+    </StyledRoot>
+  )
 }
 
 export default withI18n(NotFound)
 
 const StyledRoot = styled.div`
-  ${props => props.theme.layout.ph}
+  ${props => props.theme.layout.hp}
   align-items: center;
   box-sizing: border-box;
   display: flex;

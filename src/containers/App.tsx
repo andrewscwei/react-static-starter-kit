@@ -13,12 +13,6 @@ import routesConf from '../routes.conf'
 import globalStyles from '../styles/global'
 
 const App: FunctionComponent = () => {
-  function generateRoutes() {
-    return routesConf.map((route, index) => (
-      <Route path={route.path} key={`route-${index}`} element={<route.component/>}/>
-    ))
-  }
-
   const location = useLocation()
 
   return (
@@ -27,7 +21,11 @@ const App: FunctionComponent = () => {
       <Header/>
       <StyledBody>
         <CSSTransition key={location.key} timeout={300} classNames='route-transition'>
-          <Routes>{generateRoutes()}</Routes>
+          <Routes>
+            {routesConf.map((route, index) => (
+              <Route path={route.path} key={`route-${index}`} element={<route.component/>}/>
+            ))}
+          </Routes>
         </CSSTransition>
       </StyledBody>
       <Footer/>

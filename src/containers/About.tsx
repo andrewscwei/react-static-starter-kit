@@ -2,12 +2,13 @@ import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import { Action, bindActionCreators, Dispatch } from 'redux'
 import styled from 'styled-components'
+import getUsers from '../selectors/getUsers'
 import { AppState } from '../store'
-import { fetchUsers, User, UsersState } from '../store/users'
+import { fetchUsers, User } from '../store/users'
 import { I18nComponentProps, withI18n } from '../utils/i18n'
 
 type StateProps = {
-  users: UsersState
+  users: User[]
 }
 
 type DispatchProps = {
@@ -35,7 +36,7 @@ class About extends PureComponent<Props> {
       <StyledRoot>
         <h1>{ltxt('about-title')}</h1>
         {
-          this.props.users.items.map((user: User) => (
+          this.props.users.map((user: User) => (
             <div key={user.id} >
               <span>{user.first_name} {user.last_name}</span>
             </div>
@@ -48,7 +49,7 @@ class About extends PureComponent<Props> {
 
 export default connect(
   (state: AppState): StateProps => ({
-    users: state.users,
+    users: getUsers(state),
   }),
   (dispatch: Dispatch<Action>): DispatchProps => bindActionCreators({
     fetchUsers,
@@ -56,7 +57,7 @@ export default connect(
 )(withI18n(About))
 
 const StyledRoot = styled.div`
-  ${props => props.theme.layout.ph}
+  ${props => props.theme.layout.hp}
   align-items: center;
   box-sizing: border-box;
   display: flex;

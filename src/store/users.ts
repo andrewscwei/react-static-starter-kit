@@ -2,25 +2,21 @@ import { Action, Dispatch } from 'redux'
 
 let request: AbortController | undefined
 
-export interface User {
+export type User = {
   [key: string]: any
 }
 
 export enum UsersActionType {
-  LOADED = 'users/LOADED',
+  UPDATED = 'users/UPDATED',
 }
 
-export interface UsersAction extends Action<UsersActionType> {
-  payload: Partial<UsersState>
+export type UsersAction = Action<UsersActionType> & {
+  newState: UsersState
 }
 
-export interface UsersState {
-  items: readonly User[]
-}
+export type UsersState = User[]
 
-const initialState: UsersState = {
-  items: [],
-}
+const initialState: UsersState = []
 
 export function fetchUsers() {
   return async (dispatch: Dispatch<Action>) => {
@@ -39,12 +35,10 @@ export function fetchUsers() {
 
     request = undefined
 
-    const { data: items } = await res.json()
+    const { data: users } = await res.json()
     const action: UsersAction = {
-      type: UsersActionType.LOADED,
-      payload: {
-        items,
-      },
+      type: UsersActionType.UPDATED,
+      newState: users,
     }
 
     dispatch(action)
@@ -53,11 +47,8 @@ export function fetchUsers() {
 
 export default function reducer(state = initialState, action: UsersAction): UsersState {
   switch (action.type) {
-  case UsersActionType.LOADED:
-    return {
-      ...state,
-      ...action.payload,
-    }
+  case UsersActionType.UPDATED:
+    return action.newState
   default:
     return state
   }
