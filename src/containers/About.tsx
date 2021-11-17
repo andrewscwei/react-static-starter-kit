@@ -17,8 +17,10 @@ type DispatchProps = {
 type Props = StateProps & DispatchProps & I18nComponentProps
 
 class About extends PureComponent<Props> {
+
   constructor(props: Props) {
     super(props)
+
     this.props.fetchUsers()
   }
 

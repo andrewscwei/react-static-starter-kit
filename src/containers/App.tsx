@@ -3,8 +3,8 @@
  */
 
 import React, { Fragment, FunctionComponent } from 'react'
-import { useLocation } from 'react-router'
-import { Route, Switch } from 'react-router-dom'
+import { Routes, useLocation } from 'react-router'
+import { Route } from 'react-router-dom'
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
 import styled, { createGlobalStyle } from 'styled-components'
 import Footer from '../components/Footer'
@@ -15,9 +15,7 @@ import globalStyles from '../styles/global'
 const App: FunctionComponent = () => {
   function generateRoutes() {
     return routesConf.map((route, index) => (
-      <Route exact={route.exact} path={route.path} key={`route-${index}`}>
-        <route.component/>
-      </Route>
+      <Route path={route.path} key={`route-${index}`} element={<route.component/>}/>
     ))
   }
 
@@ -29,7 +27,7 @@ const App: FunctionComponent = () => {
       <Header/>
       <StyledBody>
         <CSSTransition key={location.key} timeout={300} classNames='route-transition'>
-          <Switch location={location}>{generateRoutes()}</Switch>
+          <Routes>{generateRoutes()}</Routes>
         </CSSTransition>
       </StyledBody>
       <Footer/>
