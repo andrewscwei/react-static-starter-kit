@@ -1,9 +1,8 @@
 import React, { PureComponent } from 'react'
-import { Route, RouteComponentProps } from 'react-router-dom'
 import styled from 'styled-components'
 import { I18nComponentProps, withI18n } from '../utils/i18n'
 
-type Props = RouteComponentProps & I18nComponentProps
+type Props = I18nComponentProps
 
 class NotFound extends PureComponent<Props> {
 
@@ -15,17 +14,9 @@ class NotFound extends PureComponent<Props> {
     const { ltxt } = this.props
 
     return (
-      <Route render={(route: RouteComponentProps<any>) => {
-        if (route.staticContext) {
-          route.staticContext.statusCode = 404
-        }
-
-        return (
-          <StyledRoot>
-            <h1>{ltxt('not-found-title') }</h1>
-          </StyledRoot>
-        )
-      }}/>
+      <StyledRoot>
+        <h1>{ltxt('not-found-title') }</h1>
+      </StyledRoot>
     )
   }
 }

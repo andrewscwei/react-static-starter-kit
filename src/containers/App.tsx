@@ -15,7 +15,9 @@ import globalStyles from '../styles/global'
 const App: FunctionComponent = () => {
   function generateRoutes() {
     return routesConf.map((route, index) => (
-      <Route exact={route.exact} path={route.path} key={`route-${index}`} component={route.component}/>
+      <Route exact={route.exact} path={route.path} key={`route-${index}`}>
+        <route.component/>
+      </Route>
     ))
   }
 

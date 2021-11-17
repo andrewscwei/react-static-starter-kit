@@ -2,27 +2,34 @@
  * @file Route definitions for React router.
  */
 
+import { ComponentType } from 'react'
 import About from './containers/About'
 import Home from './containers/Home'
 import NotFound from './containers/NotFound'
 
+type RouteConfig = {
+  component: ComponentType
+  exact?: boolean
+  path: string
+}
+
 export default [{
+  component: Home,
+  exact: true,
   path: '/',
-  exact: true,
-  component: Home,
 }, {
+  component: About,
+  exact: true,
   path: '/about',
-  exact: true,
-  component: About,
 }, {
-  path: '/ja',
-  exact: true,
   component: Home,
-}, {
-  path: '/ja/about',
   exact: true,
-  component: About,
+  path: '/ja',
 }, {
-  path: '*',
+  component: About,
+  exact: true,
+  path: '/ja/about',
+}, {
   component: NotFound,
-}]
+  path: '*',
+}] as RouteConfig[]
