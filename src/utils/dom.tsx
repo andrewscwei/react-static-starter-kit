@@ -7,7 +7,7 @@ import { hydrate, render } from 'react-dom'
 import { Provider } from 'react-redux'
 import { BrowserRouter, BrowserRouterProps } from 'react-router-dom'
 import { ThemeProvider } from 'styled-components'
-import store from '../store'
+import createStore from '../store'
 import * as theme from '../styles/theme'
 import { I18nRouterProvider } from './i18n'
 
@@ -21,7 +21,7 @@ import { I18nRouterProvider } from './i18n'
  */
 export function markup(Component: ComponentType, options: BrowserRouterProps = {}): JSX.Element {
   return (
-    <Provider store={store}>
+    <Provider store={createStore()}>
       <ThemeProvider theme={theme}>
         <BrowserRouter {...options}>
           <I18nRouterProvider>

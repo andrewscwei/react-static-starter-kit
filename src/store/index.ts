@@ -1,4 +1,4 @@
-import { applyMiddleware, combineReducers, compose, createStore } from 'redux'
+import { applyMiddleware, combineReducers, compose, createStore as _createStore } from 'redux'
 import thunk from 'redux-thunk'
 import users from './users'
 
@@ -12,13 +12,15 @@ export const reducer = combineReducers({
   users,
 })
 
-const initialState = window.__INITIAL_STATE__
-delete window.__INITIAL_STATE__
+export default function createStore() {
+  const initialState = window.__INITIAL_STATE__
+  delete window.__INITIAL_STATE__
 
-const store = createStore(reducer, initialState || {}, composeEnhancers(applyMiddleware(thunk)))
+  const store = _createStore(reducer, initialState || {}, composeEnhancers(applyMiddleware(thunk)))
 
-window.snapSaveState = () => ({
-  __INITIAL_STATE__: store.getState(),
-})
+  window.snapSaveState = () => ({
+    __INITIAL_STATE__: store.getState(),
+  })
 
-export default store
+  return store
+}
