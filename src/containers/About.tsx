@@ -1,11 +1,11 @@
-import React, { PureComponent } from 'react'
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { Action, bindActionCreators, Dispatch } from 'redux'
 import styled from 'styled-components'
-import getUsers from '../selectors/getUsers'
+import selectUsers from '../selectors/selectUsers'
 import { AppState } from '../store'
 import { fetchUsers, User } from '../store/users'
-import { I18nComponentProps, withI18n } from '../utils/i18n'
+import { useLtxt } from '../utils/i18n'
 
 type StateProps = {
   users: User[]
@@ -15,46 +15,38 @@ type DispatchProps = {
   fetchUsers: typeof fetchUsers
 }
 
-type Props = StateProps & DispatchProps & I18nComponentProps
+type Props = StateProps & DispatchProps
 
-class About extends PureComponent<Props> {
+function About({ fetchUsers, users }: Props) {
+  const ltxt = useLtxt()
 
-  constructor(props: Props) {
-    super(props)
+  useEffect(() => {
+    document.title = ltxt('window-title-about')
+    fetchUsers()
+  }, [])
 
-    this.props.fetchUsers()
-  }
-
-  componentDidMount() {
-    document.title = this.props.ltxt('window-title-about')
-  }
-
-  render() {
-    const { ltxt } = this.props
-
-    return (
-      <StyledRoot>
-        <h1>{ltxt('about-title')}</h1>
-        {
-          this.props.users.map((user: User) => (
-            <div key={user.id} >
-              <span>{user.first_name} {user.last_name}</span>
-            </div>
-          ))
-        }
-      </StyledRoot>
-    )
-  }
+  return (
+    <StyledRoot>
+      <h1>{ltxt('about-title')}</h1>
+      {
+        users.map((user: User) => (
+          <div key={user.id} >
+            <span>{user.first_name} {user.last_name}</span>
+          </div>
+        ))
+      }
+    </StyledRoot>
+  )
 }
 
 export default connect(
   (state: AppState): StateProps => ({
-    users: getUsers(state),
+    users: selectUsers(state.users),
   }),
   (dispatch: Dispatch<Action>): DispatchProps => bindActionCreators({
     fetchUsers,
   }, dispatch),
-)(withI18n(About))
+)(About)
 
 const StyledRoot = styled.div`
   ${props => props.theme.layout.hp}

@@ -6,8 +6,9 @@ import React, { ComponentType } from 'react'
 import { hydrate, render } from 'react-dom'
 import { Provider } from 'react-redux'
 import { BrowserRouter, BrowserRouterProps } from 'react-router-dom'
-import { ThemeProvider } from 'styled-components'
+import { createGlobalStyle, ThemeProvider } from 'styled-components'
 import createStore from '../store'
+import globalStyles from '../styles/global'
 import * as theme from '../styles/theme'
 import { I18nRouterProvider } from './i18n'
 
@@ -20,16 +21,23 @@ import { I18nRouterProvider } from './i18n'
  * @returns The JSX markup.
  */
 export function markup(Component: ComponentType, options: BrowserRouterProps = {}): JSX.Element {
+  const GlobalStyles = createGlobalStyle`
+    ${globalStyles}
+  `
+
   return (
-    <Provider store={createStore()}>
-      <ThemeProvider theme={theme}>
-        <BrowserRouter {...options}>
-          <I18nRouterProvider>
-            <Component/>
-          </I18nRouterProvider>
-        </BrowserRouter>
-      </ThemeProvider>
-    </Provider>
+    <>
+      <GlobalStyles/>
+      <Provider store={createStore()}>
+        <ThemeProvider theme={theme}>
+          <BrowserRouter {...options}>
+            <I18nRouterProvider>
+              <Component/>
+            </I18nRouterProvider>
+          </BrowserRouter>
+        </ThemeProvider>
+      </Provider>
+    </>
   )
 }
 

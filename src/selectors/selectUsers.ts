@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect'
-import { AppState } from '../store'
+import { UsersState } from '../store/users'
 
 export default createSelector([
-  (state: AppState) => state.users,
+  (users: UsersState) => users,
 ], users => users)

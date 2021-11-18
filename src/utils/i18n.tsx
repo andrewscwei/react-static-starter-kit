@@ -1,5 +1,5 @@
 import Polyglot from 'node-polyglot'
-import React, { ComponentType, createContext, Dispatch, FunctionComponent, PropsWithChildren, useReducer } from 'react'
+import React, { ComponentType, createContext, Dispatch, FunctionComponent, PropsWithChildren, useContext, useReducer } from 'react'
 import { useLocation } from 'react-router'
 import debug from './debug'
 
@@ -227,18 +227,28 @@ export function withI18n<P>(Component: ComponentType<P & I18nComponentProps>): F
 }
 
 /**
- * Renders a localized string in place.
+ * Hook for retrieving the current locale.
  *
- * @param args @see Polyglot.prototype.t
- *
- * @returns The rendered element.
+ * @returns Current locale.
  */
-export function ltxt(...args: Parameters<typeof Polyglot.prototype.t>): JSX.Element {
-  return (
-    <I18nContext.Consumer>
-      {({ state }) => (
-        <>{state.ltxt(...args)}</>
-      )}
-    </I18nContext.Consumer>
-  )
+export function useLocale() {
+  return useContext(I18nContext).state.locale
+}
+
+/**
+ * Hook for retrieving the string localizing function for the current locale.
+ *
+ * @returns The string localizing function.
+ */
+export function useLtxt() {
+  return useContext(I18nContext).state.ltxt
+}
+
+/**
+ * Hook for retrieving the path localizing function for the current locale.
+ *
+ * @returns The path localizing function.
+ */
+export function useLpath() {
+  return (path: string, locale?: string) => getLocalizedPath(path, locale ?? useContext(I18nContext).state.locale)
 }
