@@ -1,6 +1,6 @@
 import Polyglot from 'node-polyglot'
 import React, { ComponentType, createContext, Dispatch, FunctionComponent, PropsWithChildren, useReducer } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router'
 import debug from './debug'
 
 export type I18nState = {

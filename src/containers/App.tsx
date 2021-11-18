@@ -3,7 +3,7 @@
  */
 
 import React, { FunctionComponent } from 'react'
-import { Route, Routes, useLocation } from 'react-router-dom'
+import { Route, Routes, useLocation } from 'react-router'
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
 import styled, { createGlobalStyle } from 'styled-components'
 import Footer from '../components/Footer'
