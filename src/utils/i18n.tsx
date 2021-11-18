@@ -1,5 +1,5 @@
 import Polyglot from 'node-polyglot'
-import React, { ComponentType, createContext, Dispatch, Fragment, FunctionComponent, PropsWithChildren, useReducer } from 'react'
+import React, { ComponentType, createContext, Dispatch, FunctionComponent, PropsWithChildren, useReducer } from 'react'
 import { useLocation } from 'react-router-dom'
 import debug from './debug'
 
@@ -237,7 +237,7 @@ export function ltxt(...args: Parameters<typeof Polyglot.prototype.t>): JSX.Elem
   return (
     <I18nContext.Consumer>
       {({ state }) => (
-        <Fragment>{state.ltxt(...args)}</Fragment>
+        <>{state.ltxt(...args)}</>
       )}
     </I18nContext.Consumer>
   )

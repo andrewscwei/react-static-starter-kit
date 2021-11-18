@@ -2,7 +2,7 @@
  * @file Client app root.
  */
 
-import React, { Fragment, FunctionComponent } from 'react'
+import React, { FunctionComponent } from 'react'
 import { Route, Routes, useLocation } from 'react-router-dom'
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
 import styled, { createGlobalStyle } from 'styled-components'
@@ -15,7 +15,7 @@ const App: FunctionComponent = () => {
   const location = useLocation()
 
   return (
-    <Fragment>
+    <>
       <GlobalStyles/>
       <Header/>
       <StyledBody>
@@ -28,7 +28,7 @@ const App: FunctionComponent = () => {
         </CSSTransition>
       </StyledBody>
       <Footer/>
-    </Fragment>
+    </>
   )
 }
 
