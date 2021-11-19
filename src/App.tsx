@@ -2,7 +2,7 @@
  * @file Client app root.
  */
 
-import React, { FunctionComponent } from 'react'
+import React from 'react'
 import { Route, Routes } from 'react-router'
 import Footer from './components/Footer'
 import Header from './components/Header'
@@ -10,7 +10,7 @@ import About from './containers/About'
 import Home from './containers/Home'
 import NotFound from './containers/NotFound'
 
-const App: FunctionComponent = () => {
+export default function App() {
   return (
     <>
       <Header/>
@@ -25,5 +25,3 @@ const App: FunctionComponent = () => {
     </>
   )
 }
-
-export default App

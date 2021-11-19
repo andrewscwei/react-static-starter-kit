@@ -20,7 +20,7 @@ import { I18nRouterProvider } from './i18n'
  *
  * @returns The JSX markup.
  */
-export function markup(Component: ComponentType, options: BrowserRouterProps = {}): JSX.Element {
+export function markup(Component: ComponentType, options: BrowserRouterProps = {}) {
   const GlobalStyles = createGlobalStyle`
     ${globalStyles}
   `
