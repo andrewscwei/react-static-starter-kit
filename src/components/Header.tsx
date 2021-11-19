@@ -1,20 +1,20 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-import { getLocalizedPath, useLocale, useLtxt } from '../utils/i18n'
+import { useLpath, useLtxt } from '../utils/i18n'
 
 type Props = {
   className?: string
 }
 
 export default function Header({ className }: Props) {
-  const locale = useLocale()
+  const lpath = useLpath()
   const ltxt = useLtxt()
 
   return (
     <StyledRoot className={className}>
-      <Link to={getLocalizedPath('/', locale)}>{ltxt('window-title-home') }</Link>
-      <Link to={getLocalizedPath('/about', locale)}>{ltxt('window-title-about') }</Link>
+      <Link to={lpath('/')}>{ltxt('window-title-home') }</Link>
+      <Link to={lpath('/about')}>{ltxt('window-title-about') }</Link>
     </StyledRoot>
   )
 }
