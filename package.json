@@ -2,6 +2,7 @@
   "name": "react-static-starter-kit",
   "version": "8.1.1",
   "description": "Experimental React static prerendered app starter kit",
+  "homepage": "https://react-static-starter-kit.netlify.app/",
   "private": true,
   "license": "MIT",
   "scripts": {
