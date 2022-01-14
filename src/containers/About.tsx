@@ -1,4 +1,4 @@
-import React, { HTMLAttributes, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
 import selectUsers from '../selectors/selectUsers'
@@ -6,9 +6,7 @@ import { AppState } from '../store'
 import { actionFetchUsers, User } from '../store/users'
 import { useLtxt } from '../utils/i18n'
 
-type Props = HTMLAttributes<HTMLElement>
-
-export default function About({}: Props) {
+export default function About() {
   const ltxt = useLtxt()
   const dispatch = useDispatch()
   const users = useSelector((state: AppState) => selectUsers(state.users))
