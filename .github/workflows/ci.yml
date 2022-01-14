@@ -3,7 +3,6 @@ on:
   push:
     branches: ['**']
     tags-ignore: ['v[0-9]+.[0-9]+.[0-9]+']
-
 jobs:
   build:
     name: Build
@@ -23,7 +22,7 @@ jobs:
       - name: Install Node modules
         run: npm install
       - name: Build
-        run: BUILD_NUMBER=$GITHUB_SHA npm run build
+        run: BUILD_NUMBER=$(echo ${{ github.sha }} | head -c7) npm run build
       - name: Pack
         run: .github/workflows/pack.sh
       - name: Persist package
