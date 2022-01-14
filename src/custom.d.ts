@@ -9,7 +9,7 @@ declare const __APP_CONFIG__: typeof import('./app.conf').default
 // Supports web workers.
 declare module 'worker-loader!*' {
   class WebpackWorker extends Worker {
-    constructor();
+    constructor()
   }
 
   export default WebpackWorker
