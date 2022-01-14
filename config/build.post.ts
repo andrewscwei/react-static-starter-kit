@@ -5,7 +5,6 @@
  * @file Postbuild script used for uncommenting HTML comments marked with [POSTBUILD] tag.
  */
 
-import chalk from 'chalk'
 import fs from 'fs'
 import path from 'path'
 
@@ -15,7 +14,7 @@ let count = 0
 
 function parseDir(dirPath: string) {
   if (!fs.existsSync(dirPath)) {
-    console.log(`Parsing ${chalk.cyan('[POSTBUILD]')} comments in ${dirPath}...`, 'SKIPPED', 'Directory does not exist')
+    console.log(`Parsing [POSTBUILD] comments in ${dirPath}...`, 'SKIPPED', 'Directory does not exist')
     return
   }
 
@@ -38,10 +37,10 @@ function parseDir(dirPath: string) {
 
         count++
 
-        console.log(chalk.green(filePath))
+        console.log(filePath)
       }
       catch (err) {
-        console.error(chalk.red(filePath))
+        console.error(filePath)
 
         throw err
       }
@@ -50,10 +49,10 @@ function parseDir(dirPath: string) {
 }
 
 console.log()
-console.log(`Parsing [POSTBUILD] comments in ${chalk.cyan(buildDir)}...`)
+console.log(`Parsing [POSTBUILD] comments in ${buildDir}...`)
 console.log()
 
 parseDir(buildDir)
 
 console.log()
-console.log(`Successfully parsed ${chalk.cyan(String(count))} file(s)`)
+console.log(`Successfully parsed ${count} file(s)`)
