@@ -1,28 +1,21 @@
-import React, { useEffect } from 'react'
-import { connect } from 'react-redux'
-import { Action, bindActionCreators, Dispatch } from 'redux'
+import React, { HTMLAttributes, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
 import selectUsers from '../selectors/selectUsers'
 import { AppState } from '../store'
-import { fetchUsers, User } from '../store/users'
+import { actionFetchUsers, User } from '../store/users'
 import { useLtxt } from '../utils/i18n'
 
-type StateProps = {
-  users: User[]
-}
+type Props = HTMLAttributes<HTMLElement>
 
-type DispatchProps = {
-  fetchUsers: typeof fetchUsers
-}
-
-type Props = StateProps & DispatchProps
-
-function About({ fetchUsers, users }: Props) {
+export default function About({}: Props) {
   const ltxt = useLtxt()
+  const dispatch = useDispatch()
+  const users = useSelector((state: AppState) => selectUsers(state.users))
 
   useEffect(() => {
     document.title = ltxt('window-title-about')
-    fetchUsers()
+    dispatch(actionFetchUsers())
   }, [])
 
   return (
@@ -38,15 +31,6 @@ function About({ fetchUsers, users }: Props) {
     </StyledRoot>
   )
 }
-
-export default connect(
-  (state: AppState): StateProps => ({
-    users: selectUsers(state.users),
-  }),
-  (dispatch: Dispatch<Action>): DispatchProps => bindActionCreators({
-    fetchUsers,
-  }, dispatch),
-)(About)
 
 const StyledRoot = styled.div`
   ${props => props.theme.layout.hp}
