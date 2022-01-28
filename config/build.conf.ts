@@ -130,7 +130,7 @@ const config: Configuration = {
       minify: {
         collapseWhitespace: true,
         removeAttributeQuotes: true,
-        removeComments: false,
+        removeComments: true,
       },
       template: path.join(inputDir, 'templates', 'index.html'),
     }),
