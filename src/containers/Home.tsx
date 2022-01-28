@@ -23,7 +23,7 @@ export default function Home() {
 const StyledRoot = styled.div`
   ${props => props.theme.layout.hp}
   align-items: center;
-  box-sizing: border-box;
+  box-sizing: border-box;;
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
