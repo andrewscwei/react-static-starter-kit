@@ -7,7 +7,7 @@ jobs:
   build:
     name: Build/Test
     runs-on: ubuntu-latest
-    container: node:17.5.0
+    container: node:16.3.0
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -32,7 +32,7 @@ jobs:
     name: Deploy
     needs: [build]
     runs-on: ubuntu-latest
-    container: node:17.5.0
+    container: node:16.3.0
     steps:
       - name: Checkout
         uses: actions/checkout@v2
