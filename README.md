@@ -22,6 +22,12 @@ $ npm install
 # Run in dev
 $ npm run dev
 
+# Run tests
+$ npm test
+
+# Run tests in specific dir relative to src
+$ npm test --files=dir
+
 # Build for prod
 $ npm run build
 
