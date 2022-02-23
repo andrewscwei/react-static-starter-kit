@@ -10,7 +10,7 @@
     "prebuild": "npm run lint",
     "build": "npm run clean && cross-env NODE_ENV=production webpack --profile --config config/build.conf.ts",
     "postbuild": "react-snap",
-    "test": "jest -b --colors src/$npm_config_files",
+    "test": "jest -b --colors --passWithNoTests src/$npm_config_files",
     "dev": "cross-env NODE_ENV=development webpack-cli serve --mode development --config config/build.conf.ts",
     "lint": "eslint --ext .ts --ext .tsx src config",
     "lint:fix": "npm run lint -- --fix"
