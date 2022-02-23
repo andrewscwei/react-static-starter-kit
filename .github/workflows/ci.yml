@@ -24,7 +24,7 @@ jobs:
             ${{ runner.os }}-
       - name: Install Node modules
         run: npm install
-      - name: Test
-        run: npm test
       - name: Build
         run: BUILD_NUMBER=$(echo ${{ github.sha }} | head -c7) npm run build
+      - name: Test
+        run: npm run test:ts && npm test
