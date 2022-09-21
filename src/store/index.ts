@@ -18,9 +18,5 @@ export default function createStore() {
 
   const store = _createStore(reducer, initialState || {}, composeEnhancers(applyMiddleware(thunk)))
 
-  window.snapSaveState = () => ({
-    __INITIAL_STATE__: store.getState(),
-  })
-
   return store
 }

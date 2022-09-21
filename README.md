@@ -4,15 +4,14 @@ This is an **experimental** starter kit for a React static app.
 
 ## Features
 
-1. Prerendering with [react-snap](https://github.com/stereobooster/react-snap)
-2. HMR (in development)
-3. [TypeScript](https://www.typescriptlang.org/)
-4. [React Router](https://reacttraining.com/react-router/), routes automatically generated and localized
-5. [Redux](https://redux.js.org/introduction)
-6. [Polyglot](http://airbnb.io/polyglot.js/)
-7. [Styled Components](https://www.styled-components.com/)
-8. [Jest](https://jestjs.io/) config
-9. [ESLint](https://eslint.org/)
+1. HMR (in development)
+2. [TypeScript](https://www.typescriptlang.org/)
+3. [React Router](https://reacttraining.com/react-router/), routes automatically generated and localized
+4. [Redux](https://redux.js.org/introduction)
+5. [Polyglot](http://airbnb.io/polyglot.js/)
+6. [Styled Components](https://www.styled-components.com/)
+7. [Jest](https://jestjs.io/) config
+8. [ESLint](https://eslint.org/)
 
 ## Usage
 

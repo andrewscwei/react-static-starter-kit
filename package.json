@@ -9,23 +9,11 @@
     "clean": "rimraf build",
     "prebuild": "npm run lint",
     "build": "npm run clean && cross-env NODE_ENV=production webpack --profile --config config/build.conf.ts",
-    "postbuild": "react-snap",
     "test": "jest -b --colors --passWithNoTests --testEnvironment=jsdom tests/$npm_config_files",
     "test:ts": "jest -b --colors --passWithNoTests --testEnvironment=jsdom src/$npm_config_files",
     "dev": "cross-env NODE_ENV=development webpack-cli serve --mode development --config config/build.conf.ts",
     "lint": "eslint --ext .ts --ext .tsx src config",
     "lint:fix": "npm run lint -- --fix"
-  },
-  "reactSnap": {
-    "source": "build",
-    "include": [
-      "/404.html"
-    ],
-    "puppeteerArgs": [
-      "--no-sandbox",
-      "--disable-setuid-sandbox"
-    ],
-    "skipThirdPartyRequests": false
   },
   "devDependencies": {
     "@babel/core": "^7.17.5",
@@ -67,7 +55,6 @@
     "jest": "^27.5.1",
     "raw-loader": "^4.0.2",
     "react-refresh": "^0.11.0",
-    "react-snap": "^1.23.0",
     "require-dir": "^1.2.0",
     "rimraf": "^3.0.2",
     "speed-measure-webpack-plugin": "^1.5.0",

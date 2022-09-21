@@ -29,5 +29,4 @@ declare const __I18N_CONFIG__: Readonly<{
 interface Window {
   __INITIAL_STATE__?: Record<string, any>
   __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: () => void
-  snapSaveState?: () => void
 }
