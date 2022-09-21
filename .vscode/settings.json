@@ -1,0 +1,8 @@
+{
+  "files.associations": {
+    ".eslintrc*": "json",
+    ".babelrc*": "json",
+    ".stylelintrc*": "json",
+    ".jsconfig*": "json"
+  }
+}
