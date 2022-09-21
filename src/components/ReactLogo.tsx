@@ -1,12 +1,12 @@
-import $$Logo from '!!raw-loader!../assets/images/react-logo.svg'
 import React, { HTMLAttributes } from 'react'
 import styled, { keyframes } from 'styled-components'
+import * as assets from '../assets'
 
 type Props = HTMLAttributes<HTMLElement>
 
 export default function ReactLogo({ ...props }: Props) {
   return (
-    <StyledRoot {...props} dangerouslySetInnerHTML={{ __html: $$Logo }}/>
+    <StyledRoot {...props} dangerouslySetInnerHTML={{ __html: assets.svgs.ReactLogo }}/>
   )
 }
 

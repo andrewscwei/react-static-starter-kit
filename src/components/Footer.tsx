@@ -1,7 +1,7 @@
 import React, { HTMLAttributes } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-import $$GitHubIcon from '../assets/images/github-icon.svg'
+import * as assets from '../assets'
 import { useLpath, useLtxt } from '../utils/i18n'
 
 type Props = HTMLAttributes<HTMLElement>
@@ -38,7 +38,7 @@ const StyledRoot = styled.footer`
   }
 
   nav > a {
-    background: url(${$$GitHubIcon}) center / 100% no-repeat;
+    background: url(${assets.images.GitHubLogo}) center / 100% no-repeat;
     display: block;
     height: 20px;
     transition: all .2s ease-out;
