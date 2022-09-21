@@ -2,13 +2,13 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
 import selectUsers from '../selectors/selectUsers'
-import { AppState } from '../store'
+import { AppDispatch, AppState } from '../store'
 import { actionFetchUsers, User } from '../store/users'
 import { useLtxt } from '../utils/i18n'
 
 export default function About() {
   const ltxt = useLtxt()
-  const dispatch = useDispatch()
+  const dispatch = useDispatch<AppDispatch>()
   const users = useSelector((state: AppState) => selectUsers(state.users))
 
   useEffect(() => {
