@@ -1,12 +1,12 @@
-// Supports importing assets.
+// Support importing various asset types.
 declare module '*.svg'
 declare module '*.jpg'
 declare module '*.png'
 
-// Supports typing for app config.
+// Typing for app config.
 declare const __APP_CONFIG__: typeof import('./app.conf').default
 
-// Supports web workers.
+// Web workers.
 declare module 'worker-loader!*' {
   class WebpackWorker extends Worker {
     constructor()
@@ -15,7 +15,7 @@ declare module 'worker-loader!*' {
   export default WebpackWorker
 }
 
-// Supports I18n.
+// I18n.
 interface TranslationData { [key: string]: TranslationData | string }
 type TranslationDataDict = Record<string, TranslationData>
 
