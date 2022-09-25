@@ -1,5 +1,5 @@
 /**
- * @file Configuration for both client and server environments.
+ * @file Configurations for the app.
  */
 
 import dotenv from 'dotenv'
@@ -29,5 +29,6 @@ export default {
     url: homepage,
   },
 
+  // i18n translations.
   translations: requireDir(path.resolve('./config/locales')),
 }

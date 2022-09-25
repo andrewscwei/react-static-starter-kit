@@ -23,7 +23,7 @@ const useSpeedMeasurer = process.env.npm_config_speed === 'true' ? true : false
 const config: Configuration = {
   devtool: isDev ? 'eval-source-map' : false,
   entry: {
-    main: path.join(inputDir, 'index.ts'),
+    main: path.join(inputDir, 'index.tsx'),
     polyfills: path.join(inputDir, 'polyfills.ts'),
   },
   infrastructureLogging: {
