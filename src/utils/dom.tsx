@@ -7,10 +7,25 @@ import { hydrate, render } from 'react-dom'
 import { Provider } from 'react-redux'
 import { BrowserRouter, BrowserRouterProps } from 'react-router-dom'
 import { createGlobalStyle, ThemeProvider } from 'styled-components'
+import { I18nProvider } from '../modules/i18n'
 import createStore from '../store'
 import globalStyle from '../styles/global'
 import * as theme from '../styles/theme'
-import { I18nRouterProvider } from './i18n'
+
+const getTranslations = () => {
+  // In development, use require context for all locale translation files so they can be watched by
+  // Webpack.
+  if (process.env.NODE_ENV === 'development') {
+    const req = require.context('../../config/locales', true, /^.*\.json$/)
+    return req.keys().reduce((prev, curr) => ({
+      ...prev,
+      [curr.replace('./', '').replace('.json', '')]: req(curr),
+    }), {})
+  }
+  else {
+    return __APP_CONFIG__.translations
+  }
+}
 
 /**
  * Factory function for generating base React app markup.
@@ -31,9 +46,9 @@ export function markup(Component: ComponentType, options: BrowserRouterProps = {
       <Provider store={createStore()}>
         <ThemeProvider theme={theme}>
           <BrowserRouter {...options}>
-            <I18nRouterProvider>
+            <I18nProvider defaultLocale='en' translations={getTranslations()}>
               <Component/>
-            </I18nRouterProvider>
+            </I18nProvider>
           </BrowserRouter>
         </ThemeProvider>
       </Provider>

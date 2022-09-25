@@ -1,10 +1,10 @@
 import React, { ComponentType, useEffect } from 'react'
 import styled from 'styled-components'
 import ReactLogo from '../components/ReactLogo'
-import { useLtxt } from '../utils/i18n'
+import { useLocalizedString } from '../modules/i18n'
 
 export default function Home() {
-  const ltxt = useLtxt()
+  const ltxt = useLocalizedString()
 
   useEffect(() => {
     document.title = ltxt('window-title-home')

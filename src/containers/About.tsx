@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
+import { useLocalizedString } from '../modules/i18n'
 import selectUsers from '../selectors/selectUsers'
 import { AppDispatch, AppState } from '../store'
 import { actionFetchUsers, User } from '../store/users'
-import { useLtxt } from '../utils/i18n'
 
 export default function About() {
-  const ltxt = useLtxt()
+  const ltxt = useLocalizedString()
   const dispatch = useDispatch<AppDispatch>()
   const users = useSelector((state: AppState) => selectUsers(state.users))
 

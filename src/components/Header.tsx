@@ -1,13 +1,13 @@
 import React, { HTMLAttributes } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-import { useLpath, useLtxt } from '../utils/i18n'
+import { useLocalizedPath, useLocalizedString } from '../modules/i18n'
 
 type Props = HTMLAttributes<HTMLElement>
 
 export default function Header({ ...props }: Props) {
-  const lpath = useLpath()
-  const ltxt = useLtxt()
+  const lpath = useLocalizedPath()
+  const ltxt = useLocalizedString()
 
   return (
     <StyledRoot {...props}>

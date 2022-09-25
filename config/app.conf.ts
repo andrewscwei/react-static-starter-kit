@@ -3,12 +3,15 @@
  */
 
 import dotenv from 'dotenv'
+import path from 'path'
+import requireDir from 'require-dir'
+import { description, homepage, version } from '../package.json'
 
 dotenv.config()
 
 export default {
   // Version number.
-  version: require('../package.json').version,
+  version,
 
   // Build number.
   buildNumber: process.env.BUILD_NUMBER || 0,
@@ -20,15 +23,11 @@ export default {
     title: 'React Static Starter Kit',
 
     // Short description of the app.
-    description: require('../package.json').description,
-
-    // Search keywords.
-    keywords: require('../package.json').keywords,
+    description,
 
     // App URL.
-    url: require('../package.json').homepage,
+    url: homepage,
   },
 
-  // Supported locales. First locale is the default locale.
-  locales: ['en', 'ja'],
+  translations: requireDir(path.resolve('./config/locales')),
 }

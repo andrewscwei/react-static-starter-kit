@@ -1,22 +1,21 @@
 import React, { HTMLAttributes } from 'react'
-import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import * as assets from '../assets'
-import { useLpath, useLtxt } from '../utils/i18n'
+import { useChangeLocale, useLocalizedString } from '../modules/i18n'
 
 type Props = HTMLAttributes<HTMLElement>
 
 export default function Footer({ ...props }: Props) {
-  const ltxt = useLtxt()
-  const lpath = useLpath()
+  const ltxt = useLocalizedString()
+  const changeLocale = useChangeLocale()
 
   return (
     <StyledRoot {...props}>
       <nav>
         <a href='https://github.com/andrewscwei/react-isomorphic-starter-kit'/>
       </nav>
-      <Link to={lpath('/', 'en')}>{ltxt('en')}</Link>
-      <Link to={lpath('/', 'ja')}>{ltxt('jp')}</Link>
+      <button onClick={() => changeLocale('en')}>{ltxt('en')}</button>
+      <button onClick={() => changeLocale('ja')}>{ltxt('jp')}</button>
     </StyledRoot>
   )
 }
@@ -49,7 +48,7 @@ const StyledRoot = styled.footer`
     }
   }
 
-  > a {
+  > button {
     ${props => props.theme.texts.n2}
     align-items: center;
     background: ${props => props.theme.colors.grey};

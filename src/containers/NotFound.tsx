@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react'
 import styled from 'styled-components'
-import { useLtxt } from '../utils/i18n'
+import { useLocalizedString } from '../modules/i18n'
 
 export default function NotFound() {
-  const ltxt = useLtxt()
+  const ltxt = useLocalizedString()
 
   useEffect(() => {
     document.title = ltxt('window-title-not-found')

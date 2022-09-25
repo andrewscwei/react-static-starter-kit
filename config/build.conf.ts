@@ -10,15 +10,12 @@ import HTMLPlugin from 'html-webpack-plugin'
 import path from 'path'
 import { Configuration, DefinePlugin, EnvironmentPlugin, IgnorePlugin } from 'webpack'
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
-import appConf from '../src/app.conf'
-import { getLocalesFromDir, getTranslationsFromDir } from './utils'
+import appConf from './app.conf'
 
 const isDev = process.env.NODE_ENV === 'development'
 const cwd = path.join(__dirname, '../')
 const inputDir = path.join(cwd, 'src')
 const outputDir = path.join(cwd, 'build')
-const localesDir = path.join(cwd, 'config/locales')
-const locales = getLocalesFromDir(localesDir, appConf.locales[0], appConf.locales)
 const port = Number(process.env.PORT) || 8080
 const useBundleAnalyzer = process.env.npm_config_analyze === 'true' ? true : false
 const useSpeedMeasurer = process.env.npm_config_speed === 'true' ? true : false
@@ -115,11 +112,6 @@ const config: Configuration = {
     }),
     new DefinePlugin({
       __APP_CONFIG__: JSON.stringify(appConf),
-      __I18N_CONFIG__: JSON.stringify({
-        defaultLocale: appConf.locales[0],
-        locales,
-        dict: getTranslationsFromDir(localesDir, locales),
-      }),
     }),
     new HTMLPlugin({
       appConf,
