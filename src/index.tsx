@@ -4,7 +4,7 @@ import { Provider } from 'react-redux'
 import { BrowserRouter } from 'react-router-dom'
 import Worker from 'worker-loader!./workers/web'
 import App from './App'
-import { I18nProvider } from './contexts/i18n'
+import { I18nRouterProvider } from './providers/i18n'
 import createStore from './store'
 import './styles/global.css'
 import debug from './utils/debug'
@@ -39,9 +39,9 @@ root.render(
   <>
     <Provider store={createStore()}>
       <BrowserRouter>
-        <I18nProvider defaultLocale='en' translations={translations}>
+        <I18nRouterProvider defaultLocale='en' translations={translations}>
           <App/>
-        </I18nProvider>
+        </I18nRouterProvider>
       </BrowserRouter>
     </Provider>
   </>

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import ReactLogo from '../components/ReactLogo'
-import { useLocalizedString } from '../contexts/i18n'
+import { useLocalizedString } from '../providers/i18n'
 import style from './Home.module.css'
 
 export default function Home() {

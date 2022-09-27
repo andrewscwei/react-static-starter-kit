@@ -1,7 +1,7 @@
 import Polyglot from 'node-polyglot'
 import React, { createContext, PropsWithChildren, useRef } from 'react'
 import { useLocation } from 'react-router'
-import { getLocaleFromURL, getLocalizedURL } from '../utils/urls'
+import { getLocaleFromURL, getLocalizedURL } from './utils/urls'
 
 interface Translation { [key: string]: Translation | string }
 

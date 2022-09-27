@@ -1,6 +1,6 @@
 import { useContext } from 'react'
-import { I18nContext } from '../providers/I18nProvider'
-import { I18nRouterContext } from '../providers/I18nRouterProvider'
+import { I18nContext } from '../I18nProvider'
+import { I18nRouterContext } from '../I18nRouterProvider'
 import { getLocalizedURL, getUnlocalizedURL } from '../utils/urls'
 
 /**

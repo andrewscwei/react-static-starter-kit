@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useLocalizedString } from '../contexts/i18n'
+import { useLocalizedString } from '../providers/i18n'
 import selectUsers from '../selectors/selectUsers'
 import { AppDispatch, AppState } from '../store'
 import { actionFetchUsers } from '../store/users'
