@@ -34,8 +34,8 @@ $ npm run build
 # Analyzes the size the generated bundle(s) and displays a visual report in the default browser
 $ npm run build --analyze
 
-# Measures the speed of the build pipeline and outputs a report to console
-$ npm run build --speed
+# Builds the app but skips all HTML/CSS/JS minifications
+$ npm run build --raw
 ```
 
 See `scripts` in `package.json` for additional commands.
@@ -51,9 +51,8 @@ When creating a new repository using `react-static-starter-kit` as a template, f
 5. In `/resources/`, edit the app icon and favicon regenerate the sources
   1. In `/src/static/`, replace the app icon and favicon sources
   2. Update `/src/static/manifest.json`
-6. In `/src/app.conf.ts`, edit `meta.title` and `locales` fields
-  1. Edit translation files in `/config/locales/` to reflect locale changes
-  2. Edit `/src/routes.conf.ts` to reflect locale changes
-7. In `/src/components/Footer.tsx`, remove reference to this repository's URL
+6. In `/config/app.conf.ts`, edit `meta.title`
+7. Edit translation files in `/src/locales/` to reflect locale changes
+8. In `/src/components/Footer.tsx`, remove reference to this repository's URL
 
 In terms of configuration and metadata, those were it. The remaining changes are in the individual pages in `/src/containers/` and the assets, components and state containers that they use.
