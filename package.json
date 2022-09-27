@@ -8,7 +8,7 @@
   "scripts": {
     "clean": "rimraf build",
     "prebuild": "npm run lint",
-    "build": "npm run clean && webpack --profile --config config/build.conf.ts",
+    "build": "npm run clean && BUILD_NUMBER=$(git rev-parse --short HEAD).$(git rev-list --count HEAD) webpack --profile --config config/build.conf.ts",
     "test": "jest -b --colors --passWithNoTests --testEnvironment=jsdom tests/$npm_config_files",
     "test:ts": "jest -b --colors --passWithNoTests --testEnvironment=jsdom src/$npm_config_files",
     "dev": "cross-env NODE_ENV=development webpack-cli serve --mode development --config config/build.conf.ts",
