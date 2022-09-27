@@ -14,7 +14,7 @@ export default function Home() {
     <main>
       <ReactLogo className={style.logo}/>
       <h1 className={style.title}>{ltxt('hello')}</h1>
-      <pre className={style.version}>v{__CONFIG__.version} ({__CONFIG__.buildNumber})</pre>
+      <pre className={style.version}>{__CONFIG__.version} ({__CONFIG__.buildNumber})</pre>
       <p className={style.main}>{ltxt('description') }</p>
     </main>
   )
