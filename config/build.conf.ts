@@ -20,7 +20,7 @@ const useBundleAnalyzer = process.env.npm_config_analyze === 'true' ? true : fal
 const skipOptimizations = isDev || process.env.npm_config_ugly === 'true'
 
 export default {
-  devtool: skipOptimizations ? 'eval-source-map' : false,
+  devtool: skipOptimizations ? false : 'eval-source-map',
   entry: {
     main: path.join(inputDir, 'index.tsx'),
     polyfills: path.join(inputDir, 'polyfills.ts'),
@@ -64,7 +64,8 @@ export default {
                   'nesting-rules': true,
                 },
               }],
-            ],
+              !skipOptimizations && 'cssnano',
+            ].filter(Boolean),
           },
         },
       }],
