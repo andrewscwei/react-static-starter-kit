@@ -15,7 +15,7 @@ export default function Footer({
   return (
     <footer className={classNames(className, style.root)} {...props}>
       <nav className={style.nav}>
-        <a href='https://github.com/andrewscwei/react-isomorphic-starter-kit'/>
+        <a href='https://github.com/andrewscwei/react-static-starter-kit'/>
       </nav>
       <button className={style.button} onClick={() => changeLocale('en')}>{ltxt('en')}</button>
       <button className={style.button} onClick={() => changeLocale('jp')}>{ltxt('jp')}</button>
