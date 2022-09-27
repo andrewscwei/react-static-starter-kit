@@ -1,7 +1,7 @@
-// Support importing various asset types.
 declare module '*.svg'
 declare module '*.jpg'
 declare module '*.png'
+declare module '*.module.css'
 
 // Typing for app config.
 declare const __APP_CONFIG__: typeof import('../config/app.conf').default

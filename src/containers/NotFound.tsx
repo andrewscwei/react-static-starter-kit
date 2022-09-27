@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
-import styled from 'styled-components'
 import { useLocalizedString } from '../modules/i18n'
+import style from './NotFound.module.css'
 
 export default function NotFound() {
   const ltxt = useLocalizedString()
@@ -10,29 +10,8 @@ export default function NotFound() {
   })
 
   return (
-    <StyledRoot>
-      <h1>{ltxt('not-found-title') }</h1>
-    </StyledRoot>
+    <main>
+      <h2 className={style.title}>{ltxt('not-found-title') }</h2>
+    </main>
   )
 }
-
-const StyledRoot = styled.div`
-  ${props => props.theme.layout.hp}
-  align-items: center;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  flex-wrap: nowrap;
-  height: 100%;
-  justify-content: center;
-  position: absolute;
-  width: 100%;
-
-  h1 {
-    ${props => props.theme.texts.h2}
-    color: ${props => props.theme.colors.white};
-    margin: 0;
-    max-width: 550px;
-    text-align: center;
-  }
-`

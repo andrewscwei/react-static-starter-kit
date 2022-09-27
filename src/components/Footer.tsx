@@ -1,76 +1,24 @@
+import classNames from 'classnames'
 import React, { HTMLAttributes } from 'react'
-import styled from 'styled-components'
-import * as assets from '../assets'
 import { useChangeLocale, useLocalizedString } from '../modules/i18n'
+import style from './Footer.module.css'
 
 type Props = HTMLAttributes<HTMLElement>
 
-export default function Footer({ ...props }: Props) {
+export default function Footer({
+  className,
+  ...props
+}: Props) {
   const ltxt = useLocalizedString()
   const changeLocale = useChangeLocale()
 
   return (
-    <StyledRoot {...props}>
-      <nav>
+    <footer className={classNames(className, style.root)} {...props}>
+      <nav className={style.nav}>
         <a href='https://github.com/andrewscwei/react-isomorphic-starter-kit'/>
       </nav>
-      <button onClick={() => changeLocale('en')}>{ltxt('en')}</button>
-      <button onClick={() => changeLocale('ja')}>{ltxt('jp')}</button>
-    </StyledRoot>
+      <button className={style.button} onClick={() => changeLocale('en')}>{ltxt('en')}</button>
+      <button className={style.button} onClick={() => changeLocale('ja')}>{ltxt('jp')}</button>
+    </footer>
   )
 }
-
-const StyledRoot = styled.footer`
-  ${props => props.theme.layout.hp}
-  align-items: center;
-  bottom: 0;
-  box-sizing: border-box;
-  display: flex;
-  height: 50px;
-  left: 0;
-  width: 100%;
-  position: fixed;
-  z-index: 10;
-
-  nav {
-    flex-grow: 1;
-  }
-
-  nav > a {
-    background: url(${assets.images.GitHubLogo}) center / 100% no-repeat;
-    display: block;
-    height: 20px;
-    transition: all .2s ease-out;
-    width: 20px;
-
-    :hover {
-      opacity: .6;
-    }
-  }
-
-  > button {
-    ${props => props.theme.texts.n2}
-    align-items: center;
-    background: ${props => props.theme.colors.grey};
-    border: none;
-    box-sizing: border-box;
-    color: ${props => props.theme.colors.white};
-    cursor: pointer;
-    display: flex;
-    height: 22px;
-    justify-content: center;
-    outline: none;
-    padding: 2px 0 0 2px;
-    transition: all .2s ease-out;
-    width: 22px;
-
-    :hover {
-      background: ${props => props.theme.colors.white};
-      color: ${props => props.theme.colors.black};
-    }
-
-    :not(:last-child) {
-      margin-right: 10px;
-    }
-  }
-`

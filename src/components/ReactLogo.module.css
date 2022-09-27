@@ -1,0 +1,21 @@
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.root {
+  transform-origin: center;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  animation: rotate 5s linear infinite;
+
+  > svg {
+    width: auto;
+    height: 100%;
+  }
+}

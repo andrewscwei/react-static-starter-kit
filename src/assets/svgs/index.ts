@@ -1,1 +1,1 @@
-export { default as ReactLogo } from '!!raw-loader!./react-logo.svg'
+export { default as ReactLogo } from './react-logo.svg'
