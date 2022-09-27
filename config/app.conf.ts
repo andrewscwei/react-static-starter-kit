@@ -11,10 +11,10 @@ dotenv.config()
 
 export default {
   // Version number.
-  version,
+  version: `v${version}${process.env.NODE_ENV === 'production' ? '' : `-${(process.env.NODE_ENV ?? 'development').substring(0, 3)}`}`,
 
   // Build number.
-  buildNumber: process.env.BUILD_NUMBER || 0,
+  buildNumber: process.env.BUILD_NUMBER ?? 'local',
 
   // HTML metadata.
   meta: {

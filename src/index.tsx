@@ -11,6 +11,8 @@ if (process.env.NODE_ENV === 'development') {
   window.localStorage.debug = 'app*,worker*'
 }
 
+window.__VERSION__ = `v${__CONFIG__.version}/${__CONFIG__.buildNumber}`
+
 const worker = new Worker()
 worker.postMessage({ message: 'Hello, world!' })
 worker.addEventListener('message', event => debug(event.data.message))

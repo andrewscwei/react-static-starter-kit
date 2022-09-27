@@ -6,12 +6,12 @@ This is an **experimental** starter kit for a React static app.
 
 1. HMR (in development)
 2. [TypeScript](https://www.typescriptlang.org/)
-3. [React Router](https://reacttraining.com/react-router/), routes automatically generated and localized
-4. [Redux](https://redux.js.org/introduction)
-5. [Polyglot](http://airbnb.io/polyglot.js/)
-6. [Styled Components](https://www.styled-components.com/)
-7. [Jest](https://jestjs.io/) config
-8. [ESLint](https://eslint.org/)
+3. [React Router](https://reacttraining.com/react-router/)
+4. i18n support via Context API
+5. CSS Modules + [PostCSS](https://postcss.org/)
+6. [Jest](https://jestjs.io/)
+7. [ESLint](https://eslint.org/)
+8. [StyleLint](https://stylelint.io/)
 
 ## Usage
 
