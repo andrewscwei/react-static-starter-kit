@@ -16,7 +16,7 @@ export default function Header({
   return (
     <header className={classNames(className, style.root)} {...props}>
       <Link className={style.link} to={lpath('/')}>{ltxt('nav-title-home') }</Link>
-      <Link className={style.link} to={lpath('/about')}>{ltxt('nav-title-about') }</Link>
+      <Link className={style.link} to={lpath('/quote')}>{ltxt('nav-title-quote') }</Link>
     </header>
   )
 }

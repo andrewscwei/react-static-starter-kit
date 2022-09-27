@@ -134,7 +134,7 @@ export default {
       NODE_ENV: 'production',
     }),
     new DefinePlugin({
-      __APP_CONFIG__: JSON.stringify(appConf),
+      __CONFIG__: JSON.stringify(appConf),
     }),
     new HTMLPlugin({
       appConf,

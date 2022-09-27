@@ -1,23 +1,23 @@
 .title {
+  color: var(--color-white);
   margin: 0;
   max-width: 550px;
   text-align: center;
-  color: var(--color-white);
 }
 
 .version {
-  text-align: center;
   color: var(--color-grey);
+  text-align: center;
 }
 
 .main {
+  color: var(--color-grey);
   margin: 0;
   max-width: 400px;
   text-align: center;
-  color: var(--color-grey);
 }
 
 .logo {
-  margin-bottom: 30px;
   height: 200px;
+  margin-bottom: 30px;
 }

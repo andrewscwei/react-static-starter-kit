@@ -1,8 +1,10 @@
 {
   "extends": [
     "stylelint-config-standard",
-    "stylelint-config-concentric-order",
     "stylelint-config-css-modules"
+  ],
+  "plugins": [
+    "stylelint-order"
   ],
   "rules": {
     "at-rule-empty-line-before": [
@@ -33,6 +35,10 @@
     "max-nesting-depth": 3,
     "no-descending-specificity": null,
     "number-leading-zero": "never",
+		"order/properties-order": [
+      ["composes"],
+      { "unspecified": "bottomAlphabetical" }
+    ],
     "property-no-unknown": [
       true,
       {

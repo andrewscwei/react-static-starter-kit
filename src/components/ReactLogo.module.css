@@ -8,14 +8,14 @@
 }
 
 .root {
-  transform-origin: center;
+  animation: rotate 5s linear infinite;
+  height: 100%;
   margin: 0;
   padding: 0;
-  height: 100%;
-  animation: rotate 5s linear infinite;
+  transform-origin: center;
 
   > svg {
-    width: auto;
     height: 100%;
+    width: auto;
   }
 }

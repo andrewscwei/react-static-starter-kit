@@ -1,0 +1,29 @@
+.title {
+  color: var(--color-grey);
+  margin: 0 0 20px;
+  max-width: 550px;
+  text-align: center;
+}
+
+.quote {
+  color: var(--color-white);
+  font-family: var(--font-header);
+  font-size: 2.4em;
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: 2px;
+  line-height: 130%;
+  max-width: 50rem;
+  text-align: center;
+}
+
+.author {
+  color: var(--color-white);
+  font-family: var(--font-body);
+  font-size: 1.6em;
+  font-style: italic;
+  font-weight: 400;
+  margin-top: 1rem;
+  max-width: 40rem;
+  text-align: center;
+}

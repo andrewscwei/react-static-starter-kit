@@ -13,8 +13,8 @@ export default function Home() {
   return (
     <main>
       <ReactLogo className={style.logo}/>
-      <h2 className={style.title}>{ltxt('hello')}</h2>
-      <pre className={style.version}>v{__APP_CONFIG__.version} ({__APP_CONFIG__.buildNumber})</pre>
+      <h1 className={style.title}>{ltxt('hello')}</h1>
+      <pre className={style.version}>v{__CONFIG__.version} ({__CONFIG__.buildNumber})</pre>
       <p className={style.main}>{ltxt('description') }</p>
     </main>
   )

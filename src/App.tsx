@@ -2,9 +2,10 @@ import React from 'react'
 import { Route, Routes } from 'react-router'
 import Footer from './components/Footer'
 import Header from './components/Header'
-import About from './containers/About'
 import Home from './containers/Home'
 import NotFound from './containers/NotFound'
+import About from './containers/Quote'
+import { QuoteProvider } from './providers/quotes'
 
 export default function App() {
   return (
@@ -12,9 +13,9 @@ export default function App() {
       <Header/>
       <Routes>
         <Route path='/' element={<Home/>}/>
-        <Route path='about' element={<About/>}/>
+        <Route path='quote' element={<QuoteProvider><About/></QuoteProvider>}/>
         <Route path='ja' element={<Home/>}/>
-        <Route path='ja/about' element={<About/>}/>
+        <Route path='ja/quote' element={<QuoteProvider><About/></QuoteProvider>}/>
         <Route path='*' element={<NotFound/>}/>
       </Routes>
       <Footer/>

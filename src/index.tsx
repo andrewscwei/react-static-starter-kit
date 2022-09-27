@@ -1,11 +1,9 @@
 import React from 'react'
 import { createRoot } from 'react-dom/client'
-import { Provider } from 'react-redux'
 import { BrowserRouter } from 'react-router-dom'
 import Worker from 'worker-loader!./workers/web'
 import App from './App'
 import { I18nRouterProvider } from './providers/i18n'
-import createStore from './store'
 import './styles/global.css'
 import debug from './utils/debug'
 
@@ -27,7 +25,7 @@ const translations = (() => {
     }), {})
   }
   else {
-    return __APP_CONFIG__.translations
+    return __CONFIG__.translations
   }
 })()
 
@@ -36,13 +34,9 @@ if (!container) throw Error('Unable to find DOM element to mount app in')
 
 const root = createRoot(container)
 root.render(
-  <>
-    <Provider store={createStore()}>
-      <BrowserRouter>
-        <I18nRouterProvider defaultLocale='en' translations={translations}>
-          <App/>
-        </I18nRouterProvider>
-      </BrowserRouter>
-    </Provider>
-  </>
+  <BrowserRouter>
+    <I18nRouterProvider defaultLocale='en' translations={translations}>
+      <App/>
+    </I18nRouterProvider>
+  </BrowserRouter>
 )
