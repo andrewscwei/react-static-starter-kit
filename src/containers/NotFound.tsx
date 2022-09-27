@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useLocalizedString } from '../modules/i18n'
+import { useLocalizedString } from '../contexts/i18n'
 import style from './NotFound.module.css'
 
 export default function NotFound() {

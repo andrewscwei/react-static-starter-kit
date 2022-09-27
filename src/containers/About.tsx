@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useLocalizedString } from '../modules/i18n'
+import { useLocalizedString } from '../contexts/i18n'
 import selectUsers from '../selectors/selectUsers'
 import { AppDispatch, AppState } from '../store'
-import { actionFetchUsers, User } from '../store/users'
+import { actionFetchUsers } from '../store/users'
 import style from './About.module.css'
 
 export default function About() {

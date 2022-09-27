@@ -1,6 +1,6 @@
 import classNames from 'classnames'
 import React, { HTMLAttributes } from 'react'
-import { useChangeLocale, useLocalizedString } from '../modules/i18n'
+import { useChangeLocale, useLocalizedString } from '../contexts/i18n'
 import style from './Footer.module.css'
 
 type Props = HTMLAttributes<HTMLElement>
