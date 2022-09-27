@@ -17,10 +17,10 @@ const inputDir = path.join(__dirname, '../', 'src')
 const outputDir = path.join(__dirname, '../', 'build')
 const port = Number(process.env.PORT ?? 8080)
 const useBundleAnalyzer = process.env.npm_config_analyze === 'true' ? true : false
-const skipOptimizations = isDev || process.env.npm_config_ugly === 'true'
+const skipOptimizations = isDev || process.env.npm_config_raw === 'true'
 
 export default {
-  devtool: skipOptimizations ? false : 'eval-source-map',
+  devtool: isDev ? 'eval-source-map' : false,
   entry: {
     main: path.join(inputDir, 'index.tsx'),
     polyfills: path.join(inputDir, 'polyfills.ts'),
@@ -51,12 +51,12 @@ export default {
         options: {
           importLoaders: 1,
           modules: true,
-          sourceMap: skipOptimizations,
+          sourceMap: isDev,
         },
       }, {
         loader: 'postcss-loader',
         options: {
-          sourceMap: skipOptimizations,
+          sourceMap: isDev,
           postcssOptions: {
             plugins: [
               ['postcss-preset-env', {
