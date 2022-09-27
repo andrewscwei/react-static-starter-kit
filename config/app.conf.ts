@@ -3,8 +3,6 @@
  */
 
 import dotenv from 'dotenv'
-import path from 'path'
-import requireDir from 'require-dir'
 import { description, homepage, version } from '../package.json'
 
 dotenv.config()
@@ -28,7 +26,4 @@ export default {
     // App URL.
     url: homepage,
   },
-
-  // i18n translations.
-  translations: requireDir(path.resolve('./config/locales')),
 }

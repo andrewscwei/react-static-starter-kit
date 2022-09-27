@@ -18,17 +18,11 @@ worker.postMessage({ message: 'Hello, world!' })
 worker.addEventListener('message', event => debug(event.data.message))
 
 const translations = (() => {
-  // In development, use require context to load translations so they can be reloaded by Webpack.
-  if (process.env.NODE_ENV === 'development') {
-    const req = require.context('../config/locales', true, /^.*\.json$/)
-    return req.keys().reduce((prev, curr) => ({
-      ...prev,
-      [curr.replace('./', '').replace('.json', '')]: req(curr),
-    }), {})
-  }
-  else {
-    return __CONFIG__.translations
-  }
+  const req = require.context('./locales', true, /^.*\.json$/)
+  return req.keys().reduce((prev, curr) => ({
+    ...prev,
+    [curr.replace('./', '').replace('.json', '')]: req(curr),
+  }), {})
 })()
 
 const container = document.getElementById('app')

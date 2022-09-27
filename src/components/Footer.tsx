@@ -18,7 +18,7 @@ export default function Footer({
         <a href='https://github.com/andrewscwei/react-isomorphic-starter-kit'/>
       </nav>
       <button className={style.button} onClick={() => changeLocale('en')}>{ltxt('en')}</button>
-      <button className={style.button} onClick={() => changeLocale('ja')}>{ltxt('jp')}</button>
+      <button className={style.button} onClick={() => changeLocale('jp')}>{ltxt('jp')}</button>
     </footer>
   )
 }

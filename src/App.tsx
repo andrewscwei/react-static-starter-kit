@@ -14,8 +14,8 @@ export default function App() {
       <Routes>
         <Route path='/' element={<Home/>}/>
         <Route path='quote' element={<QuoteProvider><About/></QuoteProvider>}/>
-        <Route path='ja' element={<Home/>}/>
-        <Route path='ja/quote' element={<QuoteProvider><About/></QuoteProvider>}/>
+        <Route path='jp' element={<Home/>}/>
+        <Route path='jp/quote' element={<QuoteProvider><About/></QuoteProvider>}/>
         <Route path='*' element={<NotFound/>}/>
       </Routes>
       <Footer/>
