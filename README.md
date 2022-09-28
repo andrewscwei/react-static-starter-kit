@@ -4,14 +4,16 @@ This is an experimental starter kit for a React static app.
 
 ## Features
 
-1. HMR (in development)
-2. [TypeScript](https://www.typescriptlang.org/)
-3. [React Router](https://reacttraining.com/react-router/)
-4. i18n support via Context API
-5. CSS Modules + [PostCSS](https://postcss.org/)
+1. [React Router](https://reacttraining.com/react-router/)
+2. [Polyglot](https://airbnb.io/polyglot.js/)
+3. [CSS Modules](https://github.com/css-modules/css-modules) + [PostCSS](https://postcss.org/)
+4. HMR (in development)
+5. [TypeScript](https://www.typescriptlang.org/) + [Babel](https://babeljs.io/)
 6. [Jest](https://jestjs.io/)
-7. [ESLint](https://eslint.org/)
-8. [StyleLint](https://stylelint.io/)
+7. [ESLint](https://eslint.org/) + [StyleLint](https://stylelint.io/)
+8. [webpack](https://webpack.js.org/)
+9. CI/CD via [GitHub Actions](https://github.com/features/actions)
+10. Favicon/OG image/Twitter card resources for [Affinity Designer](https://affinity.serif.com/en-us/designer/)
 
 ## Usage
 
