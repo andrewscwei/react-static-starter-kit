@@ -9,15 +9,14 @@ dotenv.config()
 
 export default {
   // Version number.
-  version: `v${version}${process.env.NODE_ENV === 'production' ? '' : `-${(process.env.NODE_ENV ?? 'development').substring(0, 3)}`}`,
+  version: `${version}${process.env.NODE_ENV === 'production' ? '' : `-${(process.env.NODE_ENV ?? 'development').substring(0, 3)}`}`,
 
   // Build number.
   buildNumber: process.env.BUILD_NUMBER ?? 'local',
 
   // HTML metadata.
   meta: {
-    // Fallback default window title (the window title should be set by individual contianers for
-    // localization support).
+    // Fallback default window title.
     title: 'React Static Starter Kit',
 
     // Short description of the app.
