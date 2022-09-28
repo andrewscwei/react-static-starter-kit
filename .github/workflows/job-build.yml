@@ -21,7 +21,9 @@ jobs:
             ${{ runner.os }}-
       - name: Install Node modules
         run: npm install
+      - name: Run unit tests
+        run: npm run test:ts
       - name: Build
         run: npm run build
-      - name: Test
+      - name: Run integration tests
         run: npm test

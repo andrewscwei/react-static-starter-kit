@@ -15,7 +15,7 @@
     "dev": "cross-env NODE_ENV=development webpack-cli serve --mode development --config config/build.conf.ts",
     "lint": "npm run lint:ts && npm run lint:css",
     "lint:fix": "npm run lint:ts:fix && npm run lint:css:fix",
-    "lint:ts": "eslint --ext .ts --ext .tsx src config",
+    "lint:ts": "eslint --ext .ts --ext .tsx src config tests",
     "lint:ts:fix": "npm run lint -- --fix",
     "lint:css": "stylelint src/**/*.css",
     "lint:css:fix": "npm run lint:css -- --fix"
