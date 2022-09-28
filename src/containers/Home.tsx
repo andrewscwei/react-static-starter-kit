@@ -1,14 +1,13 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import ReactLogo from '../components/ReactLogo'
+import useWindowTitle from '../hooks/useWindowTitle'
 import { useLocalizedString } from '../providers/i18n'
 import style from './Home.module.css'
 
 export default function Home() {
   const ltxt = useLocalizedString()
 
-  useEffect(() => {
-    document.title = ltxt('window-title-home')
-  }, [])
+  useWindowTitle(ltxt('window-title-home'))
 
   return (
     <main>

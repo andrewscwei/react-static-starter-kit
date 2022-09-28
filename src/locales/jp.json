@@ -8,8 +8,8 @@
   "description": "実験的なReactスタティックアプリケーションのスターターキット。",
   "not-found-title": "ページが表示できません",
   "quote-title": "誰からの引用…",
-  "x-quote-text": "\"%{x}\"",
-  "x-quote-author": "~%{x}",
+  "quote-text": "\"%{text}\"",
+  "quote-author": "~%{author}",
   "en": "EN",
   "jp": "日"
 }

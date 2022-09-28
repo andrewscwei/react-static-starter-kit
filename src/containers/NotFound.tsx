@@ -1,13 +1,12 @@
-import React, { useEffect } from 'react'
+import React from 'react'
+import useWindowTitle from '../hooks/useWindowTitle'
 import { useLocalizedString } from '../providers/i18n'
 import style from './NotFound.module.css'
 
 export default function NotFound() {
   const ltxt = useLocalizedString()
 
-  useEffect(() => {
-    document.title = ltxt('window-title-not-found')
-  })
+  useWindowTitle(ltxt('window-title-not-found'))
 
   return (
     <main>
