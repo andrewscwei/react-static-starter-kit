@@ -53,8 +53,8 @@ export default function I18nRouterProvider({
     defaultLocale,
     locale,
     supportedLocales,
-    getLocalizedString: (...args) => polyglot.t(...args),
     getLocalizedPath: path => getLocalizedURL(path, locale, { defaultLocale, supportedLocales, location: 'path' }),
+    getLocalizedString: (...args) => polyglot.t(...args),
   }
 
   return (
