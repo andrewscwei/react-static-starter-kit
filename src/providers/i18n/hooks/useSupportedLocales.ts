@@ -3,19 +3,19 @@ import { I18nContext } from '../I18nProvider'
 import { I18nRouterContext } from '../I18nRouterProvider'
 
 /**
- * Hook for retrieving the path localizing function for the current locale.
+ * Hook for retrieving all supported locales.
  *
- * @returns The path localizing function.
+ * @returns All supported locales.
  */
-export default function useLocalizedPath() {
+export default function useSupportedLocales() {
   const routerContext = useContext(I18nRouterContext)
   const context = useContext(I18nContext)
 
   if (context) {
-    return (path: string) => path
+    return context.state.supportedLocales
   }
   else if (routerContext) {
-    return routerContext.getLocalizedPath
+    return routerContext.supportedLocales
   }
   else {
     throw Error('Cannot fetch the value of any compatible i18n context, is the corresponding provider instated?')

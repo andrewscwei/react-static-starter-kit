@@ -1,24 +1,59 @@
 import Polyglot from 'node-polyglot'
-import React, { createContext, PropsWithChildren, useRef } from 'react'
-import { useLocation } from 'react-router'
-import { getLocaleFromURL, getLocalizedURL } from './utils/urls'
+import React, { createContext, PropsWithChildren, useContext, useRef } from 'react'
+import { Route, Routes, useLocation } from 'react-router'
+import { getLocaleFromURL, getLocalizedURL, getUnlocalizedURL } from './utils/urls'
 
 interface Translation { [key: string]: Translation | string }
 
 type I18nRouterContextValue = {
   defaultLocale: string
   locale: string
+  location: 'path' | 'query'
   supportedLocales: string[]
   getLocalizedPath: (path: string) => string
   getLocalizedString: typeof Polyglot.prototype.t
 }
 
 type I18nRouterProviderProps = PropsWithChildren<{
-  defaultLocale: string
+  defaultLocale: I18nRouterContextValue['defaultLocale']
+  location?: I18nRouterContextValue['location']
   translations: Record<string, Translation>
 }>
 
 export const I18nRouterContext = createContext<I18nRouterContextValue | undefined>(undefined)
+
+/**
+ * Custom {@link Routes} container that generates child {@link Route} components for all locales
+ * supported by {@link I18nRouterProvider}.
+ */
+export function I18nRoutes({ children }: PropsWithChildren) {
+  const context = useContext(I18nRouterContext)
+  if (!context) throw Error('Cannot fetch the value of I18nRouterContext, is the corresponding provider instated?')
+
+  const { defaultLocale, location, supportedLocales } = context
+
+  switch (location) {
+  case 'path':
+    return (
+      <Routes>
+        {supportedLocales.map(locale => (
+          <Route key={locale} path={locale === defaultLocale ? '/' : locale}>
+            {children}
+          </Route>
+        ))}
+      </Routes>
+    )
+  case 'query':
+  default:
+    return (
+      <Routes>
+        <Route path={'/'}>
+          {children}
+        </Route>
+      </Routes>
+    )
+  }
+}
 
 /**
  * Context provider whose value is the current i18n state. With this provider, the current locale
@@ -31,9 +66,11 @@ export const I18nRouterContext = createContext<I18nRouterContextValue | undefine
 export default function I18nRouterProvider({
   children,
   defaultLocale,
+  location = 'path',
   translations,
 }: I18nRouterProviderProps) {
-  const { pathname: path } = useLocation()
+  const { pathname, search, hash } = useLocation()
+  const path = `${pathname}${search}${hash}`
   const supportedLocales = Object.keys(translations)
 
   const polyglots = useRef<Record<string, Polyglot>>(supportedLocales.reduce((prev, curr) => ({
@@ -41,8 +78,8 @@ export default function I18nRouterProvider({
     [curr]: new Polyglot({ locale: curr, phrases: translations[curr] }),
   }), {}))
 
-  const localeInfo = getLocaleFromURL(path, { defaultLocale, location: 'path', supportedLocales })
-  if (!localeInfo) throw Error(`Unable to infer locale from path <${location.pathname}>`)
+  const localeInfo = getLocaleFromURL(path, { defaultLocale, location, supportedLocales })
+  if (!localeInfo) throw Error(`Unable to infer locale from path <${path}>`)
 
   const { locale } = localeInfo
 
@@ -52,8 +89,9 @@ export default function I18nRouterProvider({
   const value: I18nRouterContextValue = {
     defaultLocale,
     locale,
+    location,
     supportedLocales,
-    getLocalizedPath: path => getLocalizedURL(path, locale, { defaultLocale, supportedLocales, location: 'path' }),
+    getLocalizedPath: path => locale === defaultLocale ? getUnlocalizedURL(path, { location, supportedLocales }) : getLocalizedURL(path, locale, { defaultLocale, location, supportedLocales }),
     getLocalizedString: (...args) => polyglot.t(...args),
   }
 

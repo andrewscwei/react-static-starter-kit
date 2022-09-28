@@ -27,7 +27,7 @@ type ResolveLocalizedURLOptions = ResolveLocaleOptions & {
    * Specifies where in the URL the locale should be matched. If `resolver` is provided, this option
    * is ignored.
    */
-  location?: 'subdomain' | 'path' | 'query' | 'auto'
+  location?: 'domain' | 'path' | 'query' | 'auto'
 
   /**
    * Custom resolver function.
@@ -116,7 +116,7 @@ export function resolveLocale(locale?: string, { defaultLocale, supportedLocales
 
 /**
  * Retrieves the locale identifier from a URL. The default behavior of this function to look for the
- * locale identifier in the subdomain first followed by the first directory of the path. You can
+ * locale identifier in the domain first followed by the first directory of the path. You can
  * provide a custom resolver.
  *
  * @param url - The URL, can be a full URL or a valid path.
@@ -138,9 +138,9 @@ export function getLocaleFromURL(url: string, { defaultLocale, location = 'auto'
   else {
     const matchedLocaleFromHost = parts.host?.split('.').filter(t => t)[0]
     const matchedLocaleFromPath = parts.path?.split('/').filter(t => t)[0]
-    const matchedLocaleFromQuery = new URLSearchParams(parts.query).get('lang') ?? new URLSearchParams(parts.query).get('locale')
+    const matchedLocaleFromQuery = new URLSearchParams(parts.query).get('locale')
 
-    if (matchedLocaleFromHost && (location === 'auto' || location === 'subdomain') && (!supportedLocales || supportedLocales.indexOf(matchedLocaleFromHost) >= 0)) return { locale: matchedLocaleFromHost, location: 'subdomain' }
+    if (matchedLocaleFromHost && (location === 'auto' || location === 'domain') && (!supportedLocales || supportedLocales.indexOf(matchedLocaleFromHost) >= 0)) return { locale: matchedLocaleFromHost, location: 'domain' }
     if (matchedLocaleFromPath && (location === 'auto' || location === 'path') && (!supportedLocales || supportedLocales.indexOf(matchedLocaleFromPath) >= 0)) return { locale: matchedLocaleFromPath, location: 'path' }
     if (matchedLocaleFromQuery && (location === 'auto' || location === 'query') && (!supportedLocales || supportedLocales.indexOf(matchedLocaleFromQuery) >= 0)) return { locale: matchedLocaleFromQuery, location: 'query' }
     if (defaultLocale && (!supportedLocales || supportedLocales.indexOf(defaultLocale) >= 0)) return { locale: defaultLocale, location: 'auto' }
@@ -169,20 +169,17 @@ export function getLocalizedURL(url: string, locale: string, { defaultLocale, lo
 
   if (currLocaleInfo) {
     switch (currLocaleInfo.location) {
-    case 'subdomain':
+    case 'domain':
       return constructURL({ ...parts, host: !!parts.host ? `${targetLocale}.${parts.host.split('.').filter(t => t).slice(1).join('.')}` : undefined })
     case 'query':
       if (!parts.query) return url
 
       const searchParams = new URLSearchParams(parts.query)
-      if (!!searchParams.get('lang')) {
-        searchParams.set('lang', targetLocale)
-      }
-      else if (!!searchParams.get('locale')) {
+      if (!!searchParams.get('locale')) {
         searchParams.set('locale', targetLocale)
       }
       else {
-        searchParams.set('lang', targetLocale)
+        searchParams.set('locale', targetLocale)
       }
 
       return constructURL({ ...parts, query: searchParams.toString() })
@@ -194,13 +191,17 @@ export function getLocalizedURL(url: string, locale: string, { defaultLocale, lo
   }
   else {
     switch (location) {
-    case 'subdomain':
+    case 'domain':
       return constructURL({ ...parts, host: !!parts.host ? `${targetLocale}.${parts.host}` : undefined })
     case 'query':
-      if (!parts.query) return url
-
       const searchParams = new URLSearchParams(parts.query)
-      searchParams.set('lang', targetLocale)
+
+      if (targetLocale === defaultLocale) {
+        searchParams.delete('locale')
+      }
+      else {
+        searchParams.set('locale', targetLocale)
+      }
 
       return constructURL({ ...parts, query: searchParams.toString() })
     case 'path':
@@ -226,13 +227,12 @@ export function getUnlocalizedURL(url: string, { location = 'auto', resolver, su
   if (!currLocaleInfo) return url
 
   switch (currLocaleInfo.location) {
-  case 'subdomain':
+  case 'domain':
     return constructURL({ ...parts, host: !!parts.host ? parts.host.split('.').filter(t => t).slice(1).join('.') : undefined })
   case 'query':
     if (!parts.query) return url
 
     const searchParams = new URLSearchParams(parts.query)
-    searchParams.delete('lang')
     searchParams.delete('locale')
 
     return constructURL({ ...parts, query: searchParams.toString() })

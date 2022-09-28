@@ -20,22 +20,17 @@ export default function useChangeLocale() {
     })
   }
   else if (routerContext) {
-    const { defaultLocale, supportedLocales } = routerContext
-    const location = useLocation()
+    const { defaultLocale, location, supportedLocales } = routerContext
+    const { pathname, search, hash } = useLocation()
+    const path = `${pathname}${search}${hash}`
     const navigate = useNavigate()
 
     return (locale: string) => {
       const newPath = locale === defaultLocale
-        ? getUnlocalizedURL(location.pathname, { location: 'path', supportedLocales })
-        : getLocalizedURL(location.pathname, locale, { defaultLocale, location: 'path', supportedLocales })
+        ? getUnlocalizedURL(path, { location, supportedLocales })
+        : getLocalizedURL(path, locale, { defaultLocale, location, supportedLocales })
 
-      navigate({
-        pathname: newPath,
-        search: location.search,
-        hash: location.hash,
-      }, {
-        replace: true,
-      })
+      navigate(newPath)
     }
   }
   else {

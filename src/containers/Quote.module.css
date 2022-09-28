@@ -8,10 +8,10 @@
 .quote {
   color: var(--color-white);
   font-family: var(--font-header);
-  font-size: 2.4em;
+  font-size: 2em;
   font-style: italic;
   font-weight: 400;
-  letter-spacing: 2px;
+  letter-spacing: 1.4px;
   line-height: 130%;
   max-width: 50rem;
   text-align: center;
@@ -20,7 +20,7 @@
 .author {
   color: var(--color-white);
   font-family: var(--font-body);
-  font-size: 1.6em;
+  font-size: 1.4em;
   font-style: italic;
   font-weight: 400;
   margin-top: 1rem;
