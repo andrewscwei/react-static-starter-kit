@@ -9,7 +9,7 @@ This is an experimental starter kit for a React static app.
 3. [CSS Modules](https://github.com/css-modules/css-modules) + [PostCSS](https://postcss.org/)
 4. HMR (in development)
 5. [TypeScript](https://www.typescriptlang.org/) + [Babel](https://babeljs.io/)
-6. [Jest](https://jestjs.io/)
+6. [Jest](https://jestjs.io/) + [React Testing Library](https://testing-library.com/docs/react-testing-library/)
 7. [ESLint](https://eslint.org/) + [StyleLint](https://stylelint.io/)
 8. [webpack](https://webpack.js.org/)
 9. CI/CD via [GitHub Actions](https://github.com/features/actions)
