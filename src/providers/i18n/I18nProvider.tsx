@@ -1,5 +1,5 @@
 import Polyglot from 'node-polyglot'
-import React, { createContext, Dispatch, PropsWithChildren, useReducer, useRef } from 'react'
+import React, { createContext, Dispatch, PropsWithChildren, useMemo, useReducer } from 'react'
 
 interface Translation { [key: string]: Translation | string }
 
@@ -32,7 +32,7 @@ const reducer = (state: I18nContextValue['state'], action: I18nChangeLocaleActio
     return {
       ...state,
       locale: action.locale,
-      getLocalizedString: (...args) => state.polyglots[action.locale].t(...args),
+      getLocalizedString: (...args) => state.polyglots[action.locale]?.t(...args) ?? args[0],
     }
   default:
     return state
@@ -54,19 +54,22 @@ export default function I18nProvider({
 }: I18nProviderProps) {
   const supportedLocales = Object.keys(translations)
 
-  const polyglots = useRef<Record<string, Polyglot>>(supportedLocales.reduce((prev, curr) => ({
-    ...prev,
-    [curr]: new Polyglot({ locale: curr, phrases: translations[curr] }),
-  }), {}))
+  if (supportedLocales.indexOf(defaultLocale) < 0) {
+    console.warn(`Provided supported locales do not contain the default locale <${defaultLocale}>`)
+    supportedLocales.push(defaultLocale)
+  }
 
-  if (!polyglots.current[defaultLocale]) throw Error(`Missing transtions for default locale <${defaultLocale}>`)
+  const polyglots = useMemo<Record<string, Polyglot>>(() => supportedLocales.reduce((out, locale) => ({
+    ...out,
+    [locale]: new Polyglot({ locale, phrases: translations[locale] }),
+  }), {}), [translations])
 
   const [state, dispatch] = useReducer(reducer, {
     defaultLocale,
     locale: defaultLocale,
-    polyglots: polyglots.current,
+    polyglots,
     supportedLocales,
-    getLocalizedString: (...args) => polyglots.current[defaultLocale].t(...args),
+    getLocalizedString: (...args) => polyglots[defaultLocale]?.t(...args) ?? args[0],
   })
 
   return (

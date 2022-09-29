@@ -19,10 +19,7 @@ export default function QuoteProvider({
   const [users, setQuote] = useState<Quote>()
 
   useEffect(() => {
-    request.current?.abort()
-
     const ac = new AbortController()
-    request.current = ac
 
     fetch('https://type.fit/api/quotes', {
       signal: ac.signal,
@@ -35,11 +32,14 @@ export default function QuoteProvider({
       .catch(err => {
         if (err.name === 'AbortError') return
         setQuote(undefined)
-        throw err
+        console.error(err)
       })
+
+    request.current = ac
 
     return () => {
       request.current?.abort()
+      request.current = undefined
     }
   }, [])
 

@@ -73,20 +73,23 @@ export default function I18nRouterProvider({
   const path = `${pathname}${search}${hash}`
   const supportedLocales = Object.keys(translations)
 
-  const polyglots = useMemo<Record<string, Polyglot>>(() =>
-    supportedLocales.reduce((out, locale) => ({
-      ...out,
-      [locale]: new Polyglot({ locale, phrases: translations[locale] }),
-    }), {})
-  , [translations])
+  if (supportedLocales.indexOf(defaultLocale) < 0) {
+    console.warn(`Provided supported locales do not contain the default locale <${defaultLocale}>`)
+    supportedLocales.push(defaultLocale)
+  }
+
+  const polyglots = useMemo<Record<string, Polyglot>>(() => supportedLocales.reduce((out, locale) => ({
+    ...out,
+    [locale]: new Polyglot({ locale, phrases: translations[locale] }),
+  }), {}), [translations])
 
   const localeInfo = getLocaleFromURL(path, { defaultLocale, location, supportedLocales })
-  if (!localeInfo) throw Error(`Unable to infer locale from path <${path}>`)
+  if (!localeInfo) console.warn(`Unable to infer locale from path <${path}>`)
 
-  const { locale } = localeInfo
+  const locale = localeInfo?.locale ?? defaultLocale
 
   const polyglot = polyglots[locale]
-  if (!polyglot) throw Error(`Missing transtions for locale <${locale}>`)
+  if (!polyglot) console.warn(`Missing transtions for locale <${locale}>`)
 
   const value: I18nRouterContextValue = {
     defaultLocale,
@@ -94,7 +97,7 @@ export default function I18nRouterProvider({
     location,
     supportedLocales,
     getLocalizedPath: path => locale === defaultLocale ? getUnlocalizedURL(path, { location, supportedLocales }) : getLocalizedURL(path, locale, { defaultLocale, location, supportedLocales }),
-    getLocalizedString: (...args) => polyglot.t(...args),
+    getLocalizedString: (...args) => polyglot?.t(...args) ?? args[0],
   }
 
   return (

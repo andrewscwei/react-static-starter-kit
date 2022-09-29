@@ -1,17 +1,23 @@
-const req = require.context('./', true, /^.*\.json$/)
 const translations: Record<string, any> = {}
 
-for (const key of req.keys()) {
-  const phrases = req(key)
-  const parts = key.replace('./', '').split('/')
+try {
+  const req = require.context('./', true, /^.*\.json$/)
 
-  let t = translations
+  for (const key of req.keys()) {
+    const phrases = req(key)
+    const parts = key.replace('./', '').split('/')
 
-  for (const part of parts) {
-    const subkey = part.replace('.json', '')
-    t[subkey] = part.endsWith('.json') ? phrases : {}
-    t = t[subkey]
+    let t = translations
+
+    for (const part of parts) {
+      const subkey = part.replace('.json', '')
+      t[subkey] = part.endsWith('.json') ? phrases : {}
+      t = t[subkey]
+    }
   }
+}
+catch (err) {
+  console.error('Loading translations...', 'ERR', err)
 }
 
 export default translations
