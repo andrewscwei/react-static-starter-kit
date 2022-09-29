@@ -139,7 +139,6 @@ export default {
     new HTMLPlugin({
       appConf,
       chunks: ['common', 'main'].concat(isDev ? [] : ['polyfills']),
-      chunksSortMode: 'manual',
       filename: 'index.html',
       inject: true,
       minify: {

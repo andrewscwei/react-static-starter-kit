@@ -11,10 +11,14 @@ export default function Home() {
 
   return (
     <main>
-      <ReactLogo className={style.logo}/>
-      <h1 className={style.title}>{ltxt('hello')}</h1>
-      <pre className={style.version}>v{__CONFIG__.version} ({__CONFIG__.buildNumber})</pre>
-      <p className={style.main}>{ltxt('description') }</p>
+      <div className={style.content}>
+        <ReactLogo className={style.logo}/>
+        <section>
+          <h1 className={style.title}>{ltxt('hello')}</h1>
+          <code className={style.version}>{`v${__CONFIG__.version} (${__CONFIG__.buildNumber})`}</code>
+          <span>{ltxt('description') }</span>
+        </section>
+      </div>
     </main>
   )
 }

@@ -10,7 +10,7 @@ export default function NotFound() {
 
   return (
     <main>
-      <h2 className={style.title}>{ltxt('not-found-title') }</h2>
+      <h1 className={style.title}>{ltxt('not-found-title') }</h1>
     </main>
   )
 }

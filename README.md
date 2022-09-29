@@ -44,7 +44,7 @@ See `scripts` in `package.json` for additional commands.
 
 ## Repository Template
 
-When creating a new repository using `react-static-starter-kit` as a template, follow the steps below to remove the original branding:
+When using `react-static-starter-kit` as a template, follow these steps to debrand:
 
 1. In `/package.json`, edit the fields: `name`, `version`, `description`, `private` and `license`
 2. Remove `/LICENSE` file
@@ -56,5 +56,3 @@ When creating a new repository using `react-static-starter-kit` as a template, f
 6. In `/config/app.conf.ts`, edit `meta.title`
 7. Edit translation files in `/src/locales/` to reflect locale changes
 8. In `/src/components/Footer.tsx`, remove reference to this repository's URL
-
-In terms of configuration and metadata, those were it. The remaining changes are in the individual pages in `/src/containers/` and the assets, components and state containers that they use.
