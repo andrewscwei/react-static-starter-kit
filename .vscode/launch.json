@@ -4,14 +4,37 @@
     {
       "type": "chrome",
       "request": "launch",
-      "name": "Debug",
+      "name": "Debug (Chrome)",
       "url": "http://localhost:8080",
       "webRoot": "${workspaceFolder}",
       "sourceMapPathOverrides": {
-        "meteor://💻app/*": "${workspaceFolder}/*",
-        "webpack:///./~/*": "${workspaceFolder}/node_modules/*",
-        "webpack://?:*/*": "${workspaceFolder}/*"
+        "webpack:///./~/*": "${webRoot}/node_modules/*",
+        "webpack://?:*/*": "${webRoot}/*"
       }
+    },
+    {
+      "type": "firefox",
+      "request": "launch",
+      "name": "Debug (Firefox)",
+      "url": "http://localhost:8080",
+      "webRoot": "${workspaceFolder}",
+      "pathMappings": [
+        {
+          "url": "webpack://react-static-starter-kit/node_modules",
+          "path": "${workspaceFolder}/node_modules"
+        },
+        {
+          "url": "webpack://react-static-starter-kit/src",
+          "path": "${workspaceFolder}/src"
+        }
+      ]
+    },
+    {
+      "type": "msedge",
+      "request": "launch",
+      "name": "Debug (Edge)",
+      "url": "http://localhost:8080",
+      "webRoot": "${workspaceFolder}"
     }
   ]
 }
