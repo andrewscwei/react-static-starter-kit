@@ -1,10 +1,7 @@
 import React from 'react'
 import { createRoot } from 'react-dom/client'
-import { BrowserRouter } from 'react-router-dom'
 import Worker from 'worker-loader!./workers/web'
 import App from './App'
-import translations from './locales'
-import { I18nRouterProvider } from './providers/i18n'
 import useDebug from './utils/useDebug'
 
 window.__VERSION__ = `v${__CONFIG__.version}/${__CONFIG__.buildNumber}`
@@ -21,12 +18,6 @@ worker.addEventListener('message', event => {
 
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 const app = createRoot(document.getElementById('app')!)
-app.render(
-  <BrowserRouter>
-    <I18nRouterProvider defaultLocale={'en'} translations={translations}>
-      <App/>
-    </I18nRouterProvider>
-  </BrowserRouter>
-)
+app.render(<App/>)
 
 debug('Rendering app...', 'OK')

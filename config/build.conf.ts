@@ -177,7 +177,7 @@ export default {
     },
   },
   resolve: {
-    extensions: ['.js', '.ts', '.tsx', '.json'],
+    extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
   },
   stats: {
     colors: true,

@@ -1,5 +1,5 @@
 import Polyglot from 'node-polyglot'
-import React, { createContext, PropsWithChildren, useContext, useRef } from 'react'
+import React, { createContext, PropsWithChildren, useContext, useMemo } from 'react'
 import { Route, Routes, useLocation } from 'react-router'
 import { getLocaleFromURL, getLocalizedURL, getUnlocalizedURL } from './utils/urls'
 
@@ -73,17 +73,19 @@ export default function I18nRouterProvider({
   const path = `${pathname}${search}${hash}`
   const supportedLocales = Object.keys(translations)
 
-  const polyglots = useRef<Record<string, Polyglot>>(supportedLocales.reduce((prev, curr) => ({
-    ...prev,
-    [curr]: new Polyglot({ locale: curr, phrases: translations[curr] }),
-  }), {}))
+  const polyglots = useMemo<Record<string, Polyglot>>(() =>
+    supportedLocales.reduce((out, locale) => ({
+      ...out,
+      [locale]: new Polyglot({ locale, phrases: translations[locale] }),
+    }), {})
+  , [translations])
 
   const localeInfo = getLocaleFromURL(path, { defaultLocale, location, supportedLocales })
   if (!localeInfo) throw Error(`Unable to infer locale from path <${path}>`)
 
   const { locale } = localeInfo
 
-  const polyglot = polyglots.current[locale]
+  const polyglot = polyglots[locale]
   if (!polyglot) throw Error(`Missing transtions for locale <${locale}>`)
 
   const value: I18nRouterContextValue = {
