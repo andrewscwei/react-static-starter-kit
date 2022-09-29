@@ -10,7 +10,7 @@ jobs:
     secrets: inherit
   release:
     name: Release
-    uses: ./.github/workflows/job-build.yml
+    uses: ./.github/workflows/job-release.yml
     needs: [build]
     secrets: inherit
   notify:
