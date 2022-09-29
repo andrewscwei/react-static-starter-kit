@@ -9,7 +9,7 @@
   "not-found-title": "ページが表示できません",
   "quote-title": "誰からの引用…",
   "quote-text": "\"%{text}\"",
-  "quote-author": "~%{author}",
+  "quote-author": "~ %{author}",
   "en": "EN",
   "jp": "日"
 }
