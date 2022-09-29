@@ -109,7 +109,6 @@ export default {
   },
   output: {
     filename: skipOptimizations ? '[name].js' : '[chunkhash].js',
-    globalObject: 'this', // https://github.com/webpack/webpack/issues/6642#issuecomment-371087342
     path: outputDir,
     publicPath: process.env.PUBLIC_PATH || '/',
     sourceMapFilename: '[file].map',
