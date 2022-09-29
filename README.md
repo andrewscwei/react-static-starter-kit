@@ -1,18 +1,19 @@
 # React Static Starter Kit [![CI](https://github.com/andrewscwei/react-static-starter-kit/workflows/CI/badge.svg)](https://github.com/andrewscwei/react-static-starter-kit/actions?query=workflow%3ACI) [![Netlify Status](https://img.shields.io/netlify/8fc40796-fac4-41bb-8e59-8d1ee7338966)](https://app.netlify.com/sites/react-static-starter-kit/deploys)
 
-This is an **experimental** starter kit for a React static app.
+This is an experimental starter kit for a React static app.
 
 ## Features
 
-1. Prerendering with [react-snap](https://github.com/stereobooster/react-snap)
-2. HMR (in development)
-3. [TypeScript](https://www.typescriptlang.org/)
-4. [React Router](https://reacttraining.com/react-router/), routes automatically generated and localized
-5. [Redux](https://redux.js.org/introduction)
-6. [Polyglot](http://airbnb.io/polyglot.js/)
-7. [Styled Components](https://www.styled-components.com/)
-8. [Jest](https://jestjs.io/) config
-9. [ESLint](https://eslint.org/)
+1. [React Router](https://reacttraining.com/react-router/)
+2. [Polyglot](https://airbnb.io/polyglot.js/)
+3. [CSS Modules](https://github.com/css-modules/css-modules) + [PostCSS](https://postcss.org/)
+4. HMR (in development)
+5. [TypeScript](https://www.typescriptlang.org/) + [Babel](https://babeljs.io/)
+6. [Jest](https://jestjs.io/) + [React Testing Library](https://testing-library.com/docs/react-testing-library/)
+7. [ESLint](https://eslint.org/) + [StyleLint](https://stylelint.io/)
+8. [webpack](https://webpack.js.org/)
+9. CI/CD via [GitHub Actions](https://github.com/features/actions)
+10. Favicon/OG image/Twitter card resources for [Affinity Designer](https://affinity.serif.com/en-us/designer/)
 
 ## Usage
 
@@ -35,8 +36,8 @@ $ npm run build
 # Analyzes the size the generated bundle(s) and displays a visual report in the default browser
 $ npm run build --analyze
 
-# Measures the speed of the build pipeline and outputs a report to console
-$ npm run build --speed
+# Builds the app but skips all HTML/CSS/JS minifications
+$ npm run build --raw
 ```
 
 See `scripts` in `package.json` for additional commands.
@@ -52,9 +53,8 @@ When creating a new repository using `react-static-starter-kit` as a template, f
 5. In `/resources/`, edit the app icon and favicon regenerate the sources
   1. In `/src/static/`, replace the app icon and favicon sources
   2. Update `/src/static/manifest.json`
-6. In `/src/app.conf.ts`, edit `meta.title` and `locales` fields
-  1. Edit translation files in `/config/locales/` to reflect locale changes
-  2. Edit `/src/routes.conf.ts` to reflect locale changes
-7. In `/src/components/Footer.tsx`, remove reference to this repository's URL
+6. In `/config/app.conf.ts`, edit `meta.title`
+7. Edit translation files in `/src/locales/` to reflect locale changes
+8. In `/src/components/Footer.tsx`, remove reference to this repository's URL
 
 In terms of configuration and metadata, those were it. The remaining changes are in the individual pages in `/src/containers/` and the assets, components and state containers that they use.

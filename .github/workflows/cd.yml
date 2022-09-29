@@ -5,44 +5,22 @@ on:
     tags: ["v*"]
 jobs:
   build:
-    name: Build/Test
-    runs-on: ubuntu-latest
-    container: node:16.3.0
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Install APT dependencies for Puppeteer
-        run: apt-get update && apt-get install -yq gconf-service libasound2 libatk1.0-0 libatk-bridge2.0-0 libc6 libcairo2 libcups2 libdbus-1-3 libexpat1 libfontconfig1 libgcc1 libgconf-2-4 libgdk-pixbuf2.0-0 libglib2.0-0 libgtk-3-0 libnspr4 libpango-1.0-0 libpangocairo-1.0-0 libstdc++6 libx11-6 libx11-xcb1 libxcb1 libxcomposite1 libxcursor1 libxdamage1 libxext6 libxfixes3 libxi6 libxrandr2 libxrender1 libxss1 ca-certificates fonts-liberation libappindicator1 libnss3 lsb-release xdg-utils wget
-      - name: Cache Node modules
-        uses: actions/cache@v2
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-build-npm-cache-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-npm-cache-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
-      - name: Install Node modules
-        run: npm install
-      - name: Build
-        run: BUILD_NUMBER=$(echo ${{ github.sha }} | head -c7) npm run build
-      - name: Test
-        run: npm run test:ts && npm test
-  deploy:
-    name: Deploy
+    name: Build
+    uses: ./.github/workflows/job-build.yml
+    secrets: inherit
+  release:
+    name: Release
+    uses: ./.github/workflows/job-build.yml
     needs: [build]
+    secrets: inherit
+  notify:
+    name: Notify
+    needs: [build, release]
+    if: ${{ always() }}
     runs-on: ubuntu-latest
-    container: node:16.3.0
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Create release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: andrewscwei/telegram-action@v1.0.0
         with:
-          tag_name: ${{ github.ref }}
-          release_name: ${{ github.ref }}
-          body_path: RELEASE.md
-          draft: false
-          prerelease: false
+          success: ${{ needs.build.result == 'success' && needs.release.result == 'success' }}
+          bot-token: ${{ secrets.TELEGRAM_DEVOPS_BOT_TOKEN }}
+          chat-id: ${{ secrets.TELEGRAM_DEVOPS_CHAT_ID }}

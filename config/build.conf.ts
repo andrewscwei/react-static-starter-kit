@@ -1,32 +1,28 @@
 /**
- * @file This is the Webpack config for compiling client assets in both `development` and
- *       `production` environments.
+ * @file Webpack config for building the app in both `development` and `production` environments.
  */
 
 import ReactRefreshPlugin from '@pmmmwh/react-refresh-webpack-plugin'
 import CopyPlugin from 'copy-webpack-plugin'
 import ForkTSCheckerPlugin from 'fork-ts-checker-webpack-plugin'
 import HTMLPlugin from 'html-webpack-plugin'
+import MiniCSSExtractPlugin from 'mini-css-extract-plugin'
 import path from 'path'
-import { Configuration, DefinePlugin, EnvironmentPlugin, IgnorePlugin } from 'webpack'
+import { DefinePlugin, EnvironmentPlugin, IgnorePlugin } from 'webpack'
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
-import appConf from '../src/app.conf'
-import { getLocalesFromDir, getTranslationsFromDir } from './utils'
+import appConf from './app.conf'
 
 const isDev = process.env.NODE_ENV === 'development'
-const cwd = path.join(__dirname, '../')
-const inputDir = path.join(cwd, 'src')
-const outputDir = path.join(cwd, 'build')
-const localesDir = path.join(cwd, 'config/locales')
-const locales = getLocalesFromDir(localesDir, appConf.locales[0], appConf.locales)
-const port = Number(process.env.PORT) || 8080
+const inputDir = path.join(__dirname, '../', 'src')
+const outputDir = path.join(__dirname, '../', 'build')
+const port = Number(process.env.PORT ?? 8080)
 const useBundleAnalyzer = process.env.npm_config_analyze === 'true' ? true : false
-const useSpeedMeasurer = process.env.npm_config_speed === 'true' ? true : false
+const skipOptimizations = isDev || process.env.npm_config_raw === 'true'
 
-const config: Configuration = {
+export default {
   devtool: isDev ? 'eval-source-map' : false,
   entry: {
-    main: path.join(inputDir, 'index.ts'),
+    main: path.join(inputDir, 'index.tsx'),
     polyfills: path.join(inputDir, 'polyfills.ts'),
   },
   infrastructureLogging: {
@@ -36,73 +32,97 @@ const config: Configuration = {
   module: {
     rules: [{
       exclude: /node_modules/,
-      test: /\.tsx?$/,
+      test: /\.[jt]sx?$/,
       use: [{
         loader: 'babel-loader',
         options: {
           cacheDirectory: true,
-          ...isDev ? {
-            plugins: [require.resolve('react-refresh/babel')],
-          } : {},
+          plugins: [
+            isDev && require.resolve('react-refresh/babel'),
+          ].filter(Boolean),
         },
       }],
+    }, {
+      test: /\.css$/,
+      use: [{
+        loader: isDev ? 'style-loader' : MiniCSSExtractPlugin.loader,
+      }, {
+        loader: 'css-loader',
+        options: {
+          importLoaders: 1,
+          modules: true,
+          sourceMap: isDev,
+        },
+      }, {
+        loader: 'postcss-loader',
+        options: {
+          sourceMap: isDev,
+          postcssOptions: {
+            plugins: [
+              ['postcss-preset-env', {
+                features: {
+                  'nesting-rules': true,
+                },
+              }],
+              !skipOptimizations && 'cssnano',
+            ].filter(Boolean),
+          },
+        },
+      }],
+    }, {
+      test: /\.svg$/,
+      include: /assets\/svgs/,
+      type: 'asset/source',
     }, {
       test: /\.(jpe?g|png|gif|svg)(\?.*)?$/,
-      use: [{
-        loader: 'url-loader',
-        options: {
-          esModule: false,
-          limit: 8192,
-          name: `assets/images/[name]${isDev ? '' : '.[hash:6]'}.[ext]`,
-        },
-      }],
+      exclude: /assets\/svgs/,
+      type: 'asset',
+      generator: {
+        filename: `assets/images/${skipOptimizations ? '[name]' : '[hash:base64]'}.[ext]`,
+      },
     }, {
       test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
-      use: [{
-        loader: 'url-loader',
-        options: {
-          esModule: false,
-          limit: 8192,
-          name: `assets/media/[name]${isDev ? '' : '.[hash:6]'}.[ext]`,
-        },
-      }],
+      type: 'asset',
+      generator: {
+        filename: `assets/media/${skipOptimizations ? '[name]' : '[hash:base64]'}.[ext]`,
+      },
     }, {
       test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
-      use: [{
-        loader: 'url-loader',
-        options: {
-          esModule: false,
-          limit: 8192,
-          name: `assets/fonts/[name]${isDev ? '' : '.[hash:6]'}.[ext]`,
-        },
-      }],
+      type: 'asset',
+      generator: {
+        filename: `assets/fonts/${skipOptimizations ? '[name]' : '[hash:base64]'}.[ext]`,
+      },
     }],
   },
   optimization: {
+    minimize: !skipOptimizations,
     splitChunks: {
       cacheGroups: {
         common: {
-          test: /node_modules/,
           chunks: 'all',
-          name: 'common',
           enforce: true,
+          name: 'common',
+          test: /node_modules/,
         },
       },
     },
   },
   output: {
-    filename: isDev ? '[name].js' : '[name].[chunkhash].js',
+    filename: skipOptimizations ? '[name].js' : '[chunkhash].js',
     path: outputDir,
     publicPath: process.env.PUBLIC_PATH || '/',
     sourceMapFilename: '[file].map',
-    globalObject: 'this', // https://github.com/webpack/webpack/issues/6642#issuecomment-371087342
   },
   performance: {
     hints: isDev ? false : 'warning',
-    maxEntrypointSize: 512 * 1024,
     maxAssetSize: 512 * 1024,
+    maxEntrypointSize: 512 * 1024,
   },
   plugins: [
+    new MiniCSSExtractPlugin({
+      chunkFilename: skipOptimizations ? '[id].css' : '[chunkhash].css',
+      filename: skipOptimizations ? '[name].css' : '[chunkhash].css',
+    }),
     new ForkTSCheckerPlugin(),
     new CopyPlugin({
       patterns: [{
@@ -114,12 +134,7 @@ const config: Configuration = {
       NODE_ENV: 'production',
     }),
     new DefinePlugin({
-      __APP_CONFIG__: JSON.stringify(appConf),
-      __I18N_CONFIG__: JSON.stringify({
-        defaultLocale: appConf.locales[0],
-        locales,
-        dict: getTranslationsFromDir(localesDir, locales),
-      }),
+      __CONFIG__: JSON.stringify(appConf),
     }),
     new HTMLPlugin({
       appConf,
@@ -134,41 +149,34 @@ const config: Configuration = {
       },
       template: path.join(inputDir, 'templates', 'index.html'),
     }),
-    ...isDev ? [
-      new ReactRefreshPlugin(),
-    ] : [
-      new IgnorePlugin({
-        resourceRegExp: /^.*\/config\/.*$/,
-      }),
-    ],
-    ...!useBundleAnalyzer ? [] : [
-      new BundleAnalyzerPlugin({
-        analyzerMode: 'static',
-      }),
-    ],
-  ],
-  ...!isDev ? {} : {
-    devServer: {
-      client: {
-        logging: 'error',
-      },
-      headers: {
-        'Access-Control-Allow-Origin': `http://localhost:${port}`,
-        'Access-Control-Allow-Methods': 'GET,OPTIONS,HEAD,PUT,POST,DELETE,PATCH',
-        'Access-Control-Allow-Headers': 'Origin, Content-Type, Accept, Authorization, X-Request-With',
-        'Access-Control-Allow-Credentials': 'true',
-      },
-      historyApiFallback: true,
-      host: '0.0.0.0',
-      hot: true,
-      port,
-      static: {
-        publicPath: process.env.PUBLIC_PATH || '/',
-      },
+    isDev && new ReactRefreshPlugin(),
+    !isDev && new IgnorePlugin({
+      resourceRegExp: /^.*\/config\/.*$/,
+    }),
+    useBundleAnalyzer && new BundleAnalyzerPlugin({
+      analyzerMode: 'static',
+    }),
+  ].filter(Boolean),
+  devServer: {
+    client: {
+      logging: 'error',
+    },
+    headers: {
+      'Access-Control-Allow-Origin': `http://localhost:${port}`,
+      'Access-Control-Allow-Methods': 'GET,OPTIONS,HEAD,PUT,POST,DELETE,PATCH',
+      'Access-Control-Allow-Headers': 'Origin, Content-Type, Accept, Authorization, X-Request-With',
+      'Access-Control-Allow-Credentials': 'true',
+    },
+    historyApiFallback: true,
+    host: '0.0.0.0',
+    hot: true,
+    port,
+    static: {
+      publicPath: process.env.PUBLIC_PATH || '/',
     },
   },
   resolve: {
-    extensions: ['.js', '.ts', '.tsx'],
+    extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
   },
   stats: {
     colors: true,
@@ -178,5 +186,3 @@ const config: Configuration = {
   },
   target: 'web',
 }
-
-export default useSpeedMeasurer ? (new (require('speed-measure-webpack-plugin'))()).wrap(config) : config
