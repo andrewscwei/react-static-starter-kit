@@ -92,7 +92,6 @@ export default function useFetch<Params extends Record<string, any>, Result>(
     runningCountRef.current++
     invalidateIsRunning()
 
-
     await useCase.run(params)
       .then(result => {
         debug(`Interacting with use case <${useCaseName}>...`, 'OK', result)
