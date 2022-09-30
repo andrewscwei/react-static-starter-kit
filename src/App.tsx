@@ -8,7 +8,6 @@ import Home from './pages/Home'
 import NotFound from './pages/NotFound'
 import Quote from './pages/Quote'
 import I18nRouterProvider, { I18nRoutes } from './providers/i18n/I18nRouterProvider'
-import { QuoteProvider } from './providers/quotes'
 import './styles/global.css'
 
 export default function App() {
@@ -18,7 +17,7 @@ export default function App() {
         <Header/>
         <I18nRoutes>
           <Route index element={<Home/>}/>
-          <Route path='quote' element={<QuoteProvider><Quote/></QuoteProvider>}/>
+          <Route path='quote' element={<Quote/>}/>
           <Route path='*' element={<NotFound/>}/>
         </I18nRoutes>
         <Footer/>

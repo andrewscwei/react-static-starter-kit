@@ -1,14 +1,19 @@
-import React, { useContext } from 'react'
+import React, { useEffect } from 'react'
+import useFetch from '../hooks/useFetch'
 import useWindowTitle from '../hooks/useWindowTitle'
+import GetQuote from '../interactors/useCases/GetQuote'
 import { useLocalizedString } from '../providers/i18n'
-import { QuoteContext } from '../providers/quotes/QuoteProvider'
 import style from './Quote.module.css'
 
 export default function About() {
   const ltxt = useLocalizedString()
-  const quote = useContext(QuoteContext)
+  const [getQuote, quote] = useFetch(GetQuote)
 
   useWindowTitle(ltxt('window-title-quote'))
+
+  useEffect(() => {
+    getQuote()
+  }, [])
 
   return (
     <main>
