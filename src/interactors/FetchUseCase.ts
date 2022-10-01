@@ -1,6 +1,7 @@
-import axios, { Method } from 'axios'
 import objectHash from 'object-hash'
 import UseCase from './UseCase'
+
+type RequestMethod = 'GET' | 'HEAD' | 'POST' | 'PUT' | 'DELETE' | 'CONNECT' | 'OPTIONS' | 'TRACE' | 'PATCH'
 
 type CachedResult<Result> = {
   value: Result
@@ -8,12 +9,19 @@ type CachedResult<Result> = {
 }
 
 type RunOptions = {
+  /**
+   * Ignores the cached result when running this use case.
+   */
   skipCache?: boolean
+
+  /**
+   * Timeout of the request in seconds. If `undefined` or <= 0, there is no timeout.
+   */
+  timeout?: number
 }
 
 export namespace FetchUseCaseError {
-  export const REQUEST_CANCELLED = Error('Request cancelled')
-  export const NO_NETWORK = Error('No network or no response from server')
+  export const ABORTED = Error('Request cancelled')
 }
 
 /**
@@ -21,31 +29,20 @@ export namespace FetchUseCaseError {
  */
 export default abstract class FetchUseCase<Params extends Record<string, any>, Result> implements UseCase<Params, Result, never> {
 
-  protected readonly request = axios.create()
-
   protected abortController: AbortController | undefined
+
+  private timer: NodeJS.Timeout | undefined
 
   /**
    * Method of the fetch request.
    */
-  get method(): Lowercase<Method> { return 'get' }
+  get method(): RequestMethod { return 'GET' }
 
   /**
    * Time to live (TTL) in seconds for the cached result of this use case. If `NaN` or <= 0, caching
    * is disabled.
    */
   get ttl(): number { return 0 }
-
-  /**
-   * Optional base URL of the fetch request. If provided, this value will be combined with the
-   * return value of {@link getEndpoint} to be used as the request URL. Otherwise, the return value
-   * of {@link getEndpoint} alone will be used as the request URL.
-   *
-   * @param params - The input parameters of this use case.
-   */
-  getHost(params: Params): string | undefined {
-    return undefined
-  }
 
   /**
    * Optional headers to be passed to the request.
@@ -91,16 +88,12 @@ export default abstract class FetchUseCase<Params extends Record<string, any>, R
    * @returns The transformed error.
    */
   transformError(error: unknown): unknown {
-    if (axios.isCancel(error)) return FetchUseCaseError.REQUEST_CANCELLED
-
-    if (axios.isAxiosError(error)) {
-      if (error.code === 'ERR_NETWORK' || error.response?.status === undefined) return FetchUseCaseError.NO_NETWORK
-    }
+    if ((error as any).name === 'AbortError') return FetchUseCaseError.ABORTED
 
     return error
   }
 
-  async run(params: Partial<Params> = {}, { skipCache = false }: RunOptions = {}): Promise<Result> {
+  async run(params: Partial<Params> = {}, { skipCache = false, timeout = 5 }: RunOptions = {}): Promise<Result> {
     this.cancel()
     this.abortController = new AbortController()
 
@@ -113,44 +106,47 @@ export default abstract class FetchUseCase<Params extends Record<string, any>, R
       if (cachedResult) return cachedResult
     }
 
-    const endpoint = this.getEndpoint(params)
-    const host = this.getHost(params)
     const method = this.method
     const headers = this.getHeaders(params)
-
-    let useParamsAsData: boolean
-
-    switch (method) {
-    case 'post':
-    case 'put':
-    case 'patch':
-    case 'delete':
-      useParamsAsData = true
-      break
-    default:
-      useParamsAsData = false
-    }
+    const url = new URL(this.getEndpoint(params))
 
     const transformedParams = this.transformParams(params)
 
+    let useParamsAsBody = false
+
+    switch (method) {
+    case 'POST':
+    case 'PUT':
+    case 'PATCH':
+    case 'DELETE':
+      useParamsAsBody = true
+      break
+    default:
+      url.search = new URLSearchParams(params).toString()
+    }
+
     try {
-      const res = await this.request({
-        baseURL: host,
-        data: useParamsAsData ? transformedParams : undefined,
+      this.startTimeout(timeout)
+
+      const res = await fetch(url, {
+        body: useParamsAsBody ? JSON.stringify(transformedParams) : undefined,
         headers,
         method,
-        params: useParamsAsData ? undefined : transformedParams,
         signal: this.abortController?.signal,
-        url: endpoint,
       })
 
-      const transformedPayload = this.transformResult(res.data)
-
-      if (cacheKey) {
-        this.setCachedResult(cacheKey, transformedPayload)
+      if (!res.ok) {
+        throw Error(res.statusText)
       }
 
-      return transformedPayload
+      const payload = await res.json()
+      const transformedResult = this.transformResult(payload)
+
+      if (cacheKey) {
+        this.setCachedResult(cacheKey, transformedResult)
+      }
+
+      return transformedResult
     }
     catch (err) {
       const error = this.transformError(err)
@@ -173,9 +169,19 @@ export default abstract class FetchUseCase<Params extends Record<string, any>, R
     // Pass
   }
 
+  private startTimeout(seconds = 0) {
+    if (this.timer !== undefined) window.clearTimeout(this.timer)
+
+    if (this.abortController === undefined) return
+    if (seconds <= 0) return
+
+    this.timer = setTimeout(() => {
+      this.abortController?.abort()
+    }, seconds * 1000)
+  }
+
   private createCacheKey(params: Params): string {
     return objectHash({
-      host: this.getHost(params),
       path: this.getEndpoint(params),
       headers: this.getHeaders(params),
       params,
@@ -186,7 +192,7 @@ export default abstract class FetchUseCase<Params extends Record<string, any>, R
   }
 
   private getCachedResult(key: string): Result | undefined {
-    const value = window.localStorage.getItem(key)
+    const value = window.sessionStorage.getItem(key)
     if (!value) return undefined
 
     const cachedResult = JSON.parse(value) as CachedResult<Result>
@@ -209,18 +215,17 @@ export default abstract class FetchUseCase<Params extends Record<string, any>, R
       timestamp: Date.now(),
     }
 
-    window.localStorage.setItem(key, JSON.stringify(cachedResult))
+    window.sessionStorage.setItem(key, JSON.stringify(cachedResult))
 
     return cachedResult
   }
 
   private invalidateCache(key: string) {
-    window.localStorage.removeItem(key)
+    window.sessionStorage.removeItem(key)
   }
 
   /**
-   * Returns the endpoint of this {@link FetchUseCase}. This can be the fully qualified request URL
-   * or be combined with the value of {@link getHost} if provided.
+   * Returns the endpoint of this {@link FetchUseCase}.
    *
    * @param params - The input parameters of this use case.
    *

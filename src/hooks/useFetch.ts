@@ -13,6 +13,11 @@ type Options<T> = {
   skipCache?: boolean
 
   /**
+   * Specifies the number of seconds it takes for the use case to timeout.
+   */
+  timeout?: number
+
+  /**
    * Handler invoked when the use case cancels running.
    */
   onCancel?: () => void
@@ -43,7 +48,8 @@ type Options<T> = {
 export default function useFetch<Params extends Record<string, any>, Result>(
   UseCaseClass: new () => FetchUseCase<Params, Result>,
   {
-    skipCache = false,
+    skipCache,
+    timeout,
     onCancel,
     onError,
     onSuccess,
@@ -87,7 +93,7 @@ export default function useFetch<Params extends Record<string, any>, Result>(
     runningCountRef.current++
     invalidateIsRunning()
 
-    await useCase.run(params, { skipCache })
+    await useCase.run(params, { skipCache, timeout })
       .then(result => {
         debug(`Interacting with use case <${useCaseName}>...`, 'OK', result)
 
@@ -95,7 +101,7 @@ export default function useFetch<Params extends Record<string, any>, Result>(
         onSuccess?.(result)
       })
       .catch(err => {
-        if (err === FetchUseCaseError.REQUEST_CANCELLED) {
+        if (err === FetchUseCaseError.ABORTED) {
           debug(`Interacting with use case <${useCaseName}>...`, 'CANCEL')
           onCancel?.()
         }
