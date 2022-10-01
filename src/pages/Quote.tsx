@@ -7,7 +7,7 @@ import style from './Quote.module.css'
 
 export default function About() {
   const ltxt = useLocalizedString()
-  const [getQuote, quote] = useFetch(GetQuote)
+  const { interact: getQuote, value: quote } = useFetch(GetQuote)
 
   useWindowTitle(ltxt('window-title-quote'))
 

@@ -1,5 +1,15 @@
 import axios, { Method } from 'axios'
+import objectHash from 'object-hash'
 import UseCase from './UseCase'
+
+type CachedResult<Result> = {
+  value: Result
+  timestamp: number
+}
+
+type RunOptions = {
+  skipCache?: boolean
+}
 
 export namespace FetchUseCaseError {
   export const REQUEST_CANCELLED = Error('Request cancelled')
@@ -11,12 +21,20 @@ export namespace FetchUseCaseError {
  */
 export default abstract class FetchUseCase<Params extends Record<string, any>, Result> implements UseCase<Params, Result, never> {
 
+  protected readonly request = axios.create()
+
   protected abortController: AbortController | undefined
 
   /**
    * Method of the fetch request.
    */
   get method(): Lowercase<Method> { return 'get' }
+
+  /**
+   * Time to live (TTL) in seconds for the cached result of this use case. If `NaN` or <= 0, caching
+   * is disabled.
+   */
+  get ttl(): number { return 0 }
 
   /**
    * Optional base URL of the fetch request. If provided, this value will be combined with the
@@ -35,7 +53,10 @@ export default abstract class FetchUseCase<Params extends Record<string, any>, R
    * @params params - The input parameters of this use case.
    */
   getHeaders(params: Params): Record<string, any> | undefined {
-    return undefined
+    return {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json;charset=UTF-8',
+    }
   }
 
   /**
@@ -79,11 +100,18 @@ export default abstract class FetchUseCase<Params extends Record<string, any>, R
     return error
   }
 
-  async run(params: Partial<Params> = {}): Promise<Result> {
+  async run(params: Partial<Params> = {}, { skipCache = false }: RunOptions = {}): Promise<Result> {
     this.cancel()
     this.abortController = new AbortController()
 
     this.validateParams(params)
+
+    const cacheKey = this.ttl > 0 ? this.createCacheKey(params) : undefined
+
+    if (!skipCache && cacheKey) {
+      const cachedResult = this.getCachedResult(cacheKey)
+      if (cachedResult) return cachedResult
+    }
 
     const endpoint = this.getEndpoint(params)
     const host = this.getHost(params)
@@ -106,7 +134,7 @@ export default abstract class FetchUseCase<Params extends Record<string, any>, R
     const transformedParams = this.transformParams(params)
 
     try {
-      const res = await axios({
+      const res = await this.request({
         baseURL: host,
         data: useParamsAsData ? transformedParams : undefined,
         headers,
@@ -117,6 +145,10 @@ export default abstract class FetchUseCase<Params extends Record<string, any>, R
       })
 
       const transformedPayload = this.transformResult(res.data)
+
+      if (cacheKey) {
+        this.setCachedResult(cacheKey, transformedPayload)
+      }
 
       return transformedPayload
     }
@@ -139,6 +171,51 @@ export default abstract class FetchUseCase<Params extends Record<string, any>, R
 
   validateParams(params: Partial<Params>): asserts params is Params {
     // Pass
+  }
+
+  private createCacheKey(params: Params): string {
+    return objectHash({
+      host: this.getHost(params),
+      path: this.getEndpoint(params),
+      headers: this.getHeaders(params),
+      params,
+    }, {
+      unorderedSets: true,
+      unorderedObjects: true,
+    })
+  }
+
+  private getCachedResult(key: string): Result | undefined {
+    const value = window.localStorage.getItem(key)
+    if (!value) return undefined
+
+    const cachedResult = JSON.parse(value) as CachedResult<Result>
+    if (!cachedResult) return undefined
+
+    const { value: result, timestamp } = cachedResult
+    const isStale = (Date.now() - timestamp) / 1000 >= this.ttl
+
+    if (isStale) {
+      this.invalidateCache(key)
+      return undefined
+    }
+
+    return result
+  }
+
+  private setCachedResult(key: string, result: Result): CachedResult<Result> {
+    const cachedResult = {
+      value: result,
+      timestamp: Date.now(),
+    }
+
+    window.localStorage.setItem(key, JSON.stringify(cachedResult))
+
+    return cachedResult
+  }
+
+  private invalidateCache(key: string) {
+    window.localStorage.removeItem(key)
   }
 
   /**
