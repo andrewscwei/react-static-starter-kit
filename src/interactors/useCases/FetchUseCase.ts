@@ -1,5 +1,5 @@
 import objectHash from 'object-hash'
-import UseCase from './UseCase'
+import UseCase from '../UseCase'
 
 type RequestMethod = 'GET' | 'HEAD' | 'POST' | 'PUT' | 'DELETE' | 'CONNECT' | 'OPTIONS' | 'TRACE' | 'PATCH'
 
