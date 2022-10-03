@@ -1,7 +1,7 @@
 import objectHash from 'object-hash'
 import UseCase from '../UseCase'
 
-type RequestMethod = 'GET' | 'HEAD' | 'POST' | 'PUT' | 'DELETE' | 'CONNECT' | 'OPTIONS' | 'TRACE' | 'PATCH'
+type RequestMethod = 'CONNECT' | 'DELETE' | 'GET' | 'HEAD' | 'OPTIONS' | 'PATCH' | 'POST' | 'PUT' | 'TRACE'
 
 type CachedResult<Result> = {
   value: Result

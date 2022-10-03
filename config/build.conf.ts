@@ -131,10 +131,10 @@ export default {
       }],
     }),
     new EnvironmentPlugin({
-      NODE_ENV: 'production',
+      'NODE_ENV': 'production',
     }),
     new DefinePlugin({
-      __CONFIG__: JSON.stringify(appConf),
+      '__CONFIG__': JSON.stringify(appConf),
     }),
     new HTMLPlugin({
       appConf,

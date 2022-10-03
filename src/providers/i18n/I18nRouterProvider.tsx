@@ -36,11 +36,11 @@ export function I18nRoutes({ children }: PropsWithChildren) {
   case 'path':
     return (
       <Routes>
-        {supportedLocales.map(locale => (
+        {supportedLocales.map(locale =>
           <Route key={locale} path={locale === defaultLocale ? '/' : locale}>
             {children}
           </Route>
-        ))}
+        )}
       </Routes>
     )
   case 'query':
@@ -70,7 +70,7 @@ export default function I18nRouterProvider({
   translations,
 }: I18nRouterProviderProps) {
   const { pathname, search, hash } = useLocation()
-  const path = `${pathname}${search}${hash}`
+  const url = `${pathname}${search}${hash}`
   const supportedLocales = Object.keys(translations)
 
   if (supportedLocales.indexOf(defaultLocale) < 0) {
@@ -83,8 +83,8 @@ export default function I18nRouterProvider({
     [locale]: new Polyglot({ locale, phrases: translations[locale] }),
   }), {}), [translations])
 
-  const localeInfo = getLocaleFromURL(path, { defaultLocale, location, supportedLocales })
-  if (!localeInfo) console.warn(`Unable to infer locale from path <${path}>`)
+  const localeInfo = getLocaleFromURL(url, { defaultLocale, location, supportedLocales })
+  if (!localeInfo) console.warn(`Unable to infer locale from path <${url}>`)
 
   const locale = localeInfo?.locale ?? defaultLocale
 

@@ -53,7 +53,7 @@ export default function useFetch<Params extends Record<string, any>, Result>(
     onCancel,
     onError,
     onSuccess,
-  }: Options<Result> = {},
+  }: Options<Result> = {}
 ): Interactor<Params, Result> {
   const totalRunCountRef = useRef(0)
   const runningCountRef = useRef(0)
@@ -94,11 +94,11 @@ export default function useFetch<Params extends Record<string, any>, Result>(
     invalidateIsRunning()
 
     await useCase.run(params, { skipCache, timeout })
-      .then(result => {
-        debug(`Interacting with use case <${useCaseName}>...`, 'OK', result)
+      .then(res => {
+        debug(`Interacting with use case <${useCaseName}>...`, 'OK', res)
 
-        setResult(result)
-        onSuccess?.(result)
+        setResult(res)
+        onSuccess?.(res)
       })
       .catch(err => {
         if (err === FetchUseCaseError.ABORTED) {

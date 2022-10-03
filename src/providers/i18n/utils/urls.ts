@@ -27,7 +27,7 @@ type ResolveLocalizedURLOptions = ResolveLocaleOptions & {
    * Specifies where in the URL the locale should be matched. If `resolver` is provided, this option
    * is ignored.
    */
-  location?: 'domain' | 'path' | 'query' | 'auto'
+  location?: 'auto' | 'domain' | 'path' | 'query'
 
   /**
    * Custom resolver function.
@@ -150,6 +150,37 @@ export function getLocaleFromURL(url: string, { defaultLocale, location = 'auto'
 }
 
 /**
+ * Returns the unlocalized version of a URL.
+ *
+ * @param url - The URL.
+ * @param options - See {@link ResolveLocalizedURLOptions}.
+ *
+ * @returns The unlocalized URL.
+ */
+export function getUnlocalizedURL(url: string, { location = 'auto', resolver, supportedLocales }: ResolveLocalizedURLOptions): string {
+  const currLocaleInfo = getLocaleFromURL(url, { location, resolver, supportedLocales })
+  const parts = parseURL(url)
+
+  if (!currLocaleInfo) return url
+
+  switch (currLocaleInfo.location) {
+  case 'domain':
+    return constructURL({ ...parts, host: !!parts.host ? parts.host.split('.').filter(t => t).slice(1).join('.') : undefined })
+  case 'query':
+    if (!parts.query) return url
+
+    const searchParams = new URLSearchParams(parts.query)
+    searchParams.delete('locale')
+
+    return constructURL({ ...parts, query: searchParams.toString() })
+  case 'path':
+  case 'auto':
+  default:
+    return constructURL({ ...parts, path: !!parts.path ? [...parts.path.split('/').filter(t => t).slice(1)].join('/') : undefined })
+  }
+}
+
+/**
  * Returns the localized version of a URL.
  *
  * @param url - The URL.
@@ -209,36 +240,5 @@ export function getLocalizedURL(url: string, locale: string, { defaultLocale, lo
     default:
       return constructURL({ ...parts, path: !!parts.path ? [targetLocale, ...parts.path.split('/').filter(t => t)].join('/') : undefined })
     }
-  }
-}
-
-/**
- * Returns the unlocalized version of a URL.
- *
- * @param url - The URL.
- * @param options - See {@link ResolveLocalizedURLOptions}.
- *
- * @returns The unlocalized URL.
- */
-export function getUnlocalizedURL(url: string, { location = 'auto', resolver, supportedLocales }: ResolveLocalizedURLOptions): string {
-  const currLocaleInfo = getLocaleFromURL(url, { location, resolver, supportedLocales })
-  const parts = parseURL(url)
-
-  if (!currLocaleInfo) return url
-
-  switch (currLocaleInfo.location) {
-  case 'domain':
-    return constructURL({ ...parts, host: !!parts.host ? parts.host.split('.').filter(t => t).slice(1).join('.') : undefined })
-  case 'query':
-    if (!parts.query) return url
-
-    const searchParams = new URLSearchParams(parts.query)
-    searchParams.delete('locale')
-
-    return constructURL({ ...parts, query: searchParams.toString() })
-  case 'path':
-  case 'auto':
-  default:
-    return constructURL({ ...parts, path: !!parts.path ? [...parts.path.split('/').filter(t => t).slice(1)].join('/') : undefined })
   }
 }
