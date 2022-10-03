@@ -33,25 +33,25 @@ export function I18nRoutes({ children }: PropsWithChildren) {
   const { defaultLocale, location, supportedLocales } = context
 
   switch (location) {
-  case 'path':
-    return (
-      <Routes>
-        {supportedLocales.map(locale =>
-          <Route key={locale} path={locale === defaultLocale ? '/' : locale}>
+    case 'path':
+      return (
+        <Routes>
+          {supportedLocales.map(locale => (
+            <Route key={locale} path={locale === defaultLocale ? '/' : locale}>
+              {children}
+            </Route>
+          ))}
+        </Routes>
+      )
+    case 'query':
+    default:
+      return (
+        <Routes>
+          <Route path={'/'}>
             {children}
           </Route>
-        )}
-      </Routes>
-    )
-  case 'query':
-  default:
-    return (
-      <Routes>
-        <Route path={'/'}>
-          {children}
-        </Route>
-      </Routes>
-    )
+        </Routes>
+      )
   }
 }
 

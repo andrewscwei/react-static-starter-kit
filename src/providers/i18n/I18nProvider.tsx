@@ -28,14 +28,14 @@ export const I18nContext = createContext<I18nContextValue | undefined>(undefined
 
 const reducer = (state: I18nContextValue['state'], action: I18nChangeLocaleAction): I18nContextValue['state'] => {
   switch (action.type) {
-  case '@i18n/CHANGE_LOCALE':
-    return {
-      ...state,
-      locale: action.locale,
-      getLocalizedString: (...args) => state.polyglots[action.locale]?.t(...args) ?? args[0],
-    }
-  default:
-    return state
+    case '@i18n/CHANGE_LOCALE':
+      return {
+        ...state,
+        locale: action.locale,
+        getLocalizedString: (...args) => state.polyglots[action.locale]?.t(...args) ?? args[0],
+      }
+    default:
+      return state
   }
 }
 

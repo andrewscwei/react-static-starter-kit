@@ -7,7 +7,9 @@ self.addEventListener('message', event => {
   debug('Receiving message from app...', 'OK', message)
 
   switch (message) {
-  case 'Marco':
-    self.postMessage({ message: 'Polo' })
+    case 'Marco':
+      self.postMessage({ message: 'Polo' })
+    default:
+      break
   }
 })

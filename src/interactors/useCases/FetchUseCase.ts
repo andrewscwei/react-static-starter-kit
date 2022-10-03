@@ -28,7 +28,6 @@ export namespace FetchUseCaseError {
  * A {@link UseCase} for fetching data from external API.
  */
 export default abstract class FetchUseCase<Params extends Record<string, any>, Result> implements UseCase<Params, Result, never> {
-
   protected abortController: AbortController | undefined
 
   private timer: NodeJS.Timeout | undefined
@@ -115,14 +114,14 @@ export default abstract class FetchUseCase<Params extends Record<string, any>, R
     let useParamsAsBody = false
 
     switch (method) {
-    case 'POST':
-    case 'PUT':
-    case 'PATCH':
-    case 'DELETE':
-      useParamsAsBody = true
-      break
-    default:
-      url.search = new URLSearchParams(params).toString()
+      case 'POST':
+      case 'PUT':
+      case 'PATCH':
+      case 'DELETE':
+        useParamsAsBody = true
+        break
+      default:
+        url.search = new URLSearchParams(params).toString()
     }
 
     try {
@@ -203,6 +202,7 @@ export default abstract class FetchUseCase<Params extends Record<string, any>, R
 
     if (isStale) {
       this.invalidateCache(key)
+
       return undefined
     }
 

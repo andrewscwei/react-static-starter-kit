@@ -15,8 +15,8 @@ export default function useChangeLocale() {
 
   if (context) {
     return (locale: string) => context.dispatch({
-      type: '@i18n/CHANGE_LOCALE',
       locale,
+      type: '@i18n/CHANGE_LOCALE',
     })
   }
   else if (routerContext) {

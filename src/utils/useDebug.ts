@@ -4,6 +4,7 @@ export default function useDebug(subnamespace = '', thread: 'app' | 'worker' = '
   if (process.env.NODE_ENV === 'development') {
     const namespace = [thread, ...subnamespace.split(':').filter(Boolean)].join(':')
     if (typeof window === 'undefined') debug.enable(namespace)
+
     return debug(namespace)
   }
   else {

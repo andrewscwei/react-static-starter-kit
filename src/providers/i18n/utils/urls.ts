@@ -1,11 +1,11 @@
 type URLParts = {
   base?: string
-  protocol?: string
-  host?: string
-  port?: string
-  path?: string
-  query?: string
   hash?: string
+  host?: string
+  path?: string
+  port?: string
+  protocol?: string
+  query?: string
 }
 
 type ResolveLocaleOptions = {
@@ -69,12 +69,12 @@ export function parseURL(url: string): URLParts {
 
   return {
     base: parts[1],
-    protocol: parts[2],
-    host: parts[3],
-    port: parts[4],
-    path: parts[5],
-    query: parts[6],
     hash: parts[7],
+    host: parts[3],
+    path: parts[5],
+    port: parts[4],
+    protocol: parts[2],
+    query: parts[6],
   }
 }
 
@@ -88,10 +88,10 @@ export function parseURL(url: string): URLParts {
 export function constructURL(parts: URLParts): string {
   const protocol = parts.protocol?.concat('://') ?? ''
   const host = parts.host?.concat('/') ?? ''
-  const port = !!parts.port ? `:${parts.port}` : ''
-  const path = !!parts.path ? `/${parts.path.split('/').filter(t => t).join('/')}` : ''
-  const query = !!parts.query ? `?${parts.query}` : ''
-  const hash = !!parts.hash ? `#${parts.hash}` : ''
+  const port = parts.port ? `:${parts.port}` : ''
+  const path = parts.path ? `/${parts.path.split('/').filter(t => t).join('/')}` : ''
+  const query = parts.query ? `?${parts.query}` : ''
+  const hash = parts.hash ? `#${parts.hash}` : ''
 
   return `${protocol}${host}${port}${path}${query}${hash}`
 }
@@ -108,6 +108,7 @@ export function resolveLocale(locale?: string, { defaultLocale, supportedLocales
   if (supportedLocales) {
     if (locale && supportedLocales.indexOf(locale) >= 0) return locale
     if (defaultLocale && supportedLocales.indexOf(defaultLocale) >= 0) return defaultLocale
+
     return undefined
   }
 
@@ -164,19 +165,20 @@ export function getUnlocalizedURL(url: string, { location = 'auto', resolver, su
   if (!currLocaleInfo) return url
 
   switch (currLocaleInfo.location) {
-  case 'domain':
-    return constructURL({ ...parts, host: !!parts.host ? parts.host.split('.').filter(t => t).slice(1).join('.') : undefined })
-  case 'query':
-    if (!parts.query) return url
+    case 'domain':
+      return constructURL({ ...parts, host: parts.host ? parts.host.split('.').filter(t => t).slice(1).join('.') : undefined })
+    case 'query': {
+      if (!parts.query) return url
 
-    const searchParams = new URLSearchParams(parts.query)
-    searchParams.delete('locale')
+      const searchParams = new URLSearchParams(parts.query)
+      searchParams.delete('locale')
 
-    return constructURL({ ...parts, query: searchParams.toString() })
-  case 'path':
-  case 'auto':
-  default:
-    return constructURL({ ...parts, path: !!parts.path ? [...parts.path.split('/').filter(t => t).slice(1)].join('/') : undefined })
+      return constructURL({ ...parts, query: searchParams.toString() })
+    }
+    case 'path':
+    case 'auto':
+    default:
+      return constructURL({ ...parts, path: parts.path ? [...parts.path.split('/').filter(t => t).slice(1)].join('/') : undefined })
   }
 }
 
@@ -200,45 +202,47 @@ export function getLocalizedURL(url: string, locale: string, { defaultLocale, lo
 
   if (currLocaleInfo) {
     switch (currLocaleInfo.location) {
-    case 'domain':
-      return constructURL({ ...parts, host: !!parts.host ? `${targetLocale}.${parts.host.split('.').filter(t => t).slice(1).join('.')}` : undefined })
-    case 'query':
-      if (!parts.query) return url
+      case 'domain':
+        return constructURL({ ...parts, host: parts.host ? `${targetLocale}.${parts.host.split('.').filter(t => t).slice(1).join('.')}` : undefined })
+      case 'query': {
+        if (!parts.query) return url
 
-      const searchParams = new URLSearchParams(parts.query)
-      if (!!searchParams.get('locale')) {
-        searchParams.set('locale', targetLocale)
-      }
-      else {
-        searchParams.set('locale', targetLocale)
-      }
+        const searchParams = new URLSearchParams(parts.query)
+        if (searchParams.get('locale')) {
+          searchParams.set('locale', targetLocale)
+        }
+        else {
+          searchParams.set('locale', targetLocale)
+        }
 
-      return constructURL({ ...parts, query: searchParams.toString() })
-    case 'path':
-    case 'auto':
-    default:
-      return constructURL({ ...parts, path: !!parts.path ? [targetLocale, ...parts.path.split('/').filter(t => t).slice(1)].join('/') : undefined })
+        return constructURL({ ...parts, query: searchParams.toString() })
+      }
+      case 'path':
+      case 'auto':
+      default:
+        return constructURL({ ...parts, path: parts.path ? [targetLocale, ...parts.path.split('/').filter(t => t).slice(1)].join('/') : undefined })
     }
   }
   else {
     switch (location) {
-    case 'domain':
-      return constructURL({ ...parts, host: !!parts.host ? `${targetLocale}.${parts.host}` : undefined })
-    case 'query':
-      const searchParams = new URLSearchParams(parts.query)
+      case 'domain':
+        return constructURL({ ...parts, host: parts.host ? `${targetLocale}.${parts.host}` : undefined })
+      case 'query': {
+        const searchParams = new URLSearchParams(parts.query)
 
-      if (targetLocale === defaultLocale) {
-        searchParams.delete('locale')
-      }
-      else {
-        searchParams.set('locale', targetLocale)
-      }
+        if (targetLocale === defaultLocale) {
+          searchParams.delete('locale')
+        }
+        else {
+          searchParams.set('locale', targetLocale)
+        }
 
-      return constructURL({ ...parts, query: searchParams.toString() })
-    case 'path':
-    case 'auto':
-    default:
-      return constructURL({ ...parts, path: !!parts.path ? [targetLocale, ...parts.path.split('/').filter(t => t)].join('/') : undefined })
+        return constructURL({ ...parts, query: searchParams.toString() })
+      }
+      case 'path':
+      case 'auto':
+      default:
+        return constructURL({ ...parts, path: parts.path ? [targetLocale, ...parts.path.split('/').filter(t => t)].join('/') : undefined })
     }
   }
 }
