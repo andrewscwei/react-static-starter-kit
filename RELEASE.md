@@ -1,4 +1,5 @@
-`v10.0.0`
+# Changes for `v10.0.0`
+
 - Removed styled-components in favor of CSS modules
 - Removed Redux in favor of Context API
 - Removed `react-snap`

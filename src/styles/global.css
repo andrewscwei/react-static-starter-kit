@@ -5,8 +5,8 @@
   --color-white: #fff;
   --color-grey: #666;
   --color-black: #111;
-  --font-header: roboto, sans-serif;
-  --font-body: roboto, sans-serif;
+  --font-header: 'Roboto', sans-serif;
+  --font-body: 'Roboto', sans-serif;
   --font-mono: monospace;
   --z-huds: 10;
 }
@@ -21,21 +21,21 @@
 }
 
 @font-face {
-  font-family: roboto;
+  font-family: 'Roboto';
   font-style: normal;
   font-weight: 700;
   src: url('../assets/fonts/Roboto-Bold.ttf') format('truetype');
 }
 
 @font-face {
-  font-family: roboto;
+  font-family: 'Roboto';
   font-style: normal;
   font-weight: 400;
   src: url('../assets/fonts/Roboto-Regular.ttf') format('truetype');
 }
 
 @font-face {
-  font-family: roboto;
+  font-family: 'Roboto';
   font-style: normal;
   font-weight: 300;
   src: url('../assets/fonts/Roboto-Light.ttf') format('truetype');
