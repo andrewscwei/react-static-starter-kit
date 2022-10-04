@@ -23,7 +23,13 @@
         "default": "array"
       }
     ],
-    "@typescript-eslint/brace-style": "off",
+    "@typescript-eslint/brace-style": [
+      "error",
+      "stroustrup",
+      {
+        "allowSingleLine": true
+      }
+    ],
     "@typescript-eslint/class-literal-property-style": [
       "error",
       "getters"
@@ -31,6 +37,13 @@
     "@typescript-eslint/comma-dangle": [
       "error",
       "always-multiline"
+    ],
+    "@typescript-eslint/comma-spacing": [
+      "error",
+      {
+        "before": false,
+        "after": true
+      }
     ],
     "@typescript-eslint/consistent-generic-constructors": "error",
     "@typescript-eslint/consistent-indexed-object-style": "error",
@@ -44,7 +57,10 @@
       }
     ],
     "@typescript-eslint/explicit-module-boundary-types": "off",
-    "@typescript-eslint/func-call-spacing": "off",
+    "@typescript-eslint/func-call-spacing": [
+      "error",
+      "never"
+    ],
     "@typescript-eslint/keyword-spacing": [
       "error",
       {
@@ -60,6 +76,7 @@
       }
     ],
     "@typescript-eslint/init-declarations": "error",
+    "@typescript-eslint/lines-between-class-members": "error",
     "@typescript-eslint/member-delimiter-style": [
       "error",
       {
@@ -129,7 +146,6 @@
     ],
     "@typescript-eslint/no-invalid-this": "error",
     "@typescript-eslint/no-invalid-void-type": "error",
-    "@typescript-eslint/lines-between-class-members": "error",
     "@typescript-eslint/no-misused-new": "error",
     "@typescript-eslint/no-namespace": "off",
     "@typescript-eslint/no-non-null-asserted-nullish-coalescing": "error",
@@ -194,7 +210,18 @@
         "lib": "always"
       }
     ],
-    "@typescript-eslint/type-annotation-spacing": "off",
+    "@typescript-eslint/type-annotation-spacing": [
+      "error",
+      {
+        "before": false,
+        "after": true,
+        "overrides": {
+          "arrow": {
+            "before": true
+          }
+        }
+      }
+    ],
     "@typescript-eslint/unified-signatures": "error",
     "array-bracket-newline": [
       "error",
@@ -234,13 +261,7 @@
     ],
     "capitalized-comments": "error",
     "comma-dangle": "off",
-    "comma-spacing": [
-      "error",
-      {
-        "before": false,
-        "after": true
-      }
-    ],
+    "comma-spacing": "off",
     "comma-style": [
       "error",
       "last"
@@ -267,10 +288,7 @@
       "error",
       "smart"
     ],
-    "func-call-spacing": [
-      "error",
-      "never"
-    ],
+    "func-call-spacing": "off",
     "func-names": [
       "error",
       "never"

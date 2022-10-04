@@ -6,7 +6,6 @@ import useDebug from '../utils/useDebug'
 const debug = useDebug('fetch')
 
 type Options<T> = {
-
   /**
    * Specifies if cache should be skipped.
    */
