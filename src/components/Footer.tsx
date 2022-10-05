@@ -1,4 +1,3 @@
-import classNames from 'classnames'
 import React, { HTMLAttributes } from 'react'
 import { useChangeLocale, useLocalizedString } from '../providers/i18n'
 import style from './Footer.module.css'
@@ -13,7 +12,7 @@ export default function Footer({
   const changeLocale = useChangeLocale()
 
   return (
-    <footer className={classNames(className, style.root)} {...props}>
+    <footer {...props} className={`${className} ${style.root}`}>
       <nav className={style.nav}>
         <a href='https://github.com/andrewscwei/react-static-starter-kit'/>
       </nav>

@@ -1,4 +1,3 @@
-import classNames from 'classnames'
 import React, { HTMLAttributes } from 'react'
 import { Link } from 'react-router-dom'
 import { useLocalizedPath, useLocalizedString } from '../providers/i18n'
@@ -14,7 +13,7 @@ export default function Header({
   const lpath = useLocalizedPath()
 
   return (
-    <header className={classNames(className, style.root)} {...props}>
+    <header {...props} className={`${className} ${style.root}`}>
       <Link className={style.link} to={lpath('/')}>{ltxt('nav-title-home') }</Link>
       <Link className={style.link} to={lpath('/quote')}>{ltxt('nav-title-quote') }</Link>
     </header>

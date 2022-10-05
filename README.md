@@ -6,13 +6,13 @@ This is an experimental starter kit for a React static app.
 
 1. [React Router](https://reacttraining.com/react-router/)
 2. [Polyglot](https://airbnb.io/polyglot.js/)
-3. [CSS Modules](https://github.com/css-modules/css-modules) + [PostCSS](https://postcss.org/)
-4. HMR (in development)
-5. [TypeScript](https://www.typescriptlang.org/) + [Babel](https://babeljs.io/)
-6. [Jest](https://jestjs.io/) + [React Testing Library](https://testing-library.com/docs/react-testing-library/)
-7. [ESLint](https://eslint.org/) + [StyleLint](https://stylelint.io/)
-8. [webpack](https://webpack.js.org/)
-9. CI/CD via [GitHub Actions](https://github.com/features/actions)
+3. [CSS Modules](https://github.com/css-modules/css-modules) + [PostCSS](https://postcss.org/) + [StyleLint](https://stylelint.io/)
+4. [TypeScript](https://www.typescriptlang.org/) + [Babel](https://babeljs.io/) + [ESLint](https://eslint.org/)
+5. [Jest](https://jestjs.io/) + [React Testing Library](https://testing-library.com/docs/react-testing-library/)
+6. [webpack](https://webpack.js.org/)
+7. Cached fetch responses
+8. Web workers
+9. CI/CD workflows with [GitHub Actions](https://github.com/features/actions)
 10. Favicon/OG image/Twitter card resources for [Affinity Designer](https://affinity.serif.com/en-us/designer/)
 
 ## Usage
@@ -36,7 +36,7 @@ $ npm run build
 # Analyzes the size the generated bundle(s) and displays a visual report in the default browser
 $ npm run build --analyze
 
-# Builds the app but skips all HTML/CSS/JS minifications
+# Builds the app but skips all HTML/CSS/JS compressions
 $ npm run build --raw
 ```
 

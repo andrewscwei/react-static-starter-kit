@@ -159,7 +159,6 @@
         "args": "none"
       }
     ],
-    "@typescript-eslint/no-use-before-define": "error",
     "@typescript-eslint/no-useless-constructor": "error",
     "@typescript-eslint/no-useless-empty-export": "error",
     "@typescript-eslint/object-curly-spacing": [
