@@ -30,7 +30,7 @@ export default function Head({
       <link rel='mask-icon' href={assets.meta.PinnedIcon} color='#000'/>
       <link rel='alternate icon' type='image/png' href={assets.meta.AltFavicon}/>
       <link rel='icon' href={assets.meta.Favicon}/>
-      <link rel='apple-touch-icon' href={assets.meta.Favicon}/>
+      <link rel='apple-touch-icon' href={assets.meta.AltFavicon2}/>
 
       <title>{pageTitle}</title>
       <meta name='description' content={pageDescription}/>
@@ -53,17 +53,17 @@ export default function Head({
       <meta name='apple-mobile-web-app-capable' content='yes'/>
       <meta name='apple-mobile-web-app-status-bar-style' content='black-translucent'/>
       <meta name='apple-mobile-web-app-title' content={baseTitle}/>
-      <link rel='apple-touch-icon' href={assets.meta.AltFavicon2} sizes='57x57'/>
-      <link rel='apple-touch-icon' href={assets.meta.AltFavicon2} sizes='60x60'/>
-      <link rel='apple-touch-icon' href={assets.meta.AltFavicon2} sizes='72x72'/>
-      <link rel='apple-touch-icon' href={assets.meta.AltFavicon2} sizes='76x76'/>
-      <link rel='apple-touch-icon' href={assets.meta.AltFavicon2} sizes='114x114'/>
-      <link rel='apple-touch-icon' href={assets.meta.AltFavicon2} sizes='120x120'/>
-      <link rel='apple-touch-icon' href={assets.meta.AltFavicon2} sizes='144x144'/>
-      <link rel='apple-touch-icon' href={assets.meta.AltFavicon2} sizes='152x152'/>
-      <link rel='apple-touch-icon' href={assets.meta.AltFavicon2} sizes='180x180'/>
-      <link rel='apple-touch-icon' href={assets.meta.AltFavicon2} sizes='192x192'/>
-      {/* <link rel='manifest' href='/manifest.json'/> */}
+      <link rel='apple-touch-icon' href='/app-icon-57.png' sizes='57x57'/>
+      <link rel='apple-touch-icon' href='/app-icon-60.png' sizes='60x60'/>
+      <link rel='apple-touch-icon' href='/app-icon-72.png' sizes='72x72'/>
+      <link rel='apple-touch-icon' href='/app-icon-76.png' sizes='76x76'/>
+      <link rel='apple-touch-icon' href='/app-icon-114.png' sizes='114x114'/>
+      <link rel='apple-touch-icon' href='/app-icon-120.png' sizes='120x120'/>
+      <link rel='apple-touch-icon' href='/app-icon-144.png' sizes='144x144'/>
+      <link rel='apple-touch-icon' href='/app-icon-152.png' sizes='152x152'/>
+      <link rel='apple-touch-icon' href='/app-icon-180.png' sizes='180x180'/>
+      <link rel='apple-touch-icon' href='/app-icon-192.png' sizes='192x192'/>
+      <link rel='manifest' href='/manifest.json'/>
     </Helmet>
   )
 }
