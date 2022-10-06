@@ -48,7 +48,7 @@ export default function Head({
       <meta name='twitter:image' content={baseUrl + assets.meta.TwitterCard}/>
       <meta name='twitter:card' content='summary_large_image'/>
 
-      {/* <meta name='mobile-web-app-capable' content='yes'/>
+      <meta name='mobile-web-app-capable' content='yes'/>
       <meta name='apple-mobile-web-app-capable' content='yes'/>
       <meta name='apple-mobile-web-app-status-bar-style' content='black-translucent'/>
       <meta name='apple-mobile-web-app-title' content={baseTitle}/>
@@ -62,7 +62,7 @@ export default function Head({
       <link rel='apple-touch-icon' href='/app-icon-152.png' sizes='152x152'/>
       <link rel='apple-touch-icon' href='/app-icon-180.png' sizes='180x180'/>
       <link rel='apple-touch-icon' href='/app-icon-192.png' sizes='192x192'/>
-      <link rel='manifest' href='/manifest.json'/> */}
+      <link rel='manifest' href='/manifest.json'/>
     </Helmet>
   )
 }
