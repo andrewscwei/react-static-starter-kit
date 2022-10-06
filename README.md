@@ -46,13 +46,13 @@ See `scripts` in `package.json` for additional commands.
 
 When using `react-static-starter-kit` as a template, follow these steps to debrand:
 
-1. In `/package.json`, edit the fields: `name`, `version`, `description`, `private` and `license`
-2. Remove `/LICENSE` file
+1. In `package.json`, edit the fields: `name`, `version`, `description`, `private` and `license`
+2. Remove `LICENSE` file
 3. Remove `RELEASE.md` file
-4. Edit `/README.md` to suit your project
-5. In `/resources/`, edit the app icon and favicon regenerate the sources
-  1. In `/src/static/`, replace the app icon and favicon sources
-  2. Update `/src/static/manifest.json`
-6. In `/config/app.conf.ts`, edit `meta.title`
-7. Edit translation files in `/src/locales/` to reflect locale changes
-8. In `/src/components/Footer.tsx`, remove reference to this repository's URL
+4. Edit `README.md` to suit your project
+5. In `res/`, edit the app icon and favicon regenerate the sources
+  1. In `src/assets/` and `src/static/`, replace the app icon and favicon sources
+  2. Update `src/static/manifest.json`
+6. In `config/app.conf.ts`, edit `meta.title`
+7. Edit translation files in `src/locales/` to reflect locale changes
+8. In `src/components/Footer.tsx`, remove reference to this repository's URL

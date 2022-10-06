@@ -75,22 +75,31 @@ export default {
       type: 'asset/source',
     }, {
       test: /\.(jpe?g|png|gif|svg)(\?.*)?$/,
-      exclude: /assets\/svgs/,
+      include: /assets\/images/,
       type: 'asset',
       generator: {
-        filename: `assets/images/${skipOptimizations ? '[name]' : '[hash:base64]'}.[ext]`,
+        filename: `assets/images/${isDev ? '[name]' : '[name].[hash:base64]'}[ext]`,
       },
     }, {
       test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
+      include: /assets\/media/,
       type: 'asset',
       generator: {
-        filename: `assets/media/${skipOptimizations ? '[name]' : '[hash:base64]'}.[ext]`,
+        filename: `assets/media/${isDev ? '[name]' : '[name].[hash:base64]'}[ext]`,
       },
     }, {
       test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
+      include: /assets\/fonts/,
       type: 'asset',
       generator: {
-        filename: `assets/fonts/${skipOptimizations ? '[name]' : '[hash:base64]'}.[ext]`,
+        filename: `assets/fonts/${isDev ? '[name]' : '[name].[hash:base64]'}[ext]`,
+      },
+    }, {
+      test: /\.(jpe?g|png|gif|svg|mp4|webm|ogg|mp3|wav|flac|aac|woff2?|eot|ttf|otf)(\?.*)?$/,
+      include: /assets\/meta/,
+      type: 'asset/resource',
+      generator: {
+        filename: `${isDev ? '[name]' : '[name].[hash:base64]'}[ext]`,
       },
     }],
   },
@@ -108,7 +117,7 @@ export default {
     },
   },
   output: {
-    filename: skipOptimizations ? '[name].js' : '[chunkhash].js',
+    filename: isDev ? '[name].js' : '[name].[chunkhash].js',
     path: outputDir,
     publicPath: process.env.PUBLIC_PATH || '/',
     sourceMapFilename: '[file].map',
@@ -120,8 +129,8 @@ export default {
   },
   plugins: [
     new MiniCSSExtractPlugin({
-      chunkFilename: skipOptimizations ? '[id].css' : '[chunkhash].css',
-      filename: skipOptimizations ? '[name].css' : '[chunkhash].css',
+      chunkFilename: isDev ? '[id].css' : '[id].[chunkhash].css',
+      filename: isDev ? '[name].css' : '[name].[chunkhash].css',
     }),
     new ForkTSCheckerPlugin(),
     new CopyPlugin({

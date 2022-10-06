@@ -149,7 +149,7 @@
     "@typescript-eslint/no-misused-new": "error",
     "@typescript-eslint/no-namespace": "off",
     "@typescript-eslint/no-non-null-asserted-nullish-coalescing": "error",
-    "@typescript-eslint/no-require-imports": "error",
+    "@typescript-eslint/no-require-imports": "warn",
     "@typescript-eslint/no-restricted-imports": "error",
     "@typescript-eslint/no-shadow": "error",
     "@typescript-eslint/no-this-alias": "error",
@@ -161,6 +161,7 @@
     ],
     "@typescript-eslint/no-useless-constructor": "error",
     "@typescript-eslint/no-useless-empty-export": "error",
+    "@typescript-eslint/no-var-requires": "warn",
     "@typescript-eslint/object-curly-spacing": [
       "error",
       "always"
@@ -350,7 +351,7 @@
       6
     ],
     "max-len": "off",
-    "new-cap": "error",
+    "new-cap": "off",
     "new-parens": "error",
     "no-alert": "warn",
     "no-bitwise": "off",
