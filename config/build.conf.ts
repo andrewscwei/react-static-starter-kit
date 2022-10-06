@@ -146,7 +146,6 @@ export default {
       '__CONFIG__': JSON.stringify(appConf),
     }),
     new HTMLPlugin({
-      appConf,
       chunks: ['common', 'main'].concat(isDev ? [] : ['polyfills']),
       filename: 'index.html',
       inject: true,
