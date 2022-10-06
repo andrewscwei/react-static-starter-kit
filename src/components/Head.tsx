@@ -18,7 +18,7 @@ export default function Head({
   const pageDescription = description ?? baseDescription
   const pageUrl = baseUrl + useLocation().pathname
   const locale = useLocale()
-  const [isDarkMode, setIsDarkMode] = useState(window.matchMedia('(prefers-color-scheme: dark)').matches)
+  const [isDarkMode, setIsDarkMode] = useState(typeof window !== 'undefined' && window.matchMedia('(prefers-color-scheme: dark)').matches)
 
   const colorSchemeChangeHandler = (event: MediaQueryListEvent) => setIsDarkMode(event.matches)
 
