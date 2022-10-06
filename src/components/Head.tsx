@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { useLocation } from 'react-router'
 import * as assets from '../assets'
@@ -18,19 +18,27 @@ export default function Head({
   const pageDescription = description ?? baseDescription
   const pageUrl = baseUrl + useLocation().pathname
   const locale = useLocale()
+  const [isDarkMode, setIsDarkMode] = useState(typeof window !== 'undefined' && window.matchMedia('(prefers-color-scheme: dark)').matches)
+
+  const colorSchemeChangeHandler = (event: MediaQueryListEvent) => setIsDarkMode(event.matches)
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+
+    const media = window.matchMedia('(prefers-color-scheme: dark)')
+    media.addEventListener('change', colorSchemeChangeHandler)
+
+    return () => {
+      media.removeEventListener('change', colorSchemeChangeHandler)
+    }
+  }, [])
 
   return (
     <Helmet>
-      <meta charSet='utf-8'/>
-      <meta httpEquiv='X-UA-Compatible' content='IE=edge'/>
-      <meta name='viewport' content='width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover'/>
-      <meta name='theme-color' content='#000'/>
-
       <link rel='canonical' href={pageUrl}/>
-      <link rel='mask-icon' href={assets.meta.PinnedIcon} color='#000'/>
-      <link rel='alternate icon' type='image/png' href={assets.meta.AltFavicon}/>
-      <link rel='icon' href={assets.meta.Favicon}/>
-
+      <link rel='mask-icon' type='image/svg+xml' href={assets.meta.PinnedIcon} color={isDarkMode ? '#fff' : '#000'}/>
+      <link rel='alternate icon' type='image/png' href={isDarkMode ? assets.meta.AltFaviconDark : assets.meta.AltFaviconLight}/>
+      <link rel='icon' href={isDarkMode ? assets.meta.FaviconDark : assets.meta.FaviconLight}/>
       <title>{pageTitle}</title>
       <meta name='description' content={pageDescription}/>
 
@@ -39,30 +47,14 @@ export default function Head({
       <meta property='og:description' content={pageDescription}/>
       <meta property='og:locale' content={locale}/>
       <meta property='og:url' content={pageUrl}/>
-      <meta property='og:type' content='website'/>
       <meta property='og:image' content={baseUrl + assets.meta.OGImage}/>
       <meta property='og:image:alt' content={pageDescription}/>
 
       <meta name='twitter:title' content={pageTitle}/>
       <meta name='twitter:description' content={pageDescription}/>
       <meta name='twitter:image' content={baseUrl + assets.meta.TwitterCard}/>
-      <meta name='twitter:card' content='summary_large_image'/>
 
-      <meta name='mobile-web-app-capable' content='yes'/>
-      <meta name='apple-mobile-web-app-capable' content='yes'/>
-      <meta name='apple-mobile-web-app-status-bar-style' content='black-translucent'/>
       <meta name='apple-mobile-web-app-title' content={baseTitle}/>
-      <link rel='apple-touch-icon' href={assets.meta.AltFavicon} sizes='57x57'/>
-      <link rel='apple-touch-icon' href={assets.meta.AltFavicon} sizes='60x60'/>
-      <link rel='apple-touch-icon' href={assets.meta.AltFavicon} sizes='72x72'/>
-      <link rel='apple-touch-icon' href={assets.meta.AltFavicon} sizes='76x76'/>
-      <link rel='apple-touch-icon' href={assets.meta.AltFavicon} sizes='114x114'/>
-      <link rel='apple-touch-icon' href={assets.meta.AltFavicon} sizes='120x120'/>
-      <link rel='apple-touch-icon' href={assets.meta.AltFavicon} sizes='144x144'/>
-      <link rel='apple-touch-icon' href={assets.meta.AltFavicon} sizes='152x152'/>
-      <link rel='apple-touch-icon' href={assets.meta.AltFavicon} sizes='180x180'/>
-      <link rel='apple-touch-icon' href={assets.meta.AltFavicon} sizes='192x192'/>
-      <link rel='manifest' href='/manifest.json'/>
     </Helmet>
   )
 }

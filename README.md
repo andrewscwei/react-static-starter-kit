@@ -42,17 +42,75 @@ $ npm run build --raw
 
 See `scripts` in `package.json` for additional commands.
 
-## Repository Template
+## Prerendering
+
+To prerender this app, you can use [`react-snap`](https://www.npmjs.com/package/react-snap):
+
+1. Install `react-snap`:
+    ```sh
+    $ npm install react-snap --save-dev
+    ```
+2. Add a `postbuild` script to `package.json`:
+    ```json
+    // package.json
+    {
+      ...
+      "scripts": {
+        ...
+        "postbuild": "react-snap",
+        ...
+      }
+      ...
+    }
+    ```
+3. Add the following to `package.json`, note that you must include the root route of every locale for `react-snap` to prerender its subroutes since they're dynamically generated:
+    ```json
+    // package.json
+    {
+      ...
+      "reactSnap": {
+        "source": "build",
+        "include": [
+          "/404.html",
+          "/jp",
+          ... // Include the root route of all locales
+        ],
+        "puppeteerArgs": [
+          "--no-sandbox",
+          "--disable-setuid-sandbox"
+        ],
+        "skipThirdPartyRequests": true
+      }
+      ...
+    }
+    ```
+4. Ensure that Puppeteer is installed when running CI/CD workflows:
+    ```yml
+    # .github/workflows/job-build.yml
+    ...
+    jobs:
+      default:
+        ...
+        steps:
+          - name: Install APT dependencies for Puppeteer
+            run: apt-get update && apt-get install -yq gconf-service libasound2 libatk1.0-0 libatk-bridge2.0-0 libc6 libcairo2 libcups2 libdbus-1-3 libexpat1 libfontconfig1 libgcc1 libgconf-2-4 libgdk-pixbuf2.0-0 libglib2.0-0 libgtk-3-0 libnspr4 libpango-1.0-0 libpangocairo-1.0-0 libstdc++6 libx11-6 libx11-xcb1 libxcb1 libxcomposite1 libxcursor1 libxdamage1 libxext6 libxfixes3 libxi6 libxrandr2 libxrender1 libxss1 ca-certificates fonts-liberation libappindicator1 libnss3 lsb-release xdg-utils wget
+            ...
+        ...
+      ...
+    ...
+    ```
+
+## Using as Repository Template
 
 When using `react-static-starter-kit` as a template, follow these steps to debrand:
 
-1. In `package.json`, edit the fields: `name`, `version`, `description`, `private` and `license`
-2. Remove `LICENSE` file
-3. Remove `RELEASE.md` file
-4. Edit `README.md` to suit your project
-5. In `res/`, edit the app icon and favicon regenerate the sources
-  1. In `src/assets/` and `src/static/`, replace the app icon and favicon sources
-  2. Update `src/static/manifest.json`
-6. In `config/app.conf.ts`, edit `meta.title`
-7. Edit translation files in `src/locales/` to reflect locale changes
-8. In `src/components/Footer.tsx`, remove reference to this repository's URL
+1. Edit fields in `package.json`
+2. Replace `LICENSE` file
+3. Replace `RELEASE.md` file
+4. Edit `README.md`
+5. Edit resources in `res/`, then ensure to replace the generated assets in the following places:
+  1. `src/assets/`
+  2. `src/static/`
+6. Edit `config/app.conf.ts`
+7. Edit translations in `src/locales/`
+8. Edit files in `src/components/` and `src/pages/`
