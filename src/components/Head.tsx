@@ -26,10 +26,10 @@ export default function Head({
       <meta name='viewport' content='width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover'/>
       <meta name='theme-color' content='#000'/>
 
-      {/* <link rel='canonical' href={pageUrl}/>
-      <link rel='mask-icon' href={assets.meta.PinnedIcon} color='#000'/>
-      <link rel='alternate icon' type='image/png' href={assets.meta.AltFavicon}/>
-      <link rel='icon' href={assets.meta.Favicon}/> */}
+      <link rel='canonical' href={pageUrl}/>
+      {/* <link rel='mask-icon' href={assets.meta.PinnedIcon} color='#000'/> */}
+      {/* <link rel='alternate icon' type='image/png' href={assets.meta.AltFavicon}/> */}
+      <link rel='icon' href={assets.meta.Favicon}/>
 
       <title>{pageTitle}</title>
       <meta name='description' content={pageDescription}/>
