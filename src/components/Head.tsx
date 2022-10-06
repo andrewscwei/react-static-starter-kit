@@ -26,7 +26,7 @@ export default function Head({
       <meta name='viewport' content='width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover'/>
       <meta name='theme-color' content='#000'/>
 
-      {/* <link rel='canonical' href={pageUrl}/>
+      <link rel='canonical' href={pageUrl}/>
       <link rel='mask-icon' href={assets.meta.PinnedIcon} color='#000'/>
       <link rel='alternate icon' type='image/png' href={assets.meta.AltFavicon}/>
       <link rel='icon' href={assets.meta.Favicon}/>
@@ -47,7 +47,7 @@ export default function Head({
       <meta name='twitter:title' content={pageTitle}/>
       <meta name='twitter:description' content={pageDescription}/>
       <meta name='twitter:image' content={baseUrl + assets.meta.TwitterCard}/>
-      <meta name='twitter:card' content='summary_large_image'/> */}
+      <meta name='twitter:card' content='summary_large_image'/>
 
       <meta name='mobile-web-app-capable' content='yes'/>
       <meta name='apple-mobile-web-app-capable' content='yes'/>
