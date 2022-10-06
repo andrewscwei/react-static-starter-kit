@@ -27,8 +27,8 @@ export default function Head({
       <meta name='theme-color' content='#000'/>
 
       <link rel='canonical' href={pageUrl}/>
-      {/* <link rel='mask-icon' href={assets.meta.PinnedIcon} color='#000'/> */}
-      <link rel='alternate icon' type='image/png' href={assets.meta.AltFavicon}/>
+      <link rel='mask-icon' href={assets.meta.PinnedIcon} color='#000'/>
+      {/* <link rel='alternate icon' type='image/png' href={assets.meta.AltFavicon}/> */}
       <link rel='icon' href={assets.meta.Favicon}/>
 
       <title>{pageTitle}</title>
