@@ -28,9 +28,8 @@ export default function Head({
 
       <link rel='canonical' href={pageUrl}/>
       <link rel='mask-icon' href={assets.meta.PinnedIcon} color='#000'/>
-      {/* <link rel='alternate icon' type='image/png' href={assets.meta.AltFavicon}/> */}
+      <link rel='alternate icon' href={assets.meta.Favicon}/>
       <link rel='icon' href={assets.meta.Favicon}/>
-      <link rel='apple-touch-icon' href={assets.meta.AltFavicon}/>
 
       <title>{pageTitle}</title>
       <meta name='description' content={pageDescription}/>
