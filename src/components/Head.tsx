@@ -23,10 +23,8 @@ export default function Head({
     <Helmet>
       <link rel='canonical' href={pageUrl}/>
       <link rel='mask-icon' href={assets.meta.PinnedIcon} color='#000' type='image/svg+xml'/>
-      <link rel='alternate icon' type='image/png' href={assets.meta.AltFaviconLight}/>
-      <link rel='icon' type='image/svg+xml' href={assets.meta.FaviconLight}/>
-      <link rel='icon' type='image/svg+xml' href={assets.meta.FaviconDark} media='(prefers-color-scheme: dark)'/>
-      <link rel='icon' type='image/svg+xml' href={assets.meta.FaviconLight} media='(prefers-color-scheme: light)'/>
+      <link rel='icon' type='image/png' href={assets.meta.AltFaviconDark} media='(prefers-color-scheme: dark)'/>
+      <link rel='icon' type='image/png' href={assets.meta.AltFaviconLight} media='(prefers-color-scheme: light)'/>
       <title>{pageTitle}</title>
       <meta name='description' content={pageDescription}/>
 
