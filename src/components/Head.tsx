@@ -34,14 +34,14 @@ export default function Head({
       <title>{pageTitle}</title>
       <meta name='description' content={pageDescription}/>
 
-      {/* <meta property='og:site_name' content={baseTitle}/>
+      <meta property='og:site_name' content={baseTitle}/>
       <meta property='og:title' content={pageTitle}/>
       <meta property='og:description' content={pageDescription}/>
       <meta property='og:locale' content={locale}/>
       <meta property='og:url' content={pageUrl}/>
       <meta property='og:type' content='website'/>
       <meta property='og:image' content={baseUrl + assets.meta.OGImage}/>
-      <meta property='og:image:alt' content={pageDescription}/> */}
+      <meta property='og:image:alt' content={pageDescription}/>
 
       <meta name='twitter:title' content={pageTitle}/>
       <meta name='twitter:description' content={pageDescription}/>
