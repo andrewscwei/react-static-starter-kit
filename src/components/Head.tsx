@@ -18,18 +18,16 @@ export default function Head({
   const pageDescription = description ?? baseDescription
   const pageUrl = baseUrl + useLocation().pathname
   const locale = useLocale()
-  const [isDarkMode, setIsDarkMode] = useState(typeof window !== 'undefined' && window.matchMedia('(prefers-color-scheme: dark)').matches)
+  const matchMedia = typeof window !== 'undefined' && typeof window.matchMedia !== 'undefined' ? window.matchMedia('(prefers-color-scheme: dark)') : undefined
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(matchMedia?.matches === true)
 
   const colorSchemeChangeHandler = (event: MediaQueryListEvent) => setIsDarkMode(event.matches)
 
   useEffect(() => {
-    if (typeof window === 'undefined') return
-
-    const media = window.matchMedia('(prefers-color-scheme: dark)')
-    media.addEventListener('change', colorSchemeChangeHandler)
+    matchMedia?.addEventListener('change', colorSchemeChangeHandler)
 
     return () => {
-      media.removeEventListener('change', colorSchemeChangeHandler)
+      matchMedia?.removeEventListener('change', colorSchemeChangeHandler)
     }
   }, [])
 
