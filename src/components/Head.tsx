@@ -52,9 +52,9 @@ export default function Head({
       {/* <meta name='mobile-web-app-capable' content='yes'/>
       <meta name='apple-mobile-web-app-capable' content='yes'/>
       <meta name='apple-mobile-web-app-status-bar-style' content='black-translucent'/>
-      <meta name='apple-mobile-web-app-title' content={baseTitle}/>
+      <meta name='apple-mobile-web-app-title' content={baseTitle}/> */}
       <link rel='apple-touch-icon' href='/app-icon-57.png' sizes='57x57'/>
-      <link rel='apple-touch-icon' href='/app-icon-60.png' sizes='60x60'/>
+      {/* <link rel='apple-touch-icon' href='/app-icon-60.png' sizes='60x60'/>
       <link rel='apple-touch-icon' href='/app-icon-72.png' sizes='72x72'/>
       <link rel='apple-touch-icon' href='/app-icon-76.png' sizes='76x76'/>
       <link rel='apple-touch-icon' href='/app-icon-114.png' sizes='114x114'/>
