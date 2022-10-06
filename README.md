@@ -6,14 +6,14 @@ This is an experimental starter kit for a React static app.
 
 1. [React Router](https://reacttraining.com/react-router/)
 2. [Polyglot](https://airbnb.io/polyglot.js/)
-3. [CSS Modules](https://github.com/css-modules/css-modules) + [PostCSS](https://postcss.org/) + [StyleLint](https://stylelint.io/)
-4. [TypeScript](https://www.typescriptlang.org/) + [Babel](https://babeljs.io/) + [ESLint](https://eslint.org/)
-5. [Jest](https://jestjs.io/) + [React Testing Library](https://testing-library.com/docs/react-testing-library/)
-6. [webpack](https://webpack.js.org/)
-7. Cached fetch responses
-8. Web workers
-9. CI/CD workflows with [GitHub Actions](https://github.com/features/actions)
-10. Favicon/OG image/Twitter card resources for [Affinity Designer](https://affinity.serif.com/en-us/designer/)
+3. [react-helmet-async](https://github.com/staylor/react-helmet-async)
+4. [CSS Modules](https://github.com/css-modules/css-modules) + [PostCSS](https://postcss.org/) + [StyleLint](https://stylelint.io/)
+5. [TypeScript](https://www.typescriptlang.org/) + [Babel](https://babeljs.io/) + [ESLint](https://eslint.org/)
+6. [Jest](https://jestjs.io/) + [React Testing Library](https://testing-library.com/docs/react-testing-library/)
+7. [webpack](https://webpack.js.org/)
+8. Cached fetch responses
+9. Web workers
+10. CI/CD workflows with [GitHub Actions](https://github.com/features/actions)
 
 ## Usage
 

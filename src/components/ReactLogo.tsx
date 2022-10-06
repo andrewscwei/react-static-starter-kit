@@ -1,3 +1,4 @@
+import classNames from 'classnames'
 import React, { HTMLAttributes } from 'react'
 import * as assets from '../assets'
 import style from './ReactLogo.module.css'
@@ -9,6 +10,6 @@ export default function ReactLogo({
   ...props
 }: Props) {
   return (
-    <figure {...props} className={`${className} ${style.root}`} dangerouslySetInnerHTML={{ __html: assets.svgs.ReactLogo }}/>
+    <figure {...props} className={classNames(className, style.root)} dangerouslySetInnerHTML={{ __html: assets.svgs.ReactLogo }}/>
   )
 }

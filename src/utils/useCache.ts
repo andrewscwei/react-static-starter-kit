@@ -31,7 +31,7 @@ function getValue<T>(key: string): T | undefined {
   const item = JSON.parse(res) as CacheItem<T>
   if (!item) return undefined
 
-  if (!isStale(item)) {
+  if (isStale(item)) {
     invalidate(key)
 
     return undefined
