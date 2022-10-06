@@ -28,7 +28,7 @@ export default function Head({
 
       <link rel='canonical' href={pageUrl}/>
       <link rel='mask-icon' href={assets.meta.PinnedIcon} color='#000'/>
-      <link rel='alternate icon' type='image/svg+xml' href={assets.meta.Favicon}/>
+      <link rel='alternate icon' type='image/png' href={assets.meta.AltFavicon2}/>
       <link rel='icon' href={assets.meta.Favicon}/>
 
       <title>{pageTitle}</title>
