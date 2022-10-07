@@ -17,7 +17,7 @@ declare module '*.ttf'
 declare module '*.otf'
 declare module '*.module.css'
 
-declare const __APP_CONFIG__: typeof import('../config/app.conf').default
+declare const __BUILD_ARGS__: typeof import('../config/build.args')
 
 declare module 'worker-loader!*' {
   class WebpackWorker extends Worker {

@@ -2,10 +2,11 @@ import React from 'react'
 import { createRoot } from 'react-dom/client'
 import Worker from 'worker-loader!./workers/web'
 import App from './App'
+import appConf from './app.conf'
 import useDebug from './utils/useDebug'
 
 if (process.env.NODE_ENV === 'development') window.localStorage.debug = 'app*'
-window.__VERSION__ = `v${__APP_CONFIG__.version}/${__APP_CONFIG__.buildNumber}`
+window.__VERSION__ = appConf.version
 
 const debug = useDebug()
 

@@ -4,11 +4,11 @@
 
 import { Config } from 'jest'
 import path from 'path'
-import appConf from './app.conf'
+import * as buildArgs from './build.args'
 
 const config: Config = {
   globals: {
-    __APP_CONFIG__: appConf,
+    __BUILD_ARGS__: buildArgs,
   },
   moduleNameMapper: {
     '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$': '<rootDir>/__mocks__/files.ts',

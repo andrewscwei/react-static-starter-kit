@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { useLocation } from 'react-router'
+import appConf from '../app.conf'
 import * as assets from '../assets'
 import { useLocale } from '../providers/i18n'
 
@@ -13,7 +14,7 @@ export default function Head({
   description,
   title,
 }: Props) {
-  const { title: baseTitle, description: baseDescription, url: baseUrl } = __APP_CONFIG__.meta
+  const { title: baseTitle, description: baseDescription, url: baseUrl } = appConf
   const pageTitle = title ?? baseTitle
   const pageDescription = description ?? baseDescription
   const pageUrl = baseUrl + useLocation().pathname

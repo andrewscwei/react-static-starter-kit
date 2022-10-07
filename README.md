@@ -111,6 +111,6 @@ When using `react-static-starter-kit` as a template, follow these steps to debra
 5. Edit resources in `res/`, then ensure to replace the generated assets in the following places:
   1. `src/assets/`
   2. `src/static/`
-6. Edit `config/app.conf.ts`
+6. Edit `config/build.args.ts`
 7. Edit translations in `src/locales/`
 8. Edit files in `src/components/` and `src/pages/`

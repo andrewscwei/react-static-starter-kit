@@ -10,25 +10,18 @@ import MiniCSSExtractPlugin from 'mini-css-extract-plugin'
 import path from 'path'
 import { Configuration, DefinePlugin, EnvironmentPlugin, IgnorePlugin } from 'webpack'
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
-import appConf from './app.conf'
-
-const isDev = process.env.NODE_ENV === 'development'
-const inputDir = path.join(__dirname, '../', 'src')
-const outputDir = path.join(__dirname, '../', 'build')
-const port = Number(process.env.PORT ?? 8080)
-const useBundleAnalyzer = process.env.npm_config_analyze === 'true'
-const skipOptimizations = isDev || process.env.npm_config_raw === 'true'
+import * as buildArgs from './build.args'
 
 const config: Configuration = {
-  devtool: isDev ? 'eval-source-map' : false,
+  devtool: buildArgs.isDev ? 'eval-source-map' : false,
   entry: {
-    main: path.join(inputDir, 'index.tsx'),
-    polyfills: path.join(inputDir, 'polyfills.ts'),
+    polyfills: path.join(buildArgs.inputDir, 'polyfills.ts'),
+    main: path.join(buildArgs.inputDir, 'index.tsx'),
   },
   infrastructureLogging: {
     level: 'error',
   },
-  mode: isDev ? 'development' : 'production',
+  mode: buildArgs.isDev ? 'development' : 'production',
   module: {
     rules: [{
       exclude: /node_modules/,
@@ -38,25 +31,25 @@ const config: Configuration = {
         options: {
           cacheDirectory: true,
           plugins: [
-            ...isDev ? [require.resolve('react-refresh/babel')] : [],
+            ...buildArgs.isDev ? [require.resolve('react-refresh/babel')] : [],
           ],
         },
       }],
     }, {
       test: /\.css$/,
       use: [{
-        loader: isDev ? 'style-loader' : MiniCSSExtractPlugin.loader,
+        loader: buildArgs.isDev ? 'style-loader' : MiniCSSExtractPlugin.loader,
       }, {
         loader: 'css-loader',
         options: {
           importLoaders: 1,
           modules: true,
-          sourceMap: isDev,
+          sourceMap: buildArgs.isDev,
         },
       }, {
         loader: 'postcss-loader',
         options: {
-          sourceMap: isDev,
+          sourceMap: buildArgs.isDev,
           postcssOptions: {
             plugins: [
               ['postcss-preset-env', {
@@ -64,7 +57,7 @@ const config: Configuration = {
                   'nesting-rules': true,
                 },
               }],
-              ...skipOptimizations ? [] : ['cssnano'],
+              ...buildArgs.skipOptimizations ? [] : ['cssnano'],
             ],
           },
         },
@@ -78,33 +71,33 @@ const config: Configuration = {
       include: /assets\/images/,
       type: 'asset',
       generator: {
-        filename: `assets/images/${isDev ? '[name]' : '[name].[hash:base64]'}[ext]`,
+        filename: `assets/images/${buildArgs.isDev ? '[name]' : '[name].[hash:base64]'}[ext]`,
       },
     }, {
       test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
       include: /assets\/media/,
       type: 'asset',
       generator: {
-        filename: `assets/media/${isDev ? '[name]' : '[name].[hash:base64]'}[ext]`,
+        filename: `assets/media/${buildArgs.isDev ? '[name]' : '[name].[hash:base64]'}[ext]`,
       },
     }, {
       test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
       include: /assets\/fonts/,
       type: 'asset',
       generator: {
-        filename: `assets/fonts/${isDev ? '[name]' : '[name].[hash:base64]'}[ext]`,
+        filename: `assets/fonts/${buildArgs.isDev ? '[name]' : '[name].[hash:base64]'}[ext]`,
       },
     }, {
       test: /\.(jpe?g|png|gif|svg|mp4|webm|ogg|mp3|wav|flac|aac|woff2?|eot|ttf|otf)(\?.*)?$/,
       include: /assets\/meta/,
       type: 'asset/resource',
       generator: {
-        filename: `${isDev ? '[name]' : '[name].[hash:base64]'}[ext]`,
+        filename: `${buildArgs.isDev ? '[name]' : '[name].[hash:base64]'}[ext]`,
       },
     }],
   },
   optimization: {
-    minimize: !skipOptimizations,
+    minimize: !buildArgs.skipOptimizations,
     splitChunks: {
       cacheGroups: {
         common: {
@@ -117,36 +110,36 @@ const config: Configuration = {
     },
   },
   output: {
-    filename: isDev ? '[name].js' : '[name].[chunkhash].js',
-    path: outputDir,
-    publicPath: process.env.PUBLIC_PATH || '/',
+    filename: buildArgs.isDev ? '[name].js' : '[name].[chunkhash].js',
+    path: buildArgs.outputDir,
+    publicPath: buildArgs.publicPath,
     sourceMapFilename: '[file].map',
   },
   performance: {
-    hints: isDev ? false : 'warning',
+    hints: buildArgs.isDev ? false : 'warning',
     maxAssetSize: 512 * 1024,
     maxEntrypointSize: 512 * 1024,
   },
   plugins: [
     new MiniCSSExtractPlugin({
-      chunkFilename: isDev ? '[id].css' : '[id].[chunkhash].css',
-      filename: isDev ? '[name].css' : '[name].[chunkhash].css',
+      chunkFilename: buildArgs.isDev ? '[id].css' : '[id].[chunkhash].css',
+      filename: buildArgs.isDev ? '[name].css' : '[name].[chunkhash].css',
     }),
     new ForkTSCheckerPlugin(),
     new CopyPlugin({
       patterns: [{
-        from: path.join(inputDir, 'static'),
-        to: outputDir,
+        from: path.join(buildArgs.inputDir, 'static'),
+        to: buildArgs.outputDir,
       }],
     }),
     new EnvironmentPlugin({
       'NODE_ENV': 'production',
     }),
     new DefinePlugin({
-      '__APP_CONFIG__': JSON.stringify(appConf),
+      '__BUILD_ARGS__': JSON.stringify(buildArgs),
     }),
     new HTMLPlugin({
-      chunks: ['common', 'main'].concat(isDev ? [] : ['polyfills']),
+      chunks: ['common', 'main'].concat(buildArgs.isDev ? [] : ['polyfills']),
       filename: 'index.html',
       inject: true,
       minify: {
@@ -154,13 +147,13 @@ const config: Configuration = {
         removeAttributeQuotes: true,
         removeComments: true,
       },
-      template: path.join(inputDir, 'templates', 'index.html'),
+      template: path.join(buildArgs.inputDir, 'templates', 'index.html'),
     }),
-    ...isDev ? [new ReactRefreshPlugin()] : [],
-    ...isDev ? [] : [new IgnorePlugin({
+    ...buildArgs.isDev ? [new ReactRefreshPlugin()] : [],
+    ...buildArgs.isDev ? [] : [new IgnorePlugin({
       resourceRegExp: /^.*\/config\/.*$/,
     })],
-    ...useBundleAnalyzer ? [new BundleAnalyzerPlugin({
+    ...buildArgs.useBundleAnalyzer ? [new BundleAnalyzerPlugin({
       analyzerMode: 'static',
     })] : [],
   ],
@@ -174,7 +167,7 @@ const config: Configuration = {
     reasons: true,
   },
   target: 'web',
-  ...isDev ? {
+  ...buildArgs.isDev ? {
     devServer: {
       client: {
         logging: 'error',
@@ -183,14 +176,14 @@ const config: Configuration = {
         'Access-Control-Allow-Credentials': 'true',
         'Access-Control-Allow-Headers': 'Origin, Content-Type, Accept, Authorization, X-Request-With',
         'Access-Control-Allow-Methods': 'GET,OPTIONS,HEAD,PUT,POST,DELETE,PATCH',
-        'Access-Control-Allow-Origin': `http://localhost:${port}`,
+        'Access-Control-Allow-Origin': `http://localhost:${buildArgs.devPort}`,
       },
       historyApiFallback: true,
       host: '0.0.0.0',
       hot: true,
-      port,
+      port: buildArgs.devPort,
       static: {
-        publicPath: process.env.PUBLIC_PATH || '/',
+        publicPath: buildArgs.publicPath,
       },
     },
   } : {},
