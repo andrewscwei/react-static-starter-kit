@@ -8,7 +8,7 @@ import ForkTSCheckerPlugin from 'fork-ts-checker-webpack-plugin'
 import HTMLPlugin from 'html-webpack-plugin'
 import MiniCSSExtractPlugin from 'mini-css-extract-plugin'
 import path from 'path'
-import { DefinePlugin, EnvironmentPlugin, IgnorePlugin } from 'webpack'
+import { Configuration, DefinePlugin, EnvironmentPlugin, IgnorePlugin } from 'webpack'
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
 import appConf from './app.conf'
 
@@ -19,7 +19,7 @@ const port = Number(process.env.PORT ?? 8080)
 const useBundleAnalyzer = process.env.npm_config_analyze === 'true'
 const skipOptimizations = isDev || process.env.npm_config_raw === 'true'
 
-export default {
+const config: Configuration = {
   devtool: isDev ? 'eval-source-map' : false,
   entry: {
     main: path.join(inputDir, 'index.tsx'),
@@ -38,8 +38,8 @@ export default {
         options: {
           cacheDirectory: true,
           plugins: [
-            isDev && require.resolve('react-refresh/babel'),
-          ].filter(Boolean),
+            ...isDev ? [require.resolve('react-refresh/babel')] : [],
+          ],
         },
       }],
     }, {
@@ -64,8 +64,8 @@ export default {
                   'nesting-rules': true,
                 },
               }],
-              !skipOptimizations && 'cssnano',
-            ].filter(Boolean),
+              ...skipOptimizations ? [] : ['cssnano'],
+            ],
           },
         },
       }],
@@ -143,7 +143,7 @@ export default {
       'NODE_ENV': 'production',
     }),
     new DefinePlugin({
-      '__CONFIG__': JSON.stringify(appConf),
+      '__APP_CONFIG__': JSON.stringify(appConf),
     }),
     new HTMLPlugin({
       chunks: ['common', 'main'].concat(isDev ? [] : ['polyfills']),
@@ -156,32 +156,14 @@ export default {
       },
       template: path.join(inputDir, 'templates', 'index.html'),
     }),
-    isDev && new ReactRefreshPlugin(),
-    !isDev && new IgnorePlugin({
+    ...isDev ? [new ReactRefreshPlugin()] : [],
+    ...isDev ? [] : [new IgnorePlugin({
       resourceRegExp: /^.*\/config\/.*$/,
-    }),
-    useBundleAnalyzer && new BundleAnalyzerPlugin({
+    })],
+    ...useBundleAnalyzer ? [new BundleAnalyzerPlugin({
       analyzerMode: 'static',
-    }),
-  ].filter(Boolean),
-  devServer: {
-    client: {
-      logging: 'error',
-    },
-    headers: {
-      'Access-Control-Allow-Origin': `http://localhost:${port}`,
-      'Access-Control-Allow-Methods': 'GET,OPTIONS,HEAD,PUT,POST,DELETE,PATCH',
-      'Access-Control-Allow-Headers': 'Origin, Content-Type, Accept, Authorization, X-Request-With',
-      'Access-Control-Allow-Credentials': 'true',
-    },
-    historyApiFallback: true,
-    host: '0.0.0.0',
-    hot: true,
-    port,
-    static: {
-      publicPath: process.env.PUBLIC_PATH || '/',
-    },
-  },
+    })] : [],
+  ],
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
   },
@@ -192,4 +174,26 @@ export default {
     reasons: true,
   },
   target: 'web',
+  ...isDev ? {
+    devServer: {
+      client: {
+        logging: 'error',
+      },
+      headers: {
+        'Access-Control-Allow-Credentials': 'true',
+        'Access-Control-Allow-Headers': 'Origin, Content-Type, Accept, Authorization, X-Request-With',
+        'Access-Control-Allow-Methods': 'GET,OPTIONS,HEAD,PUT,POST,DELETE,PATCH',
+        'Access-Control-Allow-Origin': `http://localhost:${port}`,
+      },
+      historyApiFallback: true,
+      host: '0.0.0.0',
+      hot: true,
+      port,
+      static: {
+        publicPath: process.env.PUBLIC_PATH || '/',
+      },
+    },
+  } : {},
 }
+
+export default config

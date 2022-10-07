@@ -72,7 +72,7 @@ To prerender this app, you can use [`react-snap`](https://www.npmjs.com/package/
         "source": "build",
         "include": [
           "/404.html",
-          "/jp",
+          "/ja",
           ... // Include the root route of all locales
         ],
         "puppeteerArgs": [

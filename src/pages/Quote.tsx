@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import Head from '../components/Head'
-import useFetch from '../hooks/useFetch'
-import GetQuote from '../interactors/useCases/GetQuote'
+import { GetQuote } from '../interactors'
+import useFetch from '../interactors/hooks/useFetch'
 import { useLocalizedString } from '../providers/i18n'
 import style from './Quote.module.css'
 

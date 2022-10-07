@@ -5,7 +5,7 @@ import App from './App'
 import useDebug from './utils/useDebug'
 
 if (process.env.NODE_ENV === 'development') window.localStorage.debug = 'app*'
-window.__VERSION__ = `v${__CONFIG__.version}/${__CONFIG__.buildNumber}`
+window.__VERSION__ = `v${__APP_CONFIG__.version}/${__APP_CONFIG__.buildNumber}`
 
 const debug = useDebug()
 

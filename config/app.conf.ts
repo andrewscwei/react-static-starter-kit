@@ -1,5 +1,6 @@
 /**
- * @file Configurations for the app.
+ * @file Configurations for the app. These values are computed at buildtime and passed to the
+ *       runtime environment as a global variable named `__APP_CONFIG__`.
  */
 
 import dotenv from 'dotenv'
@@ -16,13 +17,13 @@ export default {
 
   // HTML metadata.
   meta: {
-    // Fallback default window title.
+    // Fallback window title.
     title: 'React Static Starter Kit',
 
-    // Short description of the app.
+    // Fallback metadata description.
     description,
 
-    // App URL.
+    // Fully qualified URL of the app in production.
     url: homepage,
   },
 }

@@ -13,7 +13,7 @@ export default function Head({
   description,
   title,
 }: Props) {
-  const { title: baseTitle, description: baseDescription, url: baseUrl } = __CONFIG__.meta
+  const { title: baseTitle, description: baseDescription, url: baseUrl } = __APP_CONFIG__.meta
   const pageTitle = title ?? baseTitle
   const pageDescription = description ?? baseDescription
   const pageUrl = baseUrl + useLocation().pathname
