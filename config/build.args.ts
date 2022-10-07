@@ -5,21 +5,23 @@
 
 import dotenv from 'dotenv'
 import path from 'path'
-import { description as packageDescription, homepage as packageHomepage, version as packageVersion } from '../package.json'
+import packageInfo from '../package.json'
 
 dotenv.config()
 
-export { packageVersion, packageHomepage, packageDescription }
+export const packageVersion = packageInfo.version
+export const packageHomepage = packageInfo.homepage
+export const packageDescription = packageInfo.description
 
 /**
- * Indicates if `NODE_ENV` is "development".
+ * The `NODE_ENV` at buildtime.
  */
-export const isDev = process.env.NODE_ENV === 'development'
+export const env = process.env.NODE_ENV ?? '???'
 
 /**
  * Version number.
  */
-export const version = `${packageVersion}${!isDev ? '' : `-${(process.env.NODE_ENV ?? 'development').substring(0, 3)}`}`
+export const version = packageVersion
 
 /**
  * Build number.
@@ -44,7 +46,7 @@ export const useBundleAnalyzer = process.env.npm_config_analyze === 'true'
 /**
  * Specifies whether HTML/JS/CSS minifications should be disabled while building.
  */
-export const skipOptimizations = process.env.NODE_ENV === 'development' || process.env.npm_config_raw === 'true'
+export const skipOptimizations = env === 'development' || process.env.npm_config_raw === 'true'
 
 /**
  * Specifies the port to use during development.

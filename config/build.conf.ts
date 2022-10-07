@@ -1,5 +1,5 @@
 /**
- * @file Webpack config for building the app in both `development` and `production` environments.
+ * @file Webpack config for development and production.
  */
 
 import ReactRefreshPlugin from '@pmmmwh/react-refresh-webpack-plugin'
@@ -12,8 +12,10 @@ import { Configuration, DefinePlugin, EnvironmentPlugin, IgnorePlugin } from 'we
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
 import * as buildArgs from './build.args'
 
+const isDev = buildArgs.env === 'development'
+
 const config: Configuration = {
-  devtool: buildArgs.isDev ? 'eval-source-map' : false,
+  devtool: isDev ? 'eval-source-map' : false,
   entry: {
     polyfills: path.join(buildArgs.inputDir, 'polyfills.ts'),
     main: path.join(buildArgs.inputDir, 'index.tsx'),
@@ -21,7 +23,7 @@ const config: Configuration = {
   infrastructureLogging: {
     level: 'error',
   },
-  mode: buildArgs.isDev ? 'development' : 'production',
+  mode: isDev ? 'development' : 'production',
   module: {
     rules: [{
       exclude: /node_modules/,
@@ -31,25 +33,25 @@ const config: Configuration = {
         options: {
           cacheDirectory: true,
           plugins: [
-            ...buildArgs.isDev ? [require.resolve('react-refresh/babel')] : [],
+            ...isDev ? [require.resolve('react-refresh/babel')] : [],
           ],
         },
       }],
     }, {
       test: /\.css$/,
       use: [{
-        loader: buildArgs.isDev ? 'style-loader' : MiniCSSExtractPlugin.loader,
+        loader: isDev ? 'style-loader' : MiniCSSExtractPlugin.loader,
       }, {
         loader: 'css-loader',
         options: {
           importLoaders: 1,
           modules: true,
-          sourceMap: buildArgs.isDev,
+          sourceMap: isDev,
         },
       }, {
         loader: 'postcss-loader',
         options: {
-          sourceMap: buildArgs.isDev,
+          sourceMap: isDev,
           postcssOptions: {
             plugins: [
               ['postcss-preset-env', {
@@ -71,28 +73,28 @@ const config: Configuration = {
       include: /assets\/images/,
       type: 'asset',
       generator: {
-        filename: `assets/images/${buildArgs.isDev ? '[name]' : '[name].[hash:base64]'}[ext]`,
+        filename: `assets/images/${isDev ? '[name]' : '[name].[hash:base64]'}[ext]`,
       },
     }, {
       test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
       include: /assets\/media/,
       type: 'asset',
       generator: {
-        filename: `assets/media/${buildArgs.isDev ? '[name]' : '[name].[hash:base64]'}[ext]`,
+        filename: `assets/media/${isDev ? '[name]' : '[name].[hash:base64]'}[ext]`,
       },
     }, {
       test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
       include: /assets\/fonts/,
       type: 'asset',
       generator: {
-        filename: `assets/fonts/${buildArgs.isDev ? '[name]' : '[name].[hash:base64]'}[ext]`,
+        filename: `assets/fonts/${isDev ? '[name]' : '[name].[hash:base64]'}[ext]`,
       },
     }, {
       test: /\.(jpe?g|png|gif|svg|mp4|webm|ogg|mp3|wav|flac|aac|woff2?|eot|ttf|otf)(\?.*)?$/,
       include: /assets\/meta/,
       type: 'asset/resource',
       generator: {
-        filename: `${buildArgs.isDev ? '[name]' : '[name].[hash:base64]'}[ext]`,
+        filename: `${isDev ? '[name]' : '[name].[hash:base64]'}[ext]`,
       },
     }],
   },
@@ -110,20 +112,20 @@ const config: Configuration = {
     },
   },
   output: {
-    filename: buildArgs.isDev ? '[name].js' : '[name].[chunkhash].js',
+    filename: isDev ? '[name].js' : '[name].[chunkhash].js',
     path: buildArgs.outputDir,
     publicPath: buildArgs.publicPath,
     sourceMapFilename: '[file].map',
   },
   performance: {
-    hints: buildArgs.isDev ? false : 'warning',
+    hints: isDev ? false : 'warning',
     maxAssetSize: 512 * 1024,
     maxEntrypointSize: 512 * 1024,
   },
   plugins: [
     new MiniCSSExtractPlugin({
-      chunkFilename: buildArgs.isDev ? '[id].css' : '[id].[chunkhash].css',
-      filename: buildArgs.isDev ? '[name].css' : '[name].[chunkhash].css',
+      chunkFilename: isDev ? '[id].css' : '[id].[chunkhash].css',
+      filename: isDev ? '[name].css' : '[name].[chunkhash].css',
     }),
     new ForkTSCheckerPlugin(),
     new CopyPlugin({
@@ -139,7 +141,7 @@ const config: Configuration = {
       '__BUILD_ARGS__': JSON.stringify(buildArgs),
     }),
     new HTMLPlugin({
-      chunks: ['common', 'main'].concat(buildArgs.isDev ? [] : ['polyfills']),
+      chunks: ['common', 'main'].concat(isDev ? [] : ['polyfills']),
       filename: 'index.html',
       inject: true,
       minify: {
@@ -149,8 +151,8 @@ const config: Configuration = {
       },
       template: path.join(buildArgs.inputDir, 'templates', 'index.html'),
     }),
-    ...buildArgs.isDev ? [new ReactRefreshPlugin()] : [],
-    ...buildArgs.isDev ? [] : [new IgnorePlugin({
+    ...isDev ? [new ReactRefreshPlugin()] : [],
+    ...isDev ? [] : [new IgnorePlugin({
       resourceRegExp: /^.*\/config\/.*$/,
     })],
     ...buildArgs.useBundleAnalyzer ? [new BundleAnalyzerPlugin({
@@ -167,7 +169,7 @@ const config: Configuration = {
     reasons: true,
   },
   target: 'web',
-  ...buildArgs.isDev ? {
+  ...isDev ? {
     devServer: {
       client: {
         logging: 'error',
