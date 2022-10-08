@@ -16,7 +16,7 @@ export const packageDescription = packageInfo.description
 /**
  * The `NODE_ENV` at buildtime.
  */
-export const env = process.env.NODE_ENV ?? '???'
+export const env = process.env.NODE_ENV
 
 /**
  * Version number.
