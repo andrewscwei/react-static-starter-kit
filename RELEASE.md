@@ -7,4 +7,3 @@
 - Relocated `locales` directory
 - Created reusable workflows for CI/CD
 - Added `http-server` for `start` command
-- Added `hooks` directory
