@@ -1,10 +1,33 @@
 {
   "version": "0.2.0",
+  "compounds": [
+    {
+      "name": "Debug (Chrome)",
+      "configurations": [
+        "Dev",
+        "Launch (Chrome)"
+      ]
+    },
+    {
+      "name": "Debug (Firefox)",
+      "configurations": [
+        "Dev",
+        "Launch (Firefox)"
+      ]
+    },
+    {
+      "name": "Debug (Edge)",
+      "configurations": [
+        "Dev",
+        "Launch (Edge)"
+      ]
+    }
+  ],
   "configurations": [
     {
+      "name": "Launch (Chrome)",
       "type": "chrome",
       "request": "launch",
-      "name": "Debug (Chrome)",
       "url": "http://localhost:8080",
       "webRoot": "${workspaceFolder}",
       "sourceMapPathOverrides": {
@@ -13,28 +36,38 @@
       }
     },
     {
+      "name": "Launch (Firefox)",
       "type": "firefox",
       "request": "launch",
-      "name": "Debug (Firefox)",
       "url": "http://localhost:8080",
       "webRoot": "${workspaceFolder}",
       "pathMappings": [
         {
-          "url": "webpack://react-static-starter-kit/node_modules",
-          "path": "${workspaceFolder}/node_modules"
-        },
-        {
-          "url": "webpack://react-static-starter-kit/src",
-          "path": "${workspaceFolder}/src"
+          "url": "webpack://${workspaceFolderBasename}",
+          "path": "${workspaceFolder}"
         }
       ]
     },
     {
+      "name": "Launch (Edge)",
       "type": "msedge",
       "request": "launch",
-      "name": "Debug (Edge)",
       "url": "http://localhost:8080",
       "webRoot": "${workspaceFolder}"
+    },
+    {
+      "name": "Dev",
+      "type": "node",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run-script",
+        "dev"
+      ],
+      "skipFiles": [
+        "<node_internals>/**"
+      ]
     }
   ]
 }
