@@ -10,7 +10,7 @@ import translations from './locales'
 import Home from './pages/Home'
 import NotFound from './pages/NotFound'
 import Quote from './pages/Quote'
-import I18nRouterProvider, { I18nRoutes } from './providers/i18n/I18nRouterProvider'
+import I18nProvider, { I18nRoutes } from './providers/I18nProvider'
 import './styles/global.css'
 import useDebug from './utils/useDebug'
 
@@ -31,7 +31,7 @@ export default function App() {
   return (
     <HelmetProvider>
       <BrowserRouter>
-        <I18nRouterProvider defaultLocale={appConf.defaultLocale} translations={translations} urlResolveStrategy={appConf.urlResolveStrategy as any}>
+        <I18nProvider defaultLocale={appConf.defaultLocale} translations={translations} changeLocaleStrategy='action'>
           <Header/>
           <I18nRoutes>
             <Route index element={<Home/>}/>
@@ -39,7 +39,7 @@ export default function App() {
             <Route path='*' element={<NotFound/>}/>
           </I18nRoutes>
           <Footer/>
-        </I18nRouterProvider>
+        </I18nProvider>
       </BrowserRouter>
     </HelmetProvider>
   )
