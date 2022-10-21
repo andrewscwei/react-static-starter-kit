@@ -27,9 +27,4 @@ export default {
    * Default locale.
    */
   defaultLocale: 'en',
-
-  /**
-   * Location in the URL to infer the current locale, available options are "path" and "query".
-   */
-  urlResolveStrategy: 'path',
 }

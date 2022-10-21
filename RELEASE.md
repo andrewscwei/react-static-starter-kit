@@ -7,3 +7,5 @@
 - Relocated `locales` directory
 - Created reusable workflows for CI/CD
 - Added `http-server` for `start` command
+- Added interactors
+- Added `I18nProvider`

@@ -21,7 +21,6 @@ export function mount(containerId = 'app') {
   if (!container) return console.warn(`No container with ID <${containerId}> found`)
 
   const app = <App/>
-
   createRoot(container).render(app)
 
   debug('Mounting app...', 'OK')
@@ -31,7 +30,7 @@ export default function App() {
   return (
     <HelmetProvider>
       <BrowserRouter>
-        <I18nProvider defaultLocale={appConf.defaultLocale} translations={translations} changeLocaleStrategy='action'>
+        <I18nProvider defaultLocale={appConf.defaultLocale} translations={translations} changeLocaleStrategy='path'>
           <Header/>
           <I18nRoutes>
             <Route index element={<Home/>}/>
