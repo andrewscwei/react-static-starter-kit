@@ -1,7 +1,5 @@
-import React from 'react'
-import { createRoot } from 'react-dom/client'
 import Worker from 'worker-loader!./workers/web'
-import App from './App'
+import { mount } from './App'
 import appConf from './app.conf'
 import useDebug from './utils/useDebug'
 
@@ -18,8 +16,4 @@ worker.addEventListener('message', event => {
   worker.terminate()
 })
 
-// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-const app = createRoot(document.getElementById('app')!)
-app.render(<App/>)
-
-debug('Rendering app...', 'OK')
+mount()

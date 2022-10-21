@@ -18,7 +18,7 @@ const config: Configuration = {
   devtool: isDev ? 'eval-source-map' : false,
   entry: {
     polyfills: path.join(buildArgs.inputDir, 'polyfills.ts'),
-    main: path.join(buildArgs.inputDir, 'index.tsx'),
+    main: path.join(buildArgs.inputDir, 'index.ts'),
   },
   infrastructureLogging: {
     level: 'error',
@@ -37,21 +37,22 @@ const config: Configuration = {
           ],
         },
       }],
-    }, {
+    }, ...[true, false].map(useCSSModules => ({
       test: /\.css$/,
+      ...useCSSModules ? { include: /\.module\.css$/ } : { exclude: /\.module\.css$/ },
       use: [{
-        loader: isDev ? 'style-loader' : MiniCSSExtractPlugin.loader,
+        loader: MiniCSSExtractPlugin.loader,
       }, {
         loader: 'css-loader',
         options: {
           importLoaders: 1,
-          modules: true,
-          sourceMap: isDev,
+          modules: useCSSModules,
+          sourceMap: buildArgs.useSourceMaps,
         },
       }, {
         loader: 'postcss-loader',
         options: {
-          sourceMap: isDev,
+          sourceMap: buildArgs.useSourceMaps,
           postcssOptions: {
             plugins: [
               ['postcss-preset-env', {
@@ -64,7 +65,7 @@ const config: Configuration = {
           },
         },
       }],
-    }, {
+    })), {
       test: /\.svg$/,
       include: /assets\/svgs/,
       type: 'asset/source',
