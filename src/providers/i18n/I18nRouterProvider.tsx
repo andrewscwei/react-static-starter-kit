@@ -8,16 +8,16 @@ interface Translation { [key: string]: Translation | string }
 type I18nRouterContextValue = {
   defaultLocale: string
   locale: string
-  location: 'path' | 'query'
   supportedLocales: string[]
+  urlResolveStrategy: 'path' | 'query'
   getLocalizedPath: (path: string) => string
   getLocalizedString: typeof Polyglot.prototype.t
 }
 
 type I18nRouterProviderProps = PropsWithChildren<{
   defaultLocale: I18nRouterContextValue['defaultLocale']
-  location?: I18nRouterContextValue['location']
   translations: Record<string, Translation>
+  urlResolveStrategy?: I18nRouterContextValue['urlResolveStrategy']
 }>
 
 export const I18nRouterContext = createContext<I18nRouterContextValue | undefined>(undefined)
@@ -30,9 +30,9 @@ export function I18nRoutes({ children }: PropsWithChildren) {
   const context = useContext(I18nRouterContext)
   if (!context) throw Error('Cannot fetch the value of I18nRouterContext, is the corresponding provider instated?')
 
-  const { defaultLocale, location, supportedLocales } = context
+  const { defaultLocale, supportedLocales, urlResolveStrategy } = context
 
-  switch (location) {
+  switch (urlResolveStrategy) {
     case 'path':
       return (
         <Routes>
@@ -66,8 +66,8 @@ export function I18nRoutes({ children }: PropsWithChildren) {
 export default function I18nRouterProvider({
   children,
   defaultLocale,
-  location = 'path',
   translations,
+  urlResolveStrategy = 'path',
 }: I18nRouterProviderProps) {
   const { pathname, search, hash } = useLocation()
   const url = `${pathname}${search}${hash}`
@@ -83,7 +83,7 @@ export default function I18nRouterProvider({
     [locale]: new Polyglot({ locale, phrases: translations[locale] }),
   }), {}), [translations])
 
-  const localeInfo = getLocaleFromURL(url, { defaultLocale, location, supportedLocales })
+  const localeInfo = getLocaleFromURL(url, { defaultLocale, resolveStrategy: urlResolveStrategy, supportedLocales })
   if (!localeInfo) console.warn(`Unable to infer locale from path <${url}>`)
 
   const locale = localeInfo?.locale ?? defaultLocale
@@ -94,9 +94,9 @@ export default function I18nRouterProvider({
   const value: I18nRouterContextValue = {
     defaultLocale,
     locale,
-    location,
+    urlResolveStrategy,
     supportedLocales,
-    getLocalizedPath: path => locale === defaultLocale ? getUnlocalizedURL(path, { location, supportedLocales }) : getLocalizedURL(path, locale, { defaultLocale, location, supportedLocales }),
+    getLocalizedPath: path => locale === defaultLocale ? getUnlocalizedURL(path, { resolveStrategy: urlResolveStrategy, supportedLocales }) : getLocalizedURL(path, locale, { defaultLocale, resolveStrategy: urlResolveStrategy, supportedLocales }),
     getLocalizedString: (...args) => polyglot?.t(...args) ?? args[0],
   }
 

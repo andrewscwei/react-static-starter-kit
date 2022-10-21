@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client'
 import { HelmetProvider } from 'react-helmet-async'
 import { Route } from 'react-router'
 import { BrowserRouter } from 'react-router-dom'
+import appConf from './app.conf'
 import Footer from './components/Footer'
 import Header from './components/Header'
 import translations from './locales'
@@ -30,7 +31,7 @@ export default function App() {
   return (
     <HelmetProvider>
       <BrowserRouter>
-        <I18nRouterProvider defaultLocale={'en'} translations={translations}>
+        <I18nRouterProvider defaultLocale={appConf.defaultLocale} translations={translations} urlResolveStrategy={appConf.urlResolveStrategy as any}>
           <Header/>
           <I18nRoutes>
             <Route index element={<Home/>}/>

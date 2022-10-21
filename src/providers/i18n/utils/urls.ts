@@ -27,7 +27,7 @@ type ResolveLocalizedURLOptions = ResolveLocaleOptions & {
    * Specifies where in the URL the locale should be matched. If `resolver` is provided, this option
    * is ignored.
    */
-  location?: 'auto' | 'domain' | 'path' | 'query'
+  resolveStrategy?: 'auto' | 'domain' | 'path' | 'query'
 
   /**
    * Custom resolver function.
@@ -51,7 +51,7 @@ type LocalizedURLInfo = {
   /**
    * Specifies where in the URL the locale was matched.
    */
-  location: ResolveLocalizedURLOptions['location'] | 'custom'
+  resolveStrategy: ResolveLocalizedURLOptions['resolveStrategy'] | 'custom'
 }
 
 /**
@@ -125,14 +125,14 @@ function resolveLocale(locale?: string, { defaultLocale, supportedLocales }: Res
  *
  * @returns The inferred locale if it exists.
  */
-export function getLocaleFromURL(url: string, { defaultLocale, location = 'auto', resolver, supportedLocales }: ResolveLocalizedURLOptions = {}): LocalizedURLInfo | undefined {
+export function getLocaleFromURL(url: string, { defaultLocale, resolveStrategy = 'auto', resolver, supportedLocales }: ResolveLocalizedURLOptions = {}): LocalizedURLInfo | undefined {
   const parts = parseURL(url)
 
   if (resolver) {
     const matchedLocale = resolver(parts)
 
-    if (matchedLocale && (!supportedLocales || supportedLocales.indexOf(matchedLocale) >= 0)) return { locale: matchedLocale, location: 'custom' }
-    if (defaultLocale && (!supportedLocales || supportedLocales.indexOf(defaultLocale) >= 0)) return { locale: defaultLocale, location: 'auto' }
+    if (matchedLocale && (!supportedLocales || supportedLocales.indexOf(matchedLocale) >= 0)) return { locale: matchedLocale, resolveStrategy: 'custom' }
+    if (defaultLocale && (!supportedLocales || supportedLocales.indexOf(defaultLocale) >= 0)) return { locale: defaultLocale, resolveStrategy: 'auto' }
 
     return undefined
   }
@@ -141,10 +141,10 @@ export function getLocaleFromURL(url: string, { defaultLocale, location = 'auto'
     const matchedLocaleFromPath = parts.path?.split('/').filter(t => t)[0]
     const matchedLocaleFromQuery = new URLSearchParams(parts.query).get('locale')
 
-    if (matchedLocaleFromHost && (location === 'auto' || location === 'domain') && (!supportedLocales || supportedLocales.indexOf(matchedLocaleFromHost) >= 0)) return { locale: matchedLocaleFromHost, location: 'domain' }
-    if (matchedLocaleFromPath && (location === 'auto' || location === 'path') && (!supportedLocales || supportedLocales.indexOf(matchedLocaleFromPath) >= 0)) return { locale: matchedLocaleFromPath, location: 'path' }
-    if (matchedLocaleFromQuery && (location === 'auto' || location === 'query') && (!supportedLocales || supportedLocales.indexOf(matchedLocaleFromQuery) >= 0)) return { locale: matchedLocaleFromQuery, location: 'query' }
-    if (defaultLocale && (!supportedLocales || supportedLocales.indexOf(defaultLocale) >= 0)) return { locale: defaultLocale, location: 'auto' }
+    if (matchedLocaleFromHost && (resolveStrategy === 'auto' || resolveStrategy === 'domain') && (!supportedLocales || supportedLocales.indexOf(matchedLocaleFromHost) >= 0)) return { locale: matchedLocaleFromHost, resolveStrategy: 'domain' }
+    if (matchedLocaleFromPath && (resolveStrategy === 'auto' || resolveStrategy === 'path') && (!supportedLocales || supportedLocales.indexOf(matchedLocaleFromPath) >= 0)) return { locale: matchedLocaleFromPath, resolveStrategy: 'path' }
+    if (matchedLocaleFromQuery && (resolveStrategy === 'auto' || resolveStrategy === 'query') && (!supportedLocales || supportedLocales.indexOf(matchedLocaleFromQuery) >= 0)) return { locale: matchedLocaleFromQuery, resolveStrategy: 'query' }
+    if (defaultLocale && (!supportedLocales || supportedLocales.indexOf(defaultLocale) >= 0)) return { locale: defaultLocale, resolveStrategy: 'auto' }
 
     return undefined
   }
@@ -158,13 +158,13 @@ export function getLocaleFromURL(url: string, { defaultLocale, location = 'auto'
  *
  * @returns The unlocalized URL.
  */
-export function getUnlocalizedURL(url: string, { location = 'auto', resolver, supportedLocales }: ResolveLocalizedURLOptions): string {
-  const currLocaleInfo = getLocaleFromURL(url, { location, resolver, supportedLocales })
+export function getUnlocalizedURL(url: string, { resolveStrategy = 'auto', resolver, supportedLocales }: ResolveLocalizedURLOptions): string {
+  const currLocaleInfo = getLocaleFromURL(url, { resolveStrategy, resolver, supportedLocales })
   const parts = parseURL(url)
 
   if (!currLocaleInfo) return url
 
-  switch (currLocaleInfo.location) {
+  switch (currLocaleInfo.resolveStrategy) {
     case 'domain':
       return constructURL({ ...parts, host: parts.host ? parts.host.split('.').filter(t => t).slice(1).join('.') : undefined })
     case 'query': {
@@ -191,17 +191,17 @@ export function getUnlocalizedURL(url: string, { location = 'auto', resolver, su
  *
  * @returns The localized URL.
  */
-export function getLocalizedURL(url: string, locale: string, { defaultLocale, location = 'auto', resolver, supportedLocales }: ResolveLocalizedURLOptions = {}): string {
-  const currLocaleInfo = getLocaleFromURL(url, { location, resolver, supportedLocales })
+export function getLocalizedURL(url: string, locale: string, { defaultLocale, resolveStrategy = 'auto', resolver, supportedLocales }: ResolveLocalizedURLOptions = {}): string {
+  const currLocaleInfo = getLocaleFromURL(url, { resolveStrategy, resolver, supportedLocales })
   const parts = parseURL(url)
   const targetLocale = resolveLocale(locale, { defaultLocale, supportedLocales })
 
   if (!targetLocale) return url
 
-  if (targetLocale === defaultLocale) return getUnlocalizedURL(url, { location, resolver, supportedLocales })
+  if (targetLocale === defaultLocale) return getUnlocalizedURL(url, { resolveStrategy, resolver, supportedLocales })
 
   if (currLocaleInfo) {
-    switch (currLocaleInfo.location) {
+    switch (currLocaleInfo.resolveStrategy) {
       case 'domain':
         return constructURL({ ...parts, host: parts.host ? `${targetLocale}.${parts.host.split('.').filter(t => t).slice(1).join('.')}` : undefined })
       case 'query': {
@@ -224,7 +224,7 @@ export function getLocalizedURL(url: string, locale: string, { defaultLocale, lo
     }
   }
   else {
-    switch (location) {
+    switch (resolveStrategy) {
       case 'domain':
         return constructURL({ ...parts, host: parts.host ? `${targetLocale}.${parts.host}` : undefined })
       case 'query': {
@@ -255,8 +255,8 @@ export function getLocalizedURL(url: string, locale: string, { defaultLocale, lo
  *
  * @returns The localized URLs.
  */
-export function getLocalizedURLs(url: string, { defaultLocale, location = 'auto', resolver, supportedLocales }: ResolveLocalizedURLOptions = {}): string[] {
+export function getLocalizedURLs(url: string, { defaultLocale, resolveStrategy = 'auto', resolver, supportedLocales }: ResolveLocalizedURLOptions = {}): string[] {
   if (!supportedLocales) return []
 
-  return supportedLocales.map(locale => getLocalizedURL(url, locale, { defaultLocale, location, resolver, supportedLocales }))
+  return supportedLocales.map(locale => getLocalizedURL(url, locale, { defaultLocale, resolveStrategy, resolver, supportedLocales }))
 }
