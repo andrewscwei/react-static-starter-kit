@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react'
 import Head from '../components/Head'
-import GetQuote from '../interactors/GetQuote'
-import useFetch from '../interactors/hooks/useFetch'
+import GetQuote from '../interactors/apis/GetQuote'
+import { useInteractor } from '../interactors/UseCase'
 import { useLocalizedString } from '../providers/I18nProvider'
 import style from './Quote.module.css'
 
 export default function About() {
   const ltxt = useLocalizedString()
-  const { interact: getQuote, value: quote } = useFetch(GetQuote)
+  const { run: getQuote, value: quote } = useInteractor(GetQuote)
 
   useEffect(() => {
     getQuote()
