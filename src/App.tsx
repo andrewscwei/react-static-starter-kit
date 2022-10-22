@@ -28,18 +28,20 @@ export function mount(containerId = 'app') {
 
 export default function App() {
   return (
-    <HelmetProvider>
-      <BrowserRouter>
-        <I18nProvider defaultLocale={appConf.defaultLocale} translations={translations} changeLocaleStrategy='path'>
-          <Header/>
-          <I18nRoutes>
-            <Route index element={<Home/>}/>
-            <Route path='quote' element={<Quote/>}/>
-            <Route path='*' element={<NotFound/>}/>
-          </I18nRoutes>
-          <Footer/>
-        </I18nProvider>
-      </BrowserRouter>
-    </HelmetProvider>
+    <React.StrictMode>
+      <HelmetProvider>
+        <BrowserRouter>
+          <I18nProvider defaultLocale={appConf.defaultLocale} translations={translations} changeLocaleStrategy='path'>
+            <Header/>
+            <I18nRoutes>
+              <Route index element={<Home/>}/>
+              <Route path='quote' element={<Quote/>}/>
+              <Route path='*' element={<NotFound/>}/>
+            </I18nRoutes>
+            <Footer/>
+          </I18nProvider>
+        </BrowserRouter>
+      </HelmetProvider>
+    </React.StrictMode>
   )
 }
