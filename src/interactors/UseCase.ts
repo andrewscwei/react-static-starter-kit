@@ -1,7 +1,3 @@
-export namespace UseCaseError {
-  export const CANCELLED = Error('Use case cancelled')
-}
-
 import { useEffect, useMemo, useRef, useState } from 'react'
 import useDebug from '../utils/useDebug'
 
@@ -37,6 +33,10 @@ export type Interactor<Params, Result> = {
 }
 
 export type InteractorOptions<Result> = {
+  /**
+   * Specifies the default value.
+   */
+  defaultValue?: Result
 
   /**
    * Handler invoked when the use case cancels running.
@@ -69,6 +69,7 @@ export type InteractorOptions<Result> = {
 export function useInteractor<Params, Result, Options>(
   UseCaseClass: new () => UseCase<Params, Result, Options>,
   {
+    defaultValue,
     onCancel,
     onError,
     onSuccess,
@@ -78,7 +79,7 @@ export function useInteractor<Params, Result, Options>(
   const runningCountRef = useRef(0)
   const [totalRunCount, setTotalRunCount] = useState(0)
   const [isRunning, setIsRunning] = useState(false)
-  const [result, setResult] = useState<Result>()
+  const [result, setResult] = useState<Result | undefined>(defaultValue)
   const useCase = useMemo(() => new UseCaseClass(), [])
   const useCaseName = useCase.constructor.name
 
@@ -144,6 +145,10 @@ export function useInteractor<Params, Result, Options>(
     run,
     reset,
   }
+}
+
+export namespace UseCaseError {
+  export const CANCELLED = Error('Use case cancelled')
 }
 
 export default interface UseCase<Params, Result, Options> {

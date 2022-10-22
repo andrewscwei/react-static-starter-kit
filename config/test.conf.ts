@@ -18,7 +18,6 @@ const config: Config = {
   },
   passWithNoTests: true,
   rootDir: path.join(__dirname, '../'),
-  silent: true,
   testEnvironment: 'jsdom',
   verbose: true,
 }

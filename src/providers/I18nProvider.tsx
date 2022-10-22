@@ -20,8 +20,8 @@ type I18nContextValue = {
 }
 
 type I18nProviderProps = PropsWithChildren<{
-  changeLocaleStrategy?: I18nContextValue['state']['changeLocaleStrategy']
-  defaultLocale: I18nContextValue['state']['defaultLocale']
+  changeLocaleStrategy?: I18nState['changeLocaleStrategy']
+  defaultLocale: I18nState['defaultLocale']
   translations: Record<string, Translation>
 }>
 
@@ -30,7 +30,7 @@ type I18nChangeLocaleAction = {
   locale: string
 }
 
-const reducer = (state: I18nContextValue['state'], action: I18nChangeLocaleAction): I18nContextValue['state'] => {
+const reducer = (state: I18nState, action: I18nChangeLocaleAction): I18nState => {
   switch (action.type) {
     case '@i18n/CHANGE_LOCALE':
       return {
