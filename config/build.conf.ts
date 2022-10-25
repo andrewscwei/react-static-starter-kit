@@ -4,10 +4,12 @@
 
 import ReactRefreshPlugin from '@pmmmwh/react-refresh-webpack-plugin'
 import CopyPlugin from 'copy-webpack-plugin'
+import CSSMinimizerPlugin from 'css-minimizer-webpack-plugin'
 import ForkTSCheckerPlugin from 'fork-ts-checker-webpack-plugin'
 import HTMLPlugin from 'html-webpack-plugin'
 import MiniCSSExtractPlugin from 'mini-css-extract-plugin'
 import path from 'path'
+import TerserPlugin from 'terser-webpack-plugin'
 import { Configuration, DefinePlugin, EnvironmentPlugin, IgnorePlugin } from 'webpack'
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
 import * as buildArgs from './build.args'
@@ -15,7 +17,7 @@ import * as buildArgs from './build.args'
 const isDev = buildArgs.env === 'development'
 
 const config: Configuration = {
-  devtool: isDev ? 'eval-source-map' : false,
+  devtool: isDev ? 'source-map' : false,
   entry: {
     polyfills: path.join(buildArgs.inputDir, 'polyfills.ts'),
     main: path.join(buildArgs.inputDir, 'index.ts'),
@@ -60,7 +62,6 @@ const config: Configuration = {
                   'nesting-rules': true,
                 },
               }],
-              ...buildArgs.skipOptimizations ? [] : ['cssnano'],
             ],
           },
         },
@@ -101,6 +102,10 @@ const config: Configuration = {
   },
   optimization: {
     minimize: !buildArgs.skipOptimizations,
+    minimizer: [
+      new CSSMinimizerPlugin(),
+      new TerserPlugin(),
+    ],
     splitChunks: {
       cacheGroups: {
         js: {
