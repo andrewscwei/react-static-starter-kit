@@ -114,3 +114,17 @@ When using `react-static-starter-kit` as a template, follow these steps to debra
 6. Edit `config/build.args.ts`
 7. Edit translations in `src/locales/`
 8. Edit files in `src/components/` and `src/pages/`
+
+## Breaking Changes
+
+### `v10.0.0`
+
+- Removed styled-components in favor of CSS modules
+- Removed Redux in favor of Context API
+- Removed `react-snap`
+- Updated how assets are imported
+- Relocated `locales` directory
+- Created reusable workflows for CI/CD
+- Added `http-server` for `start` command
+- Added interactors
+- Added `I18nProvider`
