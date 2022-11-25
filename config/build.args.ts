@@ -1,6 +1,6 @@
 /**
- * @file Build arguments computed at buildtime and passed to the runtime environment as a global
- *       variable named `__BUILD_ARGS__`.
+ * @file Build arguments computed at buildtime and passed to the runtime
+ *       environment as a global variable named `__BUILD_ARGS__`.
  */
 
 import dotenv from 'dotenv'
@@ -49,7 +49,8 @@ export const useSourceMaps = env === 'development'
 export const useBundleAnalyzer = process.env.npm_config_analyze === 'true'
 
 /**
- * Specifies whether HTML/JS/CSS minifications should be disabled while building.
+ * Specifies whether HTML/JS/CSS minifications should be disabled while
+ * building.
  */
 export const skipOptimizations = env === 'development' || process.env.npm_config_raw === 'true'
 
