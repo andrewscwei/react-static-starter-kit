@@ -7,7 +7,7 @@ This is an experimental starter kit for a React static app.
 1. [React Router](https://reacttraining.com/react-router/)
 2. [Polyglot](https://airbnb.io/polyglot.js/)
 3. [react-helmet-async](https://github.com/staylor/react-helmet-async)
-4. [CSS Modules](https://github.com/css-modules/css-modules) + [PostCSS](https://postcss.org/) + [StyleLint](https://stylelint.io/)
+4. [CSS Modules](https://github.com/css-modules/css-modules) + [PostCSS](https://postcss.org/) + [PurgeCSS](https://purgecss.com/) + [StyleLint](https://stylelint.io/)
 5. [TypeScript](https://www.typescriptlang.org/) + [Babel](https://babeljs.io/) + [ESLint](https://eslint.org/)
 6. [Jest](https://jestjs.io/) + [React Testing Library](https://testing-library.com/docs/react-testing-library/)
 7. [webpack](https://webpack.js.org/)

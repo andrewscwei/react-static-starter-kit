@@ -2,7 +2,7 @@
   "name": "react-static-starter-kit",
   "version": "11.0.0",
   "description": "React static app starter kit",
-  "homepage": "https://react-static-starter-kit.netlify.app",
+  "homepage": "https://andrewscwei.github.io/react-static-starter-kit/",
   "private": true,
   "license": "MIT",
   "scripts": {
