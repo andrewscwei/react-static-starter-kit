@@ -102,18 +102,17 @@ To prerender this app, you can use [`react-snap`](https://www.npmjs.com/package/
 
 ## Using as Repository Template
 
-When using `react-static-starter-kit` as a template, follow these steps to debrand:
+When using `react-static-starter-kit` as a template, follow these steps to strip placeholder content:
 
-1. Edit fields in `package.json`
-2. Replace `LICENSE` file
-3. Replace `RELEASE.md` file
-4. Edit `README.md`
+1. Replace `LICENSE` file
+2. Edit `README.md`
+3. Edit fields in `package.json`
+4. Edit fields in `src/app.args.ts`
 5. Edit resources in `res/`, then ensure to replace the generated assets in the following places:
   1. `src/assets/`
   2. `src/static/`
-6. Edit `config/build.args.ts`
+6. Edit files in `src/components/` and `src/pages/`
 7. Edit translations in `src/locales/`
-8. Edit files in `src/components/` and `src/pages/`
 
 ## Breaking Changes
 

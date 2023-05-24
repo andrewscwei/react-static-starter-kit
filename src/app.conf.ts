@@ -16,12 +16,12 @@ export default {
   /**
    * Fallback app description.
    */
-  description: __BUILD_ARGS__.packageDescription,
+  description: 'React static app starter kit',
 
   /**
    * Fallback app URL.
    */
-  url: __BUILD_ARGS__.packageHomepage,
+  url: 'https://andrewscwei.github.io/react-static-starter-kit/',
 
   /**
    * Default locale.
