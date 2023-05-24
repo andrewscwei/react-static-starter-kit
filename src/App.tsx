@@ -16,7 +16,7 @@ import useDebug from './utils/useDebug'
 
 const debug = useDebug()
 
-export function mount(containerId = 'app') {
+export function mount(containerId = 'root') {
   const container = document.getElementById(containerId)
   if (!container) return console.warn(`No container with ID <${containerId}> found`)
 

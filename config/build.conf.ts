@@ -2,6 +2,7 @@
  * @file Webpack config for development and production.
  */
 
+import PostCSSPurgeCSS from '@fullhuman/postcss-purgecss'
 import ReactRefreshPlugin from '@pmmmwh/react-refresh-webpack-plugin'
 import CopyPlugin from 'copy-webpack-plugin'
 import CSSMinimizerPlugin from 'css-minimizer-webpack-plugin'
@@ -9,6 +10,7 @@ import ForkTSCheckerPlugin from 'fork-ts-checker-webpack-plugin'
 import HTMLPlugin from 'html-webpack-plugin'
 import MiniCSSExtractPlugin from 'mini-css-extract-plugin'
 import path from 'path'
+import PostCSSPresetEnv from 'postcss-preset-env'
 import TerserPlugin from 'terser-webpack-plugin'
 import { Configuration, DefinePlugin, EnvironmentPlugin, IgnorePlugin } from 'webpack'
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
@@ -57,11 +59,20 @@ const config: Configuration = {
           sourceMap: buildArgs.useSourceMaps,
           postcssOptions: {
             plugins: [
-              ['postcss-preset-env', {
+              PostCSSPresetEnv({
                 features: {
                   'nesting-rules': true,
                 },
-              }],
+              }),
+              PostCSSPurgeCSS({
+                content: [
+                  path.join(buildArgs.inputDir, '**/*.html'),
+                  path.join(buildArgs.inputDir, '**/*.tsx'),
+                  path.join(buildArgs.inputDir, '**/*.tx'),
+                  path.join(buildArgs.inputDir, '**/*.module.css'),
+                ],
+                defaultExtractor: content => content.match(/[\w-/:]+(?<!:)/g) || [],
+              }),
             ],
           },
         },
@@ -154,6 +165,7 @@ const config: Configuration = {
       '__BUILD_ARGS__': JSON.stringify(buildArgs),
     }),
     new HTMLPlugin({
+      buildArgs,
       chunks: ['common', 'main'].concat(isDev ? [] : ['polyfills']),
       filename: 'index.html',
       inject: true,

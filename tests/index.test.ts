@@ -9,7 +9,7 @@ describe('app', () => {
     document.documentElement.innerHTML = html.toString()
   })
 
-  it('has #app', async () => {
-    expect(document.getElementById('app')).toBeTruthy()
+  it('has #root', async () => {
+    expect(document.getElementById('root')).toBeTruthy()
   })
 })
