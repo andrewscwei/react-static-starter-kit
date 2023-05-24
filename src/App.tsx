@@ -30,7 +30,7 @@ export default function App() {
   return (
     <React.StrictMode>
       <HelmetProvider>
-        <BrowserRouter>
+        <BrowserRouter basename={appConf.routerBasename}>
           <I18nProvider defaultLocale={appConf.defaultLocale} translations={translations} changeLocaleStrategy='path'>
             <Header/>
             <I18nRoutes>

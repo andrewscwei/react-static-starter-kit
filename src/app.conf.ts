@@ -27,4 +27,9 @@ export default {
    * Default locale.
    */
   defaultLocale: 'en',
+
+  /**
+   * Basename for the router.
+   */
+  routerBasename: __BUILD_ARGS__.routerBasename,
 }

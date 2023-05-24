@@ -61,3 +61,8 @@ export const devPort = Number(process.env.PORT || 8080)
  * Public path for static assets.
  */
 export const publicPath = process.env.PUBLIC_PATH || '/'
+
+/**
+ * Basename for the router.
+ */
+export const routerBasename = process.env.ROUTER_BASENAME || '/'
