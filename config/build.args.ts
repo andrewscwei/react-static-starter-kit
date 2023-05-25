@@ -63,6 +63,6 @@ export const devPort = Number(process.env.PORT || 8080)
 export const publicPath = process.env.PUBLIC_PATH || '/'
 
 /**
- * Basename for the router.
+ * Base path of the router (i.e. the `basename` property).
  */
-export const routerBasename = process.env.ROUTER_BASENAME || '/'
+export const basePath = process.env.BASE_PATH || '/'

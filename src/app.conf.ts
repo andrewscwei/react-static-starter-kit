@@ -29,7 +29,7 @@ export default {
   defaultLocale: 'en',
 
   /**
-   * Basename for the router.
+   * Base path of the router (i.e. the `basename` property).
    */
-  routerBasename: __BUILD_ARGS__.routerBasename,
+  basePath: __BUILD_ARGS__.basePath,
 }
