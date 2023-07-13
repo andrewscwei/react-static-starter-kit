@@ -1,8 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { useLocation } from 'react-router'
-import appConf from '../app.conf'
-import * as assets from '../assets'
+import appConf from '../../app.conf'
+import $$AltFaviconDark from '../../assets/meta/favicon-dark.png'
+import $$FaviconDark from '../../assets/meta/favicon-dark.svg'
+import $$AltFaviconLight from '../../assets/meta/favicon-light.png'
+import $$FaviconLight from '../../assets/meta/favicon-light.svg'
+import $$OGImage from '../../assets/meta/og-image.png'
+import $$PinnedIcon from '../../assets/meta/pinned-icon.svg'
+import $$TwitterCard from '../../assets/meta/twitter-card.png'
 import { useLocale } from '../providers/I18nProvider'
 
 type Props = {
@@ -35,23 +41,25 @@ export default function Head({
   return (
     <Helmet>
       <link rel='canonical' href={pageUrl}/>
-      <link rel='mask-icon' type='image/svg+xml' href={assets.meta.PinnedIcon} color={isDarkMode ? '#fff' : '#000'}/>
-      <link rel='alternate icon' type='image/png' href={isDarkMode ? assets.meta.AltFaviconDark : assets.meta.AltFaviconLight}/>
-      <link rel='icon' href={isDarkMode ? assets.meta.FaviconDark : assets.meta.FaviconLight}/>
+      <link rel='mask-icon' type='image/svg+xml' href={$$PinnedIcon} color={isDarkMode ? '#fff' : '#000'}/>
+      <link rel='alternate icon' type='image/png' href={isDarkMode ? $$AltFaviconDark : $$AltFaviconLight}/>
+      <link rel='icon' href={isDarkMode ? $$FaviconDark : $$FaviconLight}/>
       <title>{pageTitle}</title>
       <meta name='description' content={pageDescription}/>
+
+      <meta name='theme-color' content='#15141a'/>
 
       <meta property='og:site_name' content={baseTitle}/>
       <meta property='og:title' content={pageTitle}/>
       <meta property='og:description' content={pageDescription}/>
       <meta property='og:locale' content={locale}/>
       <meta property='og:url' content={pageUrl}/>
-      <meta property='og:image' content={baseUrl + assets.meta.OGImage}/>
+      <meta property='og:image' content={baseUrl + $$OGImage}/>
       <meta property='og:image:alt' content={pageDescription}/>
 
       <meta name='twitter:title' content={pageTitle}/>
       <meta name='twitter:description' content={pageDescription}/>
-      <meta name='twitter:image' content={baseUrl + assets.meta.TwitterCard}/>
+      <meta name='twitter:image' content={baseUrl + $$TwitterCard}/>
 
       <meta name='apple-mobile-web-app-title' content={baseTitle}/>
     </Helmet>

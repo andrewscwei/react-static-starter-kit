@@ -107,10 +107,10 @@ When using `react-static-starter-kit` as a template, follow these steps to strip
 1. Replace `LICENSE` file
 2. Edit `README.md`
 3. Edit fields in `package.json`
-4. Edit fields in `src/app.args.ts`
+4. Edit fields in `src/app.conf.ts`
 5. Edit resources in `res/`, then ensure to replace the generated assets in the following places:
-  1. `src/assets/`
-  2. `src/static/`
+    1. `src/assets/`
+    2. `src/static/`
 6. Edit files in `src/components/` and `src/pages/`
 7. Edit translations in `src/locales/`
 
@@ -127,3 +127,7 @@ When using `react-static-starter-kit` as a template, follow these steps to strip
 - Added `http-server` for `start` command
 - Added interactors
 - Added `I18nProvider`
+
+### `v12.0.0`
+
+- Decoupled boilerplate architectural code to `src/base`

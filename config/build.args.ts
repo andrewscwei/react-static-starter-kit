@@ -1,6 +1,6 @@
 /**
  * @file Build arguments computed at buildtime and passed to the runtime
- *       environment as a global variable named `__BUILD_ARGS__`.
+ *       environment as global variable `__BUILD_ARGS__`.
  */
 
 import dotenv from 'dotenv'
@@ -10,11 +10,6 @@ import packageInfo from '../package.json'
 dotenv.config()
 
 export const packageVersion = packageInfo.version
-
-/**
- * The `NODE_ENV` at buildtime.
- */
-export const env = process.env.NODE_ENV
 
 /**
  * Version number.
@@ -39,7 +34,7 @@ export const outputDir = path.join(__dirname, '../', 'build')
 /**
  * Specifies whether source maps should be generated.
  */
-export const useSourceMaps = env === 'development'
+export const useSourceMaps = process.env.NODE_ENV === 'development'
 
 /**
  * Specifies whether the bundle analyzer should be enabled while building.
@@ -50,7 +45,7 @@ export const useBundleAnalyzer = process.env.npm_config_analyze === 'true'
  * Specifies whether HTML/JS/CSS minifications should be disabled while
  * building.
  */
-export const skipOptimizations = env === 'development' || process.env.npm_config_raw === 'true'
+export const skipOptimizations = process.env.NODE_ENV === 'development' || process.env.npm_config_raw === 'true'
 
 /**
  * Specifies the port to use during development.

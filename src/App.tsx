@@ -1,30 +1,17 @@
 import React from 'react'
-import { createRoot } from 'react-dom/client'
 import { HelmetProvider } from 'react-helmet-async'
 import { Route } from 'react-router'
 import { BrowserRouter } from 'react-router-dom'
 import appConf from './app.conf'
+import I18nProvider, { I18nRoutes } from './base/providers/I18nProvider'
 import Footer from './components/Footer'
 import Header from './components/Header'
 import translations from './locales'
 import Home from './pages/home'
 import NotFound from './pages/notFound'
 import Quote from './pages/quote'
-import I18nProvider, { I18nRoutes } from './providers/I18nProvider'
 import './styles/global.css'
-import useDebug from './utils/useDebug'
-
-const debug = useDebug()
-
-export function mount(containerId = 'root') {
-  const container = document.getElementById(containerId)
-  if (!container) return console.warn(`No container with ID <${containerId}> found`)
-
-  const app = <App/>
-  createRoot(container).render(app)
-
-  debug('Mounting app...', 'OK')
-}
+import './styles/theme.css'
 
 export default function App() {
   return (

@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react'
-import Head from '../../components/Head'
-import GetQuote from '../../interactors/apis/GetQuote'
-import { useInteractor } from '../../interactors/UseCase'
-import { useLocalizedString } from '../../providers/I18nProvider'
+import Head from '../../base/components/Head'
+import { useInteractor } from '../../base/interactors/Interactor'
+import { useLocalizedString } from '../../base/providers/I18nProvider'
+import GetQuote from '../../interactors/GetQuote'
 import style from './index.module.css'
 
 export default function About() {

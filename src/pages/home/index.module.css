@@ -22,15 +22,15 @@
 .content {
   align-items: center;
   box-sizing: border-box;
-  color: var(--color-grey);
+  color: var(--light-grey);
   display: flex;
   flex-flow: row nowrap;
   justify-content: center;
 
-  & > section {
+  > section {
     align-items: flex-start;
     box-sizing: border-box;
-    color: var(--color-grey);
+    color: var(--light-grey);
     display: flex;
     flex-flow: column nowrap;
     justify-content: center;
@@ -39,9 +39,9 @@
 
   @media (min-height: 600px) {
     flex-flow: column nowrap;
-    max-width: 60rem;
+    max-width: 40rem;
 
-    & > section {
+    > section {
       align-items: center;
       text-align: center;
     }

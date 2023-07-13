@@ -1,9 +1,9 @@
 import Worker from 'worker-loader!./workers/web'
-import { mount } from './App'
+import App from './App'
 import appConf from './app.conf'
-import useDebug from './utils/useDebug'
+import mountRoot from './base/utils/mountRoot'
+import useDebug from './base/utils/useDebug'
 
-if (process.env.NODE_ENV === 'development') window.localStorage.debug = 'app*'
 window.__VERSION__ = appConf.version
 
 const debug = useDebug()
@@ -16,4 +16,4 @@ worker.addEventListener('message', event => {
   worker.terminate()
 })
 
-mount()
+mountRoot(App)

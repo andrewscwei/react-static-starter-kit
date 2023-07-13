@@ -16,7 +16,7 @@ import { Configuration, DefinePlugin, EnvironmentPlugin, IgnorePlugin } from 'we
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
 import * as buildArgs from './build.args'
 
-const isDev = buildArgs.env === 'development'
+const isDev = process.env.NODE_ENV === 'development'
 
 const config: Configuration = {
   devtool: isDev ? 'source-map' : false,
@@ -174,7 +174,7 @@ const config: Configuration = {
         removeAttributeQuotes: true,
         removeComments: true,
       },
-      template: path.join(buildArgs.inputDir, 'templates', 'index.html'),
+      template: path.join(buildArgs.inputDir, 'base/templates', 'index.html'),
     }),
     ...isDev ? [new ReactRefreshPlugin()] : [],
     ...isDev ? [] : [new IgnorePlugin({
