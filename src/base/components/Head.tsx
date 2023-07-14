@@ -39,7 +39,7 @@ export default function Head({
   }, [])
 
   return (
-    <Helmet>
+    <Helmet htmlAttributes={{ lang: locale }}>
       <link rel='canonical' href={pageUrl}/>
       <link rel='mask-icon' type='image/svg+xml' href={$$PinnedIcon} color={isDarkMode ? '#fff' : '#000'}/>
       <link rel='alternate icon' type='image/png' href={isDarkMode ? $$AltFaviconDark : $$AltFaviconLight}/>

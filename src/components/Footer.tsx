@@ -1,5 +1,6 @@
 import classNames from 'classnames'
 import React, { HTMLAttributes } from 'react'
+import $$GitHubLogo from '../assets/images/github-logo.svg'
 import { useChangeLocale, useLocalizedString } from '../base/providers/I18nProvider'
 import style from './Footer.module.css'
 
@@ -15,7 +16,9 @@ export default function Footer({
   return (
     <footer {...props} className={classNames(className, style.root)}>
       <nav className={style.nav}>
-        <a href='https://github.com/andrewscwei/react-static-starter-kit'/>
+        <a href='https://github.com/andrewscwei/react-static-starter-kit'>
+          <img src={$$GitHubLogo} alt='GitHub' />
+        </a>
       </nav>
       <button className={style.button} onClick={() => changeLocale('en')}>{ltxt('en')}</button>
       <button className={style.button} onClick={() => changeLocale('ja')}>{ltxt('ja')}</button>

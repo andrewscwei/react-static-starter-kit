@@ -128,7 +128,7 @@ const config: Configuration = {
         css: {
           chunks: 'all',
           enforce: true,
-          minChunks: 2,
+          maxInitialRequests: 1,
           name: 'common',
           test: /\.css$/,
         },
