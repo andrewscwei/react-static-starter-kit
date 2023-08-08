@@ -109,9 +109,9 @@ When using `react-static-starter-kit` as a template, follow these steps to strip
 3. Edit fields in `package.json`
 4. Edit fields in `src/app.conf.ts`
 5. Edit resources in `res/`, then ensure to replace the generated assets in the following places:
-    1. `src/assets/`
+    1. `src/ui/assets/`
     2. `src/static/`
-6. Edit files in `src/components/` and `src/pages/`
+6. Edit files in `src/ui/components/` and `src/ui/pages/`
 7. Edit translations in `src/locales/`
 
 ## Breaking Changes
@@ -131,3 +131,7 @@ When using `react-static-starter-kit` as a template, follow these steps to strip
 ### `v12.0.0`
 
 - Decoupled boilerplate architectural code to `src/base`
+
+### `v13.0.0`
+
+- Restructured folders
