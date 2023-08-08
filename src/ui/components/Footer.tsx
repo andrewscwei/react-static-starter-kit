@@ -1,7 +1,7 @@
 import classNames from 'classnames'
 import React, { HTMLAttributes } from 'react'
+import { useChangeLocale, useLocalizedString } from '../../base/providers/I18nProvider'
 import $$GitHubLogo from '../assets/images/github-logo.svg'
-import { useChangeLocale, useLocalizedString } from '../base/providers/I18nProvider'
 import style from './Footer.module.css'
 
 type Props = HTMLAttributes<HTMLElement>
