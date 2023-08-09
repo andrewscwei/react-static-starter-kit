@@ -5,11 +5,9 @@
 
 import dotenv from 'dotenv'
 import path from 'path'
-import packageInfo from '../package.json'
+import { version as packageVersion } from '../package.json'
 
 dotenv.config()
-
-export const packageVersion = packageInfo.version
 
 /**
  * Version number.
