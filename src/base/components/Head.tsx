@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { useLocation } from 'react-router'
-import appConf from '../../app.conf'
+import { DESCRIPTION, TITLE } from '../../app.conf'
 import $$AltFaviconDark from '../../ui/assets/meta/favicon-dark.png'
 import $$FaviconDark from '../../ui/assets/meta/favicon-dark.svg'
 import $$AltFaviconLight from '../../ui/assets/meta/favicon-light.png'
@@ -20,10 +20,9 @@ export default function Head({
   description,
   title,
 }: Props) {
-  const { title: baseTitle, description: baseDescription, url: baseUrl } = appConf
-  const pageTitle = title ?? baseTitle
-  const pageDescription = description ?? baseDescription
-  const pageUrl = baseUrl + useLocation().pathname
+  const pageTitle = title ?? TITLE
+  const pageDescription = description ?? DESCRIPTION
+  const pageUrl = URL + useLocation().pathname
   const locale = useLocale()
   const matchMedia = typeof window !== 'undefined' && typeof window.matchMedia !== 'undefined' ? window.matchMedia('(prefers-color-scheme: dark)') : undefined
   const [isDarkMode, setIsDarkMode] = useState<boolean>(matchMedia?.matches === true)
@@ -49,19 +48,19 @@ export default function Head({
 
       <meta name='theme-color' content='#15141a'/>
 
-      <meta property='og:site_name' content={baseTitle}/>
+      <meta property='og:site_name' content={TITLE}/>
       <meta property='og:title' content={pageTitle}/>
       <meta property='og:description' content={pageDescription}/>
       <meta property='og:locale' content={locale}/>
       <meta property='og:url' content={pageUrl}/>
-      <meta property='og:image' content={baseUrl + $$OGImage}/>
+      <meta property='og:image' content={TITLE + $$OGImage}/>
       <meta property='og:image:alt' content={pageDescription}/>
 
       <meta name='twitter:title' content={pageTitle}/>
       <meta name='twitter:description' content={pageDescription}/>
-      <meta name='twitter:image' content={baseUrl + $$TwitterCard}/>
+      <meta name='twitter:image' content={URL + $$TwitterCard}/>
 
-      <meta name='apple-mobile-web-app-title' content={baseTitle}/>
+      <meta name='apple-mobile-web-app-title' content={TITLE}/>
     </Helmet>
   )
 }
