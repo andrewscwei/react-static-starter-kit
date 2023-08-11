@@ -19,7 +19,7 @@ export default function App() {
     <StrictMode>
       <HelmetProvider>
         <BrowserRouter basename={BASE_PATH}>
-          <I18nProvider defaultLocale={DEFAULT_LOCALE} translations={translations} changeLocaleStrategy='path'>
+          <I18nProvider defaultLocale={DEFAULT_LOCALE} translations={translations} localeChangeStrategy='path'>
             <Suspense>
               <Header/>
             </Suspense>
