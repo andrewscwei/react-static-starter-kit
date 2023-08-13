@@ -1,5 +1,5 @@
 import debug from 'debug'
-import { DEBUG_CHANNELS, DEBUG_ENABLED } from '../../app.conf'
+import { DEBUG_CHANNELS, DEBUG_ENABLED } from '../../src/app.conf'
 
 if (DEBUG_ENABLED && typeof window !== 'undefined') window.localStorage.debug = DEBUG_CHANNELS.map(t => `${t}*`).join(',')
 

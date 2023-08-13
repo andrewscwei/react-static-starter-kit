@@ -1,7 +1,7 @@
 import Worker from 'worker-loader!./workers/web'
+import mountRoot from '../lib/dom/mountRoot'
+import useDebug from '../lib/utils/useDebug'
 import { VERSION } from './app.conf'
-import mountRoot from './base/utils/mountRoot'
-import useDebug from './base/utils/useDebug'
 import App from './ui/App'
 
 window.__VERSION__ = VERSION

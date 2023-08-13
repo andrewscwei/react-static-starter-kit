@@ -1,6 +1,6 @@
 import { ComponentType, createElement } from 'react'
 import { createRoot } from 'react-dom/client'
-import useDebug from './useDebug'
+import useDebug from '../utils/useDebug'
 
 const debug = useDebug()
 

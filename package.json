@@ -4,7 +4,7 @@
   "private": true,
   "license": "MIT",
   "scripts": {
-    "start": "http-server build --proxy http://localhost:${PORT:-8080}?",
+    "start": "http-server build -a localhost -P http://localhost:${PORT:-8080}? -p ${PORT:-8080}",
     "clean": "rimraf build",
     "prebuild": "npm run lint",
     "build": "npm run clean && BUILD_NUMBER=$(git rev-parse --short HEAD) webpack --profile --config config/build.conf.ts",
@@ -81,7 +81,6 @@
     "object-hash": "^3.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-helmet-async": "^1.3.0",
     "react-router": "^6.14.2",
     "react-router-dom": "^6.14.2"
   }

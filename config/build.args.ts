@@ -20,6 +20,11 @@ export const version = packageVersion
 export const buildNumber = process.env.BUILD_NUMBER || 'local'
 
 /**
+ * Directory of starter kit library source files.
+ */
+export const libDir = path.join(__dirname, '../', 'lib')
+
+/**
  * Input directory of source files to compile.
  */
 export const inputDir = path.join(__dirname, '../', 'src')
@@ -54,6 +59,11 @@ export const devPort = Number(process.env.PORT || 8080)
  * Public path for static assets.
  */
 export const publicPath = process.env.PUBLIC_PATH || '/'
+
+/**
+ * Base URL of the app (no trailing `/`).
+ */
+export const baseUrl = process.env.BASE_URL || ''
 
 /**
  * Base path of the router (i.e. the `basename` property).

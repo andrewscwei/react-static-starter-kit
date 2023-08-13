@@ -3,6 +3,16 @@
  */
 
 /**
+ * Specifies whether debug is enabled.
+ */
+export const DEBUG_ENABLED = process.env.NODE_ENV === 'development'
+
+/**
+ * Enabled debug channels in the client.
+ */
+export const DEBUG_CHANNELS = ['app']
+
+/**
  * Full version string.
  */
 export const VERSION = `v${__BUILD_ARGS__.version}+build.${__BUILD_ARGS__.buildNumber}`
@@ -18,14 +28,19 @@ export const TITLE = 'React Static Starter Kit'
 export const DESCRIPTION = 'React static app starter kit'
 
 /**
- * Fallback app URL.
+ * Value for the `theme-color` meta tag.
  */
-export const URL = 'https://andrewscwei.github.io/react-static-starter-kit/'
+export const THEME_COLOR = '#15141a'
 
 /**
- * Default locale.
+ * Value for the `color` attribute of the `mask-icon` meta tag.
  */
-export const DEFAULT_LOCALE = 'en'
+export const MASK_ICON_COLOR = '#000'
+
+/**
+ * Base URL of the app.
+ */
+export const BASE_URL = __BUILD_ARGS__.baseUrl
 
 /**
  * Base path of the router (i.e. the `basename` property).
@@ -33,11 +48,12 @@ export const DEFAULT_LOCALE = 'en'
 export const BASE_PATH = __BUILD_ARGS__.basePath
 
 /**
- * Specifies whether debug is enabled.
+ * Default locale.
  */
-export const DEBUG_ENABLED = process.env.NODE_ENV === 'development'
+export const DEFAULT_LOCALE = 'en'
 
 /**
- * Enabled debug channels in the client.
+ * Location in the URL to infer the current locale, available options are "path"
+ * and "query".
  */
-export const DEBUG_CHANNELS = ['app']
+export const LOCALE_CHANGE_STRATEGY = 'path'

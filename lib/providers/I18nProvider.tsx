@@ -1,5 +1,5 @@
 import Polyglot from 'node-polyglot'
-import React, { createContext, Dispatch, PropsWithChildren, useContext, useMemo, useReducer } from 'react'
+import React, { createContext, Dispatch, PropsWithChildren, useContext, useEffect, useMemo, useReducer } from 'react'
 import { Route, Routes, useLocation, useNavigate } from 'react-router'
 
 interface Translation { [key: string]: Translation | string }
@@ -88,6 +88,24 @@ export default function I18nProvider({
         getLocalizedString: (...args) => polyglots[defaultLocale]?.t(...args) ?? args[0],
       })
 
+      if (typeof document !== 'undefined') {
+        useEffect(() => {
+          const prevVal = document.documentElement.getAttribute('lang')
+          const newVal = state.locale
+
+          document.documentElement.setAttribute('lang', newVal)
+
+          return () => {
+            if (prevVal) {
+              document.documentElement.setAttribute('lang', prevVal)
+            }
+            else {
+              document.documentElement.removeAttribute('lang')
+            }
+          }
+        }, [state.locale])
+      }
+
       return (
         <I18nContext.Provider value={{ state, dispatch }}>
           {children}
@@ -103,6 +121,24 @@ export default function I18nProvider({
 
       const polyglot = polyglots[locale]
       if (!polyglot) console.warn(`Missing transtions for locale <${locale}>`)
+
+      if (typeof document !== 'undefined') {
+        useEffect(() => {
+          const prevVal = document.documentElement.getAttribute('lang')
+          const newVal = locale
+
+          document.documentElement.setAttribute('lang', newVal)
+
+          return () => {
+            if (prevVal) {
+              document.documentElement.setAttribute('lang', prevVal)
+            }
+            else {
+              document.documentElement.removeAttribute('lang')
+            }
+          }
+        }, [locale])
+      }
 
       const state: I18nState = {
         localeChangeStrategy,

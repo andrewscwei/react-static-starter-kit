@@ -37,7 +37,6 @@ build/
 upload/
 uploads/
 docs/
-lib/
 .gh-pages/
 .gh-pages.*/
 .tmp/
