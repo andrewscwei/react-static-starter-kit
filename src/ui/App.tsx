@@ -3,7 +3,7 @@ import { Route } from 'react-router'
 import { BrowserRouter } from 'react-router-dom'
 import { useFavicon, useThemeColor } from '../../lib/dom'
 import { I18nProvider, I18nRoutes } from '../../lib/i18n'
-import { BASE_PATH, DEFAULT_LOCALE, LOCALE_CHANGE_STRATEGY, MASK_ICON_COLOR, THEME_COLOR } from '../app.conf'
+import { BASE_PATH, DEFAULT_LOCALE, LOCALE_CHANGE_STRATEGY } from '../app.conf'
 import translations from '../locales'
 import $$AltFaviconDark from './assets/meta/favicon-dark.png'
 import $$FaviconDark from './assets/meta/favicon-dark.svg'
@@ -17,11 +17,11 @@ const NotFound = lazy(() => import('./pages/notFound'))
 const Quote = lazy(() => import('./pages/quote'))
 
 export default function App() {
-  useThemeColor(THEME_COLOR)
+  useThemeColor('#15141a')
 
   useFavicon({
     maskIcon: {
-      color: MASK_ICON_COLOR,
+      color: '#000',
     },
     icon: {
       darkImage: $$FaviconDark,

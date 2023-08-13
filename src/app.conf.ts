@@ -3,39 +3,9 @@
  */
 
 /**
- * Specifies whether debug is enabled.
- */
-export const DEBUG_ENABLED = process.env.NODE_ENV === 'development'
-
-/**
- * Enabled debug channels in the client.
- */
-export const DEBUG_CHANNELS = ['app']
-
-/**
  * Full version string.
  */
 export const VERSION = `v${__BUILD_ARGS__.version}+build.${__BUILD_ARGS__.buildNumber}`
-
-/**
- * Fallback window title.
- */
-export const TITLE = 'React Static Starter Kit'
-
-/**
- * Fallback app description.
- */
-export const DESCRIPTION = 'React static app starter kit'
-
-/**
- * Value for the `theme-color` meta tag.
- */
-export const THEME_COLOR = '#15141a'
-
-/**
- * Value for the `color` attribute of the `mask-icon` meta tag.
- */
-export const MASK_ICON_COLOR = '#000'
 
 /**
  * Base URL of the app.

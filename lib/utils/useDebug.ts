@@ -1,10 +1,11 @@
 import debug from 'debug'
-import { DEBUG_CHANNELS, DEBUG_ENABLED } from '../../src/app.conf'
 
-if (DEBUG_ENABLED && typeof window !== 'undefined') window.localStorage.debug = DEBUG_CHANNELS.map(t => `${t}*`).join(',')
+const { debugChannels, debugEnabled } = __BUILD_ARGS__
+
+if (debugEnabled && typeof window !== 'undefined') window.localStorage.debug = debugChannels.map(t => `${t}*`).join(',')
 
 export default function useDebug(subnamespace = '', thread: 'app' | 'worker' = 'app') {
-  if (DEBUG_ENABLED) {
+  if (debugEnabled) {
     const namespace = [thread, ...subnamespace.split(':').filter(Boolean)].join(':')
     if (typeof window === 'undefined') debug.enable(namespace)
 

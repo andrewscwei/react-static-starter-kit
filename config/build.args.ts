@@ -10,6 +10,16 @@ import { version as packageVersion } from '../package.json'
 dotenv.config()
 
 /**
+ * Specifies whether debug is enabled.
+ */
+export const debugEnabled = process.env.DEBUG_ENABLED === 'true' || process.env.NODE_ENV === 'development'
+
+/**
+ * Enabled debug channels in the client.
+ */
+export const debugChannels = process.env.DEBUG_CHANNELS?.split(',') || ['app']
+
+/**
  * Version number.
  */
 export const version = packageVersion
