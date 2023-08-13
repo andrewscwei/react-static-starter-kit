@@ -1,6 +1,6 @@
 import classNames from 'classnames'
 import React, { HTMLAttributes } from 'react'
-import { useChangeLocale, useLocalizedString } from '../../../lib/providers/I18nProvider'
+import { useChangeLocale, useLocalizedString } from '../../../lib/i18n'
 import $$GitHubLogo from '../assets/images/github-logo.svg'
 import style from './Footer.module.css'
 

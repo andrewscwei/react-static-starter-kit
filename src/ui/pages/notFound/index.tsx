@@ -1,6 +1,6 @@
 import React from 'react'
 import useMetaTags from '../../../../lib/dom/useMetaTags'
-import { useLocalizedString } from '../../../../lib/providers/I18nProvider'
+import { useLocalizedString } from '../../../../lib/i18n'
 import style from './index.module.css'
 
 export default function NotFound() {

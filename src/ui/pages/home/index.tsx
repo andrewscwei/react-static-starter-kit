@@ -1,6 +1,6 @@
 import React from 'react'
 import useMetaTags from '../../../../lib/dom/useMetaTags'
-import { useLocalizedString } from '../../../../lib/providers/I18nProvider'
+import { useLocalizedString } from '../../../../lib/i18n'
 import { VERSION } from '../../../app.conf'
 import ReactLogo from '../../components/ReactLogo'
 import style from './index.module.css'
