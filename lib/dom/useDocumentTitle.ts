@@ -17,16 +17,6 @@ export default function useDocumentTitle(title: string, deps?: DependencyList) {
     tagName: 'meta',
     keyAttribute: {
       name: 'name',
-      value: 'apple-mobile-web-app-title',
-    },
-    updateAttribute: {
-      name: 'content',
-      value: title,
-    },
-  }, {
-    tagName: 'meta',
-    keyAttribute: {
-      name: 'name',
       value: 'og:title',
     },
     updateAttribute: {
