@@ -66,10 +66,6 @@ const config: Configuration = {
               }),
               ...isDev ? [] : [PostCSSPurgeCSS({
                 content: [
-                  path.join(buildArgs.libDir, '**/*.html'),
-                  path.join(buildArgs.libDir, '**/*.tsx'),
-                  path.join(buildArgs.libDir, '**/*.ts'),
-                  path.join(buildArgs.libDir, '**/*.module.css'),
                   path.join(buildArgs.inputDir, '**/*.html'),
                   path.join(buildArgs.inputDir, '**/*.tsx'),
                   path.join(buildArgs.inputDir, '**/*.ts'),
@@ -179,7 +175,7 @@ const config: Configuration = {
         removeAttributeQuotes: true,
         removeComments: true,
       },
-      template: path.join(buildArgs.libDir, 'templates', 'index.html'),
+      template: path.join(buildArgs.inputDir, 'templates', 'index.html'),
     }),
     ...isDev ? [new ReactRefreshPlugin()] : [],
     ...isDev ? [] : [new IgnorePlugin({
