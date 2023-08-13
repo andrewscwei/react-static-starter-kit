@@ -1,6 +1,6 @@
 import Worker from 'worker-loader!./workers/web'
 import mountRoot from '../lib/dom/mountRoot'
-import useDebug from '../lib/utils/useDebug'
+import { useDebug } from '../lib/utils'
 import { VERSION } from './app.conf'
 import App from './ui/App'
 

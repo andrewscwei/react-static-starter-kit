@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import useMetaTags from '../../../../lib/dom/useMetaTags'
 import { useLocalizedString } from '../../../../lib/i18n'
-import { useInteractor } from '../../../../lib/interactors/Interactor'
+import { useInteractor } from '../../../../lib/interactors'
 import GetQuote from '../../../useCases/GetQuote'
 import style from './index.module.css'
 
