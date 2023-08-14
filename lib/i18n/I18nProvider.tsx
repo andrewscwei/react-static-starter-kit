@@ -13,7 +13,7 @@ type I18nState = {
   localeChangeStrategy: 'action' | 'path' | 'query'
   polyglots: Record<string, Polyglot>
   supportedLocales: string[]
-  getLocalizedPath?: (path: string) => string
+  getLocalizedPath: (path: string) => string
   getLocalizedString: typeof Polyglot.prototype.t
 }
 
@@ -73,6 +73,7 @@ export default function I18nProvider({
         locale: defaultLocale,
         polyglots,
         supportedLocales,
+        getLocalizedPath: (path: string) => path,
         getLocalizedString: (...args) => polyglots[defaultLocale]?.t(...args) ?? args[0],
       })
 
