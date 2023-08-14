@@ -21,7 +21,6 @@ const isDev = process.env.NODE_ENV === 'development'
 const config: Configuration = {
   devtool: isDev ? 'source-map' : false,
   entry: {
-    polyfills: path.join(buildArgs.inputDir, 'polyfills.ts'),
     main: path.join(buildArgs.inputDir, 'index.ts'),
   },
   infrastructureLogging: {
@@ -166,7 +165,7 @@ const config: Configuration = {
     }),
     new HTMLPlugin({
       buildArgs,
-      chunks: ['common', 'main'].concat(isDev ? [] : ['polyfills']),
+      chunks: ['common', 'main'],
       filename: 'index.html',
       inject: true,
       minify: {
