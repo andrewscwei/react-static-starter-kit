@@ -8,6 +8,16 @@
 export const VERSION = `v${__BUILD_ARGS__.version}+build.${__BUILD_ARGS__.buildNumber}`
 
 /**
+ * Value for the `theme-color` meta tag.
+ */
+export const THEME_COLOR = '#15141a'
+
+/**
+ * Value for the `color` attribute of the `mask-icon` meta tag.
+ */
+export const MASK_ICON_COLOR = '#000'
+
+/**
  * Public path for static assets (with trailing slash if needed).
  */
 export const PUBLIC_PATH = __BUILD_ARGS__.publicPath
