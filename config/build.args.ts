@@ -30,11 +30,6 @@ export const version = packageVersion
 export const buildNumber = process.env.BUILD_NUMBER || 'local'
 
 /**
- * Directory of starter kit library source files.
- */
-export const libDir = path.join(__dirname, '../', 'lib')
-
-/**
  * Input directory of source files to compile.
  */
 export const inputDir = path.join(__dirname, '../', 'src')
