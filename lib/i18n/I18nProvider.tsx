@@ -1,12 +1,12 @@
 import Polyglot from 'node-polyglot'
 import React, { createContext, Dispatch, PropsWithChildren, useEffect, useMemo, useReducer } from 'react'
 import { useLocation } from 'react-router'
+import { updateElementAttributes } from '../dom'
 import getLocaleInfoFromURL from './getLocaleInfoFromURL'
 import getLocalizedURL from './getLocalizedURL'
 import getUnlocalizedURL from './getUnlocalizedURL'
-import { updateElementAttributes } from '../dom'
 
-interface Translation { [key: string]: Translation | string }
+type Translation = { [key: string]: Translation | string }
 
 type I18nState = {
   defaultLocale: string
@@ -33,21 +33,6 @@ type I18nChangeLocaleAction = {
   locale: string
   type: '@i18n/CHANGE_LOCALE'
 }
-
-const reducer = (state: I18nState, action: I18nChangeLocaleAction): I18nState => {
-  switch (action.type) {
-    case '@i18n/CHANGE_LOCALE':
-      return {
-        ...state,
-        locale: action.locale,
-        getLocalizedString: (...args) => state.polyglots[action.locale]?.t(...args) ?? args[0],
-      }
-    default:
-      return state
-  }
-}
-
-export const I18nContext = createContext<I18nContextValue | undefined>(undefined)
 
 /**
  * Context provider whose value consists of the current i18n state. The method
@@ -186,3 +171,18 @@ export default function I18nProvider({
     }
   }
 }
+
+const reducer = (state: I18nState, action: I18nChangeLocaleAction): I18nState => {
+  switch (action.type) {
+    case '@i18n/CHANGE_LOCALE':
+      return {
+        ...state,
+        locale: action.locale,
+        getLocalizedString: (...args) => state.polyglots[action.locale]?.t(...args) ?? args[0],
+      }
+    default:
+      return state
+  }
+}
+
+export const I18nContext = createContext<I18nContextValue | undefined>(undefined)
