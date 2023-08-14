@@ -10,7 +10,7 @@ export const VERSION = `v${__BUILD_ARGS__.version}+build.${__BUILD_ARGS__.buildN
 /**
  * Base URL of the app.
  */
-export const BASE_URL = __BUILD_ARGS__.baseUrl
+export const BASE_URL = __BUILD_ARGS__.baseURL
 
 /**
  * Base path of the router (i.e. the `basename` property).

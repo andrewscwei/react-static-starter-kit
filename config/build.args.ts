@@ -73,7 +73,7 @@ export const publicPath = process.env.PUBLIC_PATH || '/'
 /**
  * Base URL of the app (no trailing `/`).
  */
-export const baseUrl = process.env.BASE_URL || ''
+export const baseURL = process.env.BASE_URL || ''
 
 /**
  * Base path of the router (i.e. the `basename` property).

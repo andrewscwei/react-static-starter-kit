@@ -8,7 +8,7 @@
 
     <title><%= htmlWebpackPlugin.options.buildArgs.appName %></title>
 
-    <link rel="canonical" href="<%= htmlWebpackPlugin.options.buildArgs.baseUrl %>" />
+    <link rel="canonical" href="<%= htmlWebpackPlugin.options.buildArgs.baseURL %>" />
     <link rel="mask-icon" type="image/svg+xml" href="<%= htmlWebpackPlugin.options.buildArgs.publicPath %>mask-icon.svg"/>
     <link rel="alternate icon" type="image/png" href="<%= htmlWebpackPlugin.options.buildArgs.publicPath %>favicon.png" />
     <link rel="icon" type="image/x-icon" href="<%= htmlWebpackPlugin.options.buildArgs.publicPath %>favicon.svg" />
@@ -34,14 +34,14 @@
     <meta property="og:title" content="<%= htmlWebpackPlugin.options.buildArgs.appName %>" />
     <meta property="og:description" content="<%= htmlWebpackPlugin.options.buildArgs.appDescription %>" />
     <meta property="og:locale" content="<%= htmlWebpackPlugin.options.buildArgs.defaultLocale %>" />
-    <meta property="og:url" content="<%= htmlWebpackPlugin.options.buildArgs.baseUrl %>" />
-    <meta property="og:image" content="<%= htmlWebpackPlugin.options.buildArgs.baseUrl %>/og-image.png" />
+    <meta property="og:url" content="<%= htmlWebpackPlugin.options.buildArgs.baseURL %>" />
+    <meta property="og:image" content="<%= htmlWebpackPlugin.options.buildArgs.baseURL %>/og-image.png" />
     <meta property="og:image:alt" content="<%= htmlWebpackPlugin.options.buildArgs.appDescription %>" />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="<%= htmlWebpackPlugin.options.buildArgs.appName %>" />
     <meta name="twitter:description" content="<%= htmlWebpackPlugin.options.buildArgs.appDescription %>" />
-    <meta name="twitter:image" content="<%= htmlWebpackPlugin.options.buildArgs.baseUrl %>/twitter-card.png" />
+    <meta name="twitter:image" content="<%= htmlWebpackPlugin.options.buildArgs.baseURL %>/twitter-card.png" />
 
     <link rel="manifest" href="<%= htmlWebpackPlugin.options.buildArgs.publicPath %>manifest.json" />
   </head>
