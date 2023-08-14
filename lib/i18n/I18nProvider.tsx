@@ -5,15 +5,13 @@ import { updateElementAttributes } from '../dom'
 import createLocalizePathFunction from './createLocalizePathFunction'
 import getLocaleInfoFromURL from './getLocaleInfoFromURL'
 
-type Translation = { [key: string]: Translation | string }
-
 type I18nState = {
   defaultLocale: string
   locale: string
   localeChangeStrategy: 'action' | 'path' | 'query'
   polyglots: Record<string, Polyglot>
   supportedLocales: string[]
-  getLocalizedPath: (path: string) => string
+  getLocalizedPath: ReturnType<typeof createLocalizePathFunction>
   getLocalizedString: typeof Polyglot.prototype.t
 }
 
@@ -25,7 +23,7 @@ type I18nContextValue = {
 type I18nProviderProps = PropsWithChildren<{
   defaultLocale?: I18nState['defaultLocale']
   localeChangeStrategy?: I18nState['localeChangeStrategy']
-  translations: Record<string, Translation>
+  translations: Record<string, any>
 }>
 
 type I18nChangeLocaleAction = {
@@ -73,7 +71,7 @@ export default function I18nProvider({
         locale: defaultLocale,
         polyglots,
         supportedLocales,
-        getLocalizedPath: (path: string) => path,
+        getLocalizedPath: path => path,
         getLocalizedString: (...args) => polyglots[defaultLocale]?.t(...args) ?? args[0],
       })
 
