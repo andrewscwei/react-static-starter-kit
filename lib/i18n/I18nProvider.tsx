@@ -1,18 +1,18 @@
-import Polyglot from 'node-polyglot'
-import React, { createContext, Dispatch, PropsWithChildren, useEffect, useMemo, useReducer } from 'react'
+import React, { createContext, Dispatch, PropsWithChildren, useEffect, useReducer } from 'react'
 import { useLocation } from 'react-router'
 import { updateElementAttributes } from '../dom'
 import createLocalizePathFunction from './createLocalizePathFunction'
+import createTranslateFunction from './createTranslateFunction'
 import getLocaleInfoFromURL from './getLocaleInfoFromURL'
 
 type I18nState = {
   defaultLocale: string
   locale: string
   localeChangeStrategy: 'action' | 'path' | 'query'
-  polyglots: Record<string, Polyglot>
   supportedLocales: string[]
+  translations: Record<string, any>
   getLocalizedPath: ReturnType<typeof createLocalizePathFunction>
-  getLocalizedString: typeof Polyglot.prototype.t
+  getLocalizedString: ReturnType<typeof createTranslateFunction>
 }
 
 type I18nContextValue = {
@@ -58,21 +58,16 @@ export default function I18nProvider({
     supportedLocales.push(defaultLocale)
   }
 
-  const polyglots = useMemo<Record<string, Polyglot>>(() => supportedLocales.reduce((out, locale) => ({
-    ...out,
-    [locale]: new Polyglot({ locale, phrases: translations[locale] }),
-  }), {}), [translations])
-
   switch (localeChangeStrategy) {
     case 'action': {
       const [state, dispatch] = useReducer(reducer, {
         localeChangeStrategy,
         defaultLocale,
         locale: defaultLocale,
-        polyglots,
         supportedLocales,
+        translations,
         getLocalizedPath: path => path,
-        getLocalizedString: (...args) => polyglots[defaultLocale]?.t(...args) ?? args[0],
+        getLocalizedString: createTranslateFunction(defaultLocale, { translations }),
       })
 
       if (typeof document !== 'undefined') {
@@ -118,9 +113,6 @@ export default function I18nProvider({
 
       const locale = localeInfo?.locale ?? defaultLocale
 
-      const polyglot = polyglots[locale]
-      if (!polyglot) console.warn(`Missing transtions for locale <${locale}>`)
-
       if (typeof document !== 'undefined') {
         useEffect(() => updateElementAttributes('meta', [{
           name: 'property',
@@ -155,10 +147,10 @@ export default function I18nProvider({
         localeChangeStrategy,
         defaultLocale,
         locale,
-        polyglots,
+        translations,
         supportedLocales,
         getLocalizedPath: createLocalizePathFunction(locale, { defaultLocale, resolveStrategy, supportedLocales }),
-        getLocalizedString: (...args) => polyglot?.t(...args) ?? args[0],
+        getLocalizedString: createTranslateFunction(locale, { translations }),
       }
 
       return (
@@ -176,7 +168,7 @@ const reducer = (state: I18nState, action: I18nChangeLocaleAction): I18nState =>
       return {
         ...state,
         locale: action.locale,
-        getLocalizedString: (...args) => state.polyglots[action.locale]?.t(...args) ?? args[0],
+        getLocalizedString: createTranslateFunction(action.locale, { translations: state.translations }),
       }
     default:
       return state

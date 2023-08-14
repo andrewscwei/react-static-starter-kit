@@ -5,11 +5,11 @@ This is an experimental starter kit for a React static app.
 ## Features
 
 1. [React Router](https://reacttraining.com/react-router/)
-2. [Polyglot](https://airbnb.io/polyglot.js/)
-3. [CSS Modules](https://github.com/css-modules/css-modules) + [PostCSS](https://postcss.org/) + [PurgeCSS](https://purgecss.com/) + [StyleLint](https://stylelint.io/)
-4. [TypeScript](https://www.typescriptlang.org/) + [Babel](https://babeljs.io/) + [ESLint](https://eslint.org/)
-5. [Jest](https://jestjs.io/) + [React Testing Library](https://testing-library.com/docs/react-testing-library/)
-6. [webpack](https://webpack.js.org/)
+2. [CSS Modules](https://github.com/css-modules/css-modules) + [PostCSS](https://postcss.org/) + [PurgeCSS](https://purgecss.com/) + [StyleLint](https://stylelint.io/)
+3. [TypeScript](https://www.typescriptlang.org/) + [Babel](https://babeljs.io/) + [ESLint](https://eslint.org/)
+4. [Jest](https://jestjs.io/) + [React Testing Library](https://testing-library.com/docs/react-testing-library/)
+5. [webpack](https://webpack.js.org/)
+6. Custom i18n solution using [`sprintf-js`](https://www.npmjs.com/package/sprintf-js)
 7. Cached fetch responses
 8. Web workers
 9. CI/CD workflows with [GitHub Actions](https://github.com/features/actions)
