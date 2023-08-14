@@ -79,3 +79,18 @@ export const baseUrl = process.env.BASE_URL || ''
  * Base path of the router (i.e. the `basename` property).
  */
 export const basePath = process.env.BASE_PATH || '/'
+
+/**
+ * Default locale.
+ */
+export const defaultLocale = process.env.DEFAULT_LOCALE || 'en'
+
+/**
+ * Default app name for meta tags.
+ */
+export const appName = process.env.APP_NAME || 'React Static Starter Kit'
+
+/**
+ * Default app description for meta tags.
+ */
+export const appDescription = process.env.APP_DESCRIPTION || 'An experimental React static app starter kit.'

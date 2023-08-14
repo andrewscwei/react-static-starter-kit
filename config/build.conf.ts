@@ -166,7 +166,6 @@ const config: Configuration = {
     }),
     new HTMLPlugin({
       buildArgs,
-      appConf: {},
       chunks: ['common', 'main'].concat(isDev ? [] : ['polyfills']),
       filename: 'index.html',
       inject: true,

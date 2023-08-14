@@ -4,6 +4,7 @@ import { useLocation } from 'react-router'
 import getLocaleInfoFromURL from './getLocaleInfoFromURL'
 import getLocalizedURL from './getLocalizedURL'
 import getUnlocalizedURL from './getUnlocalizedURL'
+import { updateElementAttributes } from '../dom'
 
 interface Translation { [key: string]: Translation | string }
 
@@ -92,6 +93,18 @@ export default function I18nProvider({
       })
 
       if (typeof document !== 'undefined') {
+        useEffect(() => updateElementAttributes('meta', [{
+          name: 'property',
+          value: 'og:locale',
+          key: true,
+        }, {
+          name: 'content',
+          value: state.locale,
+        }], {
+          parent: document.head,
+          autoCreate: false,
+        }))
+
         useEffect(() => {
           const prevVal = document.documentElement.getAttribute('lang')
           const newVal = state.locale
@@ -126,6 +139,18 @@ export default function I18nProvider({
       if (!polyglot) console.warn(`Missing transtions for locale <${locale}>`)
 
       if (typeof document !== 'undefined') {
+        useEffect(() => updateElementAttributes('meta', [{
+          name: 'property',
+          value: 'og:locale',
+          key: true,
+        }, {
+          name: 'content',
+          value: locale,
+        }], {
+          parent: document.head,
+          autoCreate: false,
+        }))
+
         useEffect(() => {
           const prevVal = document.documentElement.getAttribute('lang')
           const newVal = locale
