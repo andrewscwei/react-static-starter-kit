@@ -2,9 +2,8 @@ import Polyglot from 'node-polyglot'
 import React, { createContext, Dispatch, PropsWithChildren, useEffect, useMemo, useReducer } from 'react'
 import { useLocation } from 'react-router'
 import { updateElementAttributes } from '../dom'
+import createLocalizePathFunction from './createLocalizePathFunction'
 import getLocaleInfoFromURL from './getLocaleInfoFromURL'
-import getLocalizedURL from './getLocalizedURL'
-import getUnlocalizedURL from './getUnlocalizedURL'
 
 type Translation = { [key: string]: Translation | string }
 
@@ -159,7 +158,7 @@ export default function I18nProvider({
         locale,
         polyglots,
         supportedLocales,
-        getLocalizedPath: path => locale === defaultLocale ? getUnlocalizedURL(path, { resolveStrategy, supportedLocales }) : getLocalizedURL(path, locale, { defaultLocale, resolveStrategy: localeChangeStrategy, supportedLocales }),
+        getLocalizedPath: createLocalizePathFunction(locale, { defaultLocale, resolveStrategy, supportedLocales }),
         getLocalizedString: (...args) => polyglot?.t(...args) ?? args[0],
       }
 
