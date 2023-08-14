@@ -106,7 +106,7 @@ When using `react-static-starter-kit` as a template, follow these steps to strip
 1. Replace `LICENSE` file
 2. Edit `README.md`
 3. Edit fields in `package.json`
-4. Edit fields in `src/app.conf.ts`
+4. Edit fields in `config/build.args.ts`
 5. Edit resources in `res/`, then ensure to replace the generated assets in the following places:
     1. `src/ui/assets/`
     2. `src/static/`

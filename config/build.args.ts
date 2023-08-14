@@ -66,7 +66,7 @@ export const skipOptimizations = process.env.NODE_ENV === 'development' || proce
 export const devPort = Number(process.env.PORT || 8080)
 
 /**
- * Public path for static assets.
+ * Public path for static assets (with trailing slash if needed).
  */
 export const publicPath = process.env.PUBLIC_PATH || '/'
 

@@ -8,6 +8,11 @@
 export const VERSION = `v${__BUILD_ARGS__.version}+build.${__BUILD_ARGS__.buildNumber}`
 
 /**
+ * Public path for static assets (with trailing slash if needed).
+ */
+export const PUBLIC_PATH = __BUILD_ARGS__.publicPath
+
+/**
  * Base URL of the app.
  */
 export const BASE_URL = __BUILD_ARGS__.baseURL
