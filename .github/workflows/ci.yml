@@ -9,6 +9,8 @@ jobs:
     uses: andrewscwei/workflows/.github/workflows/node-build.yml@master
     secrets: inherit
     with:
+      artifacts-path: build/
+      build-command: PUBLIC_PATH=./ BASE_URL=https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }} BASE_PATH=/${{ github.event.repository.name }} npm run build
       test-command: npm run test:ts && npm test
   notify:
     name: Notify
