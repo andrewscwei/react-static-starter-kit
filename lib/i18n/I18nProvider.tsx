@@ -1,9 +1,9 @@
-import React, { createContext, Dispatch, PropsWithChildren, useEffect, useReducer } from 'react'
+import React, { createContext, Dispatch, PropsWithChildren, useReducer } from 'react'
 import { useLocation } from 'react-router'
-import { updateElementAttributes } from '../dom'
-import createLocalizePathFunction from './createLocalizePathFunction'
-import createTranslateFunction from './createTranslateFunction'
+import { useDocumentLocale } from '../dom'
 import getLocaleInfoFromURL from './getLocaleInfoFromURL'
+import createGetLocalizedPath from './helpers/createGetLocalizedPath'
+import createGetLocalizedString from './helpers/createGetLocalizedString'
 
 type I18nState = {
   defaultLocale: string
@@ -11,8 +11,8 @@ type I18nState = {
   localeChangeStrategy: 'action' | 'path' | 'query'
   supportedLocales: string[]
   translations: Record<string, any>
-  getLocalizedPath: ReturnType<typeof createLocalizePathFunction>
-  getLocalizedString: ReturnType<typeof createTranslateFunction>
+  getLocalizedPath: ReturnType<typeof createGetLocalizedPath>
+  getLocalizedString: ReturnType<typeof createGetLocalizedString>
 }
 
 type I18nContextValue = {
@@ -49,8 +49,6 @@ export default function I18nProvider({
   localeChangeStrategy = 'path',
   translations,
 }: I18nProviderProps) {
-  const { pathname, search, hash } = useLocation()
-  const url = `${pathname}${search}${hash}`
   const supportedLocales = Object.keys(translations)
 
   if (supportedLocales.indexOf(defaultLocale) < 0) {
@@ -67,38 +65,10 @@ export default function I18nProvider({
         supportedLocales,
         translations,
         getLocalizedPath: path => path,
-        getLocalizedString: createTranslateFunction(defaultLocale, { translations }),
+        getLocalizedString: createGetLocalizedString(defaultLocale, { translations }),
       })
 
-      if (typeof document !== 'undefined') {
-        useEffect(() => updateElementAttributes('meta', [{
-          name: 'property',
-          value: 'og:locale',
-          key: true,
-        }, {
-          name: 'content',
-          value: state.locale,
-        }], {
-          parent: document.head,
-          autoCreate: false,
-        }))
-
-        useEffect(() => {
-          const prevVal = document.documentElement.getAttribute('lang')
-          const newVal = state.locale
-
-          document.documentElement.setAttribute('lang', newVal)
-
-          return () => {
-            if (prevVal) {
-              document.documentElement.setAttribute('lang', prevVal)
-            }
-            else {
-              document.documentElement.removeAttribute('lang')
-            }
-          }
-        }, [state.locale])
-      }
+      useDocumentLocale(state.locale)
 
       return (
         <I18nContext.Provider value={{ state, dispatch }}>
@@ -107,41 +77,15 @@ export default function I18nProvider({
       )
     }
     default: {
+      const { pathname, search, hash } = useLocation()
+      const url = `${pathname}${search}${hash}`
       const resolveStrategy = localeChangeStrategy === 'path' ? 'path' : 'query'
       const localeInfo = getLocaleInfoFromURL(url, { defaultLocale, resolveStrategy, supportedLocales })
       if (!localeInfo) console.warn(`Unable to infer locale from path <${url}>`)
 
       const locale = localeInfo?.locale ?? defaultLocale
 
-      if (typeof document !== 'undefined') {
-        useEffect(() => updateElementAttributes('meta', [{
-          name: 'property',
-          value: 'og:locale',
-          key: true,
-        }, {
-          name: 'content',
-          value: locale,
-        }], {
-          parent: document.head,
-          autoCreate: false,
-        }))
-
-        useEffect(() => {
-          const prevVal = document.documentElement.getAttribute('lang')
-          const newVal = locale
-
-          document.documentElement.setAttribute('lang', newVal)
-
-          return () => {
-            if (prevVal) {
-              document.documentElement.setAttribute('lang', prevVal)
-            }
-            else {
-              document.documentElement.removeAttribute('lang')
-            }
-          }
-        }, [locale])
-      }
+      useDocumentLocale(locale)
 
       const state: I18nState = {
         localeChangeStrategy,
@@ -149,8 +93,8 @@ export default function I18nProvider({
         locale,
         translations,
         supportedLocales,
-        getLocalizedPath: createLocalizePathFunction(locale, { defaultLocale, resolveStrategy, supportedLocales }),
-        getLocalizedString: createTranslateFunction(locale, { translations }),
+        getLocalizedPath: createGetLocalizedPath(locale, { defaultLocale, resolveStrategy, supportedLocales }),
+        getLocalizedString: createGetLocalizedString(locale, { translations }),
       }
 
       return (
@@ -168,7 +112,7 @@ const reducer = (state: I18nState, action: I18nChangeLocaleAction): I18nState =>
       return {
         ...state,
         locale: action.locale,
-        getLocalizedString: createTranslateFunction(action.locale, { translations: state.translations }),
+        getLocalizedString: createGetLocalizedString(action.locale, { translations: state.translations }),
       }
     default:
       return state

@@ -1,17 +1,20 @@
 import React from 'react'
-import useMetaTags from '../../../../lib/dom/useMetaTags'
+import { useMetaTags } from '../../../../lib/dom'
 import { useLocalizedString } from '../../../../lib/i18n'
 import { VERSION } from '../../../app.conf'
+import Footer from '../../components/Footer'
+import Header from '../../components/Header'
 import ReactLogo from '../../components/ReactLogo'
 import style from './index.module.css'
 
-export default function Home() {
+export function Component() {
   const ltxt = useLocalizedString()
 
   useMetaTags({ title: ltxt('window-title-home') })
 
   return (
     <>
+      <Header/>
       <main>
         <div className={style.content}>
           <ReactLogo className={style.logo}/>
@@ -22,6 +25,7 @@ export default function Home() {
           </section>
         </div>
       </main>
+      <Footer/>
     </>
   )
 }

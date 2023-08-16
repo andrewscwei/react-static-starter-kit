@@ -4,10 +4,7 @@ import style from './ReactLogo.module.css'
 
 type Props = HTMLAttributes<HTMLElement>
 
-export default function ReactLogo({
-  className,
-  ...props
-}: Props) {
+export default function ReactLogo({ className, ...props }: Props) {
   return (
     <figure {...props} className={`${style.root} ${className}`} dangerouslySetInnerHTML={{ __html: $$ReactLogo }}/>
   )
