@@ -3,12 +3,10 @@
  */
 
 import React, { StrictMode } from 'react'
-import { Outlet, RouterProvider, createBrowserRouter } from 'react-router-dom'
+import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import { useFavicon, useThemeColor } from '../../lib/dom'
-import { I18nProvider } from '../../lib/i18n'
 import { joinURL } from '../../lib/utils'
-import { BASE_PATH, DEFAULT_LOCALE, LOCALE_CHANGE_STRATEGY, MASK_ICON_COLOR, PUBLIC_PATH, THEME_COLOR } from '../app.conf'
-import { translations } from '../locales'
+import { BASE_PATH, MASK_ICON_COLOR, PUBLIC_PATH, THEME_COLOR } from '../app.conf'
 import routesConf from '../routes.conf'
 import './styles/global.css'
 import './styles/theme.css'
@@ -28,15 +26,9 @@ export default function App() {
     },
   })
 
-  const Container = () => (
-    <I18nProvider defaultLocale={DEFAULT_LOCALE} translations={translations} localeChangeStrategy={LOCALE_CHANGE_STRATEGY}>
-      <Outlet/>
-    </I18nProvider>
-  )
-
   return (
     <StrictMode>
-      <RouterProvider router={createBrowserRouter([{ Component: Container, children: routesConf }], { basename: BASE_PATH })}/>
+      <RouterProvider router={createBrowserRouter(routesConf, { basename: BASE_PATH })}/>
     </StrictMode>
   )
 }

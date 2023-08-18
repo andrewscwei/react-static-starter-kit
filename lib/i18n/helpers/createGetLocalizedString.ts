@@ -1,15 +1,8 @@
 import { sprintf } from 'sprintf-js'
+import { GetLocalizedString, I18nConfig, Locale } from '../types'
 
-type Options = {
-  translations: Record<string, any>
-}
-
-type Output = (keyPath: string, ...args: any[]) => string
-
-export default function createGetLocalizedString(locale: string, {
-  translations,
-}: Options): Output {
-  const dict = translations[locale]
+export default function createGetLocalizedString(locale: Locale | undefined, { defaultLocale, translations }: I18nConfig): GetLocalizedString {
+  const dict = translations[locale ?? defaultLocale]
 
   return (keyPath: string, ...args) => {
     if (!dict) {
@@ -20,7 +13,7 @@ export default function createGetLocalizedString(locale: string, {
 
     const keys = keyPath.split('.')
 
-    let str = dict
+    let str: any = dict
 
     try {
       while (keys.length > 0) {
