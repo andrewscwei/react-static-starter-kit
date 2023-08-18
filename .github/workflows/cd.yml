@@ -14,7 +14,7 @@ jobs:
     secrets: inherit
     with:
       artifacts-path: build/
-      build-command: PUBLIC_PATH=/${{ github.event.repository.name }}/ BASE_URL=https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }} BASE_PATH=/${{ github.event.repository.name }} npm run build
+      build-command: BASE_URL=https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }} BASE_PATH=/${{ github.event.repository.name }}/ npm run build
       test-command: npm run test:ts && npm test
   deploy:
     name: Deploy

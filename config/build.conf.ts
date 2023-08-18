@@ -15,6 +15,7 @@ import TerserPlugin from 'terser-webpack-plugin'
 import { Configuration, DefinePlugin, EnvironmentPlugin, IgnorePlugin } from 'webpack'
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
 import * as buildArgs from './build.args'
+import createResolveAssetPath from './utils/createResolveAssetPath'
 
 const isDev = process.env.NODE_ENV === 'development'
 
@@ -165,6 +166,8 @@ const config: Configuration = {
     }),
     new HTMLPlugin({
       buildArgs,
+      resolvePublicPath: createResolveAssetPath(buildArgs.publicPath),
+      resolvePublicURL: createResolveAssetPath(buildArgs.publicURL),
       chunks: ['common', 'main'],
       filename: 'index.html',
       inject: true,

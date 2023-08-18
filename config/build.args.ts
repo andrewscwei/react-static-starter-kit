@@ -32,6 +32,41 @@ export const version = packageVersion
 export const buildNumber = process.env.BUILD_NUMBER || 'local'
 
 /**
+ * Default app name for meta tags.
+ */
+export const appName = process.env.APP_NAME || 'React Static Starter Kit'
+
+/**
+ * Default app description for meta tags.
+ */
+export const appDescription = process.env.APP_DESCRIPTION || 'An experimental React static app starter kit.'
+
+/**
+ * Base URL of the app.
+ */
+export const baseURL = process.env.BASE_URL || ''
+
+/**
+ * Base path of the router (i.e. the `basename` property).
+ */
+export const basePath = process.env.BASE_PATH || '/'
+
+/**
+ * Absolute public URL for static assets.
+ */
+export const publicURL = process.env.PUBLIC_URL || baseURL
+
+/**
+ * Public path for static assets.
+ */
+export const publicPath = process.env.PUBLIC_PATH || basePath
+
+/**
+ * Default locale.
+ */
+export const defaultLocale = process.env.DEFAULT_LOCALE || 'en'
+
+/**
  * Input directory of source files to compile.
  */
 export const inputDir = path.join(__dirname, '../', 'src')
@@ -61,33 +96,3 @@ export const skipOptimizations = process.env.NODE_ENV === 'development' || proce
  * Specifies the port to use during development.
  */
 export const devPort = Number(process.env.PORT || 8080)
-
-/**
- * Public path for static assets (with trailing slash if needed).
- */
-export const publicPath = process.env.PUBLIC_PATH || '/'
-
-/**
- * Base URL of the app (no trailing `/`).
- */
-export const baseURL = process.env.BASE_URL || ''
-
-/**
- * Base path of the router (i.e. the `basename` property).
- */
-export const basePath = process.env.BASE_PATH || '/'
-
-/**
- * Default locale.
- */
-export const defaultLocale = process.env.DEFAULT_LOCALE || 'en'
-
-/**
- * Default app name for meta tags.
- */
-export const appName = process.env.APP_NAME || 'React Static Starter Kit'
-
-/**
- * Default app description for meta tags.
- */
-export const appDescription = process.env.APP_DESCRIPTION || 'An experimental React static app starter kit.'
