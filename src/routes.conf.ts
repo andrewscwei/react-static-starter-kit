@@ -4,7 +4,7 @@
 
 import { RouteObject } from 'react-router'
 import { generateLocalizedRoutes } from '../lib/i18n'
-import { i18nConfig } from './locales'
+import { I18N_CONFIG } from './app.conf'
 
 const routes: RouteObject[] = [{
   path: '/',
@@ -18,4 +18,4 @@ const routes: RouteObject[] = [{
   lazy: () => import('./ui/pages/notFound'),
 }]
 
-export default generateLocalizedRoutes(routes, i18nConfig)
+export default generateLocalizedRoutes(routes, I18N_CONFIG)
