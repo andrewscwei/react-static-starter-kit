@@ -29,7 +29,6 @@ export const I18N: I18nConfig = {
   translations: tryOrUndefined(() => loadTranslations(require.context('./locales', true, /^.*\.json$/))) ?? {},
 }
 
-
 /**
  * Value for the `theme-color` meta tag.
  */
