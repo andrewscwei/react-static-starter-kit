@@ -4,10 +4,10 @@
     <meta charSet="utf-8" />
     <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=2.0,viewport-fit=cover" />
-    <meta name="description" content="<%= htmlWebpackPlugin.options.buildArgs.appDescription %>" />
+    <meta name="description" content="<%= htmlWebpackPlugin.options.buildArgs.description %>" />
 
     <title>
-      <%= htmlWebpackPlugin.options.buildArgs.appName %>
+      <%= htmlWebpackPlugin.options.buildArgs.title %>
     </title>
 
     <link rel="canonical" href="<%= htmlWebpackPlugin.options.buildArgs.baseURL %>" />
@@ -19,7 +19,7 @@
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <meta name="apple-mobile-web-app-title" content="<%= htmlWebpackPlugin.options.buildArgs.appName %>" />
+    <meta name="apple-mobile-web-app-title" content="<%= htmlWebpackPlugin.options.buildArgs.title %>" />
     <link rel="apple-touch-icon" type="image/png" href="<%= htmlWebpackPlugin.options.resolvePublicPath('app-icon-57.png') %>" sizes="57x57" />
     <link rel="apple-touch-icon" type="image/png" href="<%= htmlWebpackPlugin.options.resolvePublicPath('app-icon-60.png') %>" sizes="60x60" />
     <link rel="apple-touch-icon" type="image/png" href="<%= htmlWebpackPlugin.options.resolvePublicPath('app-icon-72.png') %>" sizes="72x72" />
@@ -31,18 +31,18 @@
     <link rel="apple-touch-icon" type="image/png" href="<%= htmlWebpackPlugin.options.resolvePublicPath('app-icon-180.png') %>" sizes="180x180" />
     <link rel="apple-touch-icon" type="image/png" href="<%= htmlWebpackPlugin.options.resolvePublicPath('app-icon-192.png') %>" sizes="192x192" />
 
-    <meta property="og:site_name" content="<%= htmlWebpackPlugin.options.buildArgs.appName %>" />
+    <meta property="og:site_name" content="<%= htmlWebpackPlugin.options.buildArgs.title %>" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="<%= htmlWebpackPlugin.options.buildArgs.appName %>" />
-    <meta property="og:description" content="<%= htmlWebpackPlugin.options.buildArgs.appDescription %>" />
+    <meta property="og:title" content="<%= htmlWebpackPlugin.options.buildArgs.title %>" />
+    <meta property="og:description" content="<%= htmlWebpackPlugin.options.buildArgs.description %>" />
     <meta property="og:locale" content="<%= htmlWebpackPlugin.options.buildArgs.defaultLocale %>" />
     <meta property="og:url" content="<%= htmlWebpackPlugin.options.buildArgs.baseURL %>" />
     <meta property="og:image" content="<%= htmlWebpackPlugin.options.resolvePublicURL('og-image.png') %>" />
-    <meta property="og:image:alt" content="<%= htmlWebpackPlugin.options.buildArgs.appDescription %>" />
+    <meta property="og:image:alt" content="<%= htmlWebpackPlugin.options.buildArgs.description %>" />
 
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="<%= htmlWebpackPlugin.options.buildArgs.appName %>" />
-    <meta name="twitter:description" content="<%= htmlWebpackPlugin.options.buildArgs.appDescription %>" />
+    <meta name="twitter:title" content="<%= htmlWebpackPlugin.options.buildArgs.title %>" />
+    <meta name="twitter:description" content="<%= htmlWebpackPlugin.options.buildArgs.description %>" />
     <meta name="twitter:image" content="<%= htmlWebpackPlugin.options.resolvePublicURL('twitter-card.png') %>" />
 
     <link rel="manifest" href="<%= htmlWebpackPlugin.options.resolvePublicPath('manifest.json') %>" />

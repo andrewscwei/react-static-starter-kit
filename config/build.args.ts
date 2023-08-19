@@ -34,12 +34,12 @@ export const buildNumber = process.env.BUILD_NUMBER || 'local'
 /**
  * Default app name for meta tags.
  */
-export const appName = process.env.APP_NAME || 'React Static Starter Kit'
+export const title = process.env.TITLE || 'React Static Starter Kit'
 
 /**
  * Default app description for meta tags.
  */
-export const appDescription = process.env.APP_DESCRIPTION || 'An experimental React static app starter kit.'
+export const description = process.env.DESCRIPTION || 'An experimental React static app starter kit.'
 
 /**
  * Base URL of the app.

@@ -13,12 +13,22 @@ export const VERSION = `v${__BUILD_ARGS__.version}+build.${__BUILD_ARGS__.buildN
 /**
  * Fallback app title.
  */
-export const APP_NAME = __BUILD_ARGS__.appName
+export const TITLE = __BUILD_ARGS__.title
 
 /**
  * Fallback app description.
  */
-export const APP_DESCRIPTION = __BUILD_ARGS__.appDescription
+export const DESCRIPTION = __BUILD_ARGS__.description
+
+/**
+ * I18n config.
+ */
+export const I18N: I18nConfig = {
+  defaultLocale: __BUILD_ARGS__.defaultLocale,
+  localeChangeStrategy: 'path',
+  translations: tryOrUndefined(() => loadTranslations(require.context('./locales', true, /^.*\.json$/))) ?? {},
+}
+
 
 /**
  * Value for the `theme-color` meta tag.
@@ -49,12 +59,3 @@ export const PUBLIC_PATH = __BUILD_ARGS__.publicPath
  * Absolute public URL for static assets.
  */
 export const PUBLIC_URL = __BUILD_ARGS__.publicURL
-
-/**
- * I18n config.
- */
-export const I18N_CONFIG: I18nConfig = {
-  defaultLocale: __BUILD_ARGS__.defaultLocale,
-  localeChangeStrategy: 'path',
-  translations: tryOrUndefined(() => loadTranslations(require.context('./locales', true, /^.*\.json$/))) ?? {},
-}
