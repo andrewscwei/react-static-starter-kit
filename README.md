@@ -108,7 +108,7 @@ When using `react-static-starter-kit` as a template, follow these steps to strip
 3. Edit fields in `package.json`
 4. Edit fields in `config/build.args.ts`
 5. Edit resources in `res/`, then ensure to replace the generated assets in `src/static/`
-6. Edit files in `src/ui/components/` and `src/ui/pages/`
+6. Edit files in `src/ui/`
 7. Edit translations in `src/locales/`
 
 ## Breaking Changes
