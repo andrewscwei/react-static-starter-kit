@@ -22,7 +22,7 @@ const isDev = process.env.NODE_ENV === 'development'
 const config: Configuration = {
   devtool: isDev ? 'source-map' : false,
   entry: {
-    main: path.join(buildArgs.inputDir, 'index.ts'),
+    main: path.join(buildArgs.inputDir, 'index.tsx'),
   },
   infrastructureLogging: {
     level: 'error',
@@ -66,6 +66,7 @@ const config: Configuration = {
               }),
               ...isDev ? [] : [PostCSSPurgeCSS({
                 content: [
+                  path.join(buildArgs.libDir, '**/*.html'),
                   path.join(buildArgs.inputDir, '**/*.html'),
                   path.join(buildArgs.inputDir, '**/*.tsx'),
                   path.join(buildArgs.inputDir, '**/*.ts'),
@@ -176,7 +177,7 @@ const config: Configuration = {
         removeAttributeQuotes: true,
         removeComments: true,
       },
-      template: path.join(buildArgs.inputDir, 'templates', 'index.html'),
+      template: path.join(buildArgs.libDir, 'templates', 'index.html'),
     }),
     ...isDev ? [new ReactRefreshPlugin()] : [],
     ...isDev ? [] : [new IgnorePlugin({

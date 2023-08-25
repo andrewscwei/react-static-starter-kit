@@ -1,7 +1,6 @@
 import React from 'react'
 import { useMetaTags } from '../../../../lib/dom'
 import { useLocalizedString } from '../../../../lib/i18n'
-import { VERSION } from '../../../app.conf'
 import Footer from '../../components/Footer'
 import Header from '../../components/Header'
 import ReactLogo from '../../components/ReactLogo'
@@ -20,7 +19,7 @@ export function Component() {
           <ReactLogo className={style.logo}/>
           <section>
             <h1 className={style.title}>{ltxt('hello')}</h1>
-            <code className={style.version}>{VERSION}</code>
+            <code className={style.version}>{__BUILD_ARGS__.version}</code>
             <span>{ltxt('description') }</span>
           </section>
         </div>

@@ -2,14 +2,6 @@
  * @file Runtime application config.
  */
 
-import { I18nConfig, loadTranslations } from '../lib/i18n'
-import { tryOrUndefined } from '../lib/utils'
-
-/**
- * Full version string.
- */
-export const VERSION = `v${__BUILD_ARGS__.version}+build.${__BUILD_ARGS__.buildNumber}`
-
 /**
  * Fallback app title.
  */
@@ -19,17 +11,6 @@ export const TITLE = __BUILD_ARGS__.title
  * Fallback app description.
  */
 export const DESCRIPTION = __BUILD_ARGS__.description
-
-/**
- * I18n config.
- */
-export const I18N: I18nConfig = {
-  defaultLocale: __BUILD_ARGS__.defaultLocale,
-  localeChangeStrategy: 'path',
-  translations: process.env.NODE_ENV === 'test'
-    ? { [__BUILD_ARGS__.defaultLocale]: {} }
-    : tryOrUndefined(() => loadTranslations(require.context('./locales', true, /^.*\.json$/))) ?? {},
-}
 
 /**
  * Value for the `theme-color` meta tag.
@@ -42,21 +23,9 @@ export const THEME_COLOR = '#15141a'
 export const MASK_ICON_COLOR = '#000'
 
 /**
- * Base URL of the app.
+ * Specifies how locale will be changed:
+ * 1. `action`: Locale is changed by dispatching an action.
+ * 2. `path`: Locale is changed by altering the path of the URL.
+ * 3. `query`: Locale is changed by altering the query parameters of the URL.
  */
-export const BASE_URL = __BUILD_ARGS__.baseURL
-
-/**
- * Base path of the router (i.e. the `basename` property).
- */
-export const BASE_PATH = __BUILD_ARGS__.basePath
-
-/**
- * Public path for static assets.
- */
-export const PUBLIC_PATH = __BUILD_ARGS__.publicPath
-
-/**
- * Absolute public URL for static assets.
- */
-export const PUBLIC_URL = __BUILD_ARGS__.publicURL
+export const LOCALE_CHANGE_STRATEGY = 'path'

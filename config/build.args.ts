@@ -22,14 +22,14 @@ export const debugEnabled = process.env.DEBUG_ENABLED === 'true' || process.env.
 export const debugChannels = process.env.DEBUG_CHANNELS?.split(',') || ['app']
 
 /**
- * Version number.
- */
-export const version = packageVersion
-
-/**
  * Build number.
  */
 export const buildNumber = process.env.BUILD_NUMBER || 'local'
+
+/**
+ * Version number.
+ */
+export const version = `v${packageVersion}+build.${buildNumber}`
 
 /**
  * Default app name for meta tags.
@@ -65,6 +65,11 @@ export const publicPath = process.env.PUBLIC_PATH || basePath
  * Default locale.
  */
 export const defaultLocale = process.env.DEFAULT_LOCALE || 'en'
+
+/**
+ * Lib directory.
+ */
+export const libDir = path.join(__dirname, '../', 'lib')
 
 /**
  * Input directory of source files to compile.

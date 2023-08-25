@@ -2,16 +2,18 @@
  * @file Client app root.
  */
 
-import React, { StrictMode } from 'react'
-import { RouterProvider, createBrowserRouter } from 'react-router-dom'
+import React, { PropsWithChildren, StrictMode } from 'react'
 import { useFavicon, useThemeColor } from '../../lib/dom'
 import { joinURL } from '../../lib/utils'
-import { BASE_PATH, MASK_ICON_COLOR, PUBLIC_PATH, THEME_COLOR } from '../app.conf'
-import routesConf from '../routes.conf'
+import { MASK_ICON_COLOR, THEME_COLOR } from '../app.conf'
 import './styles/global.css'
 import './styles/theme.css'
 
-export default function App() {
+type Props = PropsWithChildren
+
+const { publicPath } = __BUILD_ARGS__
+
+export default function App({ children }: Props) {
   useThemeColor(THEME_COLOR)
 
   useFavicon({
@@ -19,16 +21,16 @@ export default function App() {
       color: MASK_ICON_COLOR,
     },
     icon: {
-      darkImage: joinURL(PUBLIC_PATH, 'favicon-dark.svg'),
+      darkImage: joinURL(publicPath, 'favicon-dark.svg'),
     },
     alternateIcon: {
-      darkImage: joinURL(PUBLIC_PATH, 'favicon-dark.png'),
+      darkImage: joinURL(publicPath, 'favicon-dark.png'),
     },
   })
 
   return (
     <StrictMode>
-      <RouterProvider router={createBrowserRouter(routesConf, { basename: BASE_PATH })}/>
+      {children}
     </StrictMode>
   )
 }
