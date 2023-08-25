@@ -1,5 +1,5 @@
 /**
- * @file Client router config.
+ * @file Routes config.
  */
 
 import { RouteObject } from 'react-router'
