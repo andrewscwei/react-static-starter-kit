@@ -1,8 +1,4 @@
-/**
- * @file Client app root.
- */
-
-import React, { PropsWithChildren, StrictMode } from 'react'
+import React, { StrictMode, type PropsWithChildren } from 'react'
 import { useFavicon, useThemeColor } from '../../lib/dom'
 import { joinURL } from '../../lib/utils'
 import { MASK_ICON_COLOR, THEME_COLOR } from '../app.conf'
@@ -13,7 +9,7 @@ type Props = PropsWithChildren
 
 const { publicPath } = __BUILD_ARGS__
 
-export default function App({ children }: Props) {
+export function App({ children }: Props) {
   useThemeColor(THEME_COLOR)
 
   useFavicon({

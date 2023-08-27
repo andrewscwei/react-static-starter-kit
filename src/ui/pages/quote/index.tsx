@@ -1,10 +1,11 @@
 import React from 'react'
-import { LoaderFunction, useLoaderData } from 'react-router'
+import type { LoaderFunction } from 'react-router'
+import { useLoaderData } from 'react-router'
 import { useMetaTags } from '../../../../lib/dom'
 import { useLocalizedString } from '../../../../lib/i18n'
-import GetQuote, { Quote } from '../../../useCases/GetQuote'
-import Footer from '../../components/Footer'
-import Header from '../../components/Header'
+import { GetQuote, type Quote } from '../../../useCases/GetQuote'
+import { Footer } from '../../components/Footer'
+import { Header } from '../../components/Header'
 import style from './index.module.css'
 
 export function Component() {
