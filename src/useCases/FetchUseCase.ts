@@ -1,6 +1,5 @@
 import objectHash from 'object-hash'
-import type { UseCase } from '../../lib/interactors'
-import { UseCaseError } from '../../lib/interactors'
+import { UseCaseError, type UseCase } from '../../lib/interactors'
 import { useCache } from '../../lib/utils'
 
 type RequestMethod = 'CONNECT' | 'DELETE' | 'GET' | 'HEAD' | 'OPTIONS' | 'PATCH' | 'POST' | 'PUT' | 'TRACE'
@@ -24,7 +23,7 @@ type Options = {
 export abstract class FetchUseCase<Params extends Record<string, any>, Result> implements UseCase<Params, Result, Options> {
   protected abortController: AbortController | undefined
 
-  private cache = useCache({ defaultTTL: this.ttl })
+  protected cache = useCache({ defaultTTL: this.ttl })
 
   private timer: NodeJS.Timeout | undefined
 
@@ -149,9 +148,14 @@ export abstract class FetchUseCase<Params extends Record<string, any>, Result> i
 
       throw error
     }
+    finally {
+      this.clearTimeout()
+    }
   }
 
   cancel() {
+    this.clearTimeout()
+
     if (this.abortController === undefined) return
 
     this.abortController.abort()
@@ -162,8 +166,19 @@ export abstract class FetchUseCase<Params extends Record<string, any>, Result> i
     // Pass
   }
 
+  protected createCacheKey(params: Params): string {
+    return objectHash({
+      path: this.getEndpoint(params),
+      headers: this.getHeaders(params),
+      params,
+    }, {
+      unorderedSets: true,
+      unorderedObjects: true,
+    })
+  }
+
   private startTimeout(seconds = 0) {
-    if (this.timer !== undefined) window.clearTimeout(this.timer)
+    this.clearTimeout()
 
     if (this.abortController === undefined) return
     if (seconds <= 0) return
@@ -173,15 +188,10 @@ export abstract class FetchUseCase<Params extends Record<string, any>, Result> i
     }, seconds * 1000)
   }
 
-  private createCacheKey(params: Params): string {
-    return objectHash({
-      path: this.getEndpoint(params),
-      headers: this.getHeaders(params),
-      params,
-    }, {
-      unorderedSets: true,
-      unorderedObjects: true,
-    })
+  private clearTimeout() {
+    if (this.timer === undefined) return
+
+    clearTimeout(this.timer)
   }
 
   /**
