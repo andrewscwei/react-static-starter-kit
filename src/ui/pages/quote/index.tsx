@@ -1,6 +1,5 @@
 import React from 'react'
-import type { LoaderFunction } from 'react-router'
-import { useLoaderData } from 'react-router'
+import { useLoaderData, type LoaderFunction } from 'react-router'
 import { useMetaTags } from '../../../../lib/dom'
 import { useLocalizedString } from '../../../../lib/i18n'
 import { GetQuote, type Quote } from '../../../useCases/GetQuote'
