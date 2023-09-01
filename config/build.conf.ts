@@ -21,7 +21,7 @@ import createResolveAssetPath from './utils/createResolveAssetPath'
 const isDev = process.env.NODE_ENV === 'development'
 
 const config: Configuration = {
-  devtool: isDev ? 'source-map' : false,
+  devtool: isDev ? 'eval-source-map' : false,
   entry: {
     main: path.join(buildArgs.inputDir, 'index.tsx'),
   },
