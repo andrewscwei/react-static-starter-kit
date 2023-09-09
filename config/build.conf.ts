@@ -10,7 +10,6 @@ import ForkTSCheckerPlugin from 'fork-ts-checker-webpack-plugin'
 import HTMLPlugin from 'html-webpack-plugin'
 import MiniCSSExtractPlugin from 'mini-css-extract-plugin'
 import path from 'path'
-import PostCSSPresetEnv from 'postcss-preset-env'
 import TerserPlugin from 'terser-webpack-plugin'
 import type { Configuration } from 'webpack'
 import { DefinePlugin, EnvironmentPlugin, IgnorePlugin } from 'webpack'
@@ -60,11 +59,12 @@ const config: Configuration = {
           sourceMap: buildArgs.useSourceMaps,
           postcssOptions: {
             plugins: [
-              PostCSSPresetEnv({
+              'postcss-import',
+              ['postcss-preset-env', {
                 features: {
                   'nesting-rules': true,
                 },
-              }),
+              }],
               ...isDev ? [] : [PostCSSPurgeCSS({
                 content: [
                   path.join(buildArgs.libDir, '**/*.html'),
