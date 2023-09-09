@@ -12,7 +12,7 @@ import MiniCSSExtractPlugin from 'mini-css-extract-plugin'
 import path from 'path'
 import TerserPlugin from 'terser-webpack-plugin'
 import type { Configuration } from 'webpack'
-import { DefinePlugin, EnvironmentPlugin, IgnorePlugin } from 'webpack'
+import { DefinePlugin, EnvironmentPlugin } from 'webpack'
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
 import * as buildArgs from './build.args'
 import createResolveAssetPath from './utils/createResolveAssetPath'
@@ -149,11 +149,13 @@ const config: Configuration = {
     new DefinePlugin({
       '__BUILD_ARGS__': JSON.stringify(buildArgs),
     }),
+    ...isDev ? [
+      new ReactRefreshPlugin(),
+    ] : [],
     new HTMLPlugin({
       buildArgs,
       resolvePublicPath: createResolveAssetPath(buildArgs.publicPath),
       resolvePublicURL: createResolveAssetPath(buildArgs.publicURL),
-      chunks: ['common', 'main'],
       filename: 'index.html',
       inject: true,
       minify: {
@@ -163,13 +165,6 @@ const config: Configuration = {
       },
       template: path.join(buildArgs.libDir, 'templates', 'index.html'),
     }),
-    ...isDev ? [
-      new ReactRefreshPlugin(),
-    ] : [
-      new IgnorePlugin({
-        resourceRegExp: /^.*\/config\/.*$/,
-      }),
-    ],
     ...buildArgs.useBundleAnalyzer ? [new BundleAnalyzerPlugin({
       analyzerMode: 'static',
     })] : [],
