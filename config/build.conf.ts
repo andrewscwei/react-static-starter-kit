@@ -119,23 +119,6 @@ const config: Configuration = {
       new CSSMinimizerPlugin(),
       new TerserPlugin(),
     ],
-    splitChunks: {
-      cacheGroups: {
-        js: {
-          chunks: 'all',
-          enforce: true,
-          name: 'common',
-          test: /node_modules/,
-        },
-        css: {
-          chunks: 'all',
-          enforce: true,
-          maxInitialRequests: 1,
-          name: 'common',
-          test: /\.css$/,
-        },
-      },
-    },
   },
   output: {
     filename: isDev ? '[name].js' : '[name].[chunkhash].js',
@@ -180,10 +163,13 @@ const config: Configuration = {
       },
       template: path.join(buildArgs.libDir, 'templates', 'index.html'),
     }),
-    ...isDev ? [new ReactRefreshPlugin()] : [],
-    ...isDev ? [] : [new IgnorePlugin({
-      resourceRegExp: /^.*\/config\/.*$/,
-    })],
+    ...isDev ? [
+      new ReactRefreshPlugin(),
+    ] : [
+      new IgnorePlugin({
+        resourceRegExp: /^.*\/config\/.*$/,
+      }),
+    ],
     ...buildArgs.useBundleAnalyzer ? [new BundleAnalyzerPlugin({
       analyzerMode: 'static',
     })] : [],
