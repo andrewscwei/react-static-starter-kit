@@ -27,6 +27,10 @@ declare module 'worker-loader!*' {
   export default WebpackWorker
 }
 
+interface Error {
+  status?: number
+}
+
 interface Window {
   __VERSION__: string
 }
