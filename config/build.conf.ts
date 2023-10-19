@@ -41,16 +41,17 @@ const config: Configuration = {
           ],
         },
       }],
-    }, ...[true, false].map(useCSSModules => ({
+    }, ...[true/* CSS modules */, false/* Non-CSS modules */].map(isModules => ({
+      exclude: /node_modules/,
       test: /\.css$/,
-      ...useCSSModules ? { include: /\.module\.css$/ } : { exclude: /\.module\.css$/ },
+      ...isModules ? { include: /\.module\.css$/ } : { exclude: /\.module\.css$/ },
       use: [{
         loader: isDev ? 'style-loader' : MiniCSSExtractPlugin.loader,
       }, {
         loader: 'css-loader',
         options: {
           importLoaders: 1,
-          modules: useCSSModules,
+          modules: isModules ? isDev ? { localIdentName: '[name]-[local]-[hash:base64:5]' } : true : false,
           sourceMap: buildArgs.useSourceMaps,
         },
       }, {
@@ -117,8 +118,20 @@ const config: Configuration = {
     minimize: !buildArgs.skipOptimizations,
     minimizer: [
       new CSSMinimizerPlugin(),
-      new TerserPlugin(),
+      new TerserPlugin({
+        extractComments: false,
+      }),
     ],
+    splitChunks: {
+      cacheGroups: {
+        styles: {
+          chunks: 'all',
+          enforce: true,
+          name: 'styles',
+          type: 'css/mini-extract',
+        },
+      },
+    },
   },
   output: {
     filename: isDev ? '[name].js' : '[name].[chunkhash].js',
