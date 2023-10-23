@@ -12,13 +12,13 @@ type CacheItem<T> = {
   value: T
 }
 
-type CacheAdapter = {
+type CacheProxy = {
   getValue: <T>(key: string) => T | undefined
   invalidate: (key: string) => void
   setValue: <T>(value: T, key: string, ttl?: number) => T
 }
 
-const storage = typeof window !== 'undefined' ? window.localStorage : undefined
+const storage = typeof window !== 'undefined' ? window.sessionStorage : undefined
 
 function invalidate(key: string) {
   storage?.removeItem(key)
@@ -67,7 +67,7 @@ function setValue<T>(value: T, key: string, ttl: number): T {
  *
  * @returns The interface.
  */
-export function useCache({ defaultTTL = 300 }: CacheOptions = {}): CacheAdapter {
+export function useSessionCache({ defaultTTL = 300 }: CacheOptions = {}): CacheProxy {
   return {
     getValue,
     invalidate,
