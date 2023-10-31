@@ -148,6 +148,7 @@ const config: Configuration = {
     new MiniCSSExtractPlugin({
       chunkFilename: isDev ? '[id].css' : '[id].[chunkhash].css',
       filename: isDev ? '[name].css' : '[name].[chunkhash].css',
+      ignoreOrder: true,
     }),
     new ForkTSCheckerPlugin(),
     new CopyPlugin({
@@ -184,6 +185,9 @@ const config: Configuration = {
   ],
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
+    alias: {
+      '@lib': buildArgs.libDir,
+    },
   },
   stats: {
     colors: true,

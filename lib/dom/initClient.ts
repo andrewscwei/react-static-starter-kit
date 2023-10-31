@@ -1,7 +1,7 @@
 import { createRoot } from 'react-dom/client'
 import { type RouteObject } from 'react-router'
 import { generateLocalizedRoutes, type I18nConfig } from '../i18n'
-import { useDebug } from '../utils'
+import { useDebug } from '../utils/useDebug'
 import { type RenderProps } from './types'
 
 type Config = {
