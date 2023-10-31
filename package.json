@@ -10,7 +10,7 @@
     "build": "npm run clean && BUILD_NUMBER=$(git rev-parse --short HEAD) webpack --profile --config config/build.conf.ts",
     "dev": "cross-env NODE_ENV=development webpack-cli serve --mode development --config config/build.conf.ts",
     "test": "jest --config=config/test.conf.ts tests/$npm_config_files",
-    "test:ts": "jest --config=config/test.conf.ts src/$npm_config_files",
+    "test:unit": "jest --config=config/test.conf.ts src/$npm_config_files",
     "lint": "npm run lint:ts && npm run lint:css",
     "lint:fix": "npm run lint:ts:fix && npm run lint:css:fix",
     "lint:ts": "eslint --ext .ts --ext .tsx --ignore-pattern *.d.ts config lib src tests",
