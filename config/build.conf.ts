@@ -5,13 +5,12 @@
 import PostCSSPurgeCSS from '@fullhuman/postcss-purgecss'
 import ReactRefreshPlugin from '@pmmmwh/react-refresh-webpack-plugin'
 import CopyPlugin from 'copy-webpack-plugin'
-import CSSMinimizerPlugin from 'css-minimizer-webpack-plugin'
+import { EsbuildPlugin } from 'esbuild-loader'
 import ForkTSCheckerPlugin from 'fork-ts-checker-webpack-plugin'
 import HTMLPlugin from 'html-webpack-plugin'
 import MiniCSSExtractPlugin from 'mini-css-extract-plugin'
 import path from 'path'
-import TerserPlugin from 'terser-webpack-plugin'
-import { DefinePlugin, EnvironmentPlugin, type Configuration } from 'webpack'
+import { EnvironmentPlugin, type Configuration } from 'webpack'
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
 import * as buildArgs from './build.args'
 import createResolveAssetPath from './utils/createResolveAssetPath'
@@ -113,9 +112,9 @@ const config: Configuration = {
   optimization: {
     minimize: !buildArgs.skipOptimizations,
     minimizer: [
-      new CSSMinimizerPlugin(),
-      new TerserPlugin({
-        extractComments: false,
+      new EsbuildPlugin({
+        target: 'es2015',
+        css: true,
       }),
     ],
     splitChunks: {
@@ -156,8 +155,10 @@ const config: Configuration = {
     new EnvironmentPlugin({
       'NODE_ENV': 'production',
     }),
-    new DefinePlugin({
-      '__BUILD_ARGS__': JSON.stringify(buildArgs),
+    new EsbuildPlugin({
+      define: {
+        __BUILD_ARGS__: JSON.stringify(buildArgs),
+      },
     }),
     ...isDev ? [
       new ReactRefreshPlugin(),
