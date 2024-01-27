@@ -113,6 +113,19 @@ When using `react-static-starter-kit` as a template, follow these steps to strip
 
 ## Breaking Changes
 
+### `v14.0.0`
+
+- Moved boilerplate code to `lib/`
+- Replaced `react-helmet-async` with custom solution in `lib/`
+
+### `v13.0.0`
+
+- Restructured folders
+
+### `v12.0.0`
+
+- Decoupled boilerplate architectural code to `src/base`
+
 ### `v10.0.0`
 
 - Removed styled-components in favor of CSS modules
@@ -124,16 +137,3 @@ When using `react-static-starter-kit` as a template, follow these steps to strip
 - Added `http-server` for `start` command
 - Added interactors
 - Added `I18nProvider`
-
-### `v12.0.0`
-
-- Decoupled boilerplate architectural code to `src/base`
-
-### `v13.0.0`
-
-- Restructured folders
-
-### `v14.0.0`
-
-- Moved boilerplate code to `lib/`
-- Replaced `react-helmet-async` with custom solution in `lib/`
