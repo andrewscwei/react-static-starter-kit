@@ -67,7 +67,7 @@ function setValue<T>(value: T, key: string, ttl: number): T {
  *
  * @returns The interface.
  */
-export function useCache({ defaultTTL = 300 }: CacheOptions = {}): CacheAdapter {
+export function createCache({ defaultTTL = 300 }: CacheOptions = {}): CacheAdapter {
   return {
     getValue,
     invalidate,

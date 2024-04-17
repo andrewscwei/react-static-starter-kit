@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/consistent-type-imports */
 /**
  * @file Build arguments computed at buildtime and passed to the runtime
  *       environment as global variable `__BUILD_ARGS__`.
@@ -19,12 +20,12 @@ export const debugEnabled = process.env.DEBUG_ENABLED === 'true' || process.env.
 /**
  * Enabled debug channels in the client.
  */
-export const debugChannels = process.env.DEBUG_CHANNELS?.split(',') || ['app']
+export const debugChannels = process.env.DEBUG_CHANNELS?.split(',') ?? ['app']
 
 /**
  * Build number.
  */
-export const buildNumber = process.env.BUILD_NUMBER || 'local'
+export const buildNumber = process.env.BUILD_NUMBER ?? 'local'
 
 /**
  * Version number.
@@ -34,37 +35,37 @@ export const version = `v${packageVersion}+build.${buildNumber}`
 /**
  * Default app name for meta tags.
  */
-export const title = process.env.TITLE || 'React Static Starter Kit'
+export const title = process.env.TITLE ?? 'React Static Starter Kit'
 
 /**
  * Default app description for meta tags.
  */
-export const description = process.env.DESCRIPTION || 'An experimental React static app starter kit.'
+export const description = process.env.DESCRIPTION ?? 'An experimental React static app starter kit.'
 
 /**
  * Base URL of the app.
  */
-export const baseURL = process.env.BASE_URL || ''
+export const baseURL = process.env.BASE_URL ?? ''
 
 /**
  * Base path of the router (i.e. the `basename` property).
  */
-export const basePath = process.env.BASE_PATH || '/'
+export const basePath = process.env.BASE_PATH ?? '/'
 
 /**
  * Absolute public URL for static assets.
  */
-export const publicURL = process.env.PUBLIC_URL || baseURL
+export const publicURL = process.env.PUBLIC_URL ?? baseURL
 
 /**
  * Public path for static assets.
  */
-export const publicPath = process.env.PUBLIC_PATH || basePath
+export const publicPath = process.env.PUBLIC_PATH ?? basePath
 
 /**
  * Default locale.
  */
-export const defaultLocale = process.env.DEFAULT_LOCALE || 'en'
+export const defaultLocale = (process.env.DEFAULT_LOCALE ?? 'en') as import('../lib/i18n/types').Locale
 
 /**
  * Lib directory.
@@ -100,4 +101,4 @@ export const skipOptimizations = process.env.NODE_ENV === 'development' || proce
 /**
  * Specifies the port to use during development.
  */
-export const devPort = Number(process.env.PORT || 8080)
+export const devPort = Number(process.env.PORT ?? 8080)

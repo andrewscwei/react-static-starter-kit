@@ -46,7 +46,15 @@ const config: Configuration = {
         loader: 'css-loader',
         options: {
           importLoaders: 1,
-          modules: isModules ? isDev ? { localIdentName: '[name]-[local]-[hash:base64:5]' } : true : false,
+          modules: (() => {
+            if (isModules) {
+              if (isDev) return { localIdentName: '[name]-[local]-[hash:base64:5]' }
+
+              return true
+            }
+
+            return false
+          })(),
           sourceMap: buildArgs.useSourceMaps,
         },
       }, {

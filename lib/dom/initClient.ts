@@ -1,7 +1,8 @@
-import { createRoot } from 'react-dom/client'
+import { createRoot, hydrateRoot } from 'react-dom/client'
 import { type RouteObject } from 'react-router'
 import { generateLocalizedRoutes, type I18nConfig } from '../i18n'
-import { useDebug } from '../utils/useDebug'
+import { createDebug } from '../utils/createDebug'
+import { loadLazyComponents } from './loadLazyComponents'
 import { type RenderProps } from './types'
 
 type Config = {
@@ -21,7 +22,7 @@ type Config = {
   routes: RouteObject[]
 }
 
-const debug = useDebug(undefined, 'app')
+const debug = createDebug(undefined, 'app')
 
 /**
  * Initializes the client application.
@@ -39,13 +40,22 @@ export async function initClient(render: (props: RenderProps) => JSX.Element, {
   window.__VERSION__ = __BUILD_ARGS__.version
 
   const localizedRoutes = generateLocalizedRoutes(routes, i18n)
-  const container = document.getElementById(containerId ?? 'root')
+  const container = window.document.getElementById(containerId ?? 'root')
 
   if (!container) throw console.warn(`No container with ID <${containerId}> found`)
 
+  await loadLazyComponents(localizedRoutes)
+
   const app = render({ routes: localizedRoutes })
-  const root = createRoot(container)
-  root.render(app)
+  let root
+
+  if (process.env.NODE_ENV === 'development') {
+    root = createRoot(container)
+    root.render(app)
+  }
+  else {
+    root = hydrateRoot(container, app)
+  }
 
   debug('Initializing client...', 'OK')
 

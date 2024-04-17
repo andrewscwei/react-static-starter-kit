@@ -1,5 +1,5 @@
 import { initClient } from '@lib/dom'
-import { useDebug } from '@lib/utils/useDebug'
+import { createDebug } from '@lib/utils/createDebug'
 import React from 'react'
 import { RouterProvider } from 'react-router'
 import { createBrowserRouter } from 'react-router-dom'
@@ -22,7 +22,7 @@ export default initClient(({ routes }) => (
 const worker = new Worker()
 worker.postMessage({ message: 'Marco' })
 worker.addEventListener('message', event => {
-  const debug = useDebug()
+  const debug = createDebug()
   const message = event.data.message
   debug('Receiving message from worker...', 'OK', message)
   worker.terminate()

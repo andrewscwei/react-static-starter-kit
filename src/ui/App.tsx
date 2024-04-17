@@ -9,7 +9,7 @@ type Props = PropsWithChildren
 
 const { publicPath } = __BUILD_ARGS__
 
-export function App({ children }: Props) {
+export function App({ children }: Readonly<Props>) {
   useThemeColor(THEME_COLOR)
 
   useFavicon({
