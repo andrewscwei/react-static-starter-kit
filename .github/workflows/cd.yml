@@ -10,15 +10,15 @@ concurrency:
 jobs:
   build:
     name: Build
-    uses: andrewscwei/workflows/.github/workflows/node-build.yml@master
+    uses: andrewscwei/workflows/.github/workflows/node-build.yml@v1
     secrets: inherit
     with:
       artifacts-path: build/
       build-command: BASE_URL=https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }} BASE_PATH=/${{ github.event.repository.name }}/ npm run build
-      test-command: npm run test:unit && npm test
+      test-command: npx playwright install --with-deps && npm run test:unit && npm test
   deploy:
     name: Deploy
-    uses: andrewscwei/workflows/.github/workflows/gh-pages-deploy.yml@master
+    uses: andrewscwei/workflows/.github/workflows/gh-pages-deploy.yml@v1
     needs: [build]
     secrets: inherit
     with:
@@ -33,7 +33,7 @@ jobs:
     if: ${{ always() }}
     runs-on: ubuntu-latest
     steps:
-      - uses: andrewscwei/telegram-action@v1.0.0
+      - uses: andrewscwei/telegram-action@v1
         with:
           success: ${{ needs.build.result == 'success' && needs.deploy.result == 'success' }}
           cancelled: ${{ needs.build.result == 'cancelled' || needs.deploy.result == 'cancelled' }}

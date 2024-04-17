@@ -1,15 +1,15 @@
-import fs from 'fs'
-import path from 'path'
+import { expect, test } from '@playwright/test'
 
-const baseDir = path.join(__dirname, '../build')
-const html = fs.readFileSync(path.resolve(baseDir, 'index.html'))
+test('has title', async ({ page }) => {
+  await page.goto('/')
 
-describe('app', () => {
-  beforeAll(() => {
-    document.documentElement.innerHTML = html.toString()
-  })
+  await expect(page).toHaveTitle(/React Static Starter Kit/)
+})
 
-  it('has #root', async () => {
-    expect(document.getElementById('root')).toBeTruthy()
-  })
+test('quote link', async ({ page }) => {
+  await page.goto('/')
+
+  await page.getByRole('link', { name: 'Quote' }).click()
+  await expect(page.getByText('A quote from someone...')).toBeVisible()
+  await expect(page.locator('#quote')).toHaveText(/\S/)
 })
