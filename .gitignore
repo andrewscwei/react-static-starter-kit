@@ -46,9 +46,6 @@ npm-debug.log*
 .nyc_output
 coverage
 
-# CloudFlare
-.wrangler
-
 # Playwright
 test-results/
 playwright-report/

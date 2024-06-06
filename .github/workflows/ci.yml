@@ -1,8 +1,8 @@
 name: CI
 on:
+  pull_request:
   push:
-    branches: ["**"]
-    tags-ignore: ["v*"]
+    branches-ignore: [master]
 jobs:
   build:
     name: Build
@@ -10,29 +10,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version-file: .node-version
-      - name: Cache Node modules
-        uses: actions/cache@v4
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-build-npm-cache-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-npm-cache-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
-      - name: Install Node modules
-        run: npm install
-      - name: Install Playwright browsers
-        run: npx playwright install --with-deps
-      - name: Unit test
-        run: npm run test:unit
       - name: Build
-        run: npm run build
-      - name: E2E test
-        run: npm run test
+        uses: andrewscwei/actions/node-build@v1
+        with:
+          prebuild-command: npm run test:unit
+          postbuild-command: npx playwright install --with-deps && npm run test:${{ matrix.runtime }}
   notify:
     name: Notify
     needs: [build]

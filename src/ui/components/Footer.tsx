@@ -13,7 +13,7 @@ export function Footer({ ...props }: Readonly<Props>) {
     <footer {...props} className={styles.root}>
       <nav className={styles.nav}>
         <a href='https://github.com/andrewscwei/react-static-starter-kit'>
-          <img src={$$GitHubLogo} alt='GitHub' />
+          <img alt='GitHub' src={$$GitHubLogo}/>
         </a>
       </nav>
       <button className={styles.button} onClick={() => changeLocale('en')}>{ltxt('en')}</button>

@@ -16,7 +16,7 @@ export const config: RouteObject[] = [{
   }, {
     path: '/quote',
     lazy: () => import('./ui/pages/quote'),
-    loader: async (...args) => (await import('./ui/pages/quote/loader')).loader(...args),
+    loader: async args => (await import('./ui/pages/quote/loader')).loader(args),
   }, {
     path: '*',
     lazy: () => import('./ui/pages/notFound'),

@@ -161,7 +161,7 @@ const config: Configuration = {
       }],
     }),
     new EnvironmentPlugin({
-      'NODE_ENV': 'production',
+      NODE_ENV: 'production',
     }),
     new DefinePlugin({
       __BUILD_ARGS__: JSON.stringify(buildArgs),
