@@ -65,6 +65,7 @@
     "postcss-preset-env": "^9.5.14",
     "react-refresh": "^0.14.2",
     "rimraf": "^5.0.7",
+    "semantic-release": "^24.0.0",
     "style-loader": "^4.0.0",
     "stylelint": "^16.6.1",
     "ts-node": "^10.9.2",
