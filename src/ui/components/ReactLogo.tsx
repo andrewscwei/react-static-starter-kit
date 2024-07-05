@@ -1,6 +1,6 @@
 import { type HTMLAttributes } from 'react'
 import ReactLogoSVG from '../assets/svgs/react-logo.svg?react'
-import * as styles from './ReactLogo.module.css'
+import styles from './ReactLogo.module.css'
 
 type Props = HTMLAttributes<HTMLElement>
 
