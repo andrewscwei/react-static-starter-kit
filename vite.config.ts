@@ -49,6 +49,11 @@ export default defineConfig({
     createHtmlPlugin({
       minify: true,
       entry: path.resolve(buildArgs.inputDir, 'index.tsx'),
+      inject: {
+        data: {
+          ...buildArgs,
+        },
+      },
       // template: path.resolve(buildArgs.libDir, 'templates/index.html'),
     }),
   ],
