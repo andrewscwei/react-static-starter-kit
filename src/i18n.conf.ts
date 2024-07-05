@@ -7,9 +7,10 @@ import { tryOrUndefined } from '@lib/utils/tryOrUndefined'
 import { LOCALE_CHANGE_STRATEGY } from './app.conf'
 
 const { defaultLocale } = __BUILD_ARGS__
+const sources = import.meta.glob('./locales/**/*.json', { eager: true })
 
 export const config: I18nConfig = {
   defaultLocale,
   localeChangeStrategy: LOCALE_CHANGE_STRATEGY,
-  translations: tryOrUndefined(() => loadTranslations(require.context('./locales', true, /^.*\.json$/))) ?? { [defaultLocale]: {} },
+  translations: tryOrUndefined(() => loadTranslations(sources)) ?? { [defaultLocale]: {} },
 }

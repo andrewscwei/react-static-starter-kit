@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/consistent-type-imports */
+/// <reference types="vite/client" />
 
 declare module '*.jpg'
 declare module '*.jpeg'
@@ -20,14 +21,6 @@ declare module '*.otf'
 declare module '*.module.css'
 
 declare const __BUILD_ARGS__: typeof import('../config/build.args')
-
-declare module 'worker-loader!*' {
-  class WebpackWorker extends Worker {
-    constructor()
-  }
-
-  export default WebpackWorker
-}
 
 interface Error {
   status?: number

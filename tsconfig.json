@@ -16,7 +16,7 @@
       "DOM",
       "WebWorker"
     ],
-    "module": "CommonJS",
+    "module": "ESNext",
     "moduleResolution": "Node",
     "noImplicitAny": true,
     "outDir": "./build",
