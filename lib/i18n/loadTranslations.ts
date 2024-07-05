@@ -7,13 +7,15 @@ import { type Translations } from './types'
  *
  * @returns The translations dictionary.
  */
-export function loadTranslations(ctx: __WebpackModuleApi.RequireContext): Translations {
+export function loadTranslations(sources: Record<string, any>): Translations {
   const translations: Translations = {}
 
   try {
-    for (const key of ctx.keys()) {
-      const phrases = ctx(key)
-      const parts = key.replace('./', '').split('/')
+    for (const key in sources) {
+      if (!Object.prototype.hasOwnProperty.call(sources, key)) continue
+
+      const phrases = sources[key].default
+      const parts = key.replace('./locales', '').split('/').filter(Boolean)
 
       let t: any = translations
 
