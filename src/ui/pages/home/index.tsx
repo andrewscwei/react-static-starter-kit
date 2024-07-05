@@ -1,7 +1,7 @@
 import { useMetaTags } from '@lib/dom'
 import { useLocalizedString } from '@lib/i18n'
 import { ReactLogo } from '../../components/ReactLogo'
-import * as styles from './index.module.css'
+import styles from './index.module.css'
 
 export function Component() {
   const ltxt = useLocalizedString()
