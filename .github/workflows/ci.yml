@@ -14,7 +14,7 @@ jobs:
         uses: andrewscwei/actions/node-build@v1
         with:
           prebuild-command: npm run test:unit
-          postbuild-command: npx playwright install --with-deps && npm run test:${{ matrix.runtime }}
+          postbuild-command: npx playwright install --with-deps && npm run test
   notify:
     name: Notify
     needs: [build]
