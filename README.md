@@ -39,9 +39,6 @@ $ npm test:unit
 # Build for prod
 $ npm run build
 
-# Analyzes the size the generated bundle(s) and displays a visual report in the default browser
-$ npm run build --analyze
-
 # Builds the app but skips all HTML/CSS/JS compressions
 $ npm run build --raw
 ```
