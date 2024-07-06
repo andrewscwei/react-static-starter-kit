@@ -123,7 +123,7 @@ export default tseslint.config(
       '@stylistic/no-multi-spaces': 'error',
       '@stylistic/no-multiple-empty-lines': ['error', {
         max: 1,
-        maxEOF: 1,
+        maxEOF: 0,
         maxBOF: 0,
       }],
       '@stylistic/no-tabs': 'error',
