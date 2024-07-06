@@ -14,7 +14,7 @@ export function Component() {
         <ReactLogo className={styles.logo}/>
         <section>
           <h1 className={styles.title}>{ltxt('hello')}</h1>
-          <code className={styles.version}>{__BUILD_ARGS__.version}</code>
+          <code className={styles.version}>{window.__VERSION__}</code>
           <span>{ltxt('description') }</span>
         </section>
       </div>

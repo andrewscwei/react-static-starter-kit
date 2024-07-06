@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="<%- title %>">
+<html lang="%VITE_DEFAULT_LOCALE%">
   <head>
     <meta charSet="utf-8" />
     <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
@@ -8,7 +8,7 @@
 
     <title><%- title %></title>
 
-    <link rel="canonical" href="<%- baseURL %>" />
+    <link rel="canonical" href="%VITE_HOST_URL%" />
     <link rel="mask-icon" type="image/svg+xml" href="/mask-icon.svg" />
     <link rel="alternate icon" type="image/png" href="/favicon.png" />
     <link rel="icon" type="image/x-icon" href="/favicon.svg" />
@@ -33,15 +33,15 @@
     <meta property="og:type" content="website" />
     <meta property="og:title" content="<%- title %>" />
     <meta property="og:description" content="<%- description %>" />
-    <meta property="og:locale" content="<%- title %>" />
-    <meta property="og:url" content="<%- baseURL %>" />
-    <meta property="og:image" content="<%- publicURL %>/og-image.png" />
+    <meta property="og:locale" content="%VITE_DEFAULT_LOCALE%" />
+    <meta property="og:url" content="%VITE_HOST_URL%" />
+    <meta property="og:image" content="<%- publicURL %>og-image.png" />
     <meta property="og:image:alt" content="<%- description %>" />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="<%- title %>" />
     <meta name="twitter:description" content="<%- description %>" />
-    <meta name="twitter:image" content="<%- publicURL %>/twitter-card.png" />
+    <meta name="twitter:image" content="<%- publicURL %>twitter-card.png" />
 
     <link rel="manifest" href="/manifest.json" />
   </head>

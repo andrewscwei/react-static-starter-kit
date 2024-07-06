@@ -1,8 +1,9 @@
 import debug from 'debug'
 
-const { debugChannels, debugEnabled } = __BUILD_ARGS__
+const DEBUG_ENABLED: boolean = import.meta.env.VITE_DEBUG_ENABLED === 'true' || import.meta.env.DEV
+const DEBUG_CHANNELS: string[] = import.meta.env.VITE_DEBUG_CHANNELS.split(',')
 
-if (debugEnabled && typeof window !== 'undefined') window.localStorage.debug = debugChannels.map(t => `${t}*`).join(',')
+if (DEBUG_ENABLED && typeof window !== 'undefined') window.localStorage.debug = DEBUG_CHANNELS.map(t => `${t}*`).join(',')
 
 /**
  * Returns an instance of {@link debug} decorated by the specified arguments.
@@ -14,7 +15,7 @@ if (debugEnabled && typeof window !== 'undefined') window.localStorage.debug = d
  * @returns A {@link debug} instance.
  */
 export function createDebug(subnamespace = '', thread: 'app' | 'server' | 'worker' = 'app') {
-  if (debugEnabled) {
+  if (DEBUG_ENABLED) {
     const namespace = [thread, ...subnamespace.split(':').filter(Boolean)].join(':')
     if (typeof window === 'undefined') debug.enable(namespace)
 
