@@ -62,17 +62,6 @@ type BuildArgs = {
   devPort: number
 }
 
-const createResolveAssetPath = (...parts: string[]) => {
-  return (p: string) => [...parts, p]
-    .join('/')
-    .replace(/\/+/g, '/')
-    .replace(/^(.+):\//, '$1://')
-    .replace(/^file:/, 'file:/')
-    .replace(/\/(\?|&|#[^!])/g, '$1')
-    .replace(/\?/g, '&')
-    .replace('&', '?')
-}
-
 const parseBuildArgs = (mode: string): BuildArgs => {
   const env = loadEnv(mode, process.cwd(), '')
 
