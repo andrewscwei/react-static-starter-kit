@@ -137,8 +137,9 @@ export default defineConfig(({ mode }) => {
       },
     },
     define: {
-      '__VERSION__': JSON.stringify(`v${buildArgs.version}+build.${buildArgs.buildNumber}`),
       'import.meta.env.BASE_PATH': JSON.stringify(buildArgs.basePath),
+      'import.meta.env.BUILD_NUMBER': JSON.stringify(buildArgs.buildNumber),
+      'import.meta.env.VERSION': JSON.stringify(buildArgs.version),
     },
     plugins: [
       react(),

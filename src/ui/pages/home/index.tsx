@@ -17,7 +17,7 @@ export function Component() {
         <ReactLogo className={styles.logo}/>
         <section>
           <h1 className={styles.title}>{ltxt('hello')}</h1>
-          <code className={styles.version}>{window.__VERSION__}</code>
+          <code className={styles.version}>{`v${import.meta.env.VERSION}+build.${import.meta.env.BUILD_NUMBER}`}</code>
           <span>{ltxt('description') }</span>
         </section>
       </div>

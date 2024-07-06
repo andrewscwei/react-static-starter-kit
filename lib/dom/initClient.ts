@@ -37,6 +37,8 @@ export async function initClient(render: (props: RenderProps) => JSX.Element, {
   i18n,
   containerId = 'root',
 }: Config) {
+  window.__VERSION__ = `v${import.meta.env.VERSION}+build.${import.meta.env.BUILD_NUMBER}`
+
   const localizedRoutes = generateLocalizedRoutes(routes, i18n)
   const container = window.document.getElementById(containerId ?? 'root')
 
