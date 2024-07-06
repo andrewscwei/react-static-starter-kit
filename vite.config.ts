@@ -83,9 +83,7 @@ export default defineConfig(({ mode }) => {
       'import.meta.env.VITE_HOST_URL': JSON.stringify(hostURL),
     },
     plugins: [
-      react({
-        include: '**/*.tsx',
-      }),
+      react(),
       svgr(),
       createHtmlPlugin({
         minify: !skipOptimizations,
