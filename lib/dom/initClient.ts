@@ -1,4 +1,4 @@
-import { createRoot, hydrateRoot } from 'react-dom/client'
+import { createRoot } from 'react-dom/client'
 import { type RouteObject } from 'react-router'
 import { generateLocalizedRoutes, type I18nConfig } from '../i18n'
 import { createDebug } from '../utils/createDebug'
@@ -47,15 +47,8 @@ export async function initClient(render: (props: RenderProps) => JSX.Element, {
   await loadLazyComponents(localizedRoutes)
 
   const app = render({ routes: localizedRoutes })
-  let root
-
-  if (!__BUILD_ARGS__.forceHydration && process.env.NODE_ENV === 'development') {
-    root = createRoot(container)
-    root.render(app)
-  }
-  else {
-    root = hydrateRoot(container, app)
-  }
+  const root = createRoot(container)
+  root.render(app)
 
   debug('Initializing client...', 'OK')
 

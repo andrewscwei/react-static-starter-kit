@@ -19,6 +19,10 @@ export default defineConfig({
     outDir: buildArgs.outputDir,
   },
   css: {
+    modules: {
+      localsConvention: 'camelCaseOnly',
+      generateScopedName: isDev ? '[name]-[local]-[hash:base64:5]' : '_[hash:base64:5]',
+    },
     postcss: {
       plugins: [
         PostCSSImportPlugin(),
@@ -27,16 +31,21 @@ export default defineConfig({
             'nesting-rules': true,
           },
         }),
-        ...isDev ? [] : [PostCSSPurgeCSS({
+        PostCSSPurgeCSS({
           content: [
-            path.join(buildArgs.libDir, '**/*.html'),
             path.join(buildArgs.inputDir, '**/*.html'),
             path.join(buildArgs.inputDir, '**/*.tsx'),
             path.join(buildArgs.inputDir, '**/*.ts'),
             path.join(buildArgs.inputDir, '**/*.module.css'),
           ],
-          defaultExtractor: content => content.match(/[\w-/:]+(?<!:)/g) || [],
-        })],
+          safelist: [
+            /^_[A-Za-z0-9-_]{5}$/,
+          ],
+          defaultExtractor: content => {
+            const match = content.match(/[\w-/:]+(?<!:)/g) ?? []
+            return match
+          },
+        }),
       ],
     },
   },
@@ -54,7 +63,6 @@ export default defineConfig({
           ...buildArgs,
         },
       },
-      // template: path.resolve(buildArgs.libDir, 'templates/index.html'),
     }),
   ],
   resolve: {
