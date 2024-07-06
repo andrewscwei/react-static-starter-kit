@@ -15,7 +15,7 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
   const isDev = env.NODE_ENV === 'development'
   const skipOptimizations = isDev || env.npm_config_raw === 'true'
-  const port = Number(env.port ?? 8080)
+  const port = Number(env.PORT ?? 8080)
   const rootDir = path.resolve(__dirname, 'src')
   const outDir = path.resolve(__dirname, 'build')
   const libDir = path.resolve(__dirname, 'lib')
