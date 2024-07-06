@@ -1,7 +1,7 @@
 import debug from 'debug'
 
 const DEBUG_ENABLED: boolean = import.meta.env.VITE_DEBUG_ENABLED === 'true' || import.meta.env.DEV
-const DEBUG_CHANNELS: string[] = import.meta.env.VITE_DEBUG_CHANNELS.split(',')
+const DEBUG_CHANNELS: string[] = import.meta.env.VITE_DEBUG_CHANNELS?.split(',') ?? ['app']
 
 if (DEBUG_ENABLED && typeof window !== 'undefined') window.localStorage.debug = DEBUG_CHANNELS.map(t => `${t}*`).join(',')
 
