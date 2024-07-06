@@ -8,7 +8,10 @@ export function Component() {
   const ltxt = useLocalizedString()
   const { quote: quotePromise } = useLoaderData() as any
 
-  useMetaTags({ title: ltxt('window-title-quote') })
+  useMetaTags({
+    title: ltxt('window-title-quote'),
+    description: ltxt('description'),
+  })
 
   return (
     <main>

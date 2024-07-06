@@ -1,6 +1,6 @@
 {
   "name": "react-static-starter-kit",
-  "version": "17.0.0",
+  "version": "16.1.0",
   "private": true,
   "license": "MIT",
   "type": "module",
@@ -29,7 +29,7 @@
     "@stylistic/eslint-plugin": "^2.3.0",
     "@testing-library/react": "^16.0.0",
     "@types/debug": "^4.1.12",
-    "@types/node": "^20.14.9",
+    "@types/node": "^20.14.10",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@types/react-router-dom": "^5.3.3",
@@ -43,8 +43,8 @@
     "eslint": "^9.6.0",
     "jsdom": "^24.1.0",
     "postcss-import": "^16.1.0",
-    "postcss-preset-env": "^9.5.15",
-    "rimraf": "^5.0.7",
+    "postcss-preset-env": "^9.5.16",
+    "rimraf": "^5.0.8",
     "semantic-release": "^24.0.0",
     "serve": "^14.2.3",
     "stylelint": "^16.6.1",
@@ -59,8 +59,8 @@
   "dependencies": {
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-router": "^6.24.0",
-    "react-router-dom": "^6.24.0",
+    "react-router": "^6.24.1",
+    "react-router-dom": "^6.24.1",
     "sprintf-js": "^1.1.3"
   }
 }

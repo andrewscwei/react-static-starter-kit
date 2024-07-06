@@ -20,7 +20,7 @@ export function useDocumentTitle(title?: string, deps?: DependencyList) {
   }, [title, ...deps ?? []])
 
   useEffect(() => updateElementAttributes(title !== undefined ? 'meta' : undefined, [
-    { key: true, name: 'name', value: 'og:title' },
+    { key: true, name: 'property', value: 'og:title' },
     { name: 'content', value: title ?? '' },
   ], {
     parent: window.document.head,

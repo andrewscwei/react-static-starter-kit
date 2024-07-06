@@ -9,7 +9,58 @@ import svgr from 'vite-plugin-svgr'
 import { defineConfig } from 'vitest/config'
 import packageInfo from './package.json'
 
-const packageVersion = packageInfo.version
+type BuildArgs = {
+  /**
+   * Indicates whether the build is running in development mode.
+   */
+  dev: boolean
+
+  /**
+   * Build number.
+   */
+  buildNumber: string
+
+  /**
+   * Version number.
+   */
+  version: string
+
+  /**
+   * Base URL of the app.
+   */
+  baseURL: string
+
+  /**
+   * Base path of the router (i.e. the `basename` property).
+   */
+  basePath: string
+
+  /**
+   * Absolute public URL for static assets.
+   */
+  publicURL: string
+
+  /**
+   * Public path for static assets.
+   */
+  publicPath: string
+
+  /**
+   * Specifies whether source maps should be generated.
+   */
+  useSourceMaps: boolean
+
+  /**
+   * Specifies whether HTML/JS/CSS minifications should be disabled while
+   * building.
+   */
+  skipOptimizations: boolean
+
+  /**
+   * Specifies the port to use during development.
+   */
+  devPort: number
+}
 
 const createResolveAssetPath = (...parts: string[]) => {
   return (p: string) => [...parts, p]
@@ -22,28 +73,43 @@ const createResolveAssetPath = (...parts: string[]) => {
     .replace('&', '?')
 }
 
-export default defineConfig(({ mode }) => {
+const parseBuildArgs = (mode: string): BuildArgs => {
   const env = loadEnv(mode, process.cwd(), '')
-  const isDev = env.NODE_ENV === 'development'
-  const skipOptimizations = isDev || env.npm_config_raw === 'true'
+
+  return {
+    basePath: env.BASE_PATH ?? '/',
+    baseURL: env.BASE_URL ?? '',
+    buildNumber: env.BUILD_NUMBER ?? 'local',
+    dev: env.NODE_ENV === 'development',
+    devPort: Number(env.PORT ?? 8080),
+    publicPath: env.PUBLIC_PATH ?? env.BASE_PATH ?? '/',
+    publicURL: env.PUBLIC_URL ?? env.BASE_URL ?? '',
+    skipOptimizations: env.NODE_ENV === 'development' || env.npm_config_raw === 'true',
+    useSourceMaps: env.NODE_ENV === 'development',
+    version: packageInfo.version,
+  }
+}
+
+export default defineConfig(({ mode }) => {
+  const buildArgs = parseBuildArgs(mode)
   const rootDir = path.resolve(__dirname, 'src')
 
   return {
     root: rootDir,
-    base: env.BASE_URL ?? '/',
+    base: buildArgs.publicPath,
     publicDir: path.resolve(rootDir, 'static'),
     build: {
-      cssMinify: skipOptimizations ? false : 'esbuild',
-      minify: skipOptimizations ? false : 'esbuild',
+      cssMinify: buildArgs.skipOptimizations ? false : 'esbuild',
+      minify: buildArgs.skipOptimizations ? false : 'esbuild',
       outDir: path.resolve(__dirname, 'build'),
       reportCompressedSize: true,
-      sourcemap: isDev ? 'inline' : true,
+      sourcemap: buildArgs.useSourceMaps ? 'inline' : true,
       target: 'esnext',
     },
     css: {
       modules: {
         localsConvention: 'camelCaseOnly',
-        generateScopedName: isDev ? '[name]_[local]_[hash:base64:5]' : '_[hash:base64:5]',
+        generateScopedName: buildArgs.dev ? '[name]_[local]_[hash:base64:5]' : '_[hash:base64:5]',
       },
       postcss: {
         plugins: [
@@ -53,7 +119,7 @@ export default defineConfig(({ mode }) => {
               'nesting-rules': true,
             },
           }),
-          ...isDev ? [] : [
+          ...buildArgs.dev ? [] : [
             PostCSSPurgeCSS({
               content: [
                 path.resolve(rootDir, '**/*.html'),
@@ -71,20 +137,19 @@ export default defineConfig(({ mode }) => {
       },
     },
     define: {
-      __VERSION__: JSON.stringify(`v${packageVersion}+build.${env.BUILD_NUMBER ?? 'local'}`),
+      '__VERSION__': JSON.stringify(`v${buildArgs.version}+build.${buildArgs.buildNumber}`),
+      'import.meta.env.BASE_PATH': JSON.stringify(buildArgs.basePath),
     },
     plugins: [
       react(),
       svgr(),
       createHtmlPlugin({
-        minify: !skipOptimizations,
+        minify: !buildArgs.skipOptimizations,
         entry: path.resolve(rootDir, 'index.tsx'),
         inject: {
           data: {
-            title: 'React Static Starter Kit',
-            description: 'An experimental React static app starter kit.',
-            hostURL: env.HOST_URL ?? '',
-            resolvePublicURL: createResolveAssetPath(env.PUBLIC_URL ?? env.HOST_URL ?? ''),
+            buildArgs,
+            resolveURL: (subpath: string) => path.join(buildArgs.publicURL, subpath),
           },
         },
       }),
@@ -96,7 +161,7 @@ export default defineConfig(({ mode }) => {
     },
     server: {
       host: 'localhost',
-      port: Number(env.PORT ?? 8080),
+      port: buildArgs.devPort,
     },
     test: {
       coverage: {

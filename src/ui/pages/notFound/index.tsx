@@ -5,7 +5,10 @@ import styles from './index.module.css'
 export function Component() {
   const ltxt = useLocalizedString()
 
-  useMetaTags({ title: ltxt('window-title-not-found') })
+  useMetaTags({
+    title: ltxt('window-title-not-found'),
+    description: ltxt('description'),
+  })
 
   return (
     <main>

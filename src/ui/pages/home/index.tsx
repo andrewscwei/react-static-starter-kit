@@ -6,7 +6,10 @@ import styles from './index.module.css'
 export function Component() {
   const ltxt = useLocalizedString()
 
-  useMetaTags({ title: ltxt('window-title-home') })
+  useMetaTags({
+    title: ltxt('window-title-home'),
+    description: ltxt('description'),
+  })
 
   return (
     <main>

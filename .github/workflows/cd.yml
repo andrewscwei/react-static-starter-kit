@@ -19,8 +19,8 @@ jobs:
         id: build
         uses: andrewscwei/actions/node-build@v1
         env:
-          HOST_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}
-          VITE_BASE_PATH: /${{ github.event.repository.name }}/
+          BASE_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}
+          BASE_PATH: /${{ github.event.repository.name }}/
         with:
           artifact-path: build/
   deploy:

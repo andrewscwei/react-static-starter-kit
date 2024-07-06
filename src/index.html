@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html>
+<html lang>
   <head>
     <meta charSet="utf-8" />
     <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=2.0,viewport-fit=cover" />
-    <meta name="description" content="<%- description %>" />
+    <meta name="description" content />
 
-    <title><%- title %></title>
+    <title />
 
-    <link rel="canonical" href="<%- hostURL %>" />
+    <link rel="canonical" href="<%- buildArgs.baseURL %>" />
     <link rel="mask-icon" type="image/svg+xml" href="/mask-icon.svg" />
     <link rel="alternate icon" type="image/png" href="/favicon.png" />
     <link rel="icon" type="image/x-icon" href="/favicon.svg" />
@@ -17,7 +17,7 @@
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <meta name="apple-mobile-web-app-title" content="<%- title %>" />
+    <meta name="apple-mobile-web-app-title" content />
     <link rel="apple-touch-icon" type="image/png" href="/app-icon-57.png" sizes="57x57" />
     <link rel="apple-touch-icon" type="image/png" href="/app-icon-60.png" sizes="60x60" />
     <link rel="apple-touch-icon" type="image/png" href="/app-icon-72.png" sizes="72x72" />
@@ -29,18 +29,18 @@
     <link rel="apple-touch-icon" type="image/png" href="/app-icon-180.png" sizes="180x180" />
     <link rel="apple-touch-icon" type="image/png" href="/app-icon-192.png" sizes="192x192" />
 
-    <meta property="og:site_name" content="<%- title %>" />
+    <meta property="og:site_name" content />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="<%- title %>" />
-    <meta property="og:description" content="<%- description %>" />
-    <meta property="og:url" content="<%- hostURL %>" />
-    <meta property="og:image" content="<%- resolvePublicURL('og-image.png') %>" />
-    <meta property="og:image:alt" content="<%- description %>" />
+    <meta property="og:title" content />
+    <meta property="og:description" content />
+    <meta property="og:url" content="<%- buildArgs.baseURL %>" />
+    <meta property="og:image" content="<%- resolveURL('/og-image.png') %>" />
+    <meta property="og:image:alt" content />
 
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="<%- title %>" />
-    <meta name="twitter:description" content="<%- description %>" />
-    <meta name="twitter:image" content="<%- resolvePublicURL('/twitter-card.png') %>" />
+    <meta name="twitter:title" content />
+    <meta name="twitter:description" content />
+    <meta name="twitter:image" content="<%- resolveURL('/twitter-card.png') %>" />
 
     <link rel="manifest" href="/manifest.json" />
   </head>
