@@ -18,10 +18,6 @@ declare module '*.woff2'
 declare module '*.eot'
 declare module '*.ttf'
 declare module '*.otf'
-declare module '*.module.css' {
-  const classes: Readonly<Record<string, string>>
-  export default classes
-}
 
 declare const __BUILD_ARGS__: typeof import('../config/build.args')
 
