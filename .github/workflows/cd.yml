@@ -1,7 +1,7 @@
 name: CD
 on:
   push:
-    tags: [master]
+    branches: [master]
 concurrency:
   group: deploy
   cancel-in-progress: true
