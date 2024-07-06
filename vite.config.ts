@@ -16,10 +16,10 @@ export default defineConfig(({ mode }) => {
   const isDev = env.NODE_ENV === 'development'
   const skipOptimizations = isDev || env.npm_config_raw === 'true'
   const port = Number(env.port ?? 8080)
-  const rootDir = path.join(__dirname, 'src')
-  const outDir = path.join(__dirname, 'build')
-  const libDir = path.join(__dirname, 'lib')
-  const publicDir = path.join(rootDir, 'static')
+  const rootDir = path.resolve(__dirname, 'src')
+  const outDir = path.resolve(__dirname, 'build')
+  const libDir = path.resolve(__dirname, 'lib')
+  const publicDir = path.resolve(rootDir, 'static')
   const buildNumber = env.BUILD_NUMBER ?? 'local'
   const basePath = env.VITE_BASE_PATH ?? '/'
   const baseURL = env.BASE_URL ?? basePath
@@ -57,10 +57,10 @@ export default defineConfig(({ mode }) => {
           ...isDev ? [] : [
             PostCSSPurgeCSS({
               content: [
-                path.join(rootDir, '**/*.html'),
-                path.join(rootDir, '**/*.tsx'),
-                path.join(rootDir, '**/*.ts'),
-                path.join(rootDir, '**/*.module.css'),
+                path.resolve(rootDir, '**/*.html'),
+                path.resolve(rootDir, '**/*.tsx'),
+                path.resolve(rootDir, '**/*.ts'),
+                path.resolve(rootDir, '**/*.module.css'),
               ],
               safelist: [
                 /^_[A-Za-z0-9-_]{5}$/,
