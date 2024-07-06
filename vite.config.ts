@@ -74,13 +74,13 @@ export default defineConfig({
     host: 'localhost',
     port: buildArgs.devPort,
   },
-  // test: {
-  //   coverage: {
-  //     reportsDirectory: path.resolve(__dirname, 'coverage'),
-  //     provider: 'v8',
-  //   },
-  //   reporters: ['default'],
-  //   globals: true,
-  //   environment: 'jsdom',
-  // },
+  test: {
+    coverage: {
+      reportsDirectory: path.resolve(__dirname, 'coverage'),
+      provider: 'v8',
+    },
+    reporters: ['default'],
+    globals: true,
+    environment: 'jsdom',
+  },
 })
