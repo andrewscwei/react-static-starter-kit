@@ -13,10 +13,12 @@ const isDev = process.env.NODE_ENV === 'development'
 export default defineConfig({
   root: buildArgs.inputDir,
   build: {
-    target: 'esnext',
+    cssMinify: buildArgs.skipOptimizations ? false : 'esbuild',
+    minify: buildArgs.skipOptimizations ? false : 'esbuild',
+    outDir: buildArgs.outputDir,
     reportCompressedSize: true,
     sourcemap: buildArgs.useSourceMaps,
-    outDir: buildArgs.outputDir,
+    target: 'esnext',
   },
   css: {
     modules: {
@@ -31,21 +33,23 @@ export default defineConfig({
             'nesting-rules': true,
           },
         }),
-        PostCSSPurgeCSS({
-          content: [
-            path.join(buildArgs.inputDir, '**/*.html'),
-            path.join(buildArgs.inputDir, '**/*.tsx'),
-            path.join(buildArgs.inputDir, '**/*.ts'),
-            path.join(buildArgs.inputDir, '**/*.module.css'),
-          ],
-          safelist: [
-            /^_[A-Za-z0-9-_]{5}$/,
-          ],
-          defaultExtractor: content => {
-            const match = content.match(/[\w-/:]+(?<!:)/g) ?? []
-            return match
-          },
-        }),
+        ...isDev ? [] : [
+          PostCSSPurgeCSS({
+            content: [
+              path.join(buildArgs.inputDir, '**/*.html'),
+              path.join(buildArgs.inputDir, '**/*.tsx'),
+              path.join(buildArgs.inputDir, '**/*.ts'),
+              path.join(buildArgs.inputDir, '**/*.module.css'),
+            ],
+            safelist: [
+              /^_[A-Za-z0-9-_]{5}$/,
+            ],
+            defaultExtractor: content => {
+              const match = content.match(/[\w-/:]+(?<!:)/g) ?? []
+              return match
+            },
+          }),
+        ],
       ],
     },
   },
@@ -56,7 +60,7 @@ export default defineConfig({
     react(),
     svgr(),
     createHtmlPlugin({
-      minify: true,
+      minify: !buildArgs.skipOptimizations,
       entry: path.resolve(buildArgs.inputDir, 'index.tsx'),
       inject: {
         data: {
