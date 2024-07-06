@@ -11,32 +11,31 @@ import packageInfo from './package.json'
 
 const packageVersion = packageInfo.version
 
+const createResolveAssetPath = (...parts: string[]) => {
+  return (p: string) => [...parts, p]
+    .join('/')
+    .replace(/\/+/g, '/')
+    .replace(/^(.+):\//, '$1://')
+    .replace(/^file:/, 'file:/')
+    .replace(/\/(\?|&|#[^!])/g, '$1')
+    .replace(/\?/g, '&')
+    .replace('&', '?')
+}
+
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
   const isDev = env.NODE_ENV === 'development'
   const skipOptimizations = isDev || env.npm_config_raw === 'true'
-  const port = Number(env.PORT ?? 8080)
   const rootDir = path.resolve(__dirname, 'src')
-  const outDir = path.resolve(__dirname, 'build')
-  const libDir = path.resolve(__dirname, 'lib')
-  const publicDir = path.resolve(rootDir, 'static')
-  const buildNumber = env.BUILD_NUMBER ?? 'local'
-  const basePath = env.VITE_BASE_PATH ?? '/'
-  const baseURL = env.BASE_URL ?? basePath
-  const hostURL = env.VITE_HOST_URL ?? '/'
-  const publicURL = env.PUBLIC_URL ?? hostURL
-  const defaultLocale = env.VITE_DEFAULT_LOCALE ?? 'en'
-  const debugEnabled = env.VITE_DEBUG_ENABLED === 'true'
-  const debugChannels = env.VITE_DEBUG_CHANNELS ?? 'app'
 
   return {
     root: rootDir,
-    base: baseURL,
-    publicDir,
+    base: env.BASE_URL ?? '/',
+    publicDir: path.resolve(rootDir, 'static'),
     build: {
       cssMinify: skipOptimizations ? false : 'esbuild',
       minify: skipOptimizations ? false : 'esbuild',
-      outDir,
+      outDir: path.resolve(__dirname, 'build'),
       reportCompressedSize: true,
       sourcemap: isDev ? 'inline' : true,
       target: 'esnext',
@@ -44,7 +43,7 @@ export default defineConfig(({ mode }) => {
     css: {
       modules: {
         localsConvention: 'camelCaseOnly',
-        generateScopedName: isDev ? '[name]-[local]-[hash:base64:5]' : '_[hash:base64:5]',
+        generateScopedName: isDev ? '[name]_[local]_[hash:base64:5]' : '_[hash:base64:5]',
       },
       postcss: {
         plugins: [
@@ -65,22 +64,14 @@ export default defineConfig(({ mode }) => {
               safelist: [
                 /^_[A-Za-z0-9-_]{5}$/,
               ],
-              defaultExtractor: content => {
-                const match = content.match(/[\w-/:]+(?<!:)/g) ?? []
-                return match
-              },
+              defaultExtractor: content => content.match(/[\w-/:]+(?<!:)/g) ?? [],
             }),
           ],
         ],
       },
     },
     define: {
-      '__VERSION__': JSON.stringify(`v${packageVersion}+build.${buildNumber}`),
-      'import.meta.env.VITE_DEBUG_CHANNELS': JSON.stringify(debugChannels),
-      'import.meta.env.VITE_DEBUG_ENABLED': JSON.stringify(debugEnabled),
-      'import.meta.env.VITE_DEFAULT_LOCALE': JSON.stringify(defaultLocale),
-      'import.meta.env.VITE_BASE_PATH': JSON.stringify(basePath),
-      'import.meta.env.VITE_HOST_URL': JSON.stringify(hostURL),
+      __VERSION__: JSON.stringify(`v${packageVersion}+build.${env.BUILD_NUMBER ?? 'local'}`),
     },
     plugins: [
       react(),
@@ -92,19 +83,20 @@ export default defineConfig(({ mode }) => {
           data: {
             title: 'React Static Starter Kit',
             description: 'An experimental React static app starter kit.',
-            publicURL: publicURL.endsWith('/') ? publicURL : `${publicURL}/`,
+            hostURL: env.HOST_URL ?? '',
+            resolvePublicURL: createResolveAssetPath(env.PUBLIC_URL ?? env.HOST_URL ?? ''),
           },
         },
       }),
     ],
     resolve: {
       alias: {
-        '@lib': libDir,
+        '@lib': path.resolve(__dirname, 'lib'),
       },
     },
     server: {
       host: 'localhost',
-      port,
+      port: Number(env.PORT ?? 8080),
     },
     test: {
       coverage: {
