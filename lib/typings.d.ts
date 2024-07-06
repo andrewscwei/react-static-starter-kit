@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/consistent-type-imports */
 /// <reference types="vite/client" />
 
 declare module '*.jpg'
@@ -18,8 +17,6 @@ declare module '*.woff2'
 declare module '*.eot'
 declare module '*.ttf'
 declare module '*.otf'
-
-declare const __BUILD_ARGS__: typeof import('../config/build.args')
 
 interface Error {
   status?: number

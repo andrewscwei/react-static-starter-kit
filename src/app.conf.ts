@@ -5,12 +5,12 @@
 /**
  * Fallback app title.
  */
-export const TITLE = __BUILD_ARGS__.title
+export const TITLE = 'React Static Starter Kit'
 
 /**
  * Fallback app description.
  */
-export const DESCRIPTION = __BUILD_ARGS__.description
+export const DESCRIPTION = 'An experimental React static app starter kit.'
 
 /**
  * Value for the `theme-color` meta tag.
@@ -29,3 +29,20 @@ export const MASK_ICON_COLOR = '#000'
  * 3. `query`: Locale is changed by altering the query parameters of the URL.
  */
 export const LOCALE_CHANGE_STRATEGY = 'path'
+
+/**
+ * Host URL of the app.
+ */
+export const HOST_URL = import.meta.env.VITE_HOST_URL
+
+/**
+ * Base path of the router (i.e. the `basename` property).
+ */
+export const BASE_PATH = import.meta.env.VITE_BASE_PATH
+
+/**
+ * Default locale.
+ */
+export const DEFAULT_LOCALE = import.meta.env.VITE_DEFAULT_LOCALE
+
+export const PUBLIC_PATH = import.meta.env.BASE_URL
