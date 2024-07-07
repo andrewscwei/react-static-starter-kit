@@ -21,8 +21,8 @@ jobs:
         with:
           prebuild-command: npm run test:unit
           postbuild-command: npx playwright install --with-deps && npm run test
-  release:
-    name: Release
+  deploy:
+    name: Deploy
     needs: [build]
     runs-on: ubuntu-latest
     env:
@@ -34,22 +34,16 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Set up Node
+      - name: Setup Node
         uses: actions/setup-node@v4
         with:
           cache: npm
           node-version-file: .node-version
       - name: Install Node modules
+        shell: bash
         run: npm install
-      - name: Create release
+      - name: Release
         run: npx semantic-release
-  deploy:
-    name: Deploy
-    needs: [release]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
       - name: Deploy to GitHub pages
         uses: andrewscwei/actions/gh-pages-deploy@v1
         env:
@@ -61,13 +55,13 @@ jobs:
           predeploy-command: npm run build
   notify:
     name: Notify
-    needs: [build, deploy, release]
+    needs: [build, deploy]
     if: ${{ always() }}
     runs-on: ubuntu-latest
     steps:
       - uses: andrewscwei/telegram-action@v1
         with:
-          success: ${{ needs.build.result == 'success' && needs.release.result == 'success' && needs.deploy.result == 'success' }}
-          cancelled: ${{ needs.build.result == 'cancelled' || needs.release.result == 'cancelled' || needs.deploy.result == 'cancelled' }}
+          success: ${{ needs.build.result == 'success' && needs.deploy.result == 'success' }}
+          cancelled: ${{ needs.build.result == 'cancelled' || needs.deploy.result == 'cancelled' }}
           bot-token: ${{ secrets.TELEGRAM_DEVOPS_BOT_TOKEN }}
           chat-id: ${{ secrets.TELEGRAM_DEVOPS_CHAT_ID }}
