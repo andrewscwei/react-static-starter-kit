@@ -9,96 +9,46 @@ import svgr from 'vite-plugin-svgr'
 import { defineConfig } from 'vitest/config'
 import packageInfo from './package.json'
 
-type BuildArgs = {
-  /**
-   * Indicates whether the build is running in development mode.
-   */
-  isDev: boolean
-
-  /**
-   * Build number.
-   */
-  buildNumber: string
-
-  /**
-   * Version number.
-   */
-  version: string
-
-  /**
-   * Base URL of the app.
-   */
-  baseURL: string
-
-  /**
-   * Base path of the router (i.e. the `basename` property).
-   */
-  basePath: string
-
-  /**
-   * Absolute public URL for static assets.
-   */
-  publicURL: string
-
-  /**
-   * Public path for static assets.
-   */
-  publicPath: string
-
-  /**
-   * Specifies whether source maps should be generated.
-   */
-  useSourceMaps: boolean
-
-  /**
-   * Specifies whether HTML/JS/CSS minifications should be disabled while
-   * building.
-   */
-  skipOptimizations: boolean
-
-  /**
-   * Specifies the port to use during development.
-   */
-  port: number
-}
-
-const parseBuildArgs = (mode: string): BuildArgs => {
-  const env = loadEnv(mode, process.cwd(), '')
-
-  return {
-    basePath: env.BASE_PATH ?? '/',
-    baseURL: env.BASE_URL ?? '',
-    buildNumber: env.BUILD_NUMBER ?? 'local',
-    isDev: env.NODE_ENV === 'development',
-    port: Number(env.PORT ?? 8080),
-    publicPath: env.PUBLIC_PATH ?? env.BASE_PATH ?? '/',
-    publicURL: env.PUBLIC_URL ?? env.BASE_URL ?? '',
-    skipOptimizations: env.NODE_ENV === 'development' || env.npm_config_raw === 'true',
-    useSourceMaps: env.NODE_ENV === 'development',
-    version: packageInfo.version,
-  }
-}
+const parseBuildArgs = (env: Record<string, string>) => ({
+  // Base path of the router (i.e. the `basename` property)
+  basePath: env.BASE_PATH ?? '/',
+  // Base URL of the app
+  baseURL: env.BASE_URL ?? '',
+  // Build number
+  buildNumber: env.BUILD_NUMBER ?? 'local',
+  // Public path for static assets
+  publicPath: env.PUBLIC_PATH ?? env.BASE_PATH ?? '/',
+  // Absolute public URL for static assets
+  publicURL: env.PUBLIC_URL ?? env.BASE_URL ?? '',
+  // Version number
+  version: packageInfo.version,
+})
 
 export default defineConfig(({ mode }) => {
-  const buildArgs = parseBuildArgs(mode)
+  const env = loadEnv(mode, process.cwd(), '')
+  const buildArgs = parseBuildArgs(env)
   const rootDir = path.resolve(__dirname, 'src')
+  const isDev = env.NODE_ENV === 'development'
+  const skipOptimizations = isDev || env.npm_config_raw === 'true'
+  const useSourceMaps = isDev
+  const port = Number(env.PORT ?? 8080)
 
   return {
     root: rootDir,
     base: buildArgs.publicPath,
     publicDir: path.resolve(rootDir, 'static'),
     build: {
-      cssMinify: buildArgs.skipOptimizations ? false : 'esbuild',
-      minify: buildArgs.skipOptimizations ? false : 'esbuild',
+      cssMinify: skipOptimizations ? false : 'esbuild',
+      minify: skipOptimizations ? false : 'esbuild',
       outDir: path.resolve(__dirname, 'build'),
       reportCompressedSize: true,
-      sourcemap: buildArgs.useSourceMaps ? 'inline' : true,
+      sourcemap: useSourceMaps ? 'inline' : true,
       target: 'esnext',
     },
     css: {
       modules: {
         localsConvention: 'camelCaseOnly',
-        generateScopedName: buildArgs.isDev ? '[name]_[local]_[hash:base64:5]' : '_[hash:base64:5]',
+        generateScopedName: isDev ? '[name]_[local]_[hash:base64:5]' : '_[hash:base64:5]',
       },
       postcss: {
         plugins: [
@@ -108,7 +58,7 @@ export default defineConfig(({ mode }) => {
               'nesting-rules': true,
             },
           }),
-          ...buildArgs.isDev ? [] : [
+          ...isDev ? [] : [
             PostCSSPurgeCSS({
               content: [
                 path.resolve(rootDir, '**/*.html'),
@@ -132,7 +82,7 @@ export default defineConfig(({ mode }) => {
       react(),
       svgr(),
       createHtmlPlugin({
-        minify: !buildArgs.skipOptimizations,
+        minify: !skipOptimizations,
         entry: path.resolve(rootDir, 'index.tsx'),
         inject: {
           data: {
@@ -149,7 +99,7 @@ export default defineConfig(({ mode }) => {
     },
     server: {
       host: 'localhost',
-      port: buildArgs.port,
+      port,
     },
     test: {
       coverage: {
