@@ -13,7 +13,7 @@ type BuildArgs = {
   /**
    * Indicates whether the build is running in development mode.
    */
-  dev: boolean
+  isDev: boolean
 
   /**
    * Build number.
@@ -59,7 +59,7 @@ type BuildArgs = {
   /**
    * Specifies the port to use during development.
    */
-  devPort: number
+  port: number
 }
 
 const parseBuildArgs = (mode: string): BuildArgs => {
@@ -69,8 +69,8 @@ const parseBuildArgs = (mode: string): BuildArgs => {
     basePath: env.BASE_PATH ?? '/',
     baseURL: env.BASE_URL ?? '',
     buildNumber: env.BUILD_NUMBER ?? 'local',
-    dev: env.NODE_ENV === 'development',
-    devPort: Number(env.PORT ?? 8080),
+    isDev: env.NODE_ENV === 'development',
+    port: Number(env.PORT ?? 8080),
     publicPath: env.PUBLIC_PATH ?? env.BASE_PATH ?? '/',
     publicURL: env.PUBLIC_URL ?? env.BASE_URL ?? '',
     skipOptimizations: env.NODE_ENV === 'development' || env.npm_config_raw === 'true',
@@ -98,7 +98,7 @@ export default defineConfig(({ mode }) => {
     css: {
       modules: {
         localsConvention: 'camelCaseOnly',
-        generateScopedName: buildArgs.dev ? '[name]_[local]_[hash:base64:5]' : '_[hash:base64:5]',
+        generateScopedName: buildArgs.isDev ? '[name]_[local]_[hash:base64:5]' : '_[hash:base64:5]',
       },
       postcss: {
         plugins: [
@@ -108,7 +108,7 @@ export default defineConfig(({ mode }) => {
               'nesting-rules': true,
             },
           }),
-          ...buildArgs.dev ? [] : [
+          ...buildArgs.isDev ? [] : [
             PostCSSPurgeCSS({
               content: [
                 path.resolve(rootDir, '**/*.html'),
@@ -126,9 +126,7 @@ export default defineConfig(({ mode }) => {
       },
     },
     define: {
-      'import.meta.env.BASE_PATH': JSON.stringify(buildArgs.basePath),
-      'import.meta.env.BUILD_NUMBER': JSON.stringify(buildArgs.buildNumber),
-      'import.meta.env.VERSION': JSON.stringify(buildArgs.version),
+      'import.meta.env.BUILD_ARGS': JSON.stringify(buildArgs),
     },
     plugins: [
       react(),
@@ -151,7 +149,7 @@ export default defineConfig(({ mode }) => {
     },
     server: {
       host: 'localhost',
-      port: buildArgs.devPort,
+      port: buildArgs.port,
     },
     test: {
       coverage: {

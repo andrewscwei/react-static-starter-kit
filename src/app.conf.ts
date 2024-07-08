@@ -2,6 +2,23 @@
  * @file Runtime application config.
  */
 
+import { type Locale } from '@lib/i18n'
+
+/**
+ * Base path of the router (i.e. the `basename` property).
+ */
+export const BASE_PATH = import.meta.env.BUILD_ARGS.basePath
+
+/**
+ * Base URL of the app.
+ */
+export const BASE_URL = import.meta.env.BUILD_ARGS.baseURL
+
+/**
+ * App version.
+ */
+export const VERSION = `v${import.meta.env.BUILD_ARGS.version}+build.${import.meta.env.BUILD_ARGS.buildNumber}`
+
 /**
  * Value for the `theme-color` meta tag.
  */
@@ -15,7 +32,7 @@ export const MASK_ICON_COLOR = '#000'
 /**
  * Default locale.
  */
-export const DEFAULT_LOCALE = import.meta.env.VITE_DEFAULT_LOCALE ?? 'en'
+export const DEFAULT_LOCALE = (import.meta.env.VITE_DEFAULT_LOCALE ?? 'en') as Locale
 
 /**
  * Specifies how locale will be changed:

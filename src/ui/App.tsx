@@ -1,7 +1,7 @@
 import { useFavicon, useThemeColor } from '@lib/dom'
 import { joinURL } from '@lib/utils/joinURL'
 import { StrictMode, type PropsWithChildren } from 'react'
-import { MASK_ICON_COLOR, THEME_COLOR } from '../app.conf'
+import { BASE_URL, MASK_ICON_COLOR, THEME_COLOR } from '../app.conf'
 import './styles/global.css'
 import './styles/theme.css'
 
@@ -15,10 +15,10 @@ export function App({ children }: Readonly<Props>) {
       color: MASK_ICON_COLOR,
     },
     icon: {
-      darkImage: joinURL(import.meta.env.BASE_URL, 'favicon-dark.svg'),
+      darkImage: joinURL(BASE_URL, 'favicon-dark.svg'),
     },
     alternateIcon: {
-      darkImage: joinURL(import.meta.env.BASE_URL, 'favicon-dark.png'),
+      darkImage: joinURL(BASE_URL, 'favicon-dark.png'),
     },
   })
 

@@ -43,7 +43,7 @@
     "eslint": "^9.6.0",
     "jsdom": "^24.1.0",
     "postcss-import": "^16.1.0",
-    "postcss-preset-env": "^9.5.16",
+    "postcss-preset-env": "^9.6.0",
     "rimraf": "^5.0.8",
     "semantic-release": "^24.0.0",
     "serve": "^14.2.3",
