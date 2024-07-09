@@ -19,7 +19,7 @@ This is an experimental starter kit for a React static app.
 
 ```sh
 # Install pre-commit
-$ pip install pre-commit # or brew install pre-commit
+$ brew install pre-commit # or pip install pre-commit
 
 # Install Playwright browsers
 $ npx playwright install

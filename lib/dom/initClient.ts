@@ -48,9 +48,7 @@ export async function initClient(render: (props: RenderProps) => JSX.Element, {
   const root = createRoot(container)
   root.render(app)
 
-  debug('Initializing client...', 'OK', {
-    ...import.meta.env,
-  })
+  debug('Initializing client...', 'OK')
 
   return root
 }

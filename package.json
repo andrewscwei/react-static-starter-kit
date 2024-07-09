@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "prestart": "npm run build",
-    "start": "serve build -s -p ${PORT:-8080}",
+    "start": "vite preview --port ${PORT:-8080}",
     "clean": "rimraf build",
     "prebuild": "npm run lint && npm run clean",
     "build": "BUILD_NUMBER=$(git rev-parse --short HEAD) vite build",
@@ -48,15 +48,13 @@
     "postcss-preset-env": "^9.6.0",
     "rimraf": "^5.0.8",
     "semantic-release": "^24.0.0",
-    "serve": "^14.2.3",
     "stylelint": "^16.6.1",
     "typescript": "^5.5.3",
     "typescript-eslint": "^8.0.0-alpha.10",
     "vite": "^5.3.3",
     "vite-plugin-html": "^3.2.2",
     "vite-plugin-svgr": "^4.2.0",
-    "vitest": "^1.6.0",
-    "whatwg-fetch": "^3.6.20"
+    "vitest": "^1.6.0"
   },
   "dependencies": {
     "react": "^18.3.1",
