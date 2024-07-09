@@ -12,7 +12,8 @@ export function useDocumentTitle(title?: string, deps?: DependencyList) {
     if (typeof window === 'undefined') return
 
     const prevTitle = window.document.title
-    window.document.title = title ?? ''
+
+    if (title !== undefined) window.document.title = title ?? ''
 
     return () => {
       window.document.title = prevTitle
