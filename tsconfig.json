@@ -33,7 +33,10 @@
     "sourceRoot": "/",
     "strict": true,
     "strictNullChecks": true,
-    "target": "ES5"
+    "target": "ES5",
+    "types": [
+      "vitest/globals"
+    ]
   },
   "exclude": [
     "node_modules",
