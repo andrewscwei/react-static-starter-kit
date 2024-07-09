@@ -5,14 +5,24 @@
 import { type Locale } from '@lib/i18n'
 
 /**
+ * Base URL of the app.
+ */
+export const BASE_URL = import.meta.env.BUILD_ARGS.baseURL
+
+/**
  * Base path of the router (i.e. the `basename` property).
  */
 export const BASE_PATH = import.meta.env.BUILD_ARGS.basePath
 
 /**
- * Base URL of the app.
+ * Absolute public URL for static assets.
  */
-export const BASE_URL = import.meta.env.BUILD_ARGS.baseURL
+export const PUBLIC_URL = import.meta.env.BUILD_ARGS.publicURL
+
+/**
+ * Public path for static assets.
+ */
+export const PUBLIC_PATH = import.meta.env.BUILD_ARGS.publicPath
 
 /**
  * App version.
