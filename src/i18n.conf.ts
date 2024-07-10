@@ -9,7 +9,7 @@ import { DEFAULT_LOCALE, LOCALE_CHANGE_STRATEGY } from './app.conf'
 const defaultLocale = DEFAULT_LOCALE
 const sources = import.meta.glob('./locales/**/*.json', { eager: true })
 
-export const config: I18nConfig = {
+export const i18n: I18nConfig = {
   defaultLocale,
   localeChangeStrategy: LOCALE_CHANGE_STRATEGY,
   translations: tryOrUndefined(() => loadTranslations(sources)) ?? { [defaultLocale]: {} },

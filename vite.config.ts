@@ -83,7 +83,7 @@ export default defineConfig(({ mode }) => {
       svgr(),
       createHtmlPlugin({
         minify: !skipOptimizations,
-        entry: path.resolve(rootDir, 'index.tsx'),
+        entry: path.resolve(rootDir, 'main.tsx'),
         inject: {
           data: {
             buildArgs,

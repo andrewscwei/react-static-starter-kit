@@ -5,7 +5,7 @@
 import { type RouteObject } from 'react-router'
 import { ErrorBoundary } from './ui/pages/ErrorBoundary'
 
-export const config: RouteObject[] = [{
+export const routes: RouteObject[] = [{
   id: 'root',
   lazy: () => import('./ui/pages/index'),
   ErrorBoundary,
