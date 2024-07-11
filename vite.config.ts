@@ -1,6 +1,6 @@
 import PostCSSPurgeCSS from '@fullhuman/postcss-purgecss'
 import react from '@vitejs/plugin-react'
-import path from 'path'
+import path from 'node:path'
 import PostCSSImportPlugin from 'postcss-import'
 import PostCSSPresetEnvPlugin from 'postcss-preset-env'
 import { loadEnv } from 'vite'
