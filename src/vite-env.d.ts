@@ -3,5 +3,4 @@
 
 interface ImportMetaEnv {
   VITE_DEFAULT_LOCALE?: string
-  BUILD_ARGS: Record<string, any>
 }

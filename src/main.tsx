@@ -23,7 +23,7 @@ function work() {
   })
 }
 
-async function main() {
+async function render() {
   const localizedRoutes = generateLocalizedRoutes(routes, i18n)
   const container = window.document.getElementById('root') ?? rethrow('Invalid application root')
 
@@ -38,5 +38,5 @@ async function main() {
   debug('Initializing client...', 'OK')
 }
 
-main()
+render()
 work()

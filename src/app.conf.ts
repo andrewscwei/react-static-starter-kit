@@ -7,27 +7,27 @@ import { type Locale } from '@lib/i18n'
 /**
  * Base URL of the app.
  */
-export const BASE_URL = import.meta.env.BUILD_ARGS.baseURL
+export const BASE_URL = import.meta.env.BASE_URL
 
 /**
  * Base path of the router (i.e. the `basename` property).
  */
-export const BASE_PATH = import.meta.env.BUILD_ARGS.basePath
+export const BASE_PATH = import.meta.env.BASE_PATH
 
 /**
  * Absolute public URL for static assets.
  */
-export const PUBLIC_URL = import.meta.env.BUILD_ARGS.publicURL
+export const PUBLIC_URL = import.meta.env.PUBLIC_URL
 
 /**
  * Public path for static assets.
  */
-export const PUBLIC_PATH = import.meta.env.BUILD_ARGS.publicPath
+export const PUBLIC_PATH = import.meta.env.PUBLIC_PATH
 
 /**
  * App version.
  */
-export const VERSION = `v${import.meta.env.BUILD_ARGS.version}+build.${import.meta.env.BUILD_ARGS.buildNumber}`
+export const VERSION = `v${import.meta.env.VERSION}+build.${import.meta.env.BUILD_NUMBER}`
 
 /**
  * Value for the `theme-color` meta tag.

@@ -11,36 +11,35 @@ import packageInfo from './package.json'
 
 const parseBuildArgs = (env: Record<string, string>) => ({
   // Base path of the router (i.e. the `basename` property)
-  basePath: env.BASE_PATH ?? '/',
+  BASE_PATH: env.BASE_PATH ?? '/',
   // Base URL of the app
-  baseURL: env.BASE_URL ?? '',
+  BASE_URL: env.BASE_URL ?? '',
   // Build number
-  buildNumber: env.BUILD_NUMBER ?? 'local',
+  BUILD_NUMBER: env.BUILD_NUMBER ?? 'local',
   // Public path for static assets
-  publicPath: env.PUBLIC_PATH ?? env.BASE_PATH ?? '/',
+  PUBLIC_PATH: env.PUBLIC_PATH ?? env.BASE_PATH ?? '/',
   // Absolute public URL for static assets
-  publicURL: env.PUBLIC_URL ?? env.BASE_URL ?? '',
+  PUBLIC_URL: env.PUBLIC_URL ?? env.BASE_URL ?? '',
   // Version number
-  version: packageInfo.version,
+  VERSION: packageInfo.version,
 })
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
   const buildArgs = parseBuildArgs(env)
-  const rootDir = path.resolve(__dirname, 'src')
+  const rootDir = __dirname
   const isDev = env.NODE_ENV === 'development'
   const skipOptimizations = isDev || env.npm_config_raw === 'true'
   const useSourceMaps = isDev
   const port = Number(env.PORT ?? 8080)
 
   return {
-    root: rootDir,
-    base: buildArgs.publicPath,
-    publicDir: path.resolve(rootDir, 'static'),
+    base: buildArgs.PUBLIC_PATH,
+    publicDir: path.resolve(rootDir, 'src/static'),
     build: {
       cssMinify: skipOptimizations ? false : 'esbuild',
       minify: skipOptimizations ? false : 'esbuild',
-      outDir: path.resolve(__dirname, 'build'),
+      outDir: path.resolve(rootDir, 'build'),
       reportCompressedSize: true,
       sourcemap: useSourceMaps ? 'inline' : true,
       target: 'esnext',
@@ -61,10 +60,10 @@ export default defineConfig(({ mode }) => {
           ...isDev ? [] : [
             PostCSSPurgeCSS({
               content: [
-                path.resolve(rootDir, '**/*.html'),
-                path.resolve(rootDir, '**/*.tsx'),
-                path.resolve(rootDir, '**/*.ts'),
-                path.resolve(rootDir, '**/*.module.css'),
+                path.resolve(rootDir, 'src/**/*.html'),
+                path.resolve(rootDir, 'src/**/*.tsx'),
+                path.resolve(rootDir, 'src/**/*.ts'),
+                path.resolve(rootDir, 'src/**/*.module.css'),
               ],
               safelist: [
                 /^_[A-Za-z0-9-_]{5}$/,
@@ -76,18 +75,22 @@ export default defineConfig(({ mode }) => {
       },
     },
     define: {
-      'import.meta.env.BUILD_ARGS': JSON.stringify(buildArgs),
+      ...Object.keys(buildArgs).reduce((acc, key) => ({
+        ...acc,
+        [`import.meta.env.${key}`]: JSON.stringify(buildArgs[key]),
+      }), {}),
     },
     plugins: [
       react(),
       svgr(),
       createHtmlPlugin({
         minify: !skipOptimizations,
-        entry: path.resolve(rootDir, 'main.tsx'),
+        entry: path.resolve(rootDir, 'src/main.tsx'),
+        template: 'src/index.html',
         inject: {
           data: {
             buildArgs,
-            resolveURL: (subpath: string) => path.join(buildArgs.publicURL, subpath),
+            resolveURL: (subpath: string) => path.join(buildArgs.PUBLIC_PATH, subpath),
           },
         },
       }),
