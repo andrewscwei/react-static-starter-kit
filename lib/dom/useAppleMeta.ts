@@ -14,7 +14,7 @@ export function useAppleMeta(params: Params = {}, { auto = true }: Options = {},
   const title = params.title
   const statusBarStyle = params.statusBarStyle ?? (auto ? 'default' : undefined)
 
-  const updateOptions: Parameters<typeof updateElementAttributes>[2] = { autoCreate: auto, parent: window.document.head }
+  const updateOptions: Parameters<typeof updateElementAttributes>[2] = { autoCreate: auto, parent: typeof window !== 'undefined' ? window.document.head : undefined }
   const getTagName = (value?: string): Parameters<typeof updateElementAttributes>[0] => value === undefined ? undefined : 'meta'
 
   useEffect(() => updateElementAttributes(getTagName(statusBarStyle), [

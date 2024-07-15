@@ -24,7 +24,7 @@ export function useOpenGraphMeta(params: Params = {}, { auto = true }: Options =
   const type = params.type ?? (auto ? 'website' : undefined)
   const url = params.url ?? ((auto && typeof window !== 'undefined') ? window.location.href : undefined)
 
-  const updateOptions: Parameters<typeof updateElementAttributes>[2] = { autoCreate: auto, parent: window.document.head }
+  const updateOptions: Parameters<typeof updateElementAttributes>[2] = { autoCreate: auto, parent: typeof window !== 'undefined' ? window.document.head : undefined }
   const getTagName = (value?: string): Parameters<typeof updateElementAttributes>[0] => value === undefined ? undefined : 'meta'
 
   useEffect(() => updateElementAttributes(getTagName(description), [

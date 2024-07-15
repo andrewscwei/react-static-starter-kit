@@ -18,7 +18,7 @@ export function useTwitterMeta(params: Params = {}, { auto = true }: Options = {
   const image = params.image
   const title = params.title
 
-  const updateOptions: Parameters<typeof updateElementAttributes>[2] = { autoCreate: auto, parent: window.document.head }
+  const updateOptions: Parameters<typeof updateElementAttributes>[2] = { autoCreate: auto, parent: typeof window !== 'undefined' ? window.document.head : undefined }
   const getTagName = (value?: string): Parameters<typeof updateElementAttributes>[0] => value === undefined ? undefined : 'meta'
 
   useEffect(() => updateElementAttributes(getTagName(description), [
