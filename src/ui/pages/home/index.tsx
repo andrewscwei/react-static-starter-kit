@@ -1,15 +1,16 @@
-import { useMetaTags } from '@lib/dom'
-import { useLocalizedString } from '@lib/i18n'
-import { VERSION } from '../../../app.conf'
-import { ReactLogo } from '../../components/ReactLogo'
+import { useMeta } from '@lib/dom/index.js'
+import { useLocalizedString } from '@lib/i18n/index.js'
+import { VERSION } from '../../../app.conf.js'
+import { ReactLogo } from '../../components/ReactLogo.js'
 import styles from './index.module.css'
 
 export function Component() {
   const ltxt = useLocalizedString()
 
-  useMetaTags({
+  useMeta({
     title: ltxt('window-title-home'),
     description: ltxt('description'),
+    url: window.location.href,
   })
 
   return (

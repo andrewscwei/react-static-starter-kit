@@ -7,9 +7,9 @@ This is an experimental starter kit for a React static app.
 1. [React Router](https://reacttraining.com/react-router/)
 2. [CSS Modules](https://github.com/css-modules/css-modules) + [PostCSS](https://postcss.org/) + [PurgeCSS](https://purgecss.com/) + [StyleLint](https://stylelint.io/)
 3. [TypeScript](https://www.typescriptlang.org/) + [ESLint](https://eslint.org/)
-6. [Vite](https://vitejs.dev/)
-4. [Vitest](https://vitest.dev/)/[React Testing Library](https://testing-library.com/docs/react-testing-library/) for unit testing
-5. [Playwright](https://playwright.dev/) for E2E testing
+4. [Vite](https://vitejs.dev/)
+5. [Vitest](https://vitest.dev/)/[React Testing Library](https://testing-library.com/docs/react-testing-library/) for unit testing
+6. [Playwright](https://playwright.dev/) for E2E testing
 7. Custom i18n solution using [`sprintf-js`](https://www.npmjs.com/package/sprintf-js)
 8. Web workers
 9. CI/CD workflows with [GitHub Actions](https://github.com/features/actions)

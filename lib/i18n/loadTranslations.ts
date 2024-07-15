@@ -1,4 +1,4 @@
-import { type Translations } from './types'
+import { type Translations } from './types/index.js'
 
 /**
  * Loads translations from a directory via Webpack `RequireContext`.
@@ -10,24 +10,19 @@ import { type Translations } from './types'
 export function loadTranslations(sources: Record<string, any>): Translations {
   const translations: Translations = {}
 
-  try {
-    for (const key in sources) {
-      if (!Object.prototype.hasOwnProperty.call(sources, key)) continue
+  for (const key in sources) {
+    if (!Object.prototype.hasOwnProperty.call(sources, key)) continue
 
-      const phrases = sources[key].default
-      const parts = key.replace('./locales', '').split('/').filter(Boolean)
+    const phrases = sources[key].default
+    const parts = key.replace('./locales', '').split('/').filter(Boolean)
 
-      let t: any = translations
+    let t: any = translations
 
-      for (const part of parts) {
-        const subkey = part.replace('.json', '')
-        t[subkey] = part.endsWith('.json') ? phrases : {}
-        t = t[subkey]
-      }
+    for (const part of parts) {
+      const subkey = part.replace('.json', '')
+      t[subkey] = part.endsWith('.json') ? phrases : {}
+      t = t[subkey]
     }
-  }
-  catch (err) {
-    console.error('Loading translations...', 'ERR', err)
   }
 
   return translations

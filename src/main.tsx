@@ -1,15 +1,15 @@
-import { loadLazyComponents } from '@lib/dom'
-import { generateLocalizedRoutes } from '@lib/i18n'
-import { createDebug } from '@lib/utils/createDebug'
-import { rethrow } from '@lib/utils/rethrow'
+import { loadLazyComponents } from '@lib/dom/index.js'
+import { generateLocalizedRoutes } from '@lib/i18n/index.js'
+import { createDebug } from '@lib/utils/createDebug.js'
+import { rethrow } from '@lib/utils/rethrow.js'
 import { createRoot } from 'react-dom/client'
 import { RouterProvider } from 'react-router'
 import { createBrowserRouter } from 'react-router-dom'
-import { BASE_PATH } from './app.conf'
-import { i18n } from './i18n.conf'
-import { routes } from './routes.conf'
-import { App } from './ui/App'
-import WebWorker from './workers/web?worker'
+import { BASE_PATH } from './app.conf.js'
+import { i18n } from './i18n.conf.js'
+import { routes } from './routes.conf.js'
+import { App } from './ui/App.js'
+import WebWorker from './workers/web.js?worker'
 
 const debug = createDebug()
 
@@ -23,7 +23,7 @@ function work() {
   })
 }
 
-async function render() {
+async function main() {
   const localizedRoutes = generateLocalizedRoutes(routes, i18n)
   const container = window.document.getElementById('root') ?? rethrow('Invalid application root')
 
@@ -38,5 +38,5 @@ async function render() {
   debug('Initializing client...', 'OK')
 }
 
-render()
+main()
 work()

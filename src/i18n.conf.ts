@@ -2,15 +2,11 @@
  * @file I18n config.
  */
 
-import { loadTranslations, type I18nConfig } from '@lib/i18n'
-import { tryOrUndefined } from '@lib/utils/tryOrUndefined'
-import { DEFAULT_LOCALE, LOCALE_CHANGE_STRATEGY } from './app.conf'
+import { defineConfig, type Locale } from '@lib/i18n'
+import { DEFAULT_LOCALE } from './app.conf.js'
 
-const defaultLocale = DEFAULT_LOCALE
-const sources = import.meta.glob('./locales/**/*.json', { eager: true })
-
-export const i18n: I18nConfig = {
-  defaultLocale,
-  localeChangeStrategy: LOCALE_CHANGE_STRATEGY,
-  translations: tryOrUndefined(() => loadTranslations(sources)) ?? { [defaultLocale]: {} },
-}
+export const i18n = defineConfig({
+  defaultLocale: DEFAULT_LOCALE as Locale,
+  localeChangeStrategy: 'path',
+  sources: import.meta.glob('./locales/**/*.json', { eager: true }),
+})
