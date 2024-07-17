@@ -1,3 +1,7 @@
+/**
+ * @file Client entry file.
+ */
+
 import { loadLazyComponents } from '@lib/dom/index.js'
 import { generateLocalizedRoutes } from '@lib/i18n/index.js'
 import { createDebug } from '@lib/utils/createDebug.js'
@@ -23,7 +27,7 @@ function work() {
   })
 }
 
-async function main() {
+async function render() {
   const localizedRoutes = generateLocalizedRoutes(routes, i18n)
   const container = window.document.getElementById('root') ?? rethrow('Invalid application root')
 
@@ -38,5 +42,5 @@ async function main() {
   debug('Initializing client...', 'OK')
 }
 
-main()
+render()
 work()
