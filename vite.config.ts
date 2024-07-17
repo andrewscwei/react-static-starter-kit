@@ -8,7 +8,7 @@ import { createHtmlPlugin } from 'vite-plugin-html'
 import svgr from 'vite-plugin-svgr'
 import { defineConfig } from 'vitest/config'
 import packageInfo from './package.json'
-import { DEFAULT_LOCALE, DESCRIPTION, MASK_ICON_COLOR, THEME_COLOR, TITLE } from './src/app.conf'
+import { DEFAULT_LOCALE, METADATA } from './src/app.conf'
 
 const parseBuildArgs = (env: Record<string, string>) => ({
   // Base path of the router (i.e. the `basename` property)
@@ -87,12 +87,8 @@ export default defineConfig(({ mode }) => {
         template: 'src/index.html',
         inject: {
           data: {
-            baseTitle: TITLE,
-            description: DESCRIPTION,
+            ...METADATA,
             locale: DEFAULT_LOCALE,
-            maskIconColor: MASK_ICON_COLOR,
-            themeColor: THEME_COLOR,
-            title: TITLE,
             url: buildArgs.BASE_URL,
             resolveURL: (subpath: string) => path.join(buildArgs.BASE_URL, subpath),
           },
