@@ -44,7 +44,7 @@ export function useMeta(metadata: Metadata, {
 
   if (context?.context) {
     assign(context.context, {
-      url: joinURL(location.pathname, context.default.baseURL ?? ''),
+      url: joinURL(context.default.baseURL ?? '', location.pathname),
       ...metadata,
     })
   }
