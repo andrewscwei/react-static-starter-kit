@@ -8,7 +8,7 @@ import { createHtmlPlugin } from 'vite-plugin-html'
 import svgr from 'vite-plugin-svgr'
 import { defineConfig } from 'vitest/config'
 import packageInfo from './package.json'
-import { DEFAULT_LOCALE, METADATA } from './src/app.conf'
+import { DEFAULT_LOCALE, METADATA } from './src/app.config'
 
 const parseBuildArgs = (env: Record<string, string>) => ({
   // Base path of the router (i.e. the `basename` property)
@@ -110,10 +110,6 @@ export default defineConfig(({ mode }) => {
         provider: 'v8',
       },
       globals: true,
-      include: [
-        '**/*.spec.ts',
-        '**/*.spec.tsx',
-      ],
       environment: 'jsdom',
     },
   }
