@@ -5,7 +5,6 @@ import PostCSSImportPlugin from 'postcss-import'
 import PostCSSPresetEnvPlugin from 'postcss-preset-env'
 import { loadEnv } from 'vite'
 import { createHtmlPlugin } from 'vite-plugin-html'
-import svgr from 'vite-plugin-svgr'
 import { defineConfig } from 'vitest/config'
 import packageInfo from './package.json'
 
@@ -82,7 +81,6 @@ export default defineConfig(({ mode }) => {
     },
     plugins: [
       react(),
-      svgr(),
       createHtmlPlugin({
         minify: !skipOptimizations,
         entry: path.resolve(rootDir, 'main.tsx'),
