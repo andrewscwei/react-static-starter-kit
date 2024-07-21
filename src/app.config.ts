@@ -1,32 +1,24 @@
 /**
- * @file Runtime application config.
+ * @file Application config.
  */
+
+import { type Locale } from '@lib/i18n'
 
 const env = typeof import.meta.env !== 'undefined' ? import.meta.env : process.env as ImportMetaEnv
 
-/**
- * Base URL of the app.
- */
+/** Base URL of the app. */
 export const BASE_URL = env.BASE_URL
 
-/**
- * Base path of the router (i.e. the `basename` property).
- */
+/** Base path of the router (i.e. the `basename` property). */
 export const BASE_PATH = env.BASE_PATH
 
-/**
- * App version.
- */
+/** App version. */
 export const VERSION = `v${env.VERSION}+build.${env.BUILD_NUMBER}`
 
-/**
- * Default locale.
- */
-export const DEFAULT_LOCALE = env.VITE_DEFAULT_LOCALE ?? 'en'
+/** Default locale. */
+export const DEFAULT_LOCALE: Locale = env.DEFAULT_LOCALE
 
-/**
- * Default metadata.
- */
+/** Default metadata. */
 export const METADATA = {
   baseTitle: 'React Static Starter Kit',
   description: 'React static app starter kit',
