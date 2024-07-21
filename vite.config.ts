@@ -110,6 +110,10 @@ export default defineConfig(({ mode }) => {
         provider: 'v8',
       },
       globals: true,
+      include: [
+        '**/*.spec.ts',
+        '**/*.spec.tsx',
+      ],
       environment: 'jsdom',
     },
   }
