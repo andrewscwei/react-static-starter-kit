@@ -8,13 +8,19 @@ import { createHtmlPlugin } from 'vite-plugin-html'
 import svgr from 'vite-plugin-svgr'
 import { defineConfig } from 'vitest/config'
 import packageInfo from './package.json'
-import { METADATA } from './src/app.config'
 
 const parseBuildArgs = (env: Record<string, string>) => ({
   BASE_PATH: env.BASE_PATH ?? '/',
   BASE_URL: env.BASE_URL ?? '',
   BUILD_NUMBER: env.BUILD_NUMBER ?? 'local',
   DEFAULT_LOCALE: env.DEFAULT_LOCALE ?? 'en',
+  DEFAULT_METADATA: {
+    baseTitle: 'React Static Starter Kit',
+    description: 'React static app starter kit',
+    maskIconColor: '#000',
+    themeColor: '#15141a',
+    title: 'React Static Starter Kit',
+  },
   VERSION: packageInfo.version,
 })
 
@@ -69,7 +75,6 @@ export default defineConfig(({ mode }) => {
       },
     },
     define: {
-      'import.meta.env.VITE_DEFAULT_LOCALE': JSON.stringify(env.VITE_DEFAULT_LOCALE),
       ...Object.keys(buildArgs).reduce((acc, key) => ({
         ...acc,
         [`import.meta.env.${key}`]: JSON.stringify(buildArgs[key]),
@@ -84,7 +89,7 @@ export default defineConfig(({ mode }) => {
         template: 'src/index.html',
         inject: {
           data: {
-            ...METADATA,
+            ...buildArgs.DEFAULT_METADATA,
             locale: buildArgs.DEFAULT_LOCALE,
             url: buildArgs.BASE_URL,
             resolveURL: (subpath: string) => path.join(buildArgs.BASE_URL, subpath),
