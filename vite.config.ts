@@ -14,11 +14,11 @@ const parseBuildArgs = (env: Record<string, string>) => ({
   BUILD_NUMBER: env.BUILD_NUMBER ?? 'local',
   DEFAULT_LOCALE: env.DEFAULT_LOCALE ?? 'en',
   DEFAULT_METADATA: {
-    baseTitle: 'React Static Starter Kit',
     description: 'React static app starter kit',
     maskIconColor: '#000',
     themeColor: '#15141a',
     title: 'React Static Starter Kit',
+    url: env.BASE_URL ?? '',
   },
   VERSION: packageInfo.version,
 })
@@ -89,7 +89,6 @@ export default defineConfig(({ mode }) => {
           data: {
             ...buildArgs.DEFAULT_METADATA,
             locale: buildArgs.DEFAULT_LOCALE,
-            url: buildArgs.BASE_URL,
             resolveURL: (subpath: string) => path.join(buildArgs.BASE_URL, subpath),
           },
         },
