@@ -1,14 +1,14 @@
 import debug from 'debug'
 
-const DEBUG = typeof import.meta.env === 'undefined' ? process.env.DEBUG : import.meta.env.DEBUG
-const IS_DEV = typeof import.meta.env === 'undefined' ? process.env.NODE_ENV === 'development' : import.meta.env.DEV
+const DEBUG = process.env.DEBUG
+const IS_DEV = process.env.NODE_ENV === 'development'
 
 if (DEBUG || IS_DEV) {
   if (typeof window !== 'undefined') {
     window.localStorage.debug = IS_DEV ? 'app*' : DEBUG
   }
   else {
-    debug.enable(IS_DEV ? 'app*' : DEBUG)
+    debug.enable(IS_DEV ? 'app*' : DEBUG ?? '')
   }
 }
 
