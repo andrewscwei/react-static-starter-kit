@@ -24,13 +24,12 @@ const parseBuildArgs = (env: Record<string, string>) => ({
 })
 
 export default defineConfig(({ mode }) => {
+  const isDev = mode === 'development'
+
   const env = loadEnv(mode, process.cwd(), '')
   const buildArgs = parseBuildArgs(env)
   const rootDir = path.resolve(__dirname, 'src')
-  const isDev = env.NODE_ENV === 'development'
-  const skipOptimizations = isDev || env.npm_config_raw === 'true'
-  const useSourceMaps = isDev
-  const port = Number(env.PORT ?? 8080)
+  const skipOptimizations = mode === 'development' || env.npm_config_raw === 'true'
 
   return {
     base: buildArgs.BASE_PATH,
@@ -40,7 +39,7 @@ export default defineConfig(({ mode }) => {
       minify: skipOptimizations ? false : 'esbuild',
       outDir: path.resolve(__dirname, 'build'),
       reportCompressedSize: true,
-      sourcemap: useSourceMaps ? 'inline' : true,
+      sourcemap: isDev ? 'inline' : false,
       target: 'esnext',
     },
     css: {
@@ -74,6 +73,7 @@ export default defineConfig(({ mode }) => {
       },
     },
     define: {
+      'import.meta.env.DEBUG': JSON.stringify(env.DEBUG),
       ...Object.keys(buildArgs).reduce((acc, key) => ({
         ...acc,
         [`import.meta.env.${key}`]: JSON.stringify(buildArgs[key]),
@@ -102,7 +102,7 @@ export default defineConfig(({ mode }) => {
     },
     server: {
       host: 'localhost',
-      port,
+      port: Number(env.PORT ?? 8080),
     },
     test: {
       coverage: {

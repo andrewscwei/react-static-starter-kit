@@ -13,7 +13,6 @@ This is an experimental starter kit for a React static app.
 7. Custom i18n solution using [`sprintf-js`](https://www.npmjs.com/package/sprintf-js)
 8. Web workers
 9. CI/CD workflows with [GitHub Actions](https://github.com/features/actions)
-10. Code quality analysis with [SonarQube](https://www.sonarsource.com/products/sonarqube/)
 
 ## Usage
 

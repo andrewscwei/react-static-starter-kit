@@ -1,5 +1,17 @@
 import debug from 'debug'
 
+const DEBUG = typeof import.meta.env === 'undefined' ? process.env.DEBUG : import.meta.env.DEBUG
+const IS_DEV = typeof import.meta.env === 'undefined' ? process.env.NODE_ENV === 'development' : import.meta.env.DEV
+
+if (DEBUG || IS_DEV) {
+  if (typeof window !== 'undefined') {
+    window.localStorage.debug = IS_DEV ? 'app*' : DEBUG
+  }
+  else {
+    debug.enable(IS_DEV ? 'app*' : DEBUG)
+  }
+}
+
 /**
  * Returns an instance of {@link debug} decorated by the specified arguments.
  *
@@ -10,19 +22,12 @@ import debug from 'debug'
  * @returns A {@link debug} instance.
  */
 export function createDebug(subnamespace = '', thread: 'app' | 'server' | 'worker' = 'app') {
-  if (process.env.NODE_ENV !== 'development') {
-    return () => {}
+  const namespace = [thread, ...subnamespace.split(':').filter(Boolean)].join(':')
+
+  if (DEBUG || IS_DEV) {
+    return debug(namespace)
   }
   else {
-    const namespace = [thread, ...subnamespace.split(':').filter(Boolean)].join(':')
-
-    if (typeof window === 'undefined') {
-      debug.enable(namespace)
-    }
-    else {
-      window.localStorage.debug = [(window.localStorage.debug ?? ''), namespace].join(',')
-    }
-
-    return debug(namespace)
+    return () => {}
   }
 }
