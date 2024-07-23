@@ -11,8 +11,6 @@ import { App } from './ui/App.js'
 import WebWorker from './workers/web.js?worker'
 
 const debug = createDebug()
-const container = window.document.getElementById('root') ?? rethrow('Invalid application root')
-const localizedRoutes = generateLocalizedRoutes(routes, i18n)
 
 function work() {
   const worker = new WebWorker()
@@ -24,12 +22,18 @@ function work() {
   })
 }
 
-createRoot(container).render((
-  <App>
-    <RouterProvider router={createBrowserRouter(localizedRoutes, { basename: BASE_PATH })}/>
-  </App>
-))
+function render() {
+  const container = window.document.getElementById('root') ?? rethrow('Invalid application root')
+  const localizedRoutes = generateLocalizedRoutes(routes, i18n)
 
-debug('Initializing client...', 'OK')
+  createRoot(container).render((
+    <App>
+      <RouterProvider router={createBrowserRouter(localizedRoutes, { basename: BASE_PATH })}/>
+    </App>
+  ))
 
+  debug('Initializing client...', 'OK')
+}
+
+render()
 work()
