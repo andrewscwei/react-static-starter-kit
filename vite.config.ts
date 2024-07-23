@@ -28,13 +28,15 @@ export default defineConfig(({ mode }) => {
 
   const env = loadEnv(mode, process.cwd(), '')
   const buildArgs = parseBuildArgs(env)
-  const srcDir = path.resolve(__dirname, 'src')
+  const rootDir = path.resolve(__dirname, 'src')
   const outDir = path.resolve(__dirname, 'build')
   const skipOptimizations = isDev || env.npm_config_raw === 'true'
 
   return {
+    root: rootDir,
     base: buildArgs.BASE_PATH,
-    publicDir: path.resolve(srcDir, 'static'),
+    envDir: __dirname,
+    publicDir: path.resolve(rootDir, 'static'),
     build: {
       cssMinify: skipOptimizations ? false : 'esbuild',
       minify: skipOptimizations ? false : 'esbuild',
@@ -59,10 +61,10 @@ export default defineConfig(({ mode }) => {
           ...isDev ? [] : [
             PostCSSPurgeCSS({
               content: [
-                path.resolve(srcDir, '**/*.html'),
-                path.resolve(srcDir, '**/*.tsx'),
-                path.resolve(srcDir, '**/*.ts'),
-                path.resolve(srcDir, '**/*.module.css'),
+                path.resolve(rootDir, '**/*.html'),
+                path.resolve(rootDir, '**/*.tsx'),
+                path.resolve(rootDir, '**/*.ts'),
+                path.resolve(rootDir, '**/*.module.css'),
               ],
               safelist: [
                 /^_[A-Za-z0-9-_]{5}$/,
@@ -84,8 +86,7 @@ export default defineConfig(({ mode }) => {
       react(),
       createHtmlPlugin({
         minify: !skipOptimizations,
-        entry: path.resolve(srcDir, 'main.tsx'),
-        template: 'src/index.html',
+        entry: path.resolve(rootDir, 'main.tsx'),
         inject: {
           data: {
             ...buildArgs.DEFAULT_METADATA,
