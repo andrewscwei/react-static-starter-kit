@@ -29,7 +29,7 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
   const buildArgs = parseBuildArgs(env)
   const rootDir = path.resolve(__dirname, 'src')
-  const skipOptimizations = mode === 'development' || env.npm_config_raw === 'true'
+  const skipOptimizations = isDev || env.npm_config_raw === 'true'
 
   return {
     base: buildArgs.BASE_PATH,
