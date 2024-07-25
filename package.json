@@ -25,7 +25,7 @@
     "@testing-library/react": "^16.0.0",
     "@types/debug": "^4.1.12",
     "@types/html-minifier-terser": "^7.0.2",
-    "@types/node": "^20.14.11",
+    "@types/node": "^20.14.12",
     "@types/postcss-import": "^14.0.3",
     "@types/postcss-preset-env": "^8.0.0",
     "@types/react": "^18.3.3",

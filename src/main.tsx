@@ -1,6 +1,6 @@
 import { generateLocalizedRoutes } from '@lib/i18n/index.js'
-import { createDebug } from '@lib/utils/createDebug.js'
 import { rethrow } from '@lib/utils/rethrow.js'
+import debug from 'debug'
 import { createRoot } from 'react-dom/client'
 import { RouterProvider } from 'react-router'
 import { createBrowserRouter } from 'react-router-dom'
@@ -10,14 +10,16 @@ import { routes } from './routes.config.js'
 import { App } from './ui/App.js'
 import WebWorker from './workers/web.js?worker'
 
-const debug = createDebug()
+const log = debug('app')
+
+if (import.meta.env.DEV) window.localStorage.debug = 'app*'
 
 function work() {
   const worker = new WebWorker()
   worker.postMessage({ message: 'Marco' })
   worker.addEventListener('message', event => {
     const message = event.data.message
-    debug('Receiving message from worker...', 'OK', message)
+    log('Receiving message from worker...', 'OK', message)
     worker.terminate()
   })
 }
@@ -32,7 +34,7 @@ function render() {
     </App>
   ))
 
-  debug('Initializing client...', 'OK')
+  log('Initializing client...', 'OK')
 }
 
 render()

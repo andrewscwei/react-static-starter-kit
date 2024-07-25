@@ -76,7 +76,6 @@ export default defineConfig(({ mode }) => {
       },
     },
     define: {
-      'process.env.DEBUG': JSON.stringify(env.DEBUG),
       ...Object.keys(buildArgs).reduce((acc, key) => ({
         ...acc,
         [`import.meta.env.${key}`]: JSON.stringify(buildArgs[key]),
