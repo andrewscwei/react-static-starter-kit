@@ -12,6 +12,7 @@ const parseBuildArgs = (env: Record<string, string>) => ({
   BASE_PATH: env.BASE_PATH ?? '/',
   BASE_URL: env.BASE_URL ?? '',
   BUILD_NUMBER: env.BUILD_NUMBER ?? 'local',
+  DEBUG_MODE: env.DEBUG_MODE ?? '',
   DEFAULT_LOCALE: env.DEFAULT_LOCALE ?? 'en',
   DEFAULT_METADATA: {
     description: 'React static app starter kit',
