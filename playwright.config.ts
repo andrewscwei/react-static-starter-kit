@@ -31,7 +31,7 @@ export default defineConfig({
     use: { ...devices['iPhone 12'] },
   }],
   webServer: {
-    command: `npm run start:${process.env.RUNTIME || 'server'}`,
+    command: 'npm run start',
     url: `http://localhost:${PORT}`,
     reuseExistingServer: CI,
   },
