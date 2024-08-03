@@ -20,7 +20,6 @@ jobs:
         uses: andrewscwei/actions/node-build@v1
         with:
           prebuild-command: npm run test:unit
-          build-command: BUILD_NUMBER=${{ github.sha }} npm run build
           postbuild-command: npx playwright install --with-deps && npm test
   deploy:
     name: Deploy
@@ -50,6 +49,7 @@ jobs:
         env:
           BASE_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}
           BASE_PATH: /${{ github.event.repository.name }}/
+          BUILD_NUMBER: ${{ github.sha }}
         with:
           branch-name: gh-pages
           deploy-path: build
