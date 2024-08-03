@@ -9,8 +9,6 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
-    env:
-      BUILD_NUMBER: ${{ github.sha }}
     outputs:
       artifact-name: ${{ steps.build.outputs.artifact-name }}
       artifact-path: ${{ steps.build.outputs.artifact-path }}
@@ -22,7 +20,8 @@ jobs:
         uses: andrewscwei/actions/node-build@v1
         with:
           prebuild-command: npm run test:unit
-          postbuild-command: npx playwright install --with-deps && npm run test
+          build-command: BUILD_NUMBER=${{ github.sha }} npm run build
+          postbuild-command: npx playwright install --with-deps && npm test
   deploy:
     name: Deploy
     needs: [build]
