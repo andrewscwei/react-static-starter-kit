@@ -40,6 +40,7 @@ export default defineConfig(({ mode }) => {
     publicDir: path.resolve(rootDir, 'static'),
     build: {
       cssMinify: skipOptimizations ? false : 'esbuild',
+      emptyOutDir: false,
       minify: skipOptimizations ? false : 'esbuild',
       outDir,
       reportCompressedSize: true,
