@@ -9,6 +9,8 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
+    env:
+      BUILD_NUMBER: ${{ github.sha }}
     outputs:
       artifact-name: ${{ steps.build.outputs.artifact-name }}
       artifact-path: ${{ steps.build.outputs.artifact-path }}
