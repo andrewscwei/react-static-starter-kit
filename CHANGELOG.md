@@ -1,3 +1,15 @@
+# [18.0.0](https://github.com/andrewscwei/react-static-starter-kit/compare/v17.0.0...v18.0.0) (2024-09-05)
+
+
+### Features
+
+* Upgrade dependencies and remove Quote page ([3561f3b](https://github.com/andrewscwei/react-static-starter-kit/commit/3561f3ba6445c7d0e8ce03d07bb347241c22ee66))
+
+
+### BREAKING CHANGES
+
+* Removed Quote page
+
 # [17.0.0](https://github.com/andrewscwei/react-static-starter-kit/compare/v16.1.0...v17.0.0) (2024-08-03)
 
 
