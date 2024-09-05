@@ -33,7 +33,7 @@ $ npm run dev
 $ npm test
 
 # Run unit tests
-$ npm test:unit
+$ npm unit
 
 # Build for prod
 $ npm run build

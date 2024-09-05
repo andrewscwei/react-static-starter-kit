@@ -15,7 +15,7 @@ jobs:
         env:
           BUILD_NUMBER: ${{ github.sha }}
         with:
-          prebuild-command: npm run test:unit
+          prebuild-command: npm run unit
           postbuild-command: npx playwright install --with-deps && npm run test
   notify:
     name: Notify
