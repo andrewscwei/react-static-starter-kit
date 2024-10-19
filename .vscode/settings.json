@@ -1,6 +1,5 @@
 {
   "files.exclude": {
-    ".wrangler/": true,
     "coverage/": true,
     "test-results/": true
   }
