@@ -8,6 +8,10 @@ export function Footer({ ...props }: Readonly<Props>) {
   const ltxt = useLocalizedString()
   const changeLocale = useChangeLocale()
 
+  const foo = () => {
+    changeLocale('en')
+  }
+
   return (
     <footer {...props}>
       <nav>
@@ -23,7 +27,7 @@ export function Footer({ ...props }: Readonly<Props>) {
         aria-label={ltxt('en')}
         className='icon'
         style={{ background: 'var(--color-dark-grey)' }}
-        onClick={() => changeLocale('en')}
+        onClick={() => foo()}
       >
         {ltxt('en')}
       </button>
