@@ -5,7 +5,7 @@ This is an experimental starter kit for a React static app.
 ## Features
 
 1. [React Router](https://reacttraining.com/react-router/)
-2. [CSS Modules](https://github.com/css-modules/css-modules) + [PostCSS](https://postcss.org/) + [PurgeCSS](https://purgecss.com/) + [StyleLint](https://stylelint.io/)
+2. [PostCSS](https://postcss.org/) + [StyleLint](https://stylelint.io/)
 3. [TypeScript](https://www.typescriptlang.org/) + [ESLint](https://eslint.org/)
 4. [Vite](https://vitejs.dev/)
 5. [Vitest](https://vitest.dev/)/[React Testing Library](https://testing-library.com/docs/react-testing-library/) for unit testing
@@ -52,6 +52,6 @@ When using `react-static-starter-kit` as a template, follow these steps to strip
 2. Edit `README.md`
 3. Edit fields in `package.json`
 4. Edit fields in `app.config.ts`
-5. Edit resources in `res/`, then ensure to replace the generated assets in `src/public/`
+5. Edit resources in `res/`, then ensure to replace the generated assets in `src/static/`
 6. Edit files in `src/ui/`
 7. Edit translations in `src/locales/`
