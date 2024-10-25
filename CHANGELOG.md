@@ -1,20 +1,3 @@
-# [19.0.0](https://github.com/andrewscwei/react-static-starter-kit/compare/v18.0.0...v19.0.0) (2024-10-22)
-
-
-### Bug Fixes
-
-* Remove temporary code in footer ([3251ee2](https://github.com/andrewscwei/react-static-starter-kit/commit/3251ee20b7125c28b9252fa83789bfbf32e84517))
-
-
-### Features
-
-* Remove CSS modules ([5ff3c27](https://github.com/andrewscwei/react-static-starter-kit/commit/5ff3c2786d30a055a71edece0e996f5cd73f9e10))
-
-
-### BREAKING CHANGES
-
-* Boilerplate no longer has any references to CSS modules
-
 # [18.0.0](https://github.com/andrewscwei/react-static-starter-kit/compare/v17.0.0...v18.0.0) (2024-09-05)
 
 ### Features
