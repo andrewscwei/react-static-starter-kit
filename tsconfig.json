@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
     "jsx": "react-jsx",
     "lib": [
       "DOM.Iterable",
@@ -24,8 +25,8 @@
     ]
   },
   "exclude": [
-    "node_modules",
-    "build"
+    "build",
+    "node_modules"
   ],
   "include": [
     "lib",
