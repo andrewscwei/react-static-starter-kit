@@ -1,0 +1,1 @@
+import{j as n}from"./index-o-RuUBvp.js";import{u as o,a as e}from"./useMeta-Ddo8zHB9.js";function s(){const t=o();return e({title:t("window-title-not-found")}),n.jsx("main",{children:n.jsx("h1",{children:t("not-found-title")})})}export{s as Component};
