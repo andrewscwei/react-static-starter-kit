@@ -1,3 +1,15 @@
+# [20.0.0](https://github.com/andrewscwei/react-static-starter-kit/compare/v19.0.0...v20.0.0) (2024-12-19)
+
+
+### Build System
+
+* Upgrade dependencies ([7c3ed3f](https://github.com/andrewscwei/react-static-starter-kit/commit/7c3ed3ffb80b7fea7a0854b71eb36cdca5c50fad))
+
+
+### BREAKING CHANGES
+
+* Upgraded to React v19 and React Router v7
+
 # [19.0.0](https://github.com/andrewscwei/react-static-starter-kit/compare/v18.0.0...v19.0.0) (2024-10-25)
 
 
