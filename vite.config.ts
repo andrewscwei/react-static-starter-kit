@@ -1,9 +1,8 @@
 import react from '@vitejs/plugin-react'
 import autoprefixer from 'autoprefixer'
 import path from 'node:path'
-import { loadEnv } from 'vite'
+import { defineConfig, loadEnv } from 'vite'
 import { createHtmlPlugin } from 'vite-plugin-html'
-import { defineConfig } from 'vitest/config'
 import packageInfo from './package.json'
 
 const parseBuildArgs = (env: Record<string, string>) => ({
@@ -35,7 +34,7 @@ export default defineConfig(({ mode }) => {
     root: rootDir,
     base: buildArgs.BASE_PATH,
     envDir: __dirname,
-    publicDir: path.resolve(rootDir, 'static'),
+    publicDir: path.resolve(__dirname, 'static'),
     build: {
       cssMinify: skipOptimizations ? false : 'esbuild',
       emptyOutDir: false,
