@@ -1,22 +1,25 @@
 import react from '@vitejs/plugin-react'
-import path from 'node:path'
-import { defineConfig, loadEnv } from 'vite'
-import { createHtmlPlugin } from 'vite-plugin-html'
+import { render } from 'ejs'
+import { minify } from 'html-minifier-terser'
+import { readFile, readdir, writeFile } from 'node:fs/promises'
+import { extname, join, resolve } from 'node:path'
+import { defineConfig, loadEnv, type Plugin } from 'vite'
 import packageInfo from './package.json'
 
 export default defineConfig(({ mode }) => {
   const isDev = mode === 'development'
   const env = loadEnv(mode, process.cwd(), '')
-  const buildArgs = parseBuildArgs(env)
-  const rootDir = path.resolve(__dirname, 'src')
-  const outDir = path.resolve(__dirname, 'build')
+  const args = defineArgs(env)
+  const rootDir = resolve(__dirname, 'src')
+  const outDir = resolve(__dirname, 'build')
+  const publicDir = resolve(__dirname, 'static')
   const skipOptimizations = isDev || env.npm_config_raw === 'true'
 
   return {
     root: rootDir,
-    base: buildArgs.BASE_PATH,
+    base: args.BASE_PATH,
     envDir: __dirname,
-    publicDir: path.resolve(__dirname, 'static'),
+    publicDir,
     build: {
       cssMinify: skipOptimizations ? false : 'esbuild',
       emptyOutDir: false,
@@ -27,28 +30,18 @@ export default defineConfig(({ mode }) => {
       target: 'esnext',
     },
     define: {
-      ...Object.keys(buildArgs).reduce((acc, key) => ({
+      ...Object.keys(args).reduce((acc, key) => ({
         ...acc,
-        [`import.meta.env.${key}`]: JSON.stringify(buildArgs[key]),
+        [`import.meta.env.${key}`]: JSON.stringify(args[key]),
       }), {}),
     },
     plugins: [
       react(),
-      createHtmlPlugin({
-        minify: !skipOptimizations,
-        entry: path.resolve(rootDir, 'main.tsx'),
-        inject: {
-          data: {
-            ...buildArgs.DEFAULT_METADATA,
-            locale: buildArgs.DEFAULT_LOCALE,
-            resolveURL: (subpath: string) => path.join(buildArgs.BASE_URL, subpath),
-          },
-        },
-      }),
+      ejs({ args, outDir, skipOptimizations }),
     ],
     resolve: {
       alias: {
-        '@lib': path.resolve(__dirname, 'lib'),
+        '@lib': resolve(__dirname, 'lib'),
       },
     },
     server: {
@@ -71,20 +64,59 @@ export default defineConfig(({ mode }) => {
   }
 })
 
-function parseBuildArgs(env: Record<string, string>) {
-  return {
-    BASE_PATH: env.BASE_PATH ?? '/',
-    BASE_URL: env.BASE_URL ?? '',
-    BUILD_NUMBER: env.BUILD_NUMBER ?? 'local',
-    DEBUG_MODE: env.DEBUG_MODE ?? '',
-    DEFAULT_LOCALE: env.DEFAULT_LOCALE ?? 'en',
-    DEFAULT_METADATA: {
-      canonicalURL: env.BASE_URL ?? '',
-      description: 'React static app starter kit',
-      maskIconColor: '#000',
-      themeColor: '#15141a',
-      title: 'React Static Starter Kit',
-    },
-    VERSION: packageInfo.version,
-  }
-}
+const defineArgs = (env: Record<string, string>) => ({
+  BASE_PATH: env.BASE_PATH ?? '/',
+  BASE_URL: env.BASE_URL ?? '',
+  BUILD_NUMBER: env.BUILD_NUMBER ?? 'local',
+  DEBUG_MODE: env.DEBUG_MODE ?? '',
+  DEFAULT_LOCALE: env.DEFAULT_LOCALE ?? 'en',
+  DEFAULT_METADATA: {
+    canonicalURL: env.BASE_URL ?? '',
+    description: 'React static app starter kit',
+    maskIconColor: '#000',
+    themeColor: '#15141a',
+    title: 'React Static Starter Kit',
+  },
+  VERSION: packageInfo.version,
+})
+
+const ejs = ({ args, outDir, skipOptimizations }): Plugin => ({
+  name: 'ejs',
+  transformIndexHtml: {
+    order: 'pre',
+    handler: async html => render(html, {
+      ...args.DEFAULT_METADATA,
+      locale: args.DEFAULT_LOCALE,
+      resolveURL: (path: string) => join(args.BASE_URL, path),
+    }),
+  },
+  closeBundle: async () => {
+    if (skipOptimizations === true) return
+
+    let files: string[]
+
+    try {
+      files = await readdir(outDir, { recursive: true })
+    }
+    catch {
+      console.warn('Minifying HTML...', 'SKIP', `No directory found at '${outDir}'`)
+      return
+    }
+
+    await Promise.all(files.map(async file => {
+      if (extname(file) !== '.html') return
+
+      const filePath = resolve(outDir, file)
+      const input = await readFile(filePath, 'utf8')
+      const output = await minify(input, {
+        collapseWhitespace: true,
+        removeRedundantAttributes: true,
+        removeScriptTypeAttributes: true,
+        removeStyleLinkTypeAttributes: true,
+        useShortDoctype: true,
+      })
+
+      await writeFile(filePath, output, 'utf8')
+    }))
+  },
+})
