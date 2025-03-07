@@ -1,29 +1,11 @@
 import react from '@vitejs/plugin-react'
-import autoprefixer from 'autoprefixer'
 import path from 'node:path'
 import { defineConfig, loadEnv } from 'vite'
 import { createHtmlPlugin } from 'vite-plugin-html'
 import packageInfo from './package.json'
 
-const parseBuildArgs = (env: Record<string, string>) => ({
-  BASE_PATH: env.BASE_PATH ?? '/',
-  BASE_URL: env.BASE_URL ?? '',
-  BUILD_NUMBER: env.BUILD_NUMBER ?? 'local',
-  DEBUG_MODE: env.DEBUG_MODE ?? '',
-  DEFAULT_LOCALE: env.DEFAULT_LOCALE ?? 'en',
-  DEFAULT_METADATA: {
-    description: 'React static app starter kit',
-    maskIconColor: '#000',
-    themeColor: '#15141a',
-    title: 'React Static Starter Kit',
-    url: env.BASE_URL ?? '',
-  },
-  VERSION: packageInfo.version,
-})
-
 export default defineConfig(({ mode }) => {
   const isDev = mode === 'development'
-
   const env = loadEnv(mode, process.cwd(), '')
   const buildArgs = parseBuildArgs(env)
   const rootDir = path.resolve(__dirname, 'src')
@@ -43,13 +25,6 @@ export default defineConfig(({ mode }) => {
       reportCompressedSize: true,
       sourcemap: isDev ? 'inline' : false,
       target: 'esnext',
-    },
-    css: {
-      postcss: {
-        plugins: [
-          autoprefixer(),
-        ],
-      },
     },
     define: {
       ...Object.keys(buildArgs).reduce((acc, key) => ({
@@ -95,3 +70,21 @@ export default defineConfig(({ mode }) => {
     },
   }
 })
+
+function parseBuildArgs(env: Record<string, string>) {
+  return {
+    BASE_PATH: env.BASE_PATH ?? '/',
+    BASE_URL: env.BASE_URL ?? '',
+    BUILD_NUMBER: env.BUILD_NUMBER ?? 'local',
+    DEBUG_MODE: env.DEBUG_MODE ?? '',
+    DEFAULT_LOCALE: env.DEFAULT_LOCALE ?? 'en',
+    DEFAULT_METADATA: {
+      canonicalURL: env.BASE_URL ?? '',
+      description: 'React static app starter kit',
+      maskIconColor: '#000',
+      themeColor: '#15141a',
+      title: 'React Static Starter Kit',
+    },
+    VERSION: packageInfo.version,
+  }
+}
