@@ -1,6 +1,5 @@
 import { generateLocalizedRoutes } from '@lib/i18n/index.js'
 import { debug } from '@lib/utils/debug.js'
-import { rethrow } from '@lib/utils/rethrow.js'
 import { createRoot } from 'react-dom/client'
 import { createBrowserRouter } from 'react-router'
 import { RouterProvider } from 'react-router/dom'
@@ -21,7 +20,10 @@ function work() {
 }
 
 function render() {
-  const container = window.document.getElementById('root') ?? rethrow('Invalid application root')
+  const container = window.document.getElementById('root')
+
+  if (!container) throw Error('Invalid application root')
+
   const localizedRoutes = generateLocalizedRoutes(routes, i18n)
 
   createRoot(container).render((
