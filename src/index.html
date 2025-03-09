@@ -1,41 +1,41 @@
+<%
+  const title = 'React Static Starter Kit'
+  const description = 'React static app starter kit'
+-%>
 <!DOCTYPE html>
-<html lang="<%- locale %>">
+<html lang="%DEFAULT_LOCALE%">
   <head>
     <meta charset="utf-8" />
-    <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=2.0,viewport-fit=cover" />
-    <meta name="description" content="<%- description %>" />
+    <meta name="description" content="<%= description %>" />
+    <meta name="theme-color" content="#15141a" />
 
-    <title><%- title %></title>
+    <title><%= title %></title>
 
-    <% if (canonicalURL) { %>
-    <link rel="canonical" href="<%- canonicalURL %>" />
-    <% } %>
-    <link rel="mask-icon" type="image/svg+xml" href="/mask-icon.svg" color="<%- maskIconColor %>" />
+    <link rel="mask-icon" type="image/svg+xml" href="/mask-icon.svg" color="#000" />
     <link rel="alternate icon" type="image/png" href="/favicon.png" />
     <link rel="icon" type="image/x-icon" href="/favicon.svg" />
     <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
-    <meta name="theme-color" content="<%- themeColor %>" />
+
+    <link rel="canonical" href="%BASE_URL%" />
 
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-    <meta name="apple-mobile-web-app-title" content="<%- title %>" />
+    <meta name="apple-mobile-web-app-title" content="<%= title %>" />
     <link rel="apple-touch-icon" type="image/png" href="/app-icon-180.png" sizes="180x180" />
 
-    <meta property="og:site_name" content="<%- title %>" />
+    <meta property="og:site_name" content="<%= title %>" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="<%- title %>" />
-    <meta property="og:description" content="<%- description %>" />
-    <% if (canonicalURL) { %>
-    <meta property="og:url" content="<%- canonicalURL %>" />
-    <% } %>
-    <meta property="og:image" content="<%- resolveURL('/og-image.png') %>" />
-    <meta property="og:image:alt" content="<%- description %>" />
+    <meta property="og:title" content="<%= title %>" />
+    <meta property="og:description" content="<%= description %>" />
+    <meta property="og:url" content="%BASE_URL%" />
+    <meta property="og:image" content="%BASE_URL%/og-image.png" />
+    <meta property="og:image:alt" content="<%= description %>" />
 
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="<%- title %>" />
-    <meta name="twitter:description" content="<%- description %>" />
-    <meta name="twitter:image" content="<%- resolveURL('/twitter-card.png') %>" />
+    <meta name="twitter:title" content="<%= title %>" />
+    <meta name="twitter:description" content="<%= description %>" />
+    <meta name="twitter:image" content="%BASE_URL%/twitter-card.png" />
 
     <link rel="manifest" href="/manifest.json" />
   </head>

@@ -2,7 +2,7 @@ import react from '@vitejs/plugin-react'
 import { render } from 'ejs'
 import { minify } from 'html-minifier-terser'
 import { readFile, readdir, writeFile } from 'node:fs/promises'
-import { extname, join, resolve } from 'node:path'
+import { extname, resolve } from 'node:path'
 import { defineConfig, loadEnv, type Plugin } from 'vite'
 import packageInfo from './package.json'
 
@@ -30,14 +30,14 @@ export default defineConfig(({ mode }) => {
       target: 'esnext',
     },
     define: {
-      ...Object.keys(args).reduce((acc, key) => ({
+      ...Object.entries(args).reduce((acc, [key, value]) => ({
         ...acc,
-        [`import.meta.env.${key}`]: JSON.stringify(args[key]),
+        [`import.meta.env.${key}`]: JSON.stringify(value),
       }), {}),
     },
     plugins: [
       react(),
-      ejs({ args, outDir, skipOptimizations }),
+      ejs({ outDir, skipOptimizations }),
     ],
     resolve: {
       alias: {
@@ -66,29 +66,18 @@ export default defineConfig(({ mode }) => {
 
 const defineArgs = (env: Record<string, string>) => ({
   BASE_PATH: env.BASE_PATH ?? '/',
-  BASE_URL: env.BASE_URL ?? '',
+  BASE_URL: (env.BASE_URL ?? '').replace(/\/+$/, ''),
   BUILD_NUMBER: env.BUILD_NUMBER ?? 'local',
-  DEBUG_MODE: env.DEBUG_MODE ?? '',
+  DEBUG: env.DEBUG ?? '',
   DEFAULT_LOCALE: env.DEFAULT_LOCALE ?? 'en',
-  DEFAULT_METADATA: {
-    canonicalURL: env.BASE_URL ?? '',
-    description: 'React static app starter kit',
-    maskIconColor: '#000',
-    themeColor: '#15141a',
-    title: 'React Static Starter Kit',
-  },
   VERSION: packageInfo.version,
 })
 
-const ejs = ({ args, outDir, skipOptimizations }): Plugin => ({
+const ejs = ({ outDir, skipOptimizations }): Plugin => ({
   name: 'ejs',
   transformIndexHtml: {
     order: 'pre',
-    handler: async html => render(html, {
-      ...args.DEFAULT_METADATA,
-      locale: args.DEFAULT_LOCALE,
-      resolveURL: (path: string) => join(args.BASE_URL, path),
-    }),
+    handler: render,
   },
   closeBundle: async () => {
     if (skipOptimizations === true) return
