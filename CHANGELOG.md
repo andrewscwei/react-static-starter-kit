@@ -1,3 +1,10 @@
+# [21.1.0](https://github.com/andrewscwei/react-static-starter-kit/compare/v21.0.0...v21.1.0) (2025-03-09)
+
+
+### Features
+
+* Minimize dependencies in libs ([7ff12c9](https://github.com/andrewscwei/react-static-starter-kit/commit/7ff12c923ebd7ba34adb6b5823d9d47210cdecc7))
+
 # [21.0.0](https://github.com/andrewscwei/react-static-starter-kit/compare/v20.0.0...v21.0.0) (2025-03-09)
 
 
