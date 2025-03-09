@@ -13,9 +13,9 @@
     "noImplicitAny": true,
     "outDir": "./build",
     "paths": {
-      "@lib/*": [
-        "./lib/*"
-      ]
+      "@lib/debug": ["./lib/debug/index"],
+      "@lib/dom": ["./lib/dom/index"],
+      "@lib/i18n": ["./lib/i18n/index"]
     },
     "skipLibCheck": true,
     "strict": true,

@@ -6,6 +6,15 @@ import { extname, resolve } from 'node:path'
 import { defineConfig, loadEnv, type Plugin } from 'vite'
 import packageInfo from './package.json'
 
+const defineArgs = (env: Record<string, string>) => ({
+  BASE_PATH: env.BASE_PATH ?? '/',
+  BASE_URL: (env.BASE_URL ?? '').replace(/\/+$/, ''),
+  BUILD_NUMBER: env.BUILD_NUMBER ?? 'local',
+  DEBUG: env.DEBUG ?? '',
+  DEFAULT_LOCALE: env.DEFAULT_LOCALE ?? 'en',
+  VERSION: packageInfo.version,
+})
+
 export default defineConfig(({ mode }) => {
   const isDev = mode === 'development'
   const env = loadEnv(mode, process.cwd(), '')
@@ -64,48 +73,41 @@ export default defineConfig(({ mode }) => {
   }
 })
 
-const defineArgs = (env: Record<string, string>) => ({
-  BASE_PATH: env.BASE_PATH ?? '/',
-  BASE_URL: (env.BASE_URL ?? '').replace(/\/+$/, ''),
-  BUILD_NUMBER: env.BUILD_NUMBER ?? 'local',
-  DEBUG: env.DEBUG ?? '',
-  DEFAULT_LOCALE: env.DEFAULT_LOCALE ?? 'en',
-  VERSION: packageInfo.version,
-})
+function ejs({ outDir, skipOptimizations }): Plugin {
+  return {
+    name: 'ejs',
+    transformIndexHtml: {
+      order: 'pre',
+      handler: render,
+    },
+    closeBundle: async () => {
+      if (skipOptimizations === true) return
 
-const ejs = ({ outDir, skipOptimizations }): Plugin => ({
-  name: 'ejs',
-  transformIndexHtml: {
-    order: 'pre',
-    handler: render,
-  },
-  closeBundle: async () => {
-    if (skipOptimizations === true) return
+      let files: string[]
 
-    let files: string[]
+      try {
+        files = await readdir(outDir, { recursive: true })
+      }
+      catch {
+        console.warn('Minifying HTML...', 'SKIP', `No directory found at '${outDir}'`)
+        return
+      }
 
-    try {
-      files = await readdir(outDir, { recursive: true })
-    }
-    catch {
-      console.warn('Minifying HTML...', 'SKIP', `No directory found at '${outDir}'`)
-      return
-    }
+      await Promise.all(files.map(async file => {
+        if (extname(file) !== '.html') return
 
-    await Promise.all(files.map(async file => {
-      if (extname(file) !== '.html') return
+        const filePath = resolve(outDir, file)
+        const input = await readFile(filePath, 'utf8')
+        const output = await minify(input, {
+          collapseWhitespace: true,
+          removeRedundantAttributes: true,
+          removeScriptTypeAttributes: true,
+          removeStyleLinkTypeAttributes: true,
+          useShortDoctype: true,
+        })
 
-      const filePath = resolve(outDir, file)
-      const input = await readFile(filePath, 'utf8')
-      const output = await minify(input, {
-        collapseWhitespace: true,
-        removeRedundantAttributes: true,
-        removeScriptTypeAttributes: true,
-        removeStyleLinkTypeAttributes: true,
-        useShortDoctype: true,
-      })
-
-      await writeFile(filePath, output, 'utf8')
-    }))
-  },
-})
+        await writeFile(filePath, output, 'utf8')
+      }))
+    },
+  }
+}

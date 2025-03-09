@@ -1,5 +1,5 @@
-import { generateLocalizedRoutes } from '@lib/i18n/index.js'
-import { debug } from '@lib/utils/debug.js'
+import { debug } from '@lib/debug'
+import { generateLocalizedRoutes } from '@lib/i18n'
 import { createRoot } from 'react-dom/client'
 import { createBrowserRouter } from 'react-router'
 import { RouterProvider } from 'react-router/dom'
