@@ -1,3 +1,23 @@
+# [21.0.0](https://github.com/andrewscwei/react-static-starter-kit/compare/v20.0.0...v21.0.0) (2025-03-09)
+
+
+### Build System
+
+* Upgrade build pipeline ([50220d0](https://github.com/andrewscwei/react-static-starter-kit/commit/50220d0195cc8affc6f450bcae44edc7a41d989a))
+
+
+### Features
+
+* Improve data injection ([245dfb9](https://github.com/andrewscwei/react-static-starter-kit/commit/245dfb935cd5d7b1938b5998ca63291043898632))
+* Improve handling of meta tags ([86eca93](https://github.com/andrewscwei/react-static-starter-kit/commit/86eca937681fe880a9956fedf51fa8a5e5331f41))
+* Optimize meta tag replacements ([39d60ea](https://github.com/andrewscwei/react-static-starter-kit/commit/39d60eae44eafb6105939b1902aff8fa996c700a))
+* Optimize static files ([6bdfc30](https://github.com/andrewscwei/react-static-starter-kit/commit/6bdfc30ef6c6f3c789741fe6c2bc44af7316034a))
+
+
+### BREAKING CHANGES
+
+* Lib API changes
+
 # [20.0.0](https://github.com/andrewscwei/react-static-starter-kit/compare/v19.0.0...v20.0.0) (2024-12-19)
 
 
