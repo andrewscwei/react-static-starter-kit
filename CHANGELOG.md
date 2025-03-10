@@ -1,3 +1,16 @@
+# [22.0.0](https://github.com/andrewscwei/react-static-starter-kit/compare/v21.1.0...v22.0.0) (2025-03-10)
+
+
+### Features
+
+* Optimize lib ([41ed0dc](https://github.com/andrewscwei/react-static-starter-kit/commit/41ed0dc9ee6218059b37972cce92abf900438e47))
+
+
+### BREAKING CHANGES
+
+* Renamed lib/utils to lib/debug
+* Removed joinURL
+
 # [21.1.0](https://github.com/andrewscwei/react-static-starter-kit/compare/v21.0.0...v21.1.0) (2025-03-09)
 
 
