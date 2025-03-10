@@ -14,8 +14,8 @@
     "outDir": "./build",
     "paths": {
       "@lib/debug": ["./lib/debug/index"],
-      "@lib/dom": ["./lib/dom/index"],
-      "@lib/i18n": ["./lib/i18n/index"]
+      "@lib/i18n": ["./lib/i18n/index"],
+      "@lib/meta": ["./lib/meta/index"]
     },
     "skipLibCheck": true,
     "strict": true,
