@@ -37,6 +37,9 @@ export default defineConfig(({ mode }) => {
       reportCompressedSize: true,
       sourcemap: isDev ? 'inline' : false,
       target: 'esnext',
+      rollupOptions: {
+        treeshake: 'smallest',
+      },
     },
     define: {
       ...Object.entries(args).reduce((acc, [key, value]) => ({
