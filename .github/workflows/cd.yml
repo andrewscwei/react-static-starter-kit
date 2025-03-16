@@ -53,7 +53,7 @@ jobs:
           BUILD_NUMBER: ${{ github.sha }}
         with:
           branch-name: gh-pages
-          deploy-path: build
+          deploy-path: build/${{ github.event.repository.name }}
           predeploy-command: npm run build
   notify:
     name: Notify
