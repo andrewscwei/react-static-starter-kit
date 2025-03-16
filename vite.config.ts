@@ -1,12 +1,14 @@
+/* eslint-disable no-console */
+
 import react from '@vitejs/plugin-react'
 import { render } from 'ejs'
 import { minify } from 'html-minifier-terser'
 import { readFile, readdir, writeFile } from 'node:fs/promises'
-import { extname, resolve } from 'node:path'
+import { extname, join, resolve } from 'node:path'
 import { defineConfig, loadEnv, type Plugin } from 'vite'
 import packageInfo from './package.json'
 
-const defineArgs = (env: Record<string, string>) => ({
+const defineArgs = (env: ReturnType<typeof loadEnv>) => ({
   BASE_PATH: env.BASE_PATH ?? '/',
   BASE_URL: (env.BASE_URL ?? '').replace(/\/+$/, ''),
   BUILD_NUMBER: env.BUILD_NUMBER ?? 'local',
@@ -16,13 +18,15 @@ const defineArgs = (env: Record<string, string>) => ({
 })
 
 export default defineConfig(({ mode }) => {
-  const isDev = mode === 'development'
   const env = loadEnv(mode, process.cwd(), '')
   const args = defineArgs(env)
+  const isDev = mode === 'development'
   const rootDir = resolve(__dirname, 'src')
-  const outDir = resolve(__dirname, 'build')
+  const outDir = resolve(__dirname, join('build', args.BASE_PATH))
   const publicDir = resolve(__dirname, 'static')
   const skipOptimizations = isDev || env.npm_config_raw === 'true'
+
+  printArgs(args)
 
   return {
     root: rootDir,
@@ -30,13 +34,9 @@ export default defineConfig(({ mode }) => {
     envDir: __dirname,
     publicDir,
     build: {
-      cssMinify: skipOptimizations ? false : 'esbuild',
       emptyOutDir: false,
       minify: skipOptimizations ? false : 'esbuild',
       outDir,
-      reportCompressedSize: true,
-      sourcemap: isDev ? 'inline' : false,
-      target: 'esnext',
       rollupOptions: {
         treeshake: 'smallest',
       },
@@ -57,7 +57,7 @@ export default defineConfig(({ mode }) => {
       },
     },
     server: {
-      host: 'localhost',
+      host: '0.0.0.0',
       port: Number(env.PORT ?? 8080),
     },
     test: {
@@ -75,6 +75,17 @@ export default defineConfig(({ mode }) => {
     },
   }
 })
+
+function printArgs(args: ReturnType<typeof defineArgs>) {
+  const resetColor = '\x1b[0m'
+  const magentaColor = '\x1b[35m'
+  const greenColor = '\x1b[32m'
+
+  console.log(`${greenColor}Build args:${resetColor}`)
+  Object.entries(args).forEach(([key, value]) => {
+    console.log(`${magentaColor}${key}${resetColor}: ${JSON.stringify(value)}`)
+  })
+}
 
 function ejs({ outDir, skipOptimizations }): Plugin {
   return {
