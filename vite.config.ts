@@ -86,7 +86,7 @@ function printArgs(args: ReturnType<typeof defineArgs>) {
   })
 }
 
-function template({ outDir, skipOptimizations }): Plugin {
+function template({ outDir, skipOptimizations }: { outDir: string; skipOptimizations: boolean }): Plugin {
   return {
     name: 'template',
     transformIndexHtml: {
