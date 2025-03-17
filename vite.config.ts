@@ -9,7 +9,7 @@ import { defineConfig, loadEnv, type Plugin } from 'vite'
 import packageInfo from './package.json'
 
 const defineArgs = (env: ReturnType<typeof loadEnv>) => ({
-  BASE_PATH: env.BASE_PATH ?? '/',
+  BASE_PATH: join('/', (env.BASE_PATH ?? '/').replace(/\/+$/, '')),
   BASE_URL: (env.BASE_URL ?? '').replace(/\/+$/, ''),
   BUILD_NUMBER: env.BUILD_NUMBER ?? 'local',
   DEBUG: env.DEBUG ?? '',
