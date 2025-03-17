@@ -22,7 +22,7 @@ export default defineConfig(({ mode }) => {
   const args = defineArgs(env)
   const isDev = mode === 'development'
   const rootDir = resolve(__dirname, 'src')
-  const outDir = resolve(__dirname, join('build', args.BASE_PATH))
+  const outDir = resolve(__dirname, 'build')
   const publicDir = resolve(__dirname, 'static')
   const skipOptimizations = isDev || env.npm_config_raw === 'true'
 
@@ -36,7 +36,7 @@ export default defineConfig(({ mode }) => {
     build: {
       emptyOutDir: false,
       minify: skipOptimizations ? false : 'esbuild',
-      outDir,
+      outDir: join(outDir, args.BASE_PATH),
       rollupOptions: {
         treeshake: 'smallest',
       },
