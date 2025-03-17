@@ -49,7 +49,7 @@ export default defineConfig(({ mode }) => {
     },
     plugins: [
       react(),
-      ejs({ outDir, skipOptimizations }),
+      template({ outDir, skipOptimizations }),
     ],
     resolve: {
       alias: {
@@ -77,35 +77,26 @@ export default defineConfig(({ mode }) => {
 })
 
 function printArgs(args: ReturnType<typeof defineArgs>) {
-  const resetColor = '\x1b[0m'
-  const magentaColor = '\x1b[35m'
-  const greenColor = '\x1b[32m'
+  const green = (text: string) => `\x1b[32m${text}\x1b[0m`
+  const magenta = (text: string) => `\x1b[35m${text}\x1b[0m`
 
-  console.log(`${greenColor}Build args:${resetColor}`)
+  console.log(green('Build args:'))
   Object.entries(args).forEach(([key, value]) => {
-    console.log(`${magentaColor}${key}${resetColor}: ${JSON.stringify(value)}`)
+    console.log(`${magenta(key)}: ${JSON.stringify(value)}`)
   })
 }
 
-function ejs({ outDir, skipOptimizations }): Plugin {
+function template({ outDir, skipOptimizations }): Plugin {
   return {
-    name: 'ejs',
+    name: 'template',
     transformIndexHtml: {
       order: 'pre',
       handler: render,
     },
-    closeBundle: async () => {
+    writeBundle: async () => {
       if (skipOptimizations === true) return
 
-      let files: string[]
-
-      try {
-        files = await readdir(outDir, { recursive: true })
-      }
-      catch {
-        console.warn('Minifying HTML...', 'SKIP', `No directory found at '${outDir}'`)
-        return
-      }
+      const files = await readdir(outDir, { recursive: true })
 
       await Promise.all(files.map(async file => {
         if (extname(file) !== '.html') return
