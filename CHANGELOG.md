@@ -1,3 +1,10 @@
+# [22.1.0](https://github.com/andrewscwei/react-static-starter-kit/compare/v22.0.0...v22.1.0) (2025-03-27)
+
+
+### Features
+
+* Improve parsing of locales folder ([7d8a858](https://github.com/andrewscwei/react-static-starter-kit/commit/7d8a85816f4615c9c082d1eaf18975190c62d581))
+
 # [22.0.0](https://github.com/andrewscwei/react-static-starter-kit/compare/v21.1.0...v22.0.0) (2025-03-17)
 
 
