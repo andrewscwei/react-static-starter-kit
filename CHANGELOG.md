@@ -1,3 +1,15 @@
+# [23.0.0](https://github.com/andrewscwei/react-static-starter-kit/compare/v22.1.0...v23.0.0) (2025-05-07)
+
+
+### Build System
+
+* Remove barrel exports from lib ([1d87ea2](https://github.com/andrewscwei/react-static-starter-kit/commit/1d87ea27fa807f6865fa3e572e159745a85bf884))
+
+
+### BREAKING CHANGES
+
+* Removed barrel exports from lib
+
 # [22.1.0](https://github.com/andrewscwei/react-static-starter-kit/compare/v22.0.0...v22.1.0) (2025-03-27)
 
 
