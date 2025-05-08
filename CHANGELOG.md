@@ -1,3 +1,10 @@
+## [23.0.1](https://github.com/andrewscwei/react-static-starter-kit/compare/v23.0.0...v23.0.1) (2025-05-08)
+
+
+### Bug Fixes
+
+* Only show display names of I18nProvder and MetaProvider in development ([3535ad8](https://github.com/andrewscwei/react-static-starter-kit/commit/3535ad8d957a59907c8d6e94111ee45b1e23b8cb))
+
 # [23.0.0](https://github.com/andrewscwei/react-static-starter-kit/compare/v22.1.0...v23.0.0) (2025-05-07)
 
 
