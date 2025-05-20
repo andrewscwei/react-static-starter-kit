@@ -1,3 +1,10 @@
+## [23.0.2](https://github.com/andrewscwei/react-static-starter-kit/compare/v23.0.1...v23.0.2) (2025-05-20)
+
+
+### Bug Fixes
+
+* Replace section with div ([acf5483](https://github.com/andrewscwei/react-static-starter-kit/commit/acf54835b5519d5f922ad3510a55526f1dac9228))
+
 ## [23.0.1](https://github.com/andrewscwei/react-static-starter-kit/compare/v23.0.0...v23.0.1) (2025-05-08)
 
 
