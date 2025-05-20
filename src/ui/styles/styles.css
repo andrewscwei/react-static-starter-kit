@@ -123,7 +123,7 @@ pre {
   overflow: scroll;
 }
 
-section {
+div {
   align-items: flex-start;
   box-sizing: border-box;
   color: var(--light-grey);
@@ -194,7 +194,7 @@ nav {
     flex-flow: column nowrap;
     max-width: 37rem;
 
-    > section {
+    > div {
       align-items: center;
       text-align: center;
     }
