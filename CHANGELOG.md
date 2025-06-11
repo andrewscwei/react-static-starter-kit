@@ -1,3 +1,10 @@
+# [23.1.0](https://github.com/andrewscwei/react-static-starter-kit/compare/v23.0.3...v23.1.0) (2025-06-11)
+
+
+### Features
+
+* Move  directory to ([26acf1b](https://github.com/andrewscwei/react-static-starter-kit/commit/26acf1be342b3ba932a3638cd5d7affed1724ac0))
+
 ## [23.0.3](https://github.com/andrewscwei/react-static-starter-kit/compare/v23.0.2...v23.0.3) (2025-06-11)
 
 
