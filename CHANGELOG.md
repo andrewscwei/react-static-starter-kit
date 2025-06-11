@@ -1,3 +1,10 @@
+## [23.0.3](https://github.com/andrewscwei/react-static-starter-kit/compare/v23.0.2...v23.0.3) (2025-06-11)
+
+
+### Bug Fixes
+
+* Fix boilerplate styles ([c96ca7d](https://github.com/andrewscwei/react-static-starter-kit/commit/c96ca7d6a780e75bfbc2216e1455b16c2bf19e42))
+
 ## [23.0.2](https://github.com/andrewscwei/react-static-starter-kit/compare/v23.0.1...v23.0.2) (2025-05-20)
 
 
