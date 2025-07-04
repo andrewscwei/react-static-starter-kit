@@ -1,3 +1,15 @@
+# [23.2.0](https://github.com/andrewscwei/react-static-starter-kit/compare/v23.1.0...v23.2.0) (2025-07-04)
+
+
+### Bug Fixes
+
+* Resolve `HydrateFallback` warning ([2155720](https://github.com/andrewscwei/react-static-starter-kit/commit/215572084fb8de5ed36c29c08604e9c7303fa08e))
+
+
+### Features
+
+* Use React component display names when `NODE_ENV` is equal to "development" instead ([3d2848f](https://github.com/andrewscwei/react-static-starter-kit/commit/3d2848f47718cc75f3581572dbc0e0f6bc7c45bf))
+
 # [23.1.0](https://github.com/andrewscwei/react-static-starter-kit/compare/v23.0.3...v23.1.0) (2025-06-11)
 
 
