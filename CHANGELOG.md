@@ -1,3 +1,10 @@
+# [23.3.0](https://github.com/andrewscwei/react-static-starter-kit/compare/v23.2.0...v23.3.0) (2025-07-17)
+
+
+### Features
+
+* Support multiple locale directories ([aa92daf](https://github.com/andrewscwei/react-static-starter-kit/commit/aa92daf441e5d5c873d9dac94ab4f16134214c60))
+
 # [23.2.0](https://github.com/andrewscwei/react-static-starter-kit/compare/v23.1.0...v23.2.0) (2025-07-04)
 
 
