@@ -3,8 +3,8 @@ import { createRoot } from 'react-dom/client'
 import { createBrowserRouter } from 'react-router'
 import { RouterProvider } from 'react-router/dom'
 import { BASE_PATH } from './app.config.js'
+import { App } from './App.js'
 import { routes } from './routes.config.js'
-import { App } from './ui/App.js'
 import WebWorker from './workers/web.js?worker'
 
 function work() {
