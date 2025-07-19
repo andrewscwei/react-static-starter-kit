@@ -1,3 +1,17 @@
+# [24.0.0](https://github.com/andrewscwei/react-static-starter-kit/compare/v23.3.0...v24.0.0) (2025-07-19)
+
+
+### Features
+
+* Rename page folders (1/2) ([3b92b51](https://github.com/andrewscwei/react-static-starter-kit/commit/3b92b51ddee7e0c46e399d9ac6b04c2c3c19be8d))
+* Rename page folders (2/2) ([b8901ff](https://github.com/andrewscwei/react-static-starter-kit/commit/b8901ff4288e3c9fc64060ceb11895bfe2b2932f))
+* Update folder structure ([cc09e34](https://github.com/andrewscwei/react-static-starter-kit/commit/cc09e349843e62d7b8a7ea29c7de90bbd1c52e0f))
+
+
+### BREAKING CHANGES
+
+* Updated folder structure
+
 # [23.3.0](https://github.com/andrewscwei/react-static-starter-kit/compare/v23.2.0...v23.3.0) (2025-07-17)
 
 
