@@ -8,7 +8,7 @@ import { extname, join, resolve } from 'node:path'
 import { defineConfig, loadEnv, type Plugin } from 'vite'
 import packageInfo from './package.json'
 
-const defineArgs = (env: ReturnType<typeof loadEnv>) => ({
+const loadArgs = (env: Record<string, string>) => ({
   BASE_PATH: join('/', (env.BASE_PATH ?? '/').replace(/\/+$/, '')),
   BASE_URL: (env.BASE_URL ?? '').replace(/\/+$/, ''),
   BUILD_NUMBER: env.BUILD_NUMBER ?? 'local',
@@ -19,7 +19,7 @@ const defineArgs = (env: ReturnType<typeof loadEnv>) => ({
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
-  const args = defineArgs(env)
+  const args = loadArgs(env)
   const isDev = mode === 'development'
   const rootDir = resolve(__dirname, 'src')
   const outDir = resolve(__dirname, 'build')
@@ -49,7 +49,7 @@ export default defineConfig(({ mode }) => {
     },
     plugins: [
       react(),
-      template({ outDir, skipOptimizations }),
+      htmlRenderer({ outDir, skipOptimizations }),
     ],
     resolve: {
       alias: {
@@ -76,19 +76,20 @@ export default defineConfig(({ mode }) => {
   }
 })
 
-function printArgs(args: ReturnType<typeof defineArgs>) {
+function printArgs(args: ReturnType<typeof loadArgs>) {
   const green = (text: string) => `\x1b[32m${text}\x1b[0m`
   const magenta = (text: string) => `\x1b[35m${text}\x1b[0m`
 
   console.log(green('Build args:'))
+
   Object.entries(args).forEach(([key, value]) => {
     console.log(`${magenta(key)}: ${JSON.stringify(value)}`)
   })
 }
 
-function template({ outDir, skipOptimizations }: { outDir: string; skipOptimizations: boolean }): Plugin {
+function htmlRenderer({ outDir, skipOptimizations }: { outDir: string; skipOptimizations: boolean }): Plugin {
   return {
-    name: 'template',
+    name: 'Custom plugin for rendering HTML templates after bundle generation',
     transformIndexHtml: {
       order: 'pre',
       handler: render,
