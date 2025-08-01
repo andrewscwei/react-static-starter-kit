@@ -12,7 +12,7 @@ const defineArgs = (env: ReturnType<typeof loadEnv>) => ({
   BASE_PATH: join('/', (env.BASE_PATH ?? '/').replace(/\/+$/, '')),
   BASE_URL: (env.BASE_URL ?? '').replace(/\/+$/, ''),
   BUILD_NUMBER: env.BUILD_NUMBER ?? 'local',
-  DEBUG: env.DEBUG ?? '',
+  DEBUG: env.DEBUG === 'true',
   DEFAULT_LOCALE: env.DEFAULT_LOCALE ?? 'en',
   VERSION: packageInfo.version,
 })
