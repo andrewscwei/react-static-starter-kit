@@ -1,3 +1,18 @@
+# [24.1.0](https://github.com/andrewscwei/react-static-starter-kit/compare/v24.0.0...v24.1.0) (2025-08-01)
+
+
+### Bug Fixes
+
+* Fix React logo ([808ec15](https://github.com/andrewscwei/react-static-starter-kit/commit/808ec1567485537b2cfa29241712b6617999f2b2))
+* Remove deprecated ESLint rule ([47e3952](https://github.com/andrewscwei/react-static-starter-kit/commit/47e3952ad6655a2247af24ae29d4b69afe86002a))
+
+
+### Features
+
+* Add support for Smart App Banner ([30df9a9](https://github.com/andrewscwei/react-static-starter-kit/commit/30df9a99a28131e1117694156c0cd6e2770d750e))
+* Change `import.meta.env.DEBUG` to boolean ([85bdd4a](https://github.com/andrewscwei/react-static-starter-kit/commit/85bdd4a8f876196a3d4315637f0c583e596bb368))
+* Enable debug logs when mode is "development" ([5ce81fe](https://github.com/andrewscwei/react-static-starter-kit/commit/5ce81fe24f328ca858980350ea05e44fb7d29eea))
+
 # [24.0.0](https://github.com/andrewscwei/react-static-starter-kit/compare/v23.3.0...v24.0.0) (2025-07-19)
 
 
