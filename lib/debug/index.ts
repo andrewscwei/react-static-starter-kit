@@ -29,7 +29,7 @@ export const debug = (() => {
   else {
     createDebug.disable()
 
-    if (import.meta.env.DEV || import.meta.env.DEBUG) {
+    if (import.meta.env.DEV || import.meta.env.DEBUG || import.meta.env.MODE === 'development') {
       createDebug.enable(`${CLIENT_SYMBOL}*`)
     }
 
