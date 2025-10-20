@@ -1,3 +1,16 @@
+# [24.2.0](https://github.com/andrewscwei/react-static-starter-kit/compare/v24.1.0...v24.2.0) (2025-10-20)
+
+
+### Bug Fixes
+
+* Fix favicons in index.html ([7f7206b](https://github.com/andrewscwei/react-static-starter-kit/commit/7f7206b86156f21a8c19b125e050f1ac4d30452a))
+
+
+### Features
+
+* Add ClientError page ([6d1fa6d](https://github.com/andrewscwei/react-static-starter-kit/commit/6d1fa6df2ff81dd5ec9ed286cc345731fe764290))
+* Optimize favicons ([cd3d56d](https://github.com/andrewscwei/react-static-starter-kit/commit/cd3d56d786e130ee342efffd221ad26608492aba))
+
 # [24.1.0](https://github.com/andrewscwei/react-static-starter-kit/compare/v24.0.0...v24.1.0) (2025-08-01)
 
 
