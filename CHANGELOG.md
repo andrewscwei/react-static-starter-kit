@@ -1,3 +1,10 @@
+## [24.2.1](https://github.com/andrewscwei/react-static-starter-kit/compare/v24.2.0...v24.2.1) (2025-10-28)
+
+
+### Bug Fixes
+
+* Fix favicon updates ([7c93b44](https://github.com/andrewscwei/react-static-starter-kit/commit/7c93b44c53996f5f3ab02b053264a3647e581756))
+
 # [24.2.0](https://github.com/andrewscwei/react-static-starter-kit/compare/v24.1.0...v24.2.0) (2025-10-20)
 
 
