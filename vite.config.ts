@@ -22,6 +22,7 @@ export default defineConfig(({ mode }) => {
   const args = loadArgs(env)
   const isDev = mode === 'development'
   const rootDir = resolve(__dirname, 'src')
+  const libDir = resolve(__dirname, 'lib')
   const outDir = resolve(__dirname, 'build')
   const publicDir = resolve(__dirname, 'public')
   const skipOptimizations = isDev || env.npm_config_raw === 'true'
@@ -53,7 +54,8 @@ export default defineConfig(({ mode }) => {
     ],
     resolve: {
       alias: {
-        '@lib': resolve(__dirname, 'lib'),
+        '@': rootDir,
+        '@lib': libDir,
       },
     },
     server: {

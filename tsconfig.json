@@ -13,6 +13,7 @@
     "noImplicitAny": true,
     "outDir": "./build",
     "paths": {
+      "@/*": ["./src/*"],
       "@lib/debug": ["./lib/debug/index"],
       "@lib/i18n": ["./lib/i18n/index"],
       "@lib/meta": ["./lib/meta/index"]
