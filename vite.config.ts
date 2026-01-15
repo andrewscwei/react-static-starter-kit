@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 
 import react from '@vitejs/plugin-react'
-import { render } from 'ejs'
+import ejs from 'ejs'
 import { minify } from 'html-minifier-terser'
 import { readFile, readdir, writeFile } from 'node:fs/promises'
 import { extname, join, resolve } from 'node:path'
@@ -94,7 +94,7 @@ function htmlRenderer({ outDir, skipOptimizations }: { outDir: string; skipOptim
     name: 'Custom plugin for rendering HTML templates after bundle generation',
     transformIndexHtml: {
       order: 'pre',
-      handler: render,
+      handler: ejs.render,
     },
     writeBundle: async () => {
       if (skipOptimizations === true) return
