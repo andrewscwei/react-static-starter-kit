@@ -3,9 +3,10 @@
 import react from '@vitejs/plugin-react'
 import ejs from 'ejs'
 import { minify } from 'html-minifier-terser'
-import { readFile, readdir, writeFile } from 'node:fs/promises'
+import { readdir, readFile, writeFile } from 'node:fs/promises'
 import { extname, join, resolve } from 'node:path'
 import { defineConfig, loadEnv, type Plugin } from 'vite'
+
 import packageInfo from './package.json'
 
 const loadArgs = (env: Record<string, string>) => ({
@@ -30,10 +31,7 @@ export default defineConfig(({ mode }) => {
   printArgs(args)
 
   return {
-    root: rootDir,
     base: args.BASE_PATH,
-    envDir: __dirname,
-    publicDir,
     build: {
       emptyOutDir: false,
       minify: skipOptimizations ? false : 'esbuild',
@@ -48,24 +46,27 @@ export default defineConfig(({ mode }) => {
         [`import.meta.env.${key}`]: JSON.stringify(value),
       }), {}),
     },
+    envDir: __dirname,
     plugins: [
       react(),
       htmlRenderer({ outDir, skipOptimizations }),
     ],
+    publicDir,
     resolve: {
       alias: {
         '@': rootDir,
         '@lib': libDir,
       },
     },
+    root: rootDir,
     server: {
       host: '0.0.0.0',
       port: Number(env.PORT ?? 8080),
     },
     test: {
       coverage: {
-        reporter: ['text-summary'],
         provider: 'v8',
+        reporter: ['text-summary'],
       },
       environment: 'happy-dom',
       globals: true,
@@ -93,8 +94,8 @@ function htmlRenderer({ outDir, skipOptimizations }: { outDir: string; skipOptim
   return {
     name: 'Custom plugin for rendering HTML templates after bundle generation',
     transformIndexHtml: {
-      order: 'pre',
       handler: ejs.render,
+      order: 'pre',
     },
     writeBundle: async () => {
       if (skipOptimizations === true) return
