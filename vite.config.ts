@@ -36,6 +36,13 @@ export default defineConfig(({ mode }) => {
       emptyOutDir: false,
       minify: !skipOptimizations,
       outDir: join(outDir, args.BASE_PATH),
+      rollupOptions: {
+        output: {
+          assetFileNames: 'assets/[hash][extname]',
+          chunkFileNames: 'assets/[hash].js',
+          entryFileNames: 'assets/[hash].js',
+        },
+      },
     },
     define: {
       ...Object.entries(args).reduce((acc, [key, value]) => ({
@@ -72,6 +79,14 @@ export default defineConfig(({ mode }) => {
         '**/*.spec.tsx',
       ],
       setupFiles: 'dotenv/config',
+    },
+    worker: {
+      format: 'es',
+      rollupOptions: {
+        output: {
+          entryFileNames: 'workers/[hash].js',
+        },
+      },
     },
   }
 })
