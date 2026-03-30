@@ -37,7 +37,7 @@ export default defineConfig(({ mode }) => {
       minify: skipOptimizations ? false : 'esbuild',
       outDir: join(outDir, args.BASE_PATH),
       rollupOptions: {
-        treeshake: 'smallest',
+        treeshake: true,
       },
     },
     define: {
