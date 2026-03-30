@@ -34,11 +34,8 @@ export default defineConfig(({ mode }) => {
     base: args.BASE_PATH,
     build: {
       emptyOutDir: false,
-      minify: skipOptimizations ? false : 'esbuild',
+      minify: !skipOptimizations,
       outDir: join(outDir, args.BASE_PATH),
-      rollupOptions: {
-        treeshake: true,
-      },
     },
     define: {
       ...Object.entries(args).reduce((acc, [key, value]) => ({
