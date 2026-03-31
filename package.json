@@ -10,11 +10,11 @@
     "prebuild": "npm run clean && npm run lint && npm run typecheck",
     "build": "vite build",
     "dev": "vite dev",
-    "test": "playwright test",
-    "unit": "vitest run --coverage",
+    "test": "vitest run --coverage",
+    "test:e2e": "playwright test",
     "typecheck": "tsc --noEmit",
-    "lint": "eslint && stylelint src/**/*.css",
-    "lint:fix": "eslint --fix && stylelint src/**/*.css --fix"
+    "lint": "eslint --flag=unstable_native_nodejs_ts_config && stylelint src/**/*.css",
+    "lint:fix": "eslint --flag=unstable_native_nodejs_ts_config --fix && stylelint src/**/*.css --fix"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

@@ -29,11 +29,11 @@ $ npm install
 # Run in dev
 $ npm run dev
 
-# Run E2E tests
+# Run unit tests
 $ npm test
 
-# Run unit tests
-$ npm unit
+# Run E2E tests
+$ npm run test:e2e
 
 # Build for prod
 $ npm run build

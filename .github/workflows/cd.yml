@@ -19,9 +19,9 @@ jobs:
         id: build
         uses: andrewscwei/actions/node-build@v2
         with:
-          prebuild-command: npm run unit
+          prebuild-command: npm test
       - name: Test
-        run: npx playwright install --with-deps && npm test
+        run: npx playwright install --with-deps && npm run test:e2e
   deploy:
     name: Deploy
     needs: [build]
