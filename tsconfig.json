@@ -1,15 +1,13 @@
 {
   "compilerOptions": {
-    "allowSyntheticDefaultImports": true,
     "jsx": "react-jsx",
     "lib": [
-      "DOM.Iterable",
       "DOM",
       "ES6",
       "WebWorker"
     ],
-    "module": "ESNext",
-    "moduleResolution": "Bundler",
+    "module": "esnext",
+    "moduleResolution": "bundler",
     "noImplicitAny": true,
     "outDir": "./build",
     "paths": {
@@ -20,7 +18,7 @@
     },
     "skipLibCheck": true,
     "strict": true,
-    "target": "ES2020",
+    "target": "esnext",
     "types": [
       "node",
       "vitest/globals"
