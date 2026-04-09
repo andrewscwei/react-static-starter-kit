@@ -28,8 +28,6 @@ export default defineConfig(({ mode }) => {
   const publicDir = resolve(__dirname, 'public')
   const skipOptimizations = isDev || env.npm_config_raw === 'true'
 
-  printArgs(args)
-
   return {
     base: args.BASE_PATH,
     build: {
@@ -53,6 +51,7 @@ export default defineConfig(({ mode }) => {
     envDir: __dirname,
     plugins: [
       react(),
+      logger({ buildArgs: args }),
       htmlRenderer({ outDir, skipOptimizations }),
     ],
     publicDir,
@@ -91,15 +90,26 @@ export default defineConfig(({ mode }) => {
   }
 })
 
-function printArgs(args: ReturnType<typeof loadArgs>) {
-  const green = (text: string) => `\x1b[32m${text}\x1b[0m`
-  const magenta = (text: string) => `\x1b[35m${text}\x1b[0m`
+function logger({ buildArgs }: { buildArgs: ReturnType<typeof loadArgs> }): Plugin {
+  return {
+    buildStart: async () => {
+      const green = (text: string) => `\x1b[32m${text}\x1b[0m`
+      const magenta = (text: string) => `\x1b[35m${text}\x1b[0m`
+      const gray = (text: string) => `\x1b[90m${text}\x1b[0m`
 
-  console.log(green('Build args:'))
+      console.log()
+      console.log(green('loading build args...'))
+      console.log(gray('------------------------------------------------------------------------------'))
 
-  Object.entries(args).forEach(([key, value]) => {
-    console.log(`${magenta(key)}: ${JSON.stringify(value)}`)
-  })
+      Object.entries(buildArgs).forEach(([key, value]) => {
+        console.log(`${magenta(key)}: ${JSON.stringify(value)}`)
+      })
+
+      console.log(gray('------------------------------------------------------------------------------'))
+      console.log()
+    },
+    name: 'Custom plugin for logging build arguments and environment variables',
+  }
 }
 
 function htmlRenderer({ outDir, skipOptimizations }: { outDir: string; skipOptimizations: boolean }): Plugin {
