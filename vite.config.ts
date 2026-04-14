@@ -36,9 +36,9 @@ export default defineConfig(({ mode }) => {
       outDir: join(outDir, args.BASE_PATH),
       rollupOptions: {
         output: {
-          assetFileNames: 'assets/[hash][extname]',
-          chunkFileNames: 'assets/[hash].js',
-          entryFileNames: 'assets/[hash].js',
+          assetFileNames: skipOptimizations ? 'assets/[name][extname]' : 'assets/[hash][extname]',
+          chunkFileNames: skipOptimizations ? 'assets/[name].js' : 'assets/[hash].js',
+          entryFileNames: skipOptimizations ? 'assets/[name].js' : 'assets/[hash].js',
         },
       },
     },
@@ -69,13 +69,17 @@ export default defineConfig(({ mode }) => {
     test: {
       coverage: {
         provider: 'v8',
-        reporter: ['text-summary'],
+        reportsDirectory: resolve(__dirname, 'coverage'),
       },
       environment: 'happy-dom',
       globals: true,
       include: [
-        '**/*.spec.ts',
-        '**/*.spec.tsx',
+        '**/*.spec.(ts|tsx)',
+        '**/*.test.(ts|tsx)',
+      ],
+      reporters: [
+        'tree',
+        ...process.env.GITHUB_ACTIONS === 'true' ? ['github-actions'] : [],
       ],
       setupFiles: 'dotenv/config',
     },
