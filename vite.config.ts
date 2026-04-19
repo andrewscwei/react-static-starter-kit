@@ -96,6 +96,7 @@ export default defineConfig(({ mode }) => {
 
 function logger({ buildArgs }: { buildArgs: ReturnType<typeof loadArgs> }): Plugin {
   return {
+    name: 'Custom plugin for logging build arguments and environment variables',
     buildStart: async () => {
       const green = (text: string) => `\x1b[32m${text}\x1b[0m`
       const magenta = (text: string) => `\x1b[35m${text}\x1b[0m`
@@ -112,7 +113,6 @@ function logger({ buildArgs }: { buildArgs: ReturnType<typeof loadArgs> }): Plug
       console.log(gray('------------------------------------------------------------------------------'))
       console.log()
     },
-    name: 'Custom plugin for logging build arguments and environment variables',
   }
 }
 
