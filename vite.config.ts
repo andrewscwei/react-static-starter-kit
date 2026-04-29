@@ -57,7 +57,6 @@ export default defineConfig(({ mode }) => {
     publicDir,
     resolve: {
       alias: {
-        '@': rootDir,
         '@lib': libDir,
       },
     },
