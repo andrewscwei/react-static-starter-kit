@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 
-import { I18nContext } from './I18nProvider.js'
+import { I18nContext } from './I18nContext.js'
 import { createResolveLocaleOptions } from './utils/createResolveLocaleOptions.js'
 
 /**
