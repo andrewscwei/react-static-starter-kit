@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { use } from 'react'
 
 import { I18nContext } from './I18nContext.js'
 
@@ -10,7 +10,7 @@ import { I18nContext } from './I18nContext.js'
  *          and path localizing function `l`.
  */
 export function useI18n() {
-  const context = useContext(I18nContext)
+  const context = use(I18nContext)
   if (!context) throw new Error('Cannot fetch the current i18n context, is the corresponding provider instated?')
 
   return {

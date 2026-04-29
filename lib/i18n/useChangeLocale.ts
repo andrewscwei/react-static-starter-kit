@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { use } from 'react'
 
 import { I18nContext } from './I18nContext.js'
 import { type Locale } from './types/Locale.js'
@@ -11,7 +11,7 @@ import { getLocalizedURL } from './utils/getLocalizedURL.js'
  * @returns The change locale function.
  */
 export function useChangeLocale() {
-  const context = useContext(I18nContext)
+  const context = use(I18nContext)
   if (!context) throw Error('Cannot fetch the current i18n context, is the corresponding provider instated?')
 
   const navigate = context.router.useNavigate()
