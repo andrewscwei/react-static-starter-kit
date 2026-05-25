@@ -1,0 +1,1 @@
+import{_ as e,d as t,g as n,o as r,t as i}from"./DapJi1rY.js";import{r as a}from"./Dnj2gyND.js";var o={useLocation:n,useNavigate:e},s=r();function c(){return(0,s.jsx)(i,{...a,routerAdapter:o,children:(0,s.jsx)(t,{})})}export{c as Component};
