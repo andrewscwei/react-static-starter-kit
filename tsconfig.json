@@ -13,6 +13,7 @@
     "paths": {
       "@lib/debug": ["./lib/debug/index"],
       "@lib/i18n": ["./lib/i18n/index"],
+      "@lib/i18n/adapters/react-router": ["./lib/i18n/adapters/react-router/index"],
       "@lib/meta": ["./lib/meta/index"]
     },
     "skipLibCheck": true,
