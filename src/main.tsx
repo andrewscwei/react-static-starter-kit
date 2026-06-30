@@ -20,7 +20,6 @@ function work() {
 
 function render() {
   const container = window.document.getElementById('root')
-
   if (!container) throw Error('Invalid application root')
 
   createRoot(container).render((
