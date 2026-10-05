@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
       - name: Build
         uses: andrewscwei/actions/node-build@v2
         env:
@@ -17,7 +17,12 @@ jobs:
         with:
           prebuild-command: npm test
       - name: Test
-        run: npx playwright install --with-deps && npm run test:e2e
+        run: |
+          npx playwright install --with-deps --only-shell chromium
+          npm start &
+          SERVER_PID=$!
+          trap "kill $SERVER_PID" EXIT
+          npm run test:e2e
   notify:
     name: Notify
     needs: [build]

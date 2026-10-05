@@ -14,14 +14,19 @@ jobs:
       artifact-path: ${{ steps.build.outputs.artifact-path }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
       - name: Build
         id: build
         uses: andrewscwei/actions/node-build@v2
         with:
           prebuild-command: npm test
       - name: Test
-        run: npx playwright install --with-deps && npm run test:e2e
+        run: |
+          npx playwright install --with-deps --only-shell chromium
+          npm start &
+          SERVER_PID=$!
+          trap "kill $SERVER_PID" EXIT
+          npm run test:e2e
   deploy:
     name: Deploy
     needs: [build]
@@ -34,9 +39,9 @@ jobs:
       GITHUB_TOKEN: ${{ github.token }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           cache: npm
           node-version-file: .node-version

@@ -13,6 +13,8 @@
     "paths": {
       "@lib/debug": ["./lib/debug/index"],
       "@lib/i18n": ["./lib/i18n/index"],
+      "@lib/i18n/adapters/browser-router": ["./lib/i18n/adapters/browser-router/index"],
+      "@lib/i18n/adapters/edge-router": ["./lib/i18n/adapters/edge-router/index"],
       "@lib/i18n/adapters/react-router": ["./lib/i18n/adapters/react-router/index"],
       "@lib/meta": ["./lib/meta/index"]
     },
@@ -30,6 +32,8 @@
   ],
   "include": [
     "lib",
-    "src"
+    "src",
+    "tests",
+    "*.config.ts"
   ]
 }

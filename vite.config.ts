@@ -7,7 +7,9 @@ import { readdir, readFile, writeFile } from 'node:fs/promises'
 import { extname, join, resolve } from 'node:path'
 import { defineConfig, loadEnv, type Plugin } from 'vite'
 
-import packageInfo from './package.json'
+import packageInfo from './package.json' with { type: 'json' }
+
+const __dirname = import.meta.dirname
 
 const loadArgs = (env: Record<string, string>) => ({
   BASE_PATH: join('/', (env.BASE_PATH ?? '/').replace(/\/+$/, '')),
@@ -70,6 +72,7 @@ export default defineConfig(({ mode }) => {
         provider: 'v8',
         reportsDirectory: resolve(__dirname, 'coverage'),
       },
+      dir: __dirname,
       environment: 'happy-dom',
       globals: true,
       include: [
