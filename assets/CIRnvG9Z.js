@@ -1,0 +1,1 @@
+import{i as e,t}from"./BSHaL1jx.js";import{t as n}from"./CosfzTni.js";var r=e();function i(){let{t:e}=t();return(0,r.jsx)(n,{metadata:{noIndex:!0,title:e(`window-title-not-found`)},children:(0,r.jsx)(`main`,{children:(0,r.jsx)(`h1`,{children:e(`not-found-title`)})})})}export{i as Component};
