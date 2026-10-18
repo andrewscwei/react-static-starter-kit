@@ -40,4 +40,10 @@ export default defineConfig({
     baseURL: `http://localhost:${PORT}`,
     trace: 'on-first-retry',
   },
+  webServer: {
+    command: 'npm start',
+    port: Number(PORT),
+    reuseExistingServer: !CI,
+    timeout: 30 * 1000,
+  },
 })

@@ -19,9 +19,6 @@ jobs:
       - name: Test
         run: |
           npx playwright install --with-deps --only-shell chromium
-          npm start &
-          SERVER_PID=$!
-          trap "kill $SERVER_PID" EXIT
           npm run test:e2e
   notify:
     name: Notify
