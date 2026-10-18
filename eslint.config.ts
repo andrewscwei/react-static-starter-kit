@@ -6,7 +6,7 @@ import tseslint from 'typescript-eslint'
 
 export default defineConfig(
   eslint.configs.recommended,
-  ...tseslint.configs.recommended,
+  tseslint.configs.recommended,
   {
     ignores: ['**/build/**', '**/public/**'],
   },
@@ -179,7 +179,11 @@ export default defineConfig(
         nonwords: false,
         words: true,
       }],
-      '@stylistic/spaced-comment': ['error', 'always'],
+      '@stylistic/spaced-comment': ['error', 'always', {
+        line: {
+          markers: ['#region', '#endregion'],
+        },
+      }],
       '@stylistic/switch-colon-spacing': ['error', {
         after: true,
         before: false,
@@ -320,7 +324,7 @@ export default defineConfig(
             groupName: 'flag',
           },
           {
-            elementNamePattern: '^((get|set|parse|format|render|dispatch)[A-Z].+)|(render)$',
+            elementNamePattern: '^((get|set|parse|format|dispatch)[A-Z].+)|(render)$',
             groupName: 'function',
           },
           {
@@ -370,7 +374,7 @@ export default defineConfig(
             groupName: 'component',
           },
           {
-            elementNamePattern: '^((get|set|parse|format|render|dispatch)[A-Z].+)|(render)$',
+            elementNamePattern: '^((get|set|parse|format|dispatch)[A-Z].+)|(render)$',
             groupName: 'function',
           },
           {
@@ -415,6 +419,7 @@ export default defineConfig(
       '@typescript-eslint/consistent-indexed-object-style': 'error',
       '@typescript-eslint/consistent-type-assertions': 'error',
       '@typescript-eslint/consistent-type-imports': ['error', {
+        disallowTypeAnnotations: false,
         fixStyle: 'inline-type-imports',
       }],
       '@typescript-eslint/default-param-last': 'error',
@@ -486,6 +491,12 @@ export default defineConfig(
       '@typescript-eslint/no-dupe-class-members': 'error',
       '@typescript-eslint/no-duplicate-enum-values': 'error',
       '@typescript-eslint/no-empty-function': 'off',
+      '@typescript-eslint/no-empty-object-type': [
+        'error',
+        {
+          allowInterfaces: 'with-single-extends',
+        },
+      ],
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-invalid-this': 'error',
       '@typescript-eslint/no-invalid-void-type': 'error',
@@ -605,6 +616,7 @@ export default defineConfig(
       'no-unreachable-loop': 'warn',
       'no-unused-private-class-members': 'warn',
       'no-use-before-define': 'off',
+      'no-useless-rename': 'error',
       'no-var': 'error',
       'no-void': 'error',
       'no-warning-comments': ['warn', {
